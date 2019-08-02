@@ -117,6 +117,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    redcarpet (3.5.0)
     rspec-core (3.8.2)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.4)
@@ -179,6 +180,7 @@ DEPENDENCIES
   pry
   puma (~> 3.11)
   rails (~> 5.2.3)
+  redcarpet
   rspec-rails
   sass-rails (~> 5.0)
   tzinfo-data
