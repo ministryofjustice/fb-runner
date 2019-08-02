@@ -1,0 +1,17 @@
+nunjucks = require('/Users/phillee/git/fb-runner/node_modules/nunjucks/index.js')
+fbNunjucksHelpers = require('/Users/phillee/git/fb-runner/node_modules/@ministryofjustice/fb-nunjucks-helpers')
+nunjucksConfig = nunjucks.configure([
+'/Users/phillee/git/fb-runner/node_modules/@ministryofjustice/fb-components-core/templates/nunjucks/',
+'/Users/phillee/git/fb-runner/node_modules/govuk-frontend',
+'/Users/phillee/git/fb-runner/node_modules/@ministryofjustice/fb-components-core/specifications/actions/template/nunjucks/actions.njk',
+'/Users/phillee/git/fb-runner/node_modules/@ministryofjustice/fb-components-core/specifications/text/template/nunjucks/text.njk',
+], { autoescape: true });
+nunjucksEnv = fbNunjucksHelpers.init(nunjucksConfig)
+nunjucksEnv.addMacros([
+'/Users/phillee/git/fb-runner/node_modules/govuk-frontend/components/phase-banner/macro.njk',
+'/Users/phillee/git/fb-runner/node_modules/@ministryofjustice/fb-components-core/specifications/actions/template/nunjucks/actions.njk',
+'/Users/phillee/git/fb-runner/node_modules/@ministryofjustice/fb-components-core/specifications/text/template/nunjucks/text.njk',
+'/Users/phillee/git/fb-runner/node_modules/govuk-frontend/components/button/macro.njk',
+'/Users/phillee/git/fb-runner/node_modules/govuk-frontend/components/input/macro.njk',
+])
+console.log(nunjucksEnv.render('/Users/phillee/git/fb-runner/node_modules/@ministryofjustice/fb-components-core/templates/nunjucks/page.njk.html', { page: <%= hash.to_json %> } ))
