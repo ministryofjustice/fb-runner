@@ -5,12 +5,16 @@ nunjucksConfig = nunjucks.configure([
 '<%= Rails.root.join('node_modules/govuk-frontend') %>',
 '<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/actions/template/nunjucks/actions.njk') %>',
 '<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/text/template/nunjucks/text.njk') %>',
+'<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/date/template/nunjucks/date.njk') %>',
+'<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/email/template/nunjucks/email.njk') %>',
 ], { autoescape: true });
 nunjucksEnv = fbNunjucksHelpers.init(nunjucksConfig)
 nunjucksEnv.addMacros([
 '<%= Rails.root.join('node_modules/govuk-frontend/components/phase-banner/macro.njk') %>',
 '<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/actions/template/nunjucks/actions.njk') %>',
 '<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/text/template/nunjucks/text.njk') %>',
+'<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/date/template/nunjucks/date.njk') %>',
+'<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/email/template/nunjucks/email.njk') %>',
 '<%= Rails.root.join('node_modules/govuk-frontend/components/button/macro.njk') %>',
 '<%= Rails.root.join('node_modules/govuk-frontend/components/input/macro.njk') %>',
 ])
