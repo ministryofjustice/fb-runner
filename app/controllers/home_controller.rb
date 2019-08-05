@@ -1,11 +1,16 @@
 class HomeController < ApplicationController
   def show
-    render inline: Page.new(path: '../fb-ioj/metadata/page/page.start.json', config: { csrf: form_authenticity_token }).render
+    @service = Service.new(path: '../fb-ioj', config: { csrf: form_authenticity_token })
+    @page = @service.find_page_for_url(request.path)
+
+    render inline: @page.render
   end
 
   def handle_post
-    render inline: 'handle post here'
-    # determine where should i go to
-    # redirect user
+    @service = Service.new(path: '../fb-ioj', config: { csrf: form_authenticity_token })
+    @page = @service.find_page_for_url(request.path)
+
+    @flow = Flow.new(service: @service, page: @page)
+    redirect_to("#{@flow.next_page.url}")
   end
 end

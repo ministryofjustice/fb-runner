@@ -9,8 +9,12 @@ class Page
     @config = config
   end
 
+  def id
+    hash['page']['_id']
+  end
+
   def start?
-    hash["_type"] == "page.start"
+    hash["page"]["_type"] == "page.start"
   end
 
   def render
@@ -24,6 +28,14 @@ class Page
     Rails.logger.info(file.path)
 
     `node #{file.path}`
+  end
+
+  def url
+    hash["page"]["url"]
+  end
+
+  def steps
+    hash["page"]["steps"]
   end
 
   private
