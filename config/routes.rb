@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  root 'home#show'
+  root 'home#handle_get'
 
-  get '*path', to: 'home#show'
-  post '/', to: 'home#handle_post'
+  get '*path', to: 'home#handle_get'
+  post '*path', to: 'home#handle_post'
 end

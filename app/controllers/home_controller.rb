@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def show
+  def handle_get
     @service = Service.new(path: '../fb-ioj', config: { csrf: form_authenticity_token })
     @page = @service.find_page_for_url(request.path)
 

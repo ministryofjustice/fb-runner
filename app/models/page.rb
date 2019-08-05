@@ -2,11 +2,12 @@ require 'json'
 require 'tempfile'
 
 class Page
-  attr_reader :path, :config
+  attr_reader :path, :config, :service
 
-  def initialize(path:, config:)
+  def initialize(path:, config:, service:)
     @path = path
     @config = config
+    @service = service
   end
 
   def id
@@ -36,6 +37,12 @@ class Page
 
   def steps
     hash["page"]["steps"]
+  end
+
+  def parent_page
+    service.pages.find do |page|
+      (page.steps || []).include?(self.id)
+    end
   end
 
   private

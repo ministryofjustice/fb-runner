@@ -8,7 +8,7 @@ class Service
 
   def pages
     @pages ||= Dir.glob("#{path}/metadata/page/*.json").map do |page_path|
-      Page.new(path: page_path, config: config)
+      Page.new(path: page_path, config: config, service: self)
     end
   end
 

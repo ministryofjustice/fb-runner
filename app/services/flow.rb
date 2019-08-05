@@ -7,7 +7,9 @@ class Flow
   end
 
   def next_page
-    step = page.steps[0]
-    service.find_page_by_id(step)
+    steps = page.steps || page.parent_page.steps
+    next_step_index = steps.index(page.id) + 1
+    next_step_id = steps[next_step_index]
+    service.find_page_by_id(next_step_id)
   end
 end
