@@ -2,10 +2,11 @@ require 'json'
 require 'tempfile'
 
 class Page
-  attr_reader :path
+  attr_reader :path, :config
 
-  def initialize(path:)
+  def initialize(path:, config:)
     @path = path
+    @config = config
   end
 
   def start?
@@ -28,26 +29,34 @@ class Page
   private
 
   def hash
-    @hash ||= JSON.parse(File.read(path))
+    @hash ||= { 'page' => JSON.parse(File.read(path)) }
 
-    @hash.merge!('buttonContinue' => {
-                   "_id": "actions",
-                   "_type": "actions",
-                   "primary": {
-                     "_id": "actions.primary",
-                     "_type": "button",
-                     "html": "[% button.{page@actionType}.{page@_type} || button.{page@actionType} || button.continue %]",
-                     "classes": "[% button.{page@actionType}.{page@_type}.classes || button.{page@actionType}.classes %]"
-                     }
-                 })
+    @hash['page'].merge!('actions': {
+      "$source": "@ministryofjustice/fb-components-core",
+      "_id": "actions",
+      "_type": "actions",
+      "primary": {
+        "_id": "actions.primary",
+        "_type": "button",
+        "html": "Start",
+        "classes": "govuk-button--start",
+        "$component": true,
+        "$control": true,
+        "$definition": true,
+        "disabled": false,
+        "show": true
+      }
+    })
 
     # awful
     # use specifications/definition/page/definition.page.schema.json
     # to determine when to use markdown
-    if @hash['body']
+    if @hash['page']['body']
       markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-      @hash['body'] = markdown.render(@hash['body'])
+      @hash['page']['body'] = markdown.render(@hash['page']['body'])
     end
+
+    @hash.merge!({ '_csrf': config[:csrf] })
 
     @hash
   end
