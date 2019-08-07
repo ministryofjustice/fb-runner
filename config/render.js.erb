@@ -6,10 +6,11 @@ nunjucksConfig = nunjucks.configure([
 <%= Dir.glob(Rails.root.join('node_modules/govuk-frontend/govuk/components/*/template.njk')).map{|f| "'#{f}'"}.join(',') %>,
 '<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/templates/nunjucks/') %>',
 <%= Dir.glob(Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/*/template/nunjucks/*.njk')).map{|f| "'#{f}'"}.join(',') %>,
+<%= Dir.glob(Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/page/*/template/nunjucks/*.njk.html')).map{|f| "'#{f}'"}.join(',') %>,
 ], { autoescape: true });
 nunjucksEnv = fbNunjucksHelpers.init(nunjucksConfig)
 nunjucksEnv.addMacros([
 <%= Dir.glob(Rails.root.join('node_modules/govuk-frontend/govuk/components/*/macro.njk')).map{|f| "'#{f}'"}.join(',') %>,
 <%= Dir.glob(Rails.root.join('node_modules/@ministryofjustice/fb-components-core/specifications/*/template/nunjucks/*.njk')).map{|f| "'#{f}'"}.join(',') %>,
 ])
-console.log(nunjucksEnv.render('<%= Rails.root.join('node_modules/@ministryofjustice/fb-components-core/templates/nunjucks/page.njk.html') %>', <%= hash.to_json %> ))
+console.log(nunjucksEnv.render('<%= base_template %>', <%= hash.to_json %> ))

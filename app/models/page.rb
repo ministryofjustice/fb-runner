@@ -14,6 +14,10 @@ class Page
     hash['page']['_id']
   end
 
+  def type
+    hash['page']['_type']
+  end
+
   def start?
     hash["page"]["_type"] == "page.start"
   end
@@ -46,6 +50,10 @@ class Page
   end
 
   private
+
+  def base_template
+    Rails.root.join(Dir.glob("node_modules/@ministryofjustice/fb-components-core/specifications/page/*/template/nunjucks/#{type}.njk.html")[0])
+  end
 
   def hash
     return @hash if @hash
