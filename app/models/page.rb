@@ -71,6 +71,7 @@ class Page
 
     Massagers::Pages::Body.new(hash: @hash).call
     Massagers::Components::Date.new(hash: @hash).call
+    Massagers::Components::Fileupload.new(hash: @hash).call
 
     @hash.merge!({ '_csrf': config[:csrf] })
 
