@@ -26,7 +26,7 @@ class Page
     file.write(output)
     file.close
 
-    Rails.logger.info(file.path)
+    Rails.logger.debug(pp @hash)
 
     `node #{file.path}`
   end
@@ -48,7 +48,9 @@ class Page
   private
 
   def hash
-    @hash ||= { 'page' => JSON.parse(File.read(path)) }
+    return @hash if @hash
+
+    @hash ||= ActiveSupport::HashWithIndifferentAccess.new({ 'page' => JSON.parse(File.read(path)) })
 
     @hash['page'].merge!('actions': {
       "$source": "@ministryofjustice/fb-components-core",
@@ -67,13 +69,8 @@ class Page
       }
     })
 
-    # awful
-    # use specifications/definition/page/definition.page.schema.json
-    # to determine when to use markdown
-    if @hash['page']['body']
-      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-      @hash['page']['body'] = markdown.render(@hash['page']['body'])
-    end
+    Massagers::Pages::Body.new(hash: @hash).call
+    Massagers::Components::Date.new(hash: @hash).call
 
     @hash.merge!({ '_csrf': config[:csrf] })
 
