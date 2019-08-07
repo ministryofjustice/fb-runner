@@ -8,7 +8,17 @@ module Massagers
       end
 
       def call
+        process_components(hash[:page])
+
         (hash[:page][:components] || []).each do |c|
+          process_components(c)
+        end
+      end
+
+      private
+
+      def process_components(sub_hash)
+        (sub_hash[:components] || []).each do |c|
           if c[:_type] == "date"
             c[:items] = [
               {
