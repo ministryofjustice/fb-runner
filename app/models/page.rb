@@ -98,6 +98,7 @@ class Page
     Massagers::Pages::Body.new(hash: @hash).call
     Massagers::Components::Date.new(hash: @hash).call
     Massagers::Components::Fileupload.new(hash: @hash).call
+    Massagers::Service.new(hash: @hash).call
 
     @hash.merge!({ '_csrf': config[:csrf] })
     @hash.merge!({ 'govuk_frontend_version': '3.0.0' })
