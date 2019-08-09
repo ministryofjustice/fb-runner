@@ -12,3 +12,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 Rails.application.config.assets.precompile += %w( govuk-frontend-.min.css )
+
+Rails.application.config.assets.paths << Rails.root.join("node_modules", "govuk-frontend", "govuk", "assets")
+Rails.application.config.assets.paths << Rails.root.join("node_modules", "@ministryofjustice", "fb-components-core", "assets")
