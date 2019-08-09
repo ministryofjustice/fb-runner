@@ -95,6 +95,7 @@ class Page
 
     Massagers::Data::Inject.new(hash: @hash, data: service.data).call
     Massagers::Pages::Header.new(hash: @hash).call
+    Massagers::Pages::Previous.new(hash: @hash, page: self, service: service).call
     Massagers::Pages::Body.new(hash: @hash).call
     Massagers::Components::Date.new(hash: @hash).call
     Massagers::Components::Fileupload.new(hash: @hash).call
