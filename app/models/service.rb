@@ -1,9 +1,10 @@
 class Service
-  attr_accessor :path, :config
+  attr_accessor :path, :config, :data
 
-  def initialize(path:, config:)
+  def initialize(path:, config:, data:)
     @path = path
     @config = config
+    @data = data
   end
 
   def pages

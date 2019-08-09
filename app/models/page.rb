@@ -22,6 +22,13 @@ class Page
     hash["page"]["_type"] == "page.start"
   end
 
+  def valid?
+  end
+
+  def form_fields
+    (hash.try(:[], :page).try(:[], :components) || []).map{|c| c[:name]}
+  end
+
   def render
     file = Tempfile.new
     template = File.open(Rails.root.join('config', 'render.js.erb'), 'r').read
@@ -33,6 +40,9 @@ class Page
     Rails.logger.debug(pp @hash)
 
     `node #{file.path}`
+  end
+
+  def components
   end
 
   def url
@@ -47,6 +57,12 @@ class Page
     service.pages.find do |page|
       (page.steps || []).include?(self.id)
     end
+  end
+
+  def update_userdata(params)
+    permitted_data = params.permit(form_fields)
+
+    service.data.merge(permitted_data)
   end
 
   private
@@ -77,6 +93,7 @@ class Page
       }
     })
 
+    Massagers::Data::Inject.new(hash: @hash, data: service.data).call
     Massagers::Pages::Body.new(hash: @hash).call
     Massagers::Components::Date.new(hash: @hash).call
     Massagers::Components::Fileupload.new(hash: @hash).call
