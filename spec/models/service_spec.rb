@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Service do
   subject do
-    described_class.new(path: '../fb-ioj')
+    described_class.new(path: '../fb-ioj',
+                        config: {},
+                        data: Userdata::Memory.new({}))
   end
 
   describe '#pages' do

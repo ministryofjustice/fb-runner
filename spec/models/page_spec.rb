@@ -1,12 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Page do
-  subject do
-    described_class.new(path: '../fb-ioj/metadata/page/page.start.json')
+  let(:data) do
+    Userdata::Memory.new({})
+  end
+
+  let(:service) do
+    Service.new(path: '../fb-ioj', config: {}, data: data)
   end
 
   describe '#start?' do
     context 'when start page' do
+      subject do
+        service.start_page
+      end
+
       it 'returns true' do
         expect(subject.start?).to be_truthy
       end
@@ -14,7 +22,7 @@ RSpec.describe Page do
 
     context 'when not start page' do
       subject do
-        described_class.new(path: '../fb-ioj/metadata/page/page.summary.json')
+        service.find_page_by_id('page.maat')
       end
 
       it 'returns false' do
