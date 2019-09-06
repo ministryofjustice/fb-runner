@@ -1,18 +1,19 @@
 module Massagers
   module Pages
     class Previous
-      attr_reader :hash, :service, :page
+      attr_reader :in_hash, :out_hash, :service, :page
 
-      def initialize(hash:, service:, page:)
-        @hash = hash
+      def initialize(in_hash:, out_hash:, service:, page:)
+        @in_hash = in_hash
+        @out_hash = out_hash
         @service = service
         @page = page
       end
 
       def call
         if previous_page
-          if hash['page']
-            hash['page']['previouspage'] = previous_page.url
+          if out_hash['page']
+            out_hash['page']['previouspage'] = previous_page.url
           end
         end
       end

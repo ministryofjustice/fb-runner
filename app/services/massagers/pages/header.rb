@@ -1,15 +1,16 @@
 module Massagers
   module Pages
     class Header
-      attr_reader :hash
+      attr_reader :in_hash, :out_hash
 
-      def initialize(hash:)
-        @hash = hash
+      def initialize(in_hash:, out_hash:)
+        @in_hash = in_hash
+        @out_hash = out_hash
       end
 
       def call
-        if hash['page']
-          hash['page']['header'] = {
+        if out_hash['page']
+          out_hash['page']['header'] = {
             "$source": "@ministryofjustice/fb-components-core",
             "_id": "config.header",
             "_type": "header",

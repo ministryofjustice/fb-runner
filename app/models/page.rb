@@ -10,23 +10,28 @@ class Page
     @service = service
   end
 
+  def http_method
+    config[:http_method]
+  end
+
   def id
-    hash['page']['_id']
+    in_hash['page']['_id']
   end
 
   def type
-    hash['page']['_type']
+    in_hash['page']['_type']
   end
 
   def start?
-    hash["page"]["_type"] == "page.start"
+    in_hash["page"]["_type"] == "page.start"
   end
 
   def valid?
+    components.all? { |c| c.valid? }
   end
 
   def form_fields
-    (hash.try(:[], :page).try(:[], :components) || []).map{|c| c[:name]}
+    (in_hash.try(:[], :page).try(:[], :components) || []).map{|c| c[:name]}
   end
 
   def render
@@ -37,20 +42,23 @@ class Page
     file.write(output)
     file.close
 
-    Rails.logger.debug(pp @hash)
+    Rails.logger.debug(pp @out_hash)
 
     `node #{file.path}`
   end
 
   def components
+    @components ||= (in_hash["page"].try(:[], "components") || []).map do |c|
+      Component.new_from_hash(c, config: config)
+    end
   end
 
   def url
-    hash["page"]["url"]
+    in_hash["page"]["url"]
   end
 
   def steps
-    hash["page"]["steps"]
+    in_hash["page"]["steps"]
   end
 
   def parent_page
@@ -62,6 +70,8 @@ class Page
   def update_userdata(params)
     permitted_data = params.permit(form_fields)
 
+    @in_hash = nil
+
     service.data.merge(permitted_data)
   end
 
@@ -71,12 +81,25 @@ class Page
     Rails.root.join(Dir.glob("node_modules/@ministryofjustice/fb-components-core/specifications/page/*/template/nunjucks/#{type}.njk.html")[0])
   end
 
-  def hash
-    return @hash if @hash
+  def in_hash
+    return @in_hash if @in_hash
 
-    @hash ||= ActiveSupport::HashWithIndifferentAccess.new({ 'page' => JSON.parse(File.read(path)) })
+    @in_hash = ActiveSupport::HashWithIndifferentAccess.new({ 'page' => JSON.parse(File.read(path)) })
 
-    @hash['page'].merge!('actions': {
+    Massagers::Data::Inject.new(hash: @in_hash, data: service.data).call
+
+    @in_hash
+  end
+
+  def out_hash
+    return @out_hash if @out_hash
+
+    @out_hash = { 'page' => {
+                    'components' => []
+                   }
+                }
+
+    @out_hash['page'].merge!('actions': {
       "$source": "@ministryofjustice/fb-components-core",
       "_id": "actions",
       "_type": "actions",
@@ -93,17 +116,20 @@ class Page
       }
     })
 
-    Massagers::Data::Inject.new(hash: @hash, data: service.data).call
-    Massagers::Pages::Header.new(hash: @hash).call
-    Massagers::Pages::Previous.new(hash: @hash, page: self, service: service).call
-    Massagers::Pages::Body.new(hash: @hash).call
-    Massagers::Components::Date.new(hash: @hash).call
-    Massagers::Components::Fileupload.new(hash: @hash).call
-    Massagers::Service.new(hash: @hash).call
+    Massagers::Pages::Header.new(in_hash: in_hash, out_hash: @out_hash).call
+    Massagers::Pages::Previous.new(in_hash: in_hash, out_hash: @out_hash, page: self, service: service).call
+    Massagers::Pages::Body.new(in_hash: in_hash, out_hash: @out_hash).call
+    Massagers::Pages::Headings.new(in_hash: in_hash, out_hash: @out_hash).call
 
-    @hash.merge!({ '_csrf': config[:csrf] })
-    @hash.merge!({ 'govuk_frontend_version': '3.0.0' })
+    components.each do |c|
+      @out_hash['page']['components'] << c.to_hash
+    end
 
-    @hash
+    Massagers::Service.new(in_hash: in_hash, out_hash: @out_hash).call
+
+    @out_hash.merge!({ '_csrf': config[:csrf] })
+    @out_hash.merge!({ 'govuk_frontend_version': '3.0.0' })
+
+    @out_hash
   end
 end

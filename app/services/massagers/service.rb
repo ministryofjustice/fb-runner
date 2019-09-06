@@ -1,14 +1,15 @@
 module Massagers
   class Service
-    attr_reader :hash
+    attr_reader :in_hash, :out_hash
 
-    def initialize(hash:)
-      @hash = hash
+    def initialize(in_hash:, out_hash:)
+      @in_hash = in_hash
+      @out_hash = out_hash
     end
 
     def call
-      if hash['page']
-        hash['page']['service'] = {
+      if out_hash['page']
+        out_hash['page']['service'] = {
           "$source": "service",
           "_id": "service",
           "_type": "config.service",

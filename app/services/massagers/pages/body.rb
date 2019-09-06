@@ -1,16 +1,17 @@
 module Massagers
   module Pages
     class Body
-      attr_reader :hash
+      attr_reader :in_hash, :out_hash
 
-      def initialize(hash:)
-        @hash = hash
+      def initialize(in_hash:, out_hash:)
+        @in_hash = in_hash
+        @out_hash = out_hash
       end
 
       def call
-        if hash['page']['body']
+        if in_hash['page']['body']
           markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-          hash['page']['body'] = markdown.render(hash['page']['body'])
+          out_hash['page']['body'] = markdown.render(in_hash['page']['body'])
         end
       end
     end
