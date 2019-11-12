@@ -128,7 +128,7 @@ class Page
     Massagers::Service.new(in_hash: in_hash, out_hash: @out_hash).call
 
     @out_hash.merge!({ '_csrf': config[:csrf] })
-    @out_hash.merge!({ 'govuk_frontend_version': '3.0.0' })
+    @out_hash.merge!({ 'govuk_frontend_version': '3.3.0' })
 
     @out_hash
   end
