@@ -1,10 +1,24 @@
 # README
 
-This is a work in progress proof of concept ruby/rails form builder runner with node frontend
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-Building against
+Things you may want to cover:
 
-- `fb-ioj` on `rails` branch https://github.com/ministryofjustice/fb-ioj/tree/rails
-- `fb-components-core` on `rails` branch https://github.com/ministryofjustice/fb-components-core/tree/rails
+* Ruby version
 
-I don't know how to develop against npm packages locally and simply symlinked to get around this
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
