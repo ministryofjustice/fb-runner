@@ -5,11 +5,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="govuk-template__body">
+    <%= render template: 'header/show' %>
+    <div class="govuk-width-container govuk-body-m">
+      <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>
