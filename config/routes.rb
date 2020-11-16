@@ -1,4 +1,3 @@
 Rails.application.routes.draw do
-  # root to: 'service#start'
-  mount Fb::Metadata::Presenter::Engine => "/"
+  mount MetadataPresenter::Engine => "/"
 end
