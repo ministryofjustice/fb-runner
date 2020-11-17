@@ -39,3 +39,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore node_modules and package-lock.json
+node_modules
+package-lock.json
