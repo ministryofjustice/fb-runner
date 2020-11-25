@@ -1,4 +1,5 @@
 {
+  "_type": "service.base",
   "service_id": "634aa3d5-a3b3-4d0f-9078-bb754542a1d3",
   "service_name": "Service Name",
   "version_id": "ac4b45c5-071e-4d07-b5a2-9f0196a5b267",
@@ -16,16 +17,41 @@
       "heading": "Complain about a court or tribunal",
       "lede": "Your complaint will not affect your case.",
       "steps": [
-        "page-2",
-        "page.do-you-have-a-case-number"
+        "page.text-first",
+        "page.text-second"
       ],
       "url": "/"
     },
     {
-      "_id": "page-2",
-      "_type": "page",
-      "body": "This is page two",
-      "url": "/page-2"
+      "_id": "page.text-first",
+      "_type": "page.singlequestion",
+      "components": [
+        {
+          "_id": "page.text-first--text.auto_name__1",
+          "_type": "text",
+          "hint": "Text - First - hint text",
+          "label": "Text - First",
+          "name": "auto_name__1"
+        }
+      ],
+      "section_heading": "Text - First - section heading",
+      "url": "/text-first"
+    },
+    {
+      "_id": "page.text-second",
+      "_type": "page.singlequestion",
+      "section_heading": "Text - Second - section heading",
+      "components": [
+        {
+          "_id": "page.text-second--text.auto_name__2",
+          "_type": "text",
+          "hint": "Text - Second - hint text",
+          "label": "Text - Second",
+          "label_summary": "Text - Second - summary version",
+          "name": "auto_name__2"
+        }
+      ],
+      "url": "/text-second"
     }
   ],
   "locale": "en"
