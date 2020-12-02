@@ -1,11 +1,10 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: ac51952f79b2d92ab56ab2f9c0bfefbc93a6c00e
+  revision: 78786aeb9c92e122be4065a55b264c91e49315f4
   branch: main
   specs:
     metadata_presenter (0.1.0)
       govspeak
-      json-schema
       rails (~> 6.0.3, >= 6.0.3.4)
 
 GEM
@@ -66,8 +65,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    addressable (2.7.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.3.8)
     bindex (0.8.1)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
@@ -79,9 +77,10 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    govspeak (3.5.0)
+    govspeak (3.6.2)
+      addressable (~> 2.3.8)
       htmlentities (~> 4)
-      kramdown (~> 1.5.0)
+      kramdown (~> 1.10.0)
       nokogiri (~> 1.5)
       sanitize (~> 2.1.0)
     htmlentities (4.3.4)
@@ -89,9 +88,7 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
-    json-schema (2.8.1)
-      addressable (>= 2.4)
-    kramdown (1.5.0)
+    kramdown (1.10.0)
     listen (3.3.3)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -111,7 +108,6 @@ GEM
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
-    public_suffix (4.0.6)
     puma (5.1.0)
       nio4r (~> 2.0)
     rack (2.2.3)
