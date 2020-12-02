@@ -6,8 +6,6 @@ if File.exist?(Rails.root.join('spec', 'fixtures', 'service.json'))
     File.read(Rails.root.join('spec', 'fixtures', 'service.json'))
   )
 
-  MetadataPresenter::Schema.new(Rails.configuration.service_metadata).validate
-
   Rails.configuration.service = MetadataPresenter::Service.new(
     Rails.configuration.service_metadata
   )
