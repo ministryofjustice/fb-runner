@@ -1,7 +1,6 @@
 {
-  "_type": "service.base",
-  "service_id": "634aa3d5-a3b3-4d0f-9078-bb754542a1d3",
-  "service_name": "Service Name",
+  "service_id": "d243f5c0-e8a2-4b13-982c-7b5f3fa128cf",
+  "service_name": "Complain about a court or tribunal",
   "version_id": "ac4b45c5-071e-4d07-b5a2-9f0196a5b267",
   "created_at": "2020-10-09T11:51:46",
   "created_by": "4634ec01-5618-45ec-a4e2-bb5aa587e751",
@@ -17,41 +16,47 @@
       "heading": "Complain about a court or tribunal",
       "lede": "Your complaint will not affect your case.",
       "steps": [
-        "page.text-first",
-        "page.text-second"
+        "page.name",
+        "page.email-address"
       ],
       "url": "/"
     },
     {
-      "_id": "page.text-first",
+      "_id": "page.name",
       "_type": "page.singlequestion",
       "components": [
         {
-          "_id": "page.text-first--text.auto_name__1",
+          "_id": "page.name--text.auto_name__1",
           "_type": "text",
-          "hint": "Text - First - hint text",
-          "label": "Text - First",
-          "name": "auto_name__1"
+          "label": "Full name",
+          "name": "full_name"
         }
       ],
-      "section_heading": "Text - First - section heading",
-      "url": "/text-first"
+      "heading": "Your name",
+      "url": "/name"
     },
     {
-      "_id": "page.text-second",
+      "_id": "page.email-address",
       "_type": "page.singlequestion",
-      "section_heading": "Text - Second - section heading",
+      "heading": "Email address",
       "components": [
         {
-          "_id": "page.text-second--text.auto_name__2",
+          "_id": "page.email-address--email.auto_name__2",
           "_type": "text",
-          "hint": "Text - Second - hint text",
-          "label": "Text - Second",
-          "label_summary": "Text - Second - summary version",
-          "name": "auto_name__2"
+          "errors": {
+            "format": {},
+            "required": {
+              "any": "Enter an email address"
+            }
+          },
+          "label": "Your email address",
+          "name": "email_address",
+          "validation": {
+            "required": true
+          }
         }
       ],
-      "url": "/text-second"
+      "url": "/email-address"
     }
   ],
   "locale": "en"
