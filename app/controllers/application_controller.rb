@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  layout 'metadata_presenter/application'
+
   def service
     Rails.configuration.service
   end
