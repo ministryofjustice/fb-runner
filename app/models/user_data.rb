@@ -1,21 +1,19 @@
 class UserData
   attr_reader :session
+  delegate :save, :load_data, to: :adapter
 
-  def initialize(session)
+  def initialize(session, adapter: nil)
     @session = session
+    @adapter = adapter
   end
 
-  def save(params)
-    if params[:answers]
-      session[:user_data] ||= {}
+  def adapter
+    return @adapter.new(session) if @adapter.present?
 
-      params[:answers].each do |field, answer|
-        session[:user_data][field] = answer
-      end
+    if ENV['DATASTORE_URL'].present?
+      UserDatastoreAdapter.new(session)
+    else
+      SessionDataAdapter.new(session)
     end
-  end
-
-  def load
-    session[:user_data] || {}
   end
 end

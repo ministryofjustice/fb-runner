@@ -3,35 +3,24 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.2'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
-# Use Puma as the app server
-gem 'puma', '~> 5.1'
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.2'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
+gem 'faraday'
 gem 'metadata_presenter', github: 'ministryofjustice/fb-metadata-presenter', branch: 'main'
+gem 'puma', '~> 5.1'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
+gem 'sass-rails', '>= 6'
+gem 'webpacker', '~> 5.2'
 
 group :development, :test do
   gem 'brakeman'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
+  gem 'webmock'
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.3'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
