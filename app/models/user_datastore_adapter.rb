@@ -8,8 +8,11 @@ class UserDatastoreAdapter
   end
 
   def save(params)
+    existing_answers = load_data
+    all_answers = existing_answers.merge(params)
+
     body = {
-      payload: data_encryption.encrypt(params.to_json)
+      payload: data_encryption.encrypt(all_answers.to_json)
     }
 
     Faraday.post(url, JSON.generate(body), headers)

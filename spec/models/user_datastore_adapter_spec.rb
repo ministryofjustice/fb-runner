@@ -34,21 +34,57 @@ RSpec.describe UserDatastoreAdapter do
       token: ''
     }
   end
+  let(:empty_payload) do
+    JSON.generate({ payload: "BF4O5w==\n" })
+  end
 
   describe '#save' do
     context 'when the response is successful' do
-      before do
-        stub_request(:post, expected_url)
-          .with(body: expected_body, headers: expected_headers)
-          .to_return(status: 200, body: expected_body, headers: {})
+      context 'when there is data already stored in datastore' do
+        let(:existing_answers) do
+          { other_question: 'Do. Or do not. There is no try.' }
+        end
+        let(:expected_body) do
+          JSON.generate(
+            { payload: "EQkN/5mmdPEG300IOAArXDJd9l2MTqOItFDLY8JKAqzum2/sOtipL+2ZTwpc\nOhkOaA6SbRjeOSWkSvjsDHbxOzwTDcZDVSHm3Fv6/ZUBL1eYj3U0H3PEuuf+\ngOhI0/DtQ4uFfZYSuU11YR8DETBJksrJ\n" }
+          )
+        end
+
+        before do
+          expect(adapter).to receive(:load_data).and_return(existing_answers)
+
+          stub_request(:post, expected_url)
+            .with(body: expected_body, headers: expected_headers)
+            .to_return(status: 200, body: expected_body, headers: {})
+        end
+
+        it 'merges the whole payload and send to datastore' do
+          adapter.save(params)
+          expect(WebMock).to have_requested(
+            :post, expected_url
+          ).with(headers: expected_headers, body: expected_body)
+           .once
+        end
       end
 
-      it 'sends request to datastore' do
-        adapter.save(params)
-        expect(WebMock).to have_requested(
-          :post, expected_url
-        ).with(headers: expected_headers, body: expected_body)
-         .once
+      context 'when there is no data stored in datastore' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 200, body: empty_payload, headers: {})
+
+          stub_request(:post, expected_url)
+            .with(body: expected_body, headers: expected_headers)
+            .to_return(status: 200, body: expected_body, headers: {})
+        end
+
+        it 'sends request to datastore' do
+          adapter.save(params)
+          expect(WebMock).to have_requested(
+            :post, expected_url
+          ).with(headers: expected_headers, body: expected_body)
+           .once
+        end
       end
     end
 
@@ -70,10 +106,6 @@ RSpec.describe UserDatastoreAdapter do
     end
 
     context 'when there is no data in payload (when user starts the form)' do
-      let(:empty_payload) do
-        JSON.generate({ payload: "BF4O5w==\n" })
-      end
-
       before do
         stub_request(:get, expected_url)
           .with(body: {}, headers: expected_headers)
