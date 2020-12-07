@@ -28,17 +28,20 @@ class UserDatastoreAdapter
 
   def data_encryption
     # TODO: change to session token?
-    @data_encryption = DataEncryption.new(key: session[:session_id])
+    @data_encryption = DataEncryption.new(key: subject)
   end
 
   def url
-    URI.join(root_url, "/service/#{service_slug}/user/#{session[:session_id]}")
+    URI.join(root_url, "/service/#{service_slug}/user/#{subject}")
+  end
+
+  def subject
+    session[:session_id]
   end
 
   def headers
     {
-      # Generate access token
-      # 'x-access-token-v2' => 'some-token',
+      'x-access-token-v2' => ServiceAccessToken.new(subject: subject).generate,
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
       'User-Agent' => 'Runner'

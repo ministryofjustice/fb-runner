@@ -12,13 +12,14 @@ RSpec.describe UserDatastoreAdapter do
   end
   let(:expected_headers) do
     {
-      # 'x-access-token-v2' => 'some-token',
+      'x-access-token-v2' => 'some-token',
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
       'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
       'User-Agent' => 'Runner'
     }
   end
+  let(:service_access_token) { 'some-token' }
 
   let(:expected_body) do
     JSON.generate({
@@ -36,6 +37,11 @@ RSpec.describe UserDatastoreAdapter do
   end
   let(:empty_payload) do
     JSON.generate({ payload: "BF4O5w==\n" })
+  end
+
+  before do
+    allow_any_instance_of(ServiceAccessToken).to receive(:generate)
+      .and_return(service_access_token)
   end
 
   describe '#save' do
