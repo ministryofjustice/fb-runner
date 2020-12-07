@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 85fdb548bf3fd633c47ee8843ffb1f6c7237f089
+  revision: 6fe9e4768a8a83523f6221b6c18c15f537fc3426
   branch: main
   specs:
     metadata_presenter (0.1.0)
@@ -93,7 +93,7 @@ GEM
       nokogumbo (~> 2)
       rinku (~> 2.0)
       sanitize (>= 5.2.1, < 6)
-    govuk_app_config (2.7.1)
+    govuk_app_config (2.8.0)
       logstasher (>= 1.2.2, < 1.4.0)
       sentry-raven (~> 3.1.1)
       statsd-ruby (~> 1.4.0)
