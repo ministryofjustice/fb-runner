@@ -1,0 +1,19 @@
+class UserData
+  attr_reader :session
+  delegate :save, :load_data, to: :adapter
+
+  def initialize(session, adapter: nil)
+    @session = session
+    @adapter = adapter
+  end
+
+  def adapter
+    return @adapter.new(session) if @adapter.present?
+
+    if ENV['DATASTORE_URL'].present?
+      UserDatastoreAdapter.new(session)
+    else
+      SessionDataAdapter.new(session)
+    end
+  end
+end
