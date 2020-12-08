@@ -95,6 +95,17 @@ RSpec.describe UserDatastoreAdapter do
     end
 
     context 'when the response fails' do
+      before do
+        stub_request(:get, expected_url)
+          .with(body: {}, headers: expected_headers)
+          .to_return(status: 500, body: JSON.generate({}), headers: {})
+      end
+
+      it 'raises datastore error' do
+        expect { adapter.save(params) }.to raise_error(
+          UserDatastoreAdapter::DatastoreClientError
+        )
+      end
     end
 
     context 'when there is timeout' do

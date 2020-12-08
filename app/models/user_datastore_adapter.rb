@@ -57,6 +57,7 @@ class UserDatastoreAdapter
     @connection ||= Faraday.new(root_url) do |conn|
       conn.request :json
       conn.response :json
+      conn.response :raise_error
       conn.use :instrumentation, name: SUBSCRIPTION
       conn.options[:open_timeout] = TIMEOUT
       conn.options[:timeout] = TIMEOUT
@@ -67,5 +68,7 @@ class UserDatastoreAdapter
     connection.send(verb, url, body, headers)
   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => exception
     raise DatastoreTimeoutError.new(exception.message)
+  rescue StandardError => exception
+    raise DatastoreClientError.new(exception.message)
   end
 end
