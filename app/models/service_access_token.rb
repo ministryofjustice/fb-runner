@@ -1,11 +1,13 @@
 class ServiceAccessToken
   ISSUER = 'fb-runner'
-  attr_reader :encoded_private_key, :issuer, :subject
+  attr_reader :encoded_private_key, :issuer, :subject, :platform_env, :deployment_env
 
-  def initialize(subject: nil, encoded_private_key: ENV['ENCODED_PRIVATE_KEY'])
+  def initialize(subject: nil, encoded_private_key: ENV['ENCODED_PRIVATE_KEY'], platform_env: ENV['PLATFORM_ENV'], deployment_env: ENV['DEPLOYMENT_ENV'])
     @encoded_private_key = encoded_private_key
     @issuer = ISSUER
     @subject = subject
+    @platform_env = platform_env
+    @deployment_env = deployment_env
   end
 
   def generate
@@ -33,8 +35,8 @@ class ServiceAccessToken
   end
 
   def namespace
-    if ENV['PLATFORM_ENV'].present? && ENV['DEPLOYMENT_ENV'].present?
-      "formbuilder-services-#{ENV['PLATFORM_ENV']}-#{ENV['DEPLOYMENT_ENV']}"
-    end
+    return if platform_env.blank? || deployment_env.blank?
+
+    "formbuilder-services-#{platform_env}-#{deployment_env}"
   end
 end
