@@ -83,6 +83,8 @@ GEM
     faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
+    faraday_middleware (1.0.0)
+      faraday (~> 1.0)
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -279,6 +281,7 @@ DEPENDENCIES
   brakeman
   byebug
   faraday
+  faraday_middleware
   jwt
   listen (~> 3.3)
   metadata_presenter!

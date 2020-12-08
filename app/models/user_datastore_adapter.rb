@@ -1,6 +1,8 @@
 class UserDatastoreAdapter
   class DatastoreTimeoutError < StandardError; end
+  class DatastoreClientError < StandardError; end
   TIMEOUT = 15
+  SUBSCRIPTION = 'datastore.request'
 
   attr_reader :session, :root_url, :service_slug
 
@@ -18,11 +20,11 @@ class UserDatastoreAdapter
       payload: data_encryption.encrypt(all_answers.to_json)
     }
 
-    request(:post, JSON.generate(body))
+    request(:post, body)
   end
 
   def load_data
-    response = JSON.parse(request(:get, {}).body)['payload'] || {}
+    response = request(:get, {}).body['payload'] || {}
 
     JSON.parse(data_encryption.decrypt(response)) || {}
   end
@@ -52,9 +54,13 @@ class UserDatastoreAdapter
   end
 
   def connection
-    @connection ||= Faraday.new(
-      root_url, request: { open_timeout: TIMEOUT, timeout: TIMEOUT }
-    )
+    @connection ||= Faraday.new(root_url) do |conn|
+      conn.request :json
+      conn.response :json
+      conn.use :instrumentation, name: SUBSCRIPTION
+      conn.options[:open_timeout] = TIMEOUT
+      conn.options[:timeout] = TIMEOUT
+    end
   end
 
   def request(verb, body)

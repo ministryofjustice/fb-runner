@@ -5,6 +5,7 @@ ruby '2.7.2'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
+gem 'faraday_middleware'
 gem 'jwt'
 gem 'metadata_presenter', github: 'ministryofjustice/fb-metadata-presenter', branch: 'main'
 gem 'puma', '~> 5.1'
