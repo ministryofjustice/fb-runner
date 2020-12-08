@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::Base
+  EXCEPTIONS = [
+    UserDatastoreAdapter::DatastoreTimeoutError,
+    UserDatastoreAdapter::DatastoreClientError
+  ]
+  rescue_from(*EXCEPTIONS) do |exception|
+    render file: 'public/500.html', status: 500
+  end
   layout 'metadata_presenter/application'
 
   def service
