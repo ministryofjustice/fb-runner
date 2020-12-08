@@ -96,6 +96,36 @@ RSpec.describe UserDatastoreAdapter do
 
     context 'when the response fails' do
     end
+
+    context 'when there is timeout' do
+      context 'when there is connection timeout' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_timeout
+        end
+
+        it 'raises datastore timeout error' do
+          expect { adapter.save(params) }.to raise_error(
+            UserDatastoreAdapter::DatastoreTimeoutError
+          )
+        end
+      end
+
+      context 'when there is request timeout' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_raise(Faraday::TimeoutError)
+        end
+
+        it 'raises datastore timeout error' do
+          expect { adapter.save(params) }.to raise_error(
+            UserDatastoreAdapter::DatastoreTimeoutError
+          )
+        end
+      end
+    end
   end
 
   describe '#load_data' do
