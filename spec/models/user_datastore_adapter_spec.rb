@@ -77,11 +77,11 @@ RSpec.describe UserDatastoreAdapter do
         before do
           stub_request(:get, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_return(status: 200, body: empty_payload, headers: {})
+            .to_return(status: 404, body: empty_payload, headers: {})
 
           stub_request(:post, expected_url)
             .with(body: expected_body, headers: expected_headers)
-            .to_return(status: 200, body: expected_body, headers: {})
+            .to_return(status: 201, body: expected_body, headers: {})
         end
 
         it 'sends request to datastore' do

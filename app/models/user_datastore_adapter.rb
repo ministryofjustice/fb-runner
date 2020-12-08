@@ -1,6 +1,7 @@
 class UserDatastoreAdapter
   class DatastoreTimeoutError < StandardError; end
   class DatastoreClientError < StandardError; end
+  class DatastoreResourceNotFound < StandardError; end
   TIMEOUT = 15
   SUBSCRIPTION = 'datastore.request'
 
@@ -27,6 +28,8 @@ class UserDatastoreAdapter
     response = request(:get, {}).body['payload'] || {}
 
     JSON.parse(data_encryption.decrypt(response)) || {}
+  rescue DatastoreResourceNotFound
+    {}
   end
 
   private
@@ -68,6 +71,8 @@ class UserDatastoreAdapter
     connection.send(verb, url, body, headers)
   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => exception
     raise DatastoreTimeoutError.new(exception.message)
+  rescue Faraday::ResourceNotFound => exception
+    raise DatastoreResourceNotFound.new(exception.message)
   rescue StandardError => exception
     raise DatastoreClientError.new(exception.message)
   end
