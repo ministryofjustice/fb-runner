@@ -12,7 +12,7 @@ RSpec.describe UserDatastoreAdapter do
   end
   let(:expected_headers) do
     {
-      'x-access-token-v2' => 'some-token',
+      'Authorization' => 'Bearer some-token',
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
       'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',

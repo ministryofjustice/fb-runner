@@ -24,7 +24,7 @@ RSpec.describe ServiceAccessToken do
       let(:subject) { nil }
 
       it 'returns nil' do
-        expect(service_token.generate).to be(nil)
+        expect(service_token.generate).to eq('')
       end
     end
 

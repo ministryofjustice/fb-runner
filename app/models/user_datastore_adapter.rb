@@ -52,7 +52,6 @@ class UserDatastoreAdapter
 
   def headers
     {
-      'x-access-token-v2' => ServiceAccessToken.new(subject: subject).generate,
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
       'User-Agent' => 'Runner'
@@ -67,6 +66,8 @@ class UserDatastoreAdapter
       conn.use :instrumentation, name: SUBSCRIPTION
       conn.options[:open_timeout] = TIMEOUT
       conn.options[:timeout] = TIMEOUT
+
+      conn.authorization :Bearer, ServiceAccessToken.new(subject: subject).generate
     end
   end
 

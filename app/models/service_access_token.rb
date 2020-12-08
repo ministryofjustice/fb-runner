@@ -9,7 +9,7 @@ class ServiceAccessToken
   end
 
   def generate
-    return if encoded_private_key.blank?
+    return '' if encoded_private_key.blank?
 
     private_key = OpenSSL::PKey::RSA.new(Base64.strict_decode64(encoded_private_key.chomp))
 
