@@ -1,4 +1,10 @@
 class ApplicationController < ActionController::Base
+  before_action :log_info, if: -> { Rails.env.development? }
+
+  def log_info
+    Rails.logger.info("User identifiter: #{session[:session_id]}. Token: #{session[:user_token]}")
+  end
+
   EXCEPTIONS = [
     UserDatastoreAdapter::DatastoreTimeoutError,
     UserDatastoreAdapter::DatastoreClientError

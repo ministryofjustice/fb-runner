@@ -38,7 +38,6 @@ RSpec.describe ServiceAccessToken do
           {
             'iat' => 1607367600,
             'iss' => 'fb-runner',
-            'namespace' => 'formbuilder-services-live-production',
             'sub' => 'user-id-123'
           },
           {
@@ -57,8 +56,26 @@ RSpec.describe ServiceAccessToken do
         ).to eq([
           {
             'iat' => 1607367600,
+            'iss' => 'fb-runner'
+          },
+          {
+            'alg' => 'RS256'
+          }
+        ])
+      end
+    end
+
+    context 'when there is a namespace' do
+      let(:subject) { nil }
+
+      it 'generate jwt access token without a sub' do
+        expect(
+          JWT.decode(service_token.generate, public_key, true, { algorithm: 'RS256' })
+        ).to eq([
+          {
+            'iat' => 1607367600,
             'iss' => 'fb-runner',
-            'namespace' => 'formbuilder-services-live-production'
+            'namespace' => 'formbuilder-services-test-dev'
           },
           {
             'alg' => 'RS256'

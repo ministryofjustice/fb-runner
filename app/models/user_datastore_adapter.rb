@@ -54,7 +54,8 @@ class UserDatastoreAdapter
     {
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
-      'User-Agent' => 'Runner'
+      'User-Agent' => 'Runner',
+      'x-access-token-v2' => service_access_token
     }
   end
 
@@ -67,7 +68,7 @@ class UserDatastoreAdapter
       conn.options[:open_timeout] = TIMEOUT
       conn.options[:timeout] = TIMEOUT
 
-      conn.authorization :Bearer, ServiceAccessToken.new(subject: subject).generate
+      conn.authorization :Bearer, service_access_token
     end
   end
 
@@ -79,5 +80,9 @@ class UserDatastoreAdapter
     raise DatastoreResourceNotFound.new(exception.message)
   rescue StandardError => exception
     raise DatastoreClientError.new(exception.message)
+  end
+
+  def service_access_token
+    @service_access_token ||= ServiceAccessToken.new(subject: subject).generate
   end
 end
