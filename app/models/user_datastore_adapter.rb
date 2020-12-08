@@ -35,8 +35,7 @@ class UserDatastoreAdapter
   private
 
   def data_encryption
-    # TODO: change to session token?
-    @data_encryption = DataEncryption.new(key: subject)
+    @data_encryption = DataEncryption.new(key: user_token)
   end
 
   def url
@@ -45,6 +44,10 @@ class UserDatastoreAdapter
 
   def subject
     session[:session_id]
+  end
+
+  def user_token
+    session[:user_token] ||= SecureRandom.uuid.gsub('-', '')
   end
 
   def headers
