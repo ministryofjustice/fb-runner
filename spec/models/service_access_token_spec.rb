@@ -4,6 +4,7 @@ RSpec.describe ServiceAccessToken do
     Base64.strict_encode64(private_key.to_s)
   end
   let(:public_key) { private_key.public_key }
+  let(:current_time) { Time.new(2020, 12, 7, 16) }
 
   describe '#generate' do
     let(:platform_env) { nil }
@@ -13,7 +14,7 @@ RSpec.describe ServiceAccessToken do
     end
 
     before do
-      allow(Time).to receive(:current).and_return(Time.new(2020, 12, 7, 16))
+      allow(Time).to receive(:current).and_return(current_time)
     end
 
     context 'when private key is blank' do
@@ -33,7 +34,7 @@ RSpec.describe ServiceAccessToken do
           JWT.decode(service_token.generate, public_key, true, { algorithm: 'RS256' })
         ).to eq([
           {
-            'iat' => 1607367600,
+            'iat' => current_time.to_i,
             'iss' => 'fb-runner',
             'sub' => 'user-id-123'
           },
@@ -52,7 +53,7 @@ RSpec.describe ServiceAccessToken do
           JWT.decode(service_token.generate, public_key, true, { algorithm: 'RS256' })
         ).to eq([
           {
-            'iat' => 1607367600,
+            'iat' => current_time.to_i,
             'iss' => 'fb-runner'
           },
           {
@@ -72,7 +73,7 @@ RSpec.describe ServiceAccessToken do
           JWT.decode(service_token.generate, public_key, true, { algorithm: 'RS256' })
         ).to eq([
           {
-            'iat' => 1607367600,
+            'iat' => current_time.to_i,
             'iss' => 'fb-runner',
             'namespace' => 'formbuilder-services-test-dev'
           },
