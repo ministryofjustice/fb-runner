@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require 'openssl'
+require 'base64'
+
+#puts 'Generating test private key'
+#private_key = OpenSSL::PKey::RSA.generate(2048)
+#File.open('./private.pem', 'w') { |file| file.write(private_key.to_pem) }
+
+#puts 'Writing public key'
+#public_key = private_key.public_key.to_pem
+#File.open('./public.pem', 'w') { |file| file.write(public_key) }
+
+#puts 'Putting public key in Redis'
+#encoded_public_key = Base64.strict_encode64(public_key)
+`docker-compose exec runner-app-service-token-cache-redis redis-cli set 'encoded-public-key-example-runner-service' LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFxMHpJcjh6aHE0TGdxODZtdUF1TQpWakN0d2cwWGJCWkFHSnpoWEN2SXVBbWFVdkpCRDh6K3hsdVB4L2VVQ3RKRkk4MUJxWDNXekdiVyt0Smt5TmhuCnZrazlySUxyR0VRenBpek1UN3J5d3Z2K2RxK2VUL29jbnF1amxLcGFKM2RGeFA2aGZwMlRBR0JrRTZwaFZQR0kKS0tBcE9xVnl1TlV2bE4xV1VCMFBDS29hdFBGOHU2YWxnNHpFTDFJOUNJbnJQL1RYQzhaR1Y3djU1S3pmMXNRaAp2V2V4MTVXYnNwM0FYM1ZxOGpiK3RFUFo1b045UUtGaTI2OGpjYlNuZWhnMzFJa3dEQ3BQZVNIMUc3MDc1YTRQCkQvNWk5NytmWjd6QTZJbEhCUzJSdWc4WUtnb0t2WmlMYklFdDA5c2E5RnkxY0dtWDlPWVlxWjFJNUFCaWVRd3YKc1FJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==`

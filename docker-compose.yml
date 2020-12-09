@@ -1,0 +1,63 @@
+version: '3.4'
+
+services:
+  runner-app:
+    build:
+      context: .
+      args:
+        BUNDLE_ARGS: ''
+    tty: true
+    stdin_open: true
+    ports:
+      - 9000:3000
+    environment:
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: 'true'
+      DATASTORE_URL: 'http://runner-app-datastore-app:3000/'
+      SERVICE_SLUG: 'example-runner-service'
+      ENCODED_PRIVATE_KEY: 'LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb2dJQkFBS0NBUUVBcTB6SXI4emhxNExncTg2bXVBdU1WakN0d2cwWGJCWkFHSnpoWEN2SXVBbWFVdkpCCkQ4eit4bHVQeC9lVUN0SkZJODFCcVgzV3pHYlcrdEpreU5obnZrazlySUxyR0VRenBpek1UN3J5d3Z2K2RxK2UKVC9vY25xdWpsS3BhSjNkRnhQNmhmcDJUQUdCa0U2cGhWUEdJS0tBcE9xVnl1TlV2bE4xV1VCMFBDS29hdFBGOAp1NmFsZzR6RUwxSTlDSW5yUC9UWEM4WkdWN3Y1NUt6ZjFzUWh2V2V4MTVXYnNwM0FYM1ZxOGpiK3RFUFo1b045ClFLRmkyNjhqY2JTbmVoZzMxSWt3RENwUGVTSDFHNzA3NWE0UEQvNWk5NytmWjd6QTZJbEhCUzJSdWc4WUtnb0sKdlppTGJJRXQwOXNhOUZ5MWNHbVg5T1lZcVoxSTVBQmllUXd2c1FJREFRQUJBb0lCQUZOUEw1Y1lQSFNPWFRnUgpjOUcwaEJieTY3NmhZVS9HN250SjZPeEx1djJPWmdpTEd3dFZObDgvN29oaEp4V3dOOEgydEVWN0Z2a24xc3Y3CmdOcVJMTHRGb1lJQjFkWmliUUFYYjNJalNLZDlxTDhPSUI5alU0SHpsY1hhcDZma0FRR1NtUFljS244WFlmU1MKZTIyMVhmUHNHTUVWNzlwbWpCS0pKczRsbzhjaEwwa0F3eHBIMUJ2ZUVmUlk0bTJNZ2ZSTVA0aFJUazBKTkxWTApKS3ZESC9ZdytRUTA3eEhYVFRKQys5K0RqbVlwOGFsM2tnclgweGRkTzZRV0ZGaXBBZ1V3b29KRVE3MlBLTTJ5ClpnR2dMNmFZRFA0RFM0YUNMYmlJZkFwbEVmNTd6Z21QM25VaEY5THpac09lK0ZZTGFGLzhXRWUrOGtDbUljbDcKczZaZ1EwRUNnWUVBNFZURGJKM0kydjc1MCt6T01RK1lGNzNUUnpMSHZKdlVHOUZEa0NEeTVzb0MyR1pZSW1tcQpodnNOak8wcVdBd082MmZveWtMd2FteTI2VWdoWkJaOGxiWnR0NDdvZ1VwM0wvWjMrNXJoQ1VWcmprN0IwZDV0CnpPbnZ1NjgzcmVvblhTSlFqTDdHMGphZmVjVXZmTWpwdVBYUFlUY0pWMXNIa2U1cEJ0eXU5Z2tDZ1lFQXdwMW8KRTR2Q1VhWUtsejlKelNqaEg3ZGhmUzFRY1MrVHBiUkFPb1hjVVFVU2wrQnZEM05qTmx3VFFpWXRiZ2JMb0lpcQpseFc5WTJSNEtLeW9ZQ1V5aWVwOVBMRlllS2I2TTlOMHlVSjBSclRwK3Rubk9wNXROUlJDbGlucHJhWVRxU2dECmN4U0FPWEp5dnNtbmxBSmdUd3NmU0tqNE4xS1U1RldoNnpBZ2xta0NnWUFIeUwzWGlydmRsT0ZjaU5tMnFDdEEKNXJYZHg4dE9vTE43SW9lSyt4aHBFS0Y0aUZDVEg4TmNWbC9wZG1mNEVyS1JQMDJ6Ynd5UElLSlEvTVRxaUR4VgpqNi9LbjQwNHFqSGoza2ZXMFVyazN4a1FHWGhvbjU1N2JibHlhbU1xQnVURk91STllbm16MlY4NC9hN2VTTEtLClNUT1kwQ1hxZHFLVVVBQWcxSTdXd1FLQmdHQlI3NVRjOHd2ZUZoZk5ad1YzV2hTTWVsK3Q4Y1pUT2N3bGJqU0kKMUFYMWNNSmlmaFV6a3NMd3gwZFNCZUlTMHUxZE5yRVlQV2ZYN2ZDVG83SVNOdlV6YlZDQXBienhSNXdtNkFKRQpOYkJaRWdUcG5CdlRGVkhUK1REQkJickFHN0w0N3R3aUpXUkpWS2xBdlFQd09TSmw2dEhYYnlKU2FRYXBxejN2CnovRWhBb0dBVkNaVXdUZlJXRzkzYURTQ1E4ZUlZcDRKbmtHSW1XOE1rUXdpcW9WNUJsUnM2WWEzTld1RjVHcmEKdi96UlVza20vZVZIRFB0a011TmY4RURDOUsxdzd3d0pOVzFKL01xODhIVG1uZzlCOWlGekdMZ2UvT3pFaFF0OQpTUlFHSENUZ3JZTUpjTUhlYWpRelhDd0NSY2xYdXRTUkpFOFh5RDJRbkpFV1dPVFFRd1U9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg=='
+    links:
+      - runner-app-service-token-cache-app
+      - runner-app-datastore-app
+
+  runner-app-datastore-db:
+    image: postgres:10.9-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: datastore_local
+
+  runner-app-datastore-app:
+    container_name: runner-app-datastore-app
+    build:
+      context: https://github.com/ministryofjustice/fb-user-datastore.git
+    environment:
+      SENTRY_DSN: sentry-dsn
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: 'true'
+      MAX_IAT_SKEW_SECONDS: '60'
+      SERVICE_TOKEN_CACHE_ROOT_URL: 'http://runner-app-service-token-cache-app:3000'
+      DATABASE_URL: postgres://postgres:password@runner-app-datastore-db/datastore_local
+    ports:
+      - 9001:3000
+
+  runner-app-service-token-cache-app:
+    container_name: runner-app-service-token-cache-app
+    build:
+      context: https://github.com/ministryofjustice/fb-service-token-cache.git
+    environment:
+      SENTRY_DSN: sentry-dsn
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: 'true'
+      REDIS_URL: runner-app-service-token-cache-redis
+      SERVICE_TOKEN_CACHE_TTL: 999999
+      KUBECTL_SERVICES_NAMESPACE: 'formbuilder-services-test-dev'
+    depends_on:
+      - runner-app-service-token-cache-redis
+    ports:
+      - 9002:3000
+
+  runner-app-service-token-cache-redis:
+    container_name: runner-app-service-token-cache-redis
+    image: redis:5.0.6-alpine
