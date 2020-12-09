@@ -1,6 +1,7 @@
 class UserDatastoreAdapter
   class DatastoreTimeoutError < StandardError; end
   class DatastoreClientError < StandardError; end
+  class DatastoreResourceNotFound < StandardError; end
   TIMEOUT = 15
   SUBSCRIPTION = 'datastore.request'
 
@@ -27,13 +28,14 @@ class UserDatastoreAdapter
     response = request(:get, {}).body['payload'] || {}
 
     JSON.parse(data_encryption.decrypt(response)) || {}
+  rescue DatastoreResourceNotFound
+    {}
   end
 
   private
 
   def data_encryption
-    # TODO: change to session token?
-    @data_encryption = DataEncryption.new(key: subject)
+    @data_encryption = DataEncryption.new(key: user_token)
   end
 
   def url
@@ -44,12 +46,16 @@ class UserDatastoreAdapter
     session[:session_id]
   end
 
+  def user_token
+    session[:user_token] ||= SecureRandom.uuid.gsub('-', '')
+  end
+
   def headers
     {
-      'x-access-token-v2' => ServiceAccessToken.new(subject: subject).generate,
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
-      'User-Agent' => 'Runner'
+      'User-Agent' => 'Runner',
+      'x-access-token-v2' => service_access_token
     }
   end
 
@@ -61,6 +67,8 @@ class UserDatastoreAdapter
       conn.use :instrumentation, name: SUBSCRIPTION
       conn.options[:open_timeout] = TIMEOUT
       conn.options[:timeout] = TIMEOUT
+
+      conn.authorization :Bearer, service_access_token
     end
   end
 
@@ -68,7 +76,13 @@ class UserDatastoreAdapter
     connection.send(verb, url, body, headers)
   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => exception
     raise DatastoreTimeoutError.new(exception.message)
+  rescue Faraday::ResourceNotFound => exception
+    raise DatastoreResourceNotFound.new(exception.message)
   rescue StandardError => exception
     raise DatastoreClientError.new(exception.message)
+  end
+
+  def service_access_token
+    @service_access_token ||= ServiceAccessToken.new(subject: subject).generate
   end
 end

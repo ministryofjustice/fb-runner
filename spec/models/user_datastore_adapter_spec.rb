@@ -8,10 +8,11 @@ RSpec.describe UserDatastoreAdapter do
     'http://user-datastore.com'
   end
   let(:expected_url) do
-    URI.join(root_url, '/service/court-service/user/474c39bf61287d4ec0aa1276f089d2e3')
+    URI.join(root_url, '/service/court-service/user/8b62ea25319b4ad8a889174dca57e061')
   end
   let(:expected_headers) do
     {
+      'Authorization' => 'Bearer some-token',
       'x-access-token-v2' => 'some-token',
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
@@ -31,8 +32,8 @@ RSpec.describe UserDatastoreAdapter do
   end
   let(:session) do
     {
-      session_id: '474c39bf61287d4ec0aa1276f089d2e3',
-      token: ''
+      session_id: '8b62ea25319b4ad8a889174dca57e061',
+      user_token: '474c39bf61287d4ec0aa1276f089d2e3'
     }
   end
   let(:empty_payload) do
@@ -77,11 +78,11 @@ RSpec.describe UserDatastoreAdapter do
         before do
           stub_request(:get, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_return(status: 200, body: empty_payload, headers: {})
+            .to_return(status: 404, body: empty_payload, headers: {})
 
           stub_request(:post, expected_url)
             .with(body: expected_body, headers: expected_headers)
-            .to_return(status: 200, body: expected_body, headers: {})
+            .to_return(status: 201, body: expected_body, headers: {})
         end
 
         it 'sends request to datastore' do

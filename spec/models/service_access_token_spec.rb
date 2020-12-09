@@ -5,14 +5,11 @@ RSpec.describe ServiceAccessToken do
   end
   let(:public_key) { private_key.public_key }
 
-  before do
-    allow(ENV).to receive(:[])
-      .with('ENCODED_PRIVATE_KEY').and_return(encoded_private_key)
-  end
-
   describe '#generate' do
+    let(:platform_env) { nil }
+    let(:deployment_env) { nil }
     let(:service_token) do
-      ServiceAccessToken.new(subject: subject)
+      ServiceAccessToken.new(subject: subject, encoded_private_key: encoded_private_key, platform_env: platform_env, deployment_env: deployment_env)
     end
 
     before do
@@ -24,7 +21,7 @@ RSpec.describe ServiceAccessToken do
       let(:subject) { nil }
 
       it 'returns nil' do
-        expect(service_token.generate).to be(nil)
+        expect(service_token.generate).to eq('')
       end
     end
 
@@ -38,7 +35,6 @@ RSpec.describe ServiceAccessToken do
           {
             'iat' => 1607367600,
             'iss' => 'fb-runner',
-            'namespace' => 'formbuilder-services-live-production',
             'sub' => 'user-id-123'
           },
           {
@@ -57,8 +53,28 @@ RSpec.describe ServiceAccessToken do
         ).to eq([
           {
             'iat' => 1607367600,
+            'iss' => 'fb-runner'
+          },
+          {
+            'alg' => 'RS256'
+          }
+        ])
+      end
+    end
+
+    context 'when there is a namespace' do
+      let(:subject) { nil }
+      let(:platform_env) { 'test' }
+      let(:deployment_env) { 'dev' }
+
+      it 'generate jwt access token without a sub' do
+        expect(
+          JWT.decode(service_token.generate, public_key, true, { algorithm: 'RS256' })
+        ).to eq([
+          {
+            'iat' => 1607367600,
             'iss' => 'fb-runner',
-            'namespace' => 'formbuilder-services-live-production'
+            'namespace' => 'formbuilder-services-test-dev'
           },
           {
             'alg' => 'RS256'
