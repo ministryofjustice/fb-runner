@@ -94,3 +94,17 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+require 'simplecov'
+require 'simplecov-console'
+
+SimpleCov.start do
+  add_filter '/config/'
+  add_filter '/spec/'
+end
+
+SimpleCov.minimum_coverage 97
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::Console
+])
