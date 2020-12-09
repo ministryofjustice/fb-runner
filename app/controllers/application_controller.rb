@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   helper_method :service
 
   def save_user_data
-    UserData.new(session).save(params.permit(answers: {})[:answers] || {})
+    UserData.new(session).save(answers: params.permit(answers: {})[:answers] || {})
   end
 
   def load_user_data
