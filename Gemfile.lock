@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 768a06fcb9b9ade24a53f2ca82295d27867bfd0a
+  revision: 4dffb0ade7e60f585e722b9e9dee5c0b89e251f7
   branch: main
   specs:
     metadata_presenter (0.1.0)
@@ -69,16 +69,26 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ansi (1.5.0)
     bindex (0.8.1)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
     brakeman (4.10.0)
     builder (3.2.4)
     byebug (11.1.3)
+    capybara (3.34.0)
+      addressable
+      mini_mime (>= 0.1.3)
+      nokogiri (~> 1.8)
+      rack (>= 1.6.0)
+      rack-test (>= 0.6.3)
+      regexp_parser (~> 1.5)
+      xpath (~> 3.2)
     concurrent-ruby (1.1.7)
     crack (0.4.4)
     crass (1.0.6)
     diff-lcs (1.4.4)
+    docile (1.3.2)
     erubi (1.10.0)
     faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
@@ -108,7 +118,7 @@ GEM
       actionview (>= 5.2)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
-    govuk_publishing_components (23.8.0)
+    govuk_publishing_components (23.9.0)
       govuk_app_config
       kramdown
       plek
@@ -192,6 +202,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    regexp_parser (1.8.2)
     request_store (1.5.0)
       rack (>= 1.4)
     rexml (3.2.4)
@@ -232,6 +243,21 @@ GEM
     semantic_range (2.3.1)
     sentry-raven (3.1.1)
       faraday (>= 1.0)
+    simplecov (0.20.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-console (0.8.0)
+      ansi
+      simplecov
+      terminal-table
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.2)
+    site_prism (3.7)
+      addressable (~> 2.5)
+      capybara (~> 3.8)
+      site_prism-all_there (>= 0.3.1, < 1.0)
+    site_prism-all_there (0.3.2)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -244,11 +270,14 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     statsd-ruby (1.4.0)
+    terminal-table (2.0.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
+    unicode-display_width (1.7.0)
     unicorn (5.7.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -269,6 +298,8 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    xpath (3.2.0)
+      nokogiri (~> 1.8)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -278,6 +309,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   brakeman
   byebug
+  capybara
   faraday
   faraday_middleware
   jwt
@@ -287,6 +319,9 @@ DEPENDENCIES
   rails (~> 6.0.3, >= 6.0.3.4)
   rspec-rails
   sass-rails (>= 6)
+  simplecov
+  simplecov-console
+  site_prism
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

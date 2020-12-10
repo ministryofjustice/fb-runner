@@ -1,9 +1,9 @@
 class ServiceMetadataNotFoundError < StandardError
 end
 
-if File.exist?(Rails.root.join('spec', 'fixtures', 'service.json'))
+if File.exist?(MetadataPresenter::Engine.root.join('spec', 'fixtures', 'version.json'))
   Rails.configuration.service_metadata = JSON.parse(
-    File.read(Rails.root.join('spec', 'fixtures', 'service.json'))
+    File.read(MetadataPresenter::Engine.root.join('spec', 'fixtures', 'version.json'))
   )
 
   Rails.configuration.service = MetadataPresenter::Service.new(
