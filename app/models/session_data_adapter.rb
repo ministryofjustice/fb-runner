@@ -5,11 +5,11 @@ class SessionDataAdapter
     @session = session
   end
 
-  def save(params)
-    if params[:answers]
+  def save(answers)
+    if answers.present?
       session[:user_data] ||= {}
 
-      params[:answers].each do |field, answer|
+      answers.each do |field, answer|
         session[:user_data][field] = answer
       end
     end
