@@ -4,13 +4,13 @@ RSpec.describe SessionDataAdapter do
   describe '#save' do
     context 'when there is answers' do
       let(:params) do
-        { answers:  { question_1: 'Even the very wise cannot see all ends' } }
+        { question_1: 'Even the very wise cannot see all ends' }
       end
       let(:session) { {} }
 
       it 'add answers to the session' do
         adapter.save(params)
-        expect(session).to eq(user_data: params[:answers])
+        expect(session).to eq(user_data: params)
       end
     end
 

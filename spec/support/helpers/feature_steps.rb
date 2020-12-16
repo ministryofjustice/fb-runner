@@ -10,6 +10,7 @@ module FeatureSteps
 
   def and_I_add_my_email
     form.email_field.set('han.solo@gmail.com')
+    form.continue_button.click
   end
 
   def when_I_visit_the_service
