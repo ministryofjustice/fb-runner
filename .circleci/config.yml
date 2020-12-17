@@ -13,6 +13,9 @@ jobs:
           name: Installing dependencies
           command: bundle install
       - run:
+          name: Webpack
+          command: ./bin/webpack
+      - run:
           name: security
           command: bundle exec brakeman -q --no-pager
       - run:

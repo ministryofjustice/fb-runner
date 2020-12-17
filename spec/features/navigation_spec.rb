@@ -13,6 +13,7 @@ RSpec.feature 'Navigation' do
     then_I_should_see_my_email
     and_I_go_back
     then_I_should_see_my_full_name
+    and_I_change_my_full_name_answer
   end
 
   scenario 'when I visit a non existent page' do
@@ -51,6 +52,10 @@ RSpec.feature 'Navigation' do
 
   def and_I_send_my_application
     form.accept_and_send_button.click
+  end
+
+  def and_I_change_my_full_name_answer
+    form.full_name_change_answer_link.click
   end
 
   def then_I_should_see_my_full_name
