@@ -9,7 +9,7 @@ gem 'faraday_middleware'
 gem 'jwt'
 gem 'metadata_presenter', github: 'ministryofjustice/fb-metadata-presenter', branch: 'main'
 gem 'puma', '~> 5.1'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
+gem 'rails', '~> 6.1.0'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 5.2'
 
