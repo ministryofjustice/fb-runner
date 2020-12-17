@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To run the project locally, execute the following steps:
+- Install Ruby dependencies `bundle install`
+- Install all dependencies `yarn install`
+- Bundle JavaScript assets `./bin/webpack`
+- Start the Rails server `bundle exec rails s`
+- The application should run on `localhost:3000`
