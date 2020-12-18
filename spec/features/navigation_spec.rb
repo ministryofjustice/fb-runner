@@ -13,6 +13,14 @@ RSpec.feature 'Navigation' do
     then_I_should_see_my_email
     and_I_go_back
     then_I_should_see_my_full_name
+  end
+
+  scenario 'change your answer from check your answer page' do
+    when_I_visit_the_service
+    and_I_add_my_full_name
+    and_I_add_my_email
+    and_I_add_my_parent_info
+    and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
   end
@@ -46,9 +54,9 @@ RSpec.feature 'Navigation' do
   end
 
   def and_I_check_that_my_answers_are_correct
-    expect(form.full_name_section.text).to eq('Full name Han Solo')
-    expect(form.email_section.text).to eq('Your email address han.solo@gmail.com')
-    expect(form.parent_section.text).to eq('Parent name Unknown')
+    expect(form.full_name_summary.text).to include('Full name Han Solo')
+    expect(form.email_summary.text).to include('Your email address han.solo@gmail.com')
+    expect(form.parent_summary.text).to include('Parent name Unknown')
   end
 
   def and_I_send_my_application
@@ -57,7 +65,7 @@ RSpec.feature 'Navigation' do
 
   def and_I_change_my_full_name_answer
     form.full_name_change_answer_link.click
-    form.full_name_field.set('Jabba the Hutt')
+    form.full_name_field.set('Jabba')
     form.continue_button.click
   end
 
@@ -82,6 +90,6 @@ RSpec.feature 'Navigation' do
   end
 
   def then_I_should_see_my_changed_full_name_on_check_your_answers
-    expect(form.full_name_section.text).to eq('Full name Jabba the Hutt')
+    expect(form.full_name_summary.text).to eq('Full name Jabba Change Your answer for Full name')
   end
 end

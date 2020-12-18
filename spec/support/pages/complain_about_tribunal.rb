@@ -10,7 +10,6 @@ class ComplainAboutTribunal < SitePrism::Page
   elements :inline_error_messages, '.govuk-error-message'
   elements :summary_list, '.govuk-summary-list__row'
   element :accept_and_send_button, :button, 'Accept and send application'
-  element :full_name_change_answer_link, '.govuk-summary-list__row[0] a'
   element :confirmation_heading, '.govuk-panel__title'
   element :confirmation_lede, '.govuk-panel__body'
   element :confirmation_body, '.fb-body'
@@ -28,15 +27,19 @@ class ComplainAboutTribunal < SitePrism::Page
     end
   end
 
-  def full_name_section
+  def full_name_summary
     summary_list[0]
   end
 
-  def email_section
+  def full_name_change_answer_link
+    full_name_summary.find('a')
+  end
+
+  def email_summary
     summary_list[1]
   end
 
-  def parent_section
+  def parent_summary
     summary_list[2]
   end
 end
