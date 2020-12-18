@@ -9,6 +9,7 @@ jobs:
       - image: cimg/ruby:2.7.2
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Setup containers
           command: make setup
