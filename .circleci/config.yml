@@ -10,17 +10,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Installing dependencies
-          command: bundle install
-      - run:
-          name: Webpack
-          command: ./bin/webpack
+          name: Setup containers
+          command: make setup
       - run:
           name: security
-          command: bundle exec brakeman -q --no-pager
+          command: docker-compose run --rm runner-app bundle exec brakeman -q --no-pager
       - run:
           name: test
-          command: bundle exec rspec
+          command: docker-compose run --rm runner-app bundle exec rspec
       - slack/status: &slack_status
           fail_only: true
           only_for_branches: main
