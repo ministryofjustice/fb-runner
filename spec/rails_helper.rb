@@ -18,12 +18,21 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include FeatureSteps
 
+  config.before do |example_group|
+    if example_group.metadata[:type].to_sym.equal?(:feature)
+      WebMock.allow_net_connect!
+    end
+  end
+
   config.after do |example_group|
-    if example_group.exception.present? &&
-        example_group.metadata[:type].to_sym.equal?(:feature)
-      puts '======================================='
-      puts form.text
-      puts '======================================='
+    if example_group.metadata[:type].to_sym.equal?(:feature)
+      WebMock.disable_net_connect!
+
+      if example_group.exception.present?
+        puts '======================================='
+        puts form.text
+        puts '======================================='
+      end
     end
   end
 end
