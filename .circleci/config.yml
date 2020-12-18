@@ -12,13 +12,13 @@ jobs:
       - setup_remote_docker
       - run:
           name: Setup containers
-          command: make setup
+          command: make setup-ci
       - run:
-          name: security
-          command: docker-compose run --rm runner-app bundle exec brakeman -q --no-pager
+          name: Security check
+          command: make security-check
       - run:
-          name: test
-          command: docker-compose run --rm runner-app bundle exec rspec
+          name: Unit tests
+          command: make spec
       - slack/status: &slack_status
           fail_only: true
           only_for_branches: main

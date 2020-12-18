@@ -10,4 +10,14 @@ seed_public_key:
 build:
 	$(DOCKER_COMPOSE) build --parallel
 
-setup: build seed_public_key
+setup-integration: build seed_public_key
+
+setup-ci:
+	docker-compose -f docker-compose.ci.yml build
+
+security-check:
+	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec brakeman -q --no-pager
+
+spec:
+	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rspec spec
+
