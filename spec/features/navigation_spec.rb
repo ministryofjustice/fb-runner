@@ -13,6 +13,8 @@ RSpec.feature 'Navigation' do
     then_I_should_see_my_email
     and_I_go_back
     then_I_should_see_my_full_name
+    and_I_change_my_full_name_answer
+    then_I_should_see_my_changed_full_name_on_check_your_answers
   end
 
   scenario 'when I visit a non existent page' do
@@ -44,7 +46,7 @@ RSpec.feature 'Navigation' do
   end
 
   def and_I_check_that_my_answers_are_correct
-    expect(form.first_name_section.text).to eq('Full name Han Solo')
+    expect(form.full_name_section.text).to eq('Full name Han Solo')
     expect(form.email_section.text).to eq('Your email address han.solo@gmail.com')
     expect(form.parent_section.text).to eq('Parent name Unknown')
   end
@@ -55,6 +57,8 @@ RSpec.feature 'Navigation' do
 
   def and_I_change_my_full_name_answer
     form.full_name_change_answer_link.click
+    form.full_name_field.set('Jabba the Hutt')
+    form.continue_button.click
   end
 
   def then_I_should_see_my_full_name
@@ -75,5 +79,9 @@ RSpec.feature 'Navigation' do
     expect(form.confirmation_heading.text).to eq('Complaint sent')
     expect(form.confirmation_lede.text).to eq('Optional lede')
     expect(form.confirmation_body.text).to eq("You'll receive a confirmation email")
+  end
+
+  def then_I_should_see_my_changed_full_name_on_check_your_answers
+    expect(form.full_name_section.text).to eq('Full name Jabba the Hutt')
   end
 end
