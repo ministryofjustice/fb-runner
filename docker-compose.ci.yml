@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  runner-app-ci:
+    build:
+      context: .
+      args:
+        BUNDLE_ARGS: ''
+    tty: true
+    stdin_open: true
+    ports:
+      - 9000:3000
+    environment:
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: 'true'

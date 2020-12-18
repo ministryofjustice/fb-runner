@@ -53,6 +53,10 @@ RSpec.feature 'Navigation' do
     form.accept_and_send_button.click
   end
 
+  def and_I_change_my_full_name_answer
+    form.full_name_change_answer_link.click
+  end
+
   def then_I_should_see_my_full_name
     expect(form.full_name_field.value).to eq('Han Solo')
   end
