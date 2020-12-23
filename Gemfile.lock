@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: eca450df1ad4aa5ea414be5926023c61730effa6
+  revision: 3a337ef3be388f05dba09c86854a64e8941be5c2
   branch: main
   specs:
     metadata_presenter (0.1.0)
@@ -168,7 +168,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (~> 1.0)
-    rake (13.0.1)
+    rake (13.0.3)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
