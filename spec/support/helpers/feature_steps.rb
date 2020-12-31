@@ -19,12 +19,6 @@ module FeatureSteps
   end
 
   def complain_about_tribunal_metadata
-    JSON.parse(
-      File.read(
-        MetadataPresenter::Engine.root.join(
-          'spec', 'fixtures', 'version.json'
-        )
-      )
-    )
+    JSON.parse(File.read(fixtures_directory.join('version.json')))
   end
 end

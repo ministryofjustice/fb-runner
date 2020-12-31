@@ -1,14 +1,3 @@
-GIT
-  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 52366c42556994ee48b499b3e2dd7c42ac1af86e
-  branch: main
-  specs:
-    metadata_presenter (0.1.0)
-      govuk_design_system_formbuilder (>= 2.1.5)
-      json-schema (>= 2.8.1)
-      kramdown (>= 2.3.0)
-      rails (>= 6.0.3.4, < 6.2.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -89,17 +78,18 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     concurrent-ruby (1.1.7)
-    crack (0.4.4)
+    crack (0.4.5)
+      rexml
     crass (1.0.6)
     diff-lcs (1.4.4)
-    docile (1.3.2)
+    docile (1.3.4)
     erubi (1.10.0)
     faraday (1.2.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
-    ffi (1.13.1)
+    ffi (1.14.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     govuk_design_system_formbuilder (2.1.6)
@@ -124,6 +114,11 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
+    metadata_presenter (0.1.3)
+      govuk_design_system_formbuilder (>= 2.1.5)
+      json-schema (>= 2.8.1)
+      kramdown (>= 2.3.0)
+      rails (>= 6.0.3.4, < 6.2.0)
     method_source (1.0.0)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
@@ -269,7 +264,7 @@ DEPENDENCIES
   faraday_middleware
   jwt
   listen (~> 3.3)
-  metadata_presenter!
+  metadata_presenter (~> 0.1.3)
   puma (~> 5.1)
   rails (~> 6.1.0)
   rspec-rails
