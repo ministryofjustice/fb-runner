@@ -23,5 +23,5 @@ security-check:
 
 .PHONY: spec
 spec:
-	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rspec --exclude-pattern features/navigation_spec.rb
+	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rspec
 
