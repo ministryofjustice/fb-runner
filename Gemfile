@@ -12,6 +12,7 @@ gem 'puma', '~> 5.1'
 gem 'rails', '~> 6.1.1'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 5.2'
+gem 'fb-jwt-auth', github: 'ministryofjustice/fb-jwt-auth', branch: 'feature/generate-jwt-token'
 
 group :development, :test do
   gem 'brakeman'

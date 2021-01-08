@@ -83,6 +83,6 @@ class UserDatastoreAdapter
   end
 
   def service_access_token
-    @service_access_token ||= ServiceAccessToken.new(subject: subject).generate
+    @service_access_token ||= Fb::Jwt::Auth::ServiceAccessToken.new(subject: subject).generate
   end
 end
