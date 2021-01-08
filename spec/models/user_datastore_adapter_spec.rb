@@ -41,7 +41,7 @@ RSpec.describe UserDatastoreAdapter do
   end
 
   before do
-    allow_any_instance_of(ServiceAccessToken).to receive(:generate)
+    allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)
       .and_return(service_access_token)
   end
 

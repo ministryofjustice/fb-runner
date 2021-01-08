@@ -1,6 +1,9 @@
 UID ?= $(shell id -u)
 DOCKER_COMPOSE = env UID=$(UID) docker-compose -f docker-compose.yml
 
+.PHONY: setup
+setup: build seed_public_key
+
 .PHONY: seed_public_key
 seed_public_key:
 	$(DOCKER_COMPOSE) up -d --build runner-app-service-token-cache-redis
