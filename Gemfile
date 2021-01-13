@@ -7,7 +7,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'jwt'
-gem 'metadata_presenter', '0.1.4'
+gem 'metadata_presenter', '0.1.6'
 gem 'puma', '~> 5.1'
 gem 'rails', '~> 6.1.1'
 gem 'sass-rails', '>= 6'
