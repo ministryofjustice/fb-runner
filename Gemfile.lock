@@ -91,7 +91,7 @@ GEM
     faraday-net_http (1.0.0)
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
-    fb-jwt-auth (0.4.0)
+    fb-jwt-auth (0.5.0)
       activesupport
       json
       jwt
@@ -271,7 +271,7 @@ DEPENDENCIES
   capybara
   faraday
   faraday_middleware
-  fb-jwt-auth (= 0.4.0)
+  fb-jwt-auth (= 0.5.0)
   jwt
   listen (~> 3.4)
   metadata_presenter (= 0.1.6)
