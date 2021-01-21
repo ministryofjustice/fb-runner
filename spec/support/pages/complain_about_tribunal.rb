@@ -27,19 +27,19 @@ class ComplainAboutTribunal < SitePrism::Page
     end
   end
 
-  def full_name_summary
+  def full_name_checkanswers
     summary_list[0]
   end
 
   def full_name_change_answer_link
-    full_name_summary.find('a')
+    full_name_checkanswers.find('a')
   end
 
-  def email_summary
+  def email_checkanswers
     summary_list[1]
   end
 
-  def parent_summary
+  def parent_checkanswers
     summary_list[2]
   end
 end

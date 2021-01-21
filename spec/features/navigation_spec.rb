@@ -54,9 +54,9 @@ RSpec.feature 'Navigation' do
   end
 
   def and_I_check_that_my_answers_are_correct
-    expect(form.full_name_summary.text).to include('Full name Han Solo')
-    expect(form.email_summary.text).to include('Your email address han.solo@gmail.com')
-    expect(form.parent_summary.text).to include('Parent name Unknown')
+    expect(form.full_name_checkanswers.text).to include('Full name Han Solo')
+    expect(form.email_checkanswers.text).to include('Your email address han.solo@gmail.com')
+    expect(form.parent_checkanswers.text).to include('Parent name Unknown')
   end
 
   def and_I_send_my_application
@@ -90,6 +90,6 @@ RSpec.feature 'Navigation' do
   end
 
   def then_I_should_see_my_changed_full_name_on_check_your_answers
-    expect(form.full_name_summary.text).to eq('Full name Jabba Change Your answer for Full name')
+    expect(form.full_name_checkanswers.text).to eq('Full name Jabba Change Your answer for Full name')
   end
 end
