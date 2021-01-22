@@ -21,6 +21,11 @@ class ApplicationController < ActionController::Base
     UserData.new(session).load_data
   end
 
+  def editable?
+    false
+  end
+  helper_method :editable?
+
   def answer_params
     params.permit(:answers => {})[:answers] || {}
   end
