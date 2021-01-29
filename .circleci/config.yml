@@ -23,7 +23,7 @@ jobs:
       - slack/status: &slack_status
           fail_only: true
           only_for_branches: main
-          failure_message: ":facepalm:  Failed job $CIRCLE_JOB  :homer-disappear:"
+          failure_message: ":facepalm: Failed job $CIRCLE_JOB  :homer-disappear:"
           include_job_number_field: false
   build_and_deploy_to_test:
     docker: &ecr_image
@@ -33,7 +33,8 @@ jobs:
           aws_secret_access_key: $AWS_BUILD_IMAGE_SECRET_ACCESS_KEY
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - add_ssh_keys: &ssh_keys
           fingerprints:
             - "af:e3:71:5e:fc:fd:08:e1:61:d4:18:10:cd:6b:6d:aa"
