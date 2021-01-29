@@ -1,14 +1,10 @@
-class ServiceMetadataNotFoundError < StandardError
-end
-
-fixture =  MetadataPresenter::Engine.root.join('fixtures', 'version.json')
-
-if File.exist?(fixture)
-  Rails.configuration.service_metadata = JSON.parse(File.read(fixture))
+Rails.application.reloader.to_prepare do
+  Rails.configuration.service_metadata = LoadServiceMetadata.new(
+    service_metadata: ENV['SERVICE_METADATA'],
+    fixture: ENV['SERVICE_FIXTURE'] || :version
+  ).to_h
 
   Rails.configuration.service = MetadataPresenter::Service.new(
     Rails.configuration.service_metadata
   )
-else
-  raise ServiceMetadataNotFoundError.new('No service metadata found')
 end
