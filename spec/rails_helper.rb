@@ -2,6 +2,7 @@
 require 'spec_helper'
 
 ENV['RAILS_ENV'] ||= 'test'
+ENV['SERVICE_FIXTURE'] ||= 'version'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
@@ -21,13 +22,13 @@ RSpec.configure do |config|
   config.include TestHelper
 
   config.before do |example_group|
-    if example_group.metadata[:type].to_sym.equal?(:feature)
+    if example_group.metadata[:type] && example_group.metadata[:type].to_sym.equal?(:feature)
       WebMock.allow_net_connect!
     end
   end
 
   config.after do |example_group|
-    if example_group.metadata[:type].to_sym.equal?(:feature)
+    if example_group.metadata[:type] && example_group.metadata[:type].to_sym.equal?(:feature)
       WebMock.disable_net_connect!
 
       if example_group.exception.present?

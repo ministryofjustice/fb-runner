@@ -13,3 +13,5 @@ services:
     environment:
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: 'true'
+      SECRET_KEY_BASE: '8917f6fa9a96e678f4777aea2bf148920a325162da1bd7b246baba4437eec8176765be27156161086abfe91266dfdc8a851d3e97edb66fe9f27ba4ea09bdc142'
+      SERVICE_FIXTURE: 'version'

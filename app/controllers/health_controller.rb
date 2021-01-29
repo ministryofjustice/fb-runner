@@ -1,5 +1,7 @@
 class HealthController < ActionController::API
   def show
-    render plain: 'healthy'
+    Rails.logger.silence do
+      render plain: 'healthy'
+    end
   end
 end
