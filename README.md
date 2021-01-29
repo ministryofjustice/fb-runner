@@ -4,7 +4,24 @@ To run the project locally, execute the following steps:
 - Install Ruby dependencies `bundle install`
 - Install all dependencies `yarn install`
 - Bundle JavaScript assets `./bin/webpack`
-- Start the Rails server `bundle exec rails s`
+
+## Start the Rails server
+
+The runner requires a service metadata to render the form.
+
+Or you can bypass any metadata and start the server:
+
+```
+  SERVICE_METADATA="{ #... json service metadata }" bundle exec rails s
+```
+
+Alternatively you can pass a service fixture that will load any fixture from
+the metadata presenter fixture dir:
+```
+  # this will load the version.json from the metadata presenter fixture dir
+  SERVICE_FIXTURE=version bundle exec rails s
+```
+
 - The application should run on `localhost:3000`
 
 ## Datastore integration
