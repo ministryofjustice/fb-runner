@@ -7,7 +7,14 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'jwt'
-gem 'metadata_presenter', '0.3.0'
+# Metadata presenter - if you need to be on development you can uncomment
+# one of these lines:
+# gem 'metadata_presenter',
+#     github: 'ministryofjustice/fb-metadata-presenter',
+#     branch: 'some-branch'
+#gem 'metadata_presenter', path: '../fb-metadata-presenter'
+#
+gem 'metadata_presenter', '0.3.2'
 gem 'puma', '~> 5.2'
 gem 'rails', '~> 6.1.1'
 gem 'sass-rails', '>= 6'

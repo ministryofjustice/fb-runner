@@ -23,10 +23,58 @@ jobs:
       - slack/status: &slack_status
           fail_only: true
           only_for_branches: main
-          failure_message: ":facepalm:  Failed job $CIRCLE_JOB  :homer-disappear:"
+          failure_message: ":facepalm: Failed job $CIRCLE_JOB  :homer-disappear:"
           include_job_number_field: false
+  build_and_deploy_to_test:
+    docker: &ecr_image
+      - image: $AWS_BUILD_IMAGE_ECR_ACCOUNT_URL
+        aws_auth:
+          aws_access_key_id: $AWS_BUILD_IMAGE_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_BUILD_IMAGE_SECRET_ACCESS_KEY
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - add_ssh_keys: &ssh_keys
+          fingerprints:
+            - "af:e3:71:5e:fc:fd:08:e1:61:d4:18:10:cd:6b:6d:aa"
+      - run: &base_environment_variables
+          name: Setup base environment variable
+          command: |
+            echo "export BUILD_SHA=$CIRCLE_SHA1" >> $BASH_ENV
+            echo "export SSH_FILE_FOR_SECRETS=~/.ssh/id_rsa_afe3715efcfd08e161d41810cd6b6daa" >> $BASH_ENV
+      - run: &deploy_scripts
+          name: cloning deploy scripts
+          command: 'git clone git@github.com:ministryofjustice/fb-deploy.git deploy-scripts'
+      - run:
+          name: build and push docker images
+          environment:
+            ENVIRONMENT_NAME: test
+          command: './deploy-scripts/bin/build'
+      - run:
+          name: Restart the runners test dev
+          environment:
+            PLATFORM_ENV: test
+            DEPLOYMENT_ENV: dev
+            K8S_NAMESPACE: formbuilder-services-test-dev
+          command: './deploy-scripts/bin/restart_all_pods'
+      - run:
+          name: Restart the runners in test production
+          environment:
+            PLATFORM_ENV: test
+            DEPLOYMENT_ENV: production
+            K8S_NAMESPACE: formbuilder-services-test-production
+          command: './deploy-scripts/bin/restart_all_pods'
+      - slack/status: *slack_status
 workflows:
   version: 2
   test_and_build:
     jobs:
       - test
+      - build_and_deploy_to_test:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - main
