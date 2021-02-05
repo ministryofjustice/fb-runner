@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action :require_basic_auth
+
   EXCEPTIONS = [
     UserDatastoreAdapter::DatastoreTimeoutError,
     UserDatastoreAdapter::DatastoreClientError
@@ -28,5 +30,13 @@ class ApplicationController < ActionController::Base
 
   def answer_params
     params.permit(:answers => {})[:answers] || {}
+  end
+
+  def require_basic_auth
+    if ENV['BASIC_AUTH_USER'].present? && ENV['BASIC_AUTH_PASS'].present?
+      authenticate_or_request_with_http_basic do |username, password|
+        username == ENV['BASIC_AUTH_USER'] && password == ENV['BASIC_AUTH_PASS']
+      end
+    end
   end
 end
