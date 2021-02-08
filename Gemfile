@@ -14,7 +14,7 @@ gem 'jwt'
 #     branch: 'some-branch'
 #gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
-gem 'metadata_presenter', '0.3.2'
+gem 'metadata_presenter', '0.6.0'
 gem 'puma', '~> 5.2'
 gem 'rails', '~> 6.1.1'
 gem 'sass-rails', '>= 6'
