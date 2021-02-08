@@ -11,10 +11,10 @@ gem 'jwt'
 # one of these lines:
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'some-branch'
+#     branch: 'component/textarea'
 #gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
-gem 'metadata_presenter', '0.3.2'
+gem 'metadata_presenter', '0.6.0'
 gem 'puma', '~> 5.2'
 gem 'rails', '~> 6.1.1'
 gem 'sass-rails', '>= 6'
