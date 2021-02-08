@@ -1,5 +1,5 @@
 RSpec.feature 'Navigation' do
-  let(:form) { ComplainAboutTribunal.new }
+  let(:form) { VersionFixture.new }
 
   background do
     given_the_service_has_a_metadata
