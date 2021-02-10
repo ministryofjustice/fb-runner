@@ -20,6 +20,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_full_name
     and_I_add_my_email
     and_I_add_my_parent_info
+    and_I_add_my_age
     and_I_add_my_family_hobbies
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
@@ -36,6 +37,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_full_name
     and_I_add_my_email
     and_I_add_my_parent_info
+    and_I_add_my_age
     and_I_add_my_family_hobbies
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
@@ -55,8 +57,15 @@ RSpec.feature 'Navigation' do
     form.continue_button.click
   end
 
+  def and_I_add_my_age
+    form.age_field.set('31')
+    form.continue_button.click
+  end
+
   def and_I_add_my_family_hobbies
-    form.family_hobbies_field.set("Play with the dogs\n Surfing!")
+    form.family_hobbies_field.set(
+      "Play with the dogs\r\nSurfing!" # emulates textarea carriage return
+    )
     form.continue_button.click
   end
 
@@ -66,6 +75,10 @@ RSpec.feature 'Navigation' do
       "Your email address\nhan.solo@gmail.com"
     )
     expect(form.parent_checkanswers.text).to include("Parent name\nUnknown")
+    expect(form.age_checkanswers.text).to include("Your age\n31")
+    expect(form.family_hobbies_checkanswers.text).to include(
+      "Your family hobbies\nPlay with the dogs\nSurfing!"
+    )
   end
 
   def and_I_send_my_application
