@@ -9,12 +9,12 @@ gem 'faraday_middleware'
 gem 'jwt'
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-gem 'metadata_presenter',
-     github: 'ministryofjustice/fb-metadata-presenter',
-     branch: 'component/number'
+#gem 'metadata_presenter',
+#     github: 'ministryofjustice/fb-metadata-presenter',
+#     branch: 'component/number'
 #gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
-#gem 'metadata_presenter', '0.7.1'
+gem 'metadata_presenter', '0.8.0'
 gem 'puma', '~> 5.2'
 gem 'rails', '~> 6.1.1'
 gem 'sass-rails', '>= 6'
