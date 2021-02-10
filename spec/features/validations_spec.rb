@@ -27,6 +27,12 @@ RSpec.feature 'Navigation' do
     then_I_should_see_that_I_should_enter_a_number
   end
 
+  scenario 'when number field is blank and it is required' do
+    and_I_visit_my_age_page
+    when_I_left_my_age_blank
+    then_I_should_see_that_I_should_answer_my_age
+  end
+
   def and_I_left_my_name_blank
     form.full_name_field.set('')
     form.continue_button.click
@@ -51,9 +57,20 @@ RSpec.feature 'Navigation' do
     form.continue_button.click
   end
 
+  def when_I_left_my_age_blank
+    form.age_field.set('')
+    form.continue_button.click
+  end
+
   def then_I_should_see_that_I_should_answer_my_name
     then_I_should_see_the_error_message(
       'Enter an answer for Full name'
+    )
+  end
+
+  def then_I_should_see_that_I_should_answer_my_age
+    then_I_should_see_the_error_message(
+      'Enter an answer for Your age'
     )
   end
 
