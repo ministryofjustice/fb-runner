@@ -7,6 +7,7 @@ class VersionFixture < SitePrism::Page
   element :email_field, :field, 'Your email address'
   element :age_field, :field, 'Your age'
   element :family_hobbies_field, :field, 'Your family hobbies'
+  element :hell_no, :radio_button, 'Hell no!'
   element :back_link, :link, 'Back'
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
@@ -51,5 +52,9 @@ class VersionFixture < SitePrism::Page
 
   def family_hobbies_checkanswers
     summary_list[4]
+  end
+
+  def do_you_like_star_wars_checkanswers
+    summary_list[5]
   end
 end
