@@ -33,6 +33,12 @@ RSpec.feature 'Navigation' do
     then_I_should_see_that_I_should_answer_my_age
   end
 
+  scenario 'when no radio button is selected and it is required' do
+    and_I_visit_the_radio_buttons_page
+    when_I_did_not_choose_a_radio_button
+    then_I_should_see_that_I_should_choose_a_radio_option
+  end
+
   def and_I_left_my_name_blank
     form.full_name_field.set('')
     form.continue_button.click
@@ -52,6 +58,10 @@ RSpec.feature 'Navigation' do
     visit '/your-age'
   end
 
+  def and_I_visit_the_radio_buttons_page
+    visit '/do-you-like-star-wars'
+  end
+
   def when_I_add_an_invalid_age
     form.age_field.set('Millenium Falcon')
     form.continue_button.click
@@ -59,6 +69,10 @@ RSpec.feature 'Navigation' do
 
   def when_I_left_my_age_blank
     form.age_field.set('')
+    form.continue_button.click
+  end
+
+  def when_I_did_not_choose_a_radio_button
     form.continue_button.click
   end
 
@@ -89,6 +103,12 @@ RSpec.feature 'Navigation' do
   def then_I_should_see_that_I_should_enter_a_number
     then_I_should_see_the_error_message(
       'Enter a number for Your age'
+    )
+  end
+
+  def then_I_should_see_that_I_should_choose_a_radio_option
+    then_I_should_see_the_error_message(
+      'Enter an answer for Do you like Star Wars?'
     )
   end
 
