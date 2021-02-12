@@ -22,6 +22,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_parent_info
     and_I_add_my_age
     and_I_add_my_family_hobbies
+    and_I_declare_my_dislike_of_star_wars
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -39,6 +40,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_parent_info
     and_I_add_my_age
     and_I_add_my_family_hobbies
+    and_I_declare_my_dislike_of_star_wars
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -69,6 +71,11 @@ RSpec.feature 'Navigation' do
     form.continue_button.click
   end
 
+  def and_I_declare_my_dislike_of_star_wars
+    form.hell_no.click
+    form.continue_button.click
+  end
+
   def and_I_check_that_my_answers_are_correct
     expect(form.full_name_checkanswers.text).to include("Full name\nHan Solo")
     expect(form.email_checkanswers.text).to include(
@@ -79,6 +86,7 @@ RSpec.feature 'Navigation' do
     expect(form.family_hobbies_checkanswers.text).to include(
       "Your family hobbies\nPlay with the dogs\nSurfing!"
     )
+    expect(form.do_you_like_star_wars_checkanswers.text).to include("Hell no!")
   end
 
   def and_I_send_my_application
