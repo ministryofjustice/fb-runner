@@ -5,6 +5,7 @@ class VersionFixture < SitePrism::Page
   element :full_name_field, :field, 'Full name'
   element :parent_field, :field, 'Parent name'
   element :email_field, :field, 'Your email address'
+  element :age_field, :field, 'Your age'
   element :family_hobbies_field, :field, 'Your family hobbies'
   element :back_link, :link, 'Back'
   elements :error_summary_list, '.govuk-error-summary__list'
@@ -42,5 +43,13 @@ class VersionFixture < SitePrism::Page
 
   def parent_checkanswers
     summary_list[2]
+  end
+
+  def age_checkanswers
+    summary_list[3]
+  end
+
+  def family_hobbies_checkanswers
+    summary_list[4]
   end
 end
