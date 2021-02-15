@@ -7,7 +7,11 @@ class VersionFixture < SitePrism::Page
   element :email_field, :field, 'Your email address'
   element :age_field, :field, 'Your age'
   element :family_hobbies_field, :field, 'Your family hobbies'
+  element :only_on_weekends, :radio_button, 'Only on weekends'
   element :hell_no, :radio_button, 'Hell no!'
+  element :holiday_day_field, :field, 'Day'
+  element :holiday_month_field, :field, 'Month'
+  element :holiday_year_field, :field, 'Year'
   element :back_link, :link, 'Back'
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
@@ -56,5 +60,9 @@ class VersionFixture < SitePrism::Page
 
   def do_you_like_star_wars_checkanswers
     summary_list[5]
+  end
+
+  def holiday_checkanswers
+    summary_list[6]
   end
 end
