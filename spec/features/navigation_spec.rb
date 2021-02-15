@@ -23,6 +23,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_age
     and_I_add_my_family_hobbies
     and_I_declare_my_dislike_of_star_wars
+    and_I_add_my_holiday
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -41,9 +42,24 @@ RSpec.feature 'Navigation' do
     and_I_add_my_age
     and_I_add_my_family_hobbies
     and_I_declare_my_dislike_of_star_wars
+    and_I_add_my_holiday
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
+  end
+
+  scenario 'when I go back to a page with radio component' do
+    and_I_go_to_declare_my_star_wars_opinion_page
+    and_I_declare_my_dislike_of_star_wars
+    and_I_go_back
+    then_I_should_hell_no_option_chosen
+  end
+
+  scenario 'when I go back to a page with date component' do
+    and_I_go_to_my_holiday_page
+    and_I_add_my_holiday
+    and_I_go_back
+    then_I_should_see_my_holiday_in_the_fields
   end
 
   def when_I_visit_a_non_existent_page
@@ -56,37 +72,47 @@ RSpec.feature 'Navigation' do
 
   def and_I_add_my_parent_info
     form.parent_field.set('Unknown')
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def and_I_add_my_age
     form.age_field.set('31')
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def and_I_add_my_family_hobbies
     form.family_hobbies_field.set(
       "Play with the dogs\r\nSurfing!" # emulates textarea carriage return
     )
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def and_I_declare_my_dislike_of_star_wars
     form.hell_no.click
-    form.continue_button.click
+    and_I_go_to_next_page
+  end
+
+  def and_I_add_my_holiday
+    form.holiday_day_field.set('01')
+    form.holiday_month_field.set('06')
+    form.holiday_year_field.set('2021')
+    and_I_go_to_next_page
   end
 
   def and_I_check_that_my_answers_are_correct
-    expect(form.full_name_checkanswers.text).to include("Full name\nHan Solo")
+    expect(form.full_name_checkanswers.text).to include("Full name Han Solo")
     expect(form.email_checkanswers.text).to include(
-      "Your email address\nhan.solo@gmail.com"
+      "Your email address han.solo@gmail.com"
     )
-    expect(form.parent_checkanswers.text).to include("Parent name\nUnknown")
-    expect(form.age_checkanswers.text).to include("Your age\n31")
+    expect(form.parent_checkanswers.text).to include("Parent name Unknown")
+    expect(form.age_checkanswers.text).to include("Your age 31")
     expect(form.family_hobbies_checkanswers.text).to include(
       "Your family hobbies\nPlay with the dogs\nSurfing!"
     )
     expect(form.do_you_like_star_wars_checkanswers.text).to include("Hell no!")
+    expect(form.holiday_checkanswers.text).to eq(
+      'What is the day that you like to take holidays? 01 June 2021 Change Your answer for What is the day that you like to take holidays?'
+    )
   end
 
   def and_I_send_my_application
@@ -96,7 +122,7 @@ RSpec.feature 'Navigation' do
   def and_I_change_my_full_name_answer
     form.full_name_change_answer_link.click
     form.full_name_field.set('Jabba')
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_see_my_full_name
@@ -121,7 +147,18 @@ RSpec.feature 'Navigation' do
 
   def then_I_should_see_my_changed_full_name_on_check_your_answers
     expect(form.full_name_checkanswers.text).to eq(
-      "Full name\nJabba\nChange Your answer for Full name"
+      "Full name Jabba Change Your answer for Full name"
     )
+  end
+
+  def then_I_should_see_my_holiday_in_the_fields
+    expect(form.holiday_day_field.value).to eq('01')
+    expect(form.holiday_month_field.value).to eq('06')
+    expect(form.holiday_year_field.value).to eq('2021')
+  end
+
+  def then_I_should_hell_no_option_chosen
+    expect(form.only_on_weekends).to_not be_checked
+    expect(form.hell_no).to be_checked
   end
 end

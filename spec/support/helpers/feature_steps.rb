@@ -3,14 +3,26 @@ module FeatureSteps
     expect(Rails.configuration.service_metadata).to eq(complain_about_tribunal_metadata)
   end
 
+  def and_I_go_to_next_page
+    form.continue_button.click
+  end
+
   def and_I_add_my_full_name
     form.full_name_field.set('Han Solo')
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def and_I_add_my_email
     form.email_field.set('han.solo@gmail.com')
-    form.continue_button.click
+    and_I_go_to_next_page
+  end
+
+  def and_I_go_to_my_holiday_page
+    visit '/holiday'
+  end
+
+  def and_I_go_to_declare_my_star_wars_opinion_page
+    visit '/do-you-like-star-wars'
   end
 
   def when_I_visit_the_service
