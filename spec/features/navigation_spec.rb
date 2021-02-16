@@ -122,7 +122,7 @@ RSpec.feature 'Navigation' do
     expect(form.parent_checkanswers.text).to include("Parent name Unknown")
     expect(form.age_checkanswers.text).to include("Your age 31")
     expect(form.family_hobbies_checkanswers.text).to include(
-      "Your family hobbies\nPlay with the dogs\nSurfing!"
+      "Your family hobbies Play with the dogs Surfing! Change Your answer for Your family hobbies"
     )
     expect(form.do_you_like_star_wars_checkanswers.text).to include("Hell no!")
     expect(form.burger_checkanswers.text).to include("Mozzarella, cheddar, feta")
