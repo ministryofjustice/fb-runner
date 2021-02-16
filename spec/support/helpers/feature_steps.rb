@@ -25,6 +25,10 @@ module FeatureSteps
     visit '/do-you-like-star-wars'
   end
 
+  def and_I_go_to_burger_page
+    visit '/burgers'
+  end
+
   def when_I_visit_the_service
     form.load
     form.start_button.click

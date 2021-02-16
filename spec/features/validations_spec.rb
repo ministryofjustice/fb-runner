@@ -39,6 +39,12 @@ RSpec.feature 'Navigation' do
     then_I_should_see_that_I_should_choose_a_radio_option
   end
 
+  scenario 'when no checkbox is selected and it is required' do
+    and_I_go_to_burger_page
+    when_I_do_not_choose_a_checkbox
+    then_I_should_see_choose_a_checkbox
+  end
+
   scenario 'when date field is totally blank' do
     and_I_go_to_my_holiday_page
     and_I_go_to_next_page
@@ -115,6 +121,10 @@ RSpec.feature 'Navigation' do
     and_I_go_to_next_page
   end
 
+  def when_I_do_not_choose_a_checkbox
+    and_I_go_to_next_page
+  end
+
   def then_I_should_see_that_I_should_answer_my_name
     then_I_should_see_the_error_message(
       'Enter an answer for Full name'
@@ -160,6 +170,12 @@ RSpec.feature 'Navigation' do
   def then_I_should_see_that_I_should_add_a_valid_holiday
     then_I_should_see_the_error_message(
       'Enter a valid date for What is the day that you like to take holidays?'
+    )
+  end
+
+  def then_I_should_see_choose_a_checkbox
+    then_I_should_see_the_error_message(
+      'Enter an answer for What would you like on your burger?'
     )
   end
 

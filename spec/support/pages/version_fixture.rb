@@ -12,6 +12,9 @@ class VersionFixture < SitePrism::Page
   element :holiday_day_field, :field, 'Day'
   element :holiday_month_field, :field, 'Month'
   element :holiday_year_field, :field, 'Year'
+  element :cheeseburger, :checkbox, 'Mozzarella, cheddar, feta'
+  element :beef_burger, :checkbox, 'Beef, cheese, tomato'
+  element :chicken_burger, :checkbox, 'Chicken, cheese, tomato'
   element :back_link, :link, 'Back'
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
@@ -64,5 +67,9 @@ class VersionFixture < SitePrism::Page
 
   def holiday_checkanswers
     summary_list[6]
+  end
+
+  def burger_checkanswers
+    summary_list[7]
   end
 end

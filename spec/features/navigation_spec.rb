@@ -24,6 +24,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_family_hobbies
     and_I_declare_my_dislike_of_star_wars
     and_I_add_my_holiday
+    and_I_add_my_burger
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -43,6 +44,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_family_hobbies
     and_I_declare_my_dislike_of_star_wars
     and_I_add_my_holiday
+    and_I_add_my_burger
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -60,6 +62,13 @@ RSpec.feature 'Navigation' do
     and_I_add_my_holiday
     and_I_go_back
     then_I_should_see_my_holiday_in_the_fields
+  end
+
+  scenario 'when I go back to a page with a checkbox component' do
+    and_I_go_to_burger_page
+    and_I_add_my_burger
+    and_I_go_back
+    then_I_should_see_cheese_chicken_chosen
   end
 
   def when_I_visit_a_non_existent_page
@@ -99,6 +108,12 @@ RSpec.feature 'Navigation' do
     and_I_go_to_next_page
   end
 
+  def and_I_add_my_burger
+    form.cheeseburger.click
+    form.chicken_burger.click
+    and_I_go_to_next_page
+  end
+
   def and_I_check_that_my_answers_are_correct
     expect(form.full_name_checkanswers.text).to include("Full name Han Solo")
     expect(form.email_checkanswers.text).to include(
@@ -107,9 +122,10 @@ RSpec.feature 'Navigation' do
     expect(form.parent_checkanswers.text).to include("Parent name Unknown")
     expect(form.age_checkanswers.text).to include("Your age 31")
     expect(form.family_hobbies_checkanswers.text).to include(
-      "Your family hobbies\nPlay with the dogs\nSurfing!"
+      "Your family hobbies Play with the dogs Surfing! Change Your answer for Your family hobbies"
     )
     expect(form.do_you_like_star_wars_checkanswers.text).to include("Hell no!")
+    expect(form.burger_checkanswers.text).to include("Mozzarella, cheddar, feta")
     expect(form.holiday_checkanswers.text).to eq(
       'What is the day that you like to take holidays? 01 June 2021 Change Your answer for What is the day that you like to take holidays?'
     )
@@ -160,5 +176,11 @@ RSpec.feature 'Navigation' do
   def then_I_should_hell_no_option_chosen
     expect(form.only_on_weekends).to_not be_checked
     expect(form.hell_no).to be_checked
+  end
+
+  def then_I_should_see_cheese_chicken_chosen
+    expect(form.beef_burger).to_not be_checked
+    expect(form.chicken_burger).to be_checked
+    expect(form.cheeseburger).to be_checked
   end
 end
