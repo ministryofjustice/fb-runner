@@ -28,7 +28,7 @@ module Platform
       ).generate
     end
 
-    def request(verb, body)
+    def request(verb, url, body)
       connection.send(verb, url, body, headers)
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError => exception
       raise Platform::TimeoutError.new(error_message(exception))

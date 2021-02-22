@@ -21,11 +21,11 @@ module Platform
         payload: data_encryption.encrypt(all_answers.to_json)
       }
 
-      request(:post, body)
+      request(:post, url, body)
     end
 
     def load_data
-      response = request(:get, {}).body['payload'] || {}
+      response = request(:get, url, {}).body['payload'] || {}
 
       JSON.parse(data_encryption.decrypt(response)) || {}
     rescue Platform::ResourceNotFound
