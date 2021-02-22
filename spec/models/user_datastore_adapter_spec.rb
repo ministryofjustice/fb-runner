@@ -1,4 +1,4 @@
-RSpec.describe UserDatastoreAdapter do
+RSpec.describe Platform::UserDatastoreAdapter do
   subject(:adapter) do
     described_class.new(session, root_url: root_url, service_slug: service_slug)
   end
@@ -104,7 +104,7 @@ RSpec.describe UserDatastoreAdapter do
 
       it 'raises datastore error' do
         expect { adapter.save(params) }.to raise_error(
-          UserDatastoreAdapter::DatastoreClientError
+          Platform::UserDatastoreAdapter::DatastoreClientError
         )
       end
     end
@@ -119,7 +119,7 @@ RSpec.describe UserDatastoreAdapter do
 
         it 'raises datastore timeout error' do
           expect { adapter.save(params) }.to raise_error(
-            UserDatastoreAdapter::DatastoreTimeoutError
+            Platform::UserDatastoreAdapter::DatastoreTimeoutError
           )
         end
       end
@@ -133,7 +133,7 @@ RSpec.describe UserDatastoreAdapter do
 
         it 'raises datastore timeout error' do
           expect { adapter.save(params) }.to raise_error(
-            UserDatastoreAdapter::DatastoreTimeoutError
+            Platform::UserDatastoreAdapter::DatastoreTimeoutError
           )
         end
       end

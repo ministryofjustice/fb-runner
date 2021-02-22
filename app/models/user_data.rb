@@ -11,7 +11,7 @@ class UserData
     return @adapter.new(session) if @adapter.present?
 
     if ENV['DATASTORE_URL'].present?
-      UserDatastoreAdapter.new(session)
+      Platform::UserDatastoreAdapter.new(session)
     else
       SessionDataAdapter.new(session)
     end

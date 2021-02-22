@@ -38,7 +38,9 @@ RSpec.describe UserData do
       end
 
       it 'returns the datastore adapter' do
-        expect(user_data.adapter).to be_instance_of(UserDatastoreAdapter)
+        expect(user_data.adapter).to be_instance_of(
+          Platform::UserDatastoreAdapter
+        )
       end
     end
 
