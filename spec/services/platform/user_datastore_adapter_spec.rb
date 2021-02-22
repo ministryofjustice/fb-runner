@@ -104,7 +104,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
       it 'raises datastore error' do
         expect { adapter.save(params) }.to raise_error(
-          Platform::UserDatastoreAdapter::DatastoreClientError
+          Platform::ClientError
         )
       end
     end
@@ -119,7 +119,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
         it 'raises datastore timeout error' do
           expect { adapter.save(params) }.to raise_error(
-            Platform::UserDatastoreAdapter::DatastoreTimeoutError
+            Platform::TimeoutError
           )
         end
       end
@@ -133,7 +133,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
         it 'raises datastore timeout error' do
           expect { adapter.save(params) }.to raise_error(
-            Platform::UserDatastoreAdapter::DatastoreTimeoutError
+            Platform::TimeoutError
           )
         end
       end

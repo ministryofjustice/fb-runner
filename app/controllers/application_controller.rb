@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :require_basic_auth
 
   EXCEPTIONS = [
-    Platform::UserDatastoreAdapter::DatastoreTimeoutError,
-    Platform::UserDatastoreAdapter::DatastoreClientError
+    Platform::TimeoutError,
+    Platform::ClientError
   ]
   rescue_from(*EXCEPTIONS) do |exception|
     render file: 'public/500.html', status: 500
