@@ -11,6 +11,7 @@ require 'webmock/rspec'
 require 'capybara/rspec'
 Bundler.require(:development, :test)
 Dir.glob("#{Rails.root}/spec/support/*/**/*.rb").sort.each { |f| require f }
+require 'metadata_presenter/test_helpers'
 
 RSpec.configure do |config|
   config.use_active_record = false
@@ -38,4 +39,6 @@ RSpec.configure do |config|
       end
     end
   end
+
+  config.include MetadataPresenter::TestHelpers
 end

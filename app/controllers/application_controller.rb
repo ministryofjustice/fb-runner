@@ -25,6 +25,17 @@ class ApplicationController < ActionController::Base
     UserData.new(session).load_data
   end
 
+  def create_submission
+    # if ENV['SUBMITTER_URL'] || email_to_blank?
+    #   payload = SubmitterPayload.new(load_user_data, service).to_h
+    #   -> date(3i)
+    #   -> date(2i)
+    #   -> date(1i)
+    #
+    #   SubmitterAdapter.new(payload).save
+    # end
+  end
+
   def editable?
     false
   end

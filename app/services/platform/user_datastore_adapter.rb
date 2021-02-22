@@ -1,9 +1,8 @@
 module Platform
   class UserDatastoreAdapter
+    include Platform::Connection
     TIMEOUT = 15
     SUBSCRIPTION = 'datastore.request'
-
-    include Platform::Connection
 
     attr_reader :session, :root_url, :service_slug
 
@@ -30,10 +29,6 @@ module Platform
       JSON.parse(data_encryption.decrypt(response)) || {}
     rescue Platform::ResourceNotFound
       {}
-    end
-
-    def data_encryption
-      @data_encryption = DataEncryption.new(key: encryption_key)
     end
 
     private

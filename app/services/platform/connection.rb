@@ -5,6 +5,7 @@ module Platform
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
         'User-Agent' => 'Runner',
+        # Datastore still uses the v2 access token from service token cache
         'x-access-token-v2' => service_access_token
       }
     end
@@ -18,8 +19,13 @@ module Platform
         conn.options[:open_timeout] = timeout
         conn.options[:timeout] = timeout
 
+        # Submitter uses the v3 access token from service token cache
         conn.authorization :Bearer, service_access_token
       end
+    end
+
+    def data_encryption
+      @data_encryption ||= DataEncryption.new(key: encryption_key)
     end
 
     def service_access_token
