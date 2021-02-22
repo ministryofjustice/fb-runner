@@ -54,11 +54,26 @@ module Platform
             {
               field_id: component.id,
               field_name: component.humanised_title,
-              answer: user_data[component.name]
+              answer: answer_for(page, component)
             }
           end
         }
       end.compact
+    end
+
+    def answer_for(page, component)
+      page_answers = MetadataPresenter::PageAnswers.new(page, user_data)
+      answer = page_answers.send(component.id)
+
+      if answer.is_a?(MetadataPresenter::DateField)
+        # how can we reuse the presenter code? Module?
+        I18n.l(
+          Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),
+          format: '%d %B %Y'
+        )
+      else
+        answer
+      end
     end
   end
 end
