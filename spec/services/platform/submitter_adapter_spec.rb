@@ -2,12 +2,14 @@ RSpec.describe Platform::SubmitterAdapter do
   subject(:adapter) do
     described_class.new(
       payload: payload,
-      root_url: root_url
+      root_url: root_url,
+      service_slug: service_slug
     )
   end
   let(:root_url) do
     'http://submitter.com'
   end
+  let(:service_slug) { 'lotr' }
 
   describe '#save' do
     let(:payload) do
@@ -36,10 +38,13 @@ RSpec.describe Platform::SubmitterAdapter do
     let(:key) do
       SecureRandom.uuid[0..31]
     end
+    let(:service_access_token) { double(Fb::Jwt::Auth::ServiceAccessToken) }
 
     before do
-      allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)
-        .and_return('some-token')
+      expect(Fb::Jwt::Auth::ServiceAccessToken).to receive(:new)
+        .with(issuer: 'lotr')
+        .and_return(service_access_token)
+      allow(service_access_token).to receive(:generate).and_return('some-token')
 
       allow(ENV).to receive(:[])
       allow(ENV).to receive(:[]).with('SUBMISSION_ENCRYPTION_KEY')

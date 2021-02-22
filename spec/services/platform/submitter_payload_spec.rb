@@ -125,7 +125,7 @@ RSpec.describe Platform::SubmitterPayload do
     let(:service_payload) do
       {
         id: service.service_id,
-        slug: service.slug,
+        slug: 'service-name',
         name: service.service_name
       }
     end

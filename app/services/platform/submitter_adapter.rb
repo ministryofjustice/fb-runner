@@ -1,17 +1,19 @@
 module Platform
   class SubmitterAdapter
     include Platform::Connection
-    attr_reader :payload, :root_url
+    attr_reader :payload, :root_url, :service_slug
 
     SUBSCRIPTION = 'submitter.request'.freeze
     TIMEOUT = 15
     V2_URL = '/v2/submissions'
 
     def initialize(payload:,
-                   root_url: ENV['SUBMITTER_URL']
+                   root_url: ENV['SUBMITTER_URL'],
+                   service_slug: ENV['SERVICE_SLUG']
                    )
       @payload = payload
       @root_url = root_url
+      @service_slug = service_slug
     end
 
     def save
@@ -26,7 +28,10 @@ module Platform
       ENV['SUBMISSION_ENCRYPTION_KEY']
     end
 
-    def subject
+    def service_access_token
+      @service_access_token ||= Fb::Jwt::Auth::ServiceAccessToken.new(
+        issuer: service_slug
+      ).generate
     end
 
     def subscription
