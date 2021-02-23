@@ -29,8 +29,11 @@ RSpec.describe Platform::Submission do
   end
 
   describe '#valid?' do
+    let(:submitter_url) { 'http://fb-awesome-submitter' }
+
     before do
       allow(ENV).to receive(:[])
+      allow(ENV).to receive(:[]).with('SUBMITTER_URL').and_return(submitter_url)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT')
         .and_return(service_email_output)
     end
@@ -43,8 +46,17 @@ RSpec.describe Platform::Submission do
       end
     end
 
-    context 'when required env vars are blank' do
+    context 'when service email output is blank' do
       let(:service_email_output) { nil }
+
+      it 'returns invalid' do
+        expect(submission).to_not be_valid
+      end
+    end
+
+    context 'when submitter url is blank' do
+      let(:service_email_output) { 'aragorn@middle-earth.uk' }
+      let(:submitter_url) { nil }
 
       it 'returns invalid' do
         expect(submission).to_not be_valid

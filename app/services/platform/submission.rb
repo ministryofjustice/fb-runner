@@ -3,7 +3,7 @@ module Platform
     include ActiveModel::Model
     attr_accessor :service, :user_data
 
-    REQUIRED_ENV_VARS = %w(SERVICE_EMAIL_OUTPUT).freeze
+    REQUIRED_ENV_VARS = %w(SERVICE_EMAIL_OUTPUT SUBMITTER_URL).freeze
 
     validate do
       if REQUIRED_ENV_VARS.any? { |env_var| ENV[env_var].blank? }
