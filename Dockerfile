@@ -2,7 +2,15 @@ FROM ruby:2.7.2-alpine3.12
 
 ARG UID=1001
 
-RUN apk add --update nodejs yarn build-base bash libcurl git tzdata
+RUN apk add --update nodejs yarn build-base bash libcurl git tzdata go
+
+# For load testing
+# Configure Go and install Vegeta
+ENV GOROOT /usr/lib/go
+ENV GOPATH /go
+ENV PATH /go/bin:$PATH
+RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
+RUN go get -u github.com/tsenart/vegeta
 
 RUN addgroup -g ${UID} -S appgroup && \
   adduser -u ${UID} -S appuser -G appgroup
