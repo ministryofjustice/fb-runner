@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+number_of_requests=100
+concurrency=100
+
+access_token=$1
+domain=$2
+user_identifier=$3
+slug=$4
+
+if [[ -z $domain ]]; then
+  domain="http://localhost:10001"
+fi
+
+if [[ $access_token =~ "You need to create" ]]; then
+  echo "access token must be set"
+  exit 1
+fi
+
+url="${domain}/service/${slug}/user/$user_identifier"
+
+echo "======= Vegeta Attack for 'POST ${url}' =========="
+  echo "POST $url" | \
+  vegeta attack -rate=150 -header "x-access-token-v2: ${access_token}" \
+  -body "./bin/datastore_request_body" \
+  -duration=20s | \
+  tee results.bin | \
+  vegeta report
+
+echo "======= Vegeta Attack for 'GET ${url}' =========="
+echo "GET $url" | \
+  vegeta attack --rate=150 -header "x-access-token-v2: ${access_token}" \
+  -duration=20s | \
+  tee results.bin | \
+  vegeta report
