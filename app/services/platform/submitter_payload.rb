@@ -19,15 +19,15 @@ module Platform
     def service_info
       {
         id: service.service_id,
-        slug: service.slug,
+        slug: service.service_slug,
         name: service.service_name
       }
     end
 
     def meta
       {
-        pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'],
-        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING']
+        pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'].to_s,
+        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s
       }
     end
 
@@ -35,10 +35,10 @@ module Platform
       [
         {
           kind: 'email',
-          to: ENV['SERVICE_EMAIL_OUTPUT'],
-          from: ENV['SERVICE_EMAIL_SENDER'],
-          subject: ENV['SERVICE_EMAIL_SUBJECT'],
-          email_body: ENV['SERVICE_EMAIL_BODY'],
+          to: ENV['SERVICE_EMAIL_OUTPUT'].to_s,
+          from: ENV['SERVICE_EMAIL_SENDER'].to_s,
+          subject: ENV['SERVICE_EMAIL_SUBJECT'].to_s,
+          email_body: ENV['SERVICE_EMAIL_BODY'].to_s,
           include_pdf: true
         }
       ]
@@ -65,7 +65,7 @@ module Platform
       page_answers = MetadataPresenter::PageAnswers.new(page, user_data)
       answer = page_answers.send(component.id)
 
-      if answer.is_a?(MetadataPresenter::DateField)
+      if answer.is_a?(MetadataPresenter::DateField) && answer.present?
         # how can we reuse the presenter code? Module?
         I18n.l(
           Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),

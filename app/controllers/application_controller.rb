@@ -27,19 +27,10 @@ class ApplicationController < ActionController::Base
   end
 
   def create_submission
-    submitter_payload = Platform::SubmitterPayload.new(
+    Platform::Submission.new(
       service: service,
       user_data: load_user_data
-    )
-    Platform::SubmitterAdapter.new(payload: submitter_payload.to_h).save
-    # if ENV['SUBMITTER_URL'] || email_to_blank?
-    #   payload = SubmitterPayload.new(load_user_data, service).to_h
-    #   -> date(3i)
-    #   -> date(2i)
-    #   -> date(1i)
-    #
-    #   SubmitterAdapter.new(payload).save
-    # end
+    ).save
   end
 
   def editable?
