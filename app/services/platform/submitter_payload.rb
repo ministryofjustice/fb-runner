@@ -2,6 +2,8 @@ module Platform
   class SubmitterPayload
     attr_reader :service, :user_data
 
+    EMAIL = 'email'.freeze
+
     def initialize(service:, user_data:)
       @service = service
       @user_data = user_data
@@ -26,19 +28,19 @@ module Platform
 
     def meta
       {
-        pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'].to_s,
-        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s
+        pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'],
+        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING']
       }
     end
 
     def actions
       [
         {
-          kind: 'email',
-          to: ENV['SERVICE_EMAIL_OUTPUT'].to_s,
-          from: ENV['SERVICE_EMAIL_SENDER'].to_s,
-          subject: ENV['SERVICE_EMAIL_SUBJECT'].to_s,
-          email_body: ENV['SERVICE_EMAIL_BODY'].to_s,
+          kind: EMAIL,
+          to: ENV['SERVICE_EMAIL_OUTPUT'],
+          from: ENV['SERVICE_EMAIL_SENDER'],
+          subject: ENV['SERVICE_EMAIL_SUBJECT'],
+          email_body: ENV['SERVICE_EMAIL_BODY'],
           include_pdf: true
         }
       ]
