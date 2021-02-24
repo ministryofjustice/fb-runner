@@ -8,8 +8,8 @@ module Platform
     V2_URL = '/v2/submissions'
 
     def initialize(payload:,
-                   root_url: ENV['SUBMITTER_URL'],
-                   service_slug: ENV['SERVICE_SLUG']
+                   service_slug:,
+                   root_url: ENV['SUBMITTER_URL']
                    )
       @payload = payload
       @root_url = root_url

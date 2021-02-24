@@ -12,7 +12,7 @@ module Platform
     end
 
     def save
-      invalid? || Platform::SubmitterAdapter.new(payload: submitter_payload).save
+      invalid? || Platform::SubmitterAdapter.new(service_slug: service.service_slug, payload: submitter_payload).save
     end
 
     def submitter_payload

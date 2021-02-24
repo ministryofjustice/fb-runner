@@ -10,10 +10,22 @@ RSpec.describe Platform::Submission do
     end
 
     context 'when valid' do
+      let(:adapter) { double }
+      let(:submitter_payload) { double }
+      let(:payload) { { encrypted_submission: '' } }
       let(:invalid) { false }
 
+      before do
+        allow(Platform::SubmitterPayload).to receive(:new)
+          .and_return(submitter_payload)
+        allow(submitter_payload).to receive(:to_h).and_return(payload)
+      end
+
       it 'sends the submission' do
-        expect_any_instance_of(Platform::SubmitterAdapter).to receive(:save)
+        expect(Platform::SubmitterAdapter).to receive(:new)
+          .with(payload: payload, service_slug: service.service_slug)
+          .and_return(adapter)
+        expect(adapter).to receive(:save)
         submission.save
       end
     end
