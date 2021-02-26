@@ -4,10 +4,11 @@ class ApplicationController < ActionController::Base
   before_action :require_basic_auth
 
   EXCEPTIONS = [
-    UserDatastoreAdapter::DatastoreTimeoutError,
-    UserDatastoreAdapter::DatastoreClientError
+    Platform::TimeoutError,
+    Platform::ClientError
   ]
   rescue_from(*EXCEPTIONS) do |exception|
+    Rails.logger.info(exception.message)
     render file: 'public/500.html', status: 500
   end
   layout 'metadata_presenter/application'
@@ -23,6 +24,13 @@ class ApplicationController < ActionController::Base
 
   def load_user_data
     UserData.new(session).load_data
+  end
+
+  def create_submission
+    Platform::Submission.new(
+      service: service,
+      user_data: load_user_data
+    ).save
   end
 
   def editable?

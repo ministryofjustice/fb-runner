@@ -1,5 +1,7 @@
 Rails.application.reloader.to_prepare do
-  ActiveSupport::Notifications.subscribe(UserDatastoreAdapter::SUBSCRIPTION) do |name, starts, ends, _, env|
+  ActiveSupport::Notifications.subscribe(
+    Platform::UserDatastoreAdapter::SUBSCRIPTION
+  ) do |name, starts, ends, _, env|
     url = env[:url]
     http_method = env[:method].to_s.upcase
     duration = ends - starts

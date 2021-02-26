@@ -1,4 +1,4 @@
-RSpec.describe UserDatastoreAdapter do
+RSpec.describe Platform::UserDatastoreAdapter do
   subject(:adapter) do
     described_class.new(session, root_url: root_url, service_slug: service_slug)
   end
@@ -24,7 +24,8 @@ RSpec.describe UserDatastoreAdapter do
 
   let(:expected_body) do
     JSON.generate({
-      payload: "EQkT/pSwcscYxHcUIgxmCDIlsTmAAfGioAXDLIxLGfi01BvnN8WnaqSFAURK\ndRgOMUHDMVPdLTS+Uf/wTAvj\n" })
+      payload: data_encryption.encrypt(params.to_json)
+    })
   end
 
   let(:params) do
@@ -37,8 +38,9 @@ RSpec.describe UserDatastoreAdapter do
     }
   end
   let(:empty_payload) do
-    JSON.generate({ payload: "BF4O5w==\n" })
+    JSON.generate({ payload: data_encryption.encrypt("{}") })
   end
+  let(:data_encryption) { DataEncryption.new(key: session[:user_token]) }
 
   before do
     allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)
@@ -53,7 +55,9 @@ RSpec.describe UserDatastoreAdapter do
         end
         let(:expected_body) do
           JSON.generate(
-            { payload: "EQkN/5mmdPEG300IOAArXDJd9l2MTqOItFDLY8JKAqzum2/sOtipL+2ZTwpc\nOhkOaA6SbRjeOSWkSvjsDHbxOzwTDcZDVSHm3Fv6/ZUBL1eYj3U0H3PEuuf+\ngOhI0/DtQ4uFfZYSuU11YR8DETBJksrJ\n" }
+            {
+              payload: data_encryption.encrypt(existing_answers.merge(params).to_json)
+            }
           )
         end
 
@@ -104,7 +108,7 @@ RSpec.describe UserDatastoreAdapter do
 
       it 'raises datastore error' do
         expect { adapter.save(params) }.to raise_error(
-          UserDatastoreAdapter::DatastoreClientError
+          Platform::ClientError
         )
       end
     end
@@ -119,7 +123,7 @@ RSpec.describe UserDatastoreAdapter do
 
         it 'raises datastore timeout error' do
           expect { adapter.save(params) }.to raise_error(
-            UserDatastoreAdapter::DatastoreTimeoutError
+            Platform::TimeoutError
           )
         end
       end
@@ -133,7 +137,7 @@ RSpec.describe UserDatastoreAdapter do
 
         it 'raises datastore timeout error' do
           expect { adapter.save(params) }.to raise_error(
-            UserDatastoreAdapter::DatastoreTimeoutError
+            Platform::TimeoutError
           )
         end
       end
