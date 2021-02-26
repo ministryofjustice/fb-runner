@@ -24,9 +24,9 @@ module Platform
     end
 
     def load_data
-      response = request(:get, url, {}).body['payload'] || {}
+      response = request(:get, url, {}).body['payload']
 
-      JSON.parse(data_encryption.decrypt(response)) || {}
+      JSON.parse(data_encryption.decrypt(response))
     rescue Platform::ResourceNotFound
       {}
     end
