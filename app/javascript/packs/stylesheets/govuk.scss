@@ -1,2 +1,13 @@
 $govuk-assets-path: "~govuk-frontend/govuk/assets/";
 @import "govuk-frontend/govuk/all";
+
+// Corrective tweak to make area non-full width in large view
+// Pointed out by design and shown in this example (at time of writing)
+// https://design-system.service.gov.uk/patterns/confirmation-pages/default/index.html 
+.govuk-panel--confirmation {
+  width: govuk-grid-width("two-thirds");
+
+  @include govuk-media-query($until: tablet) {
+    width: 100%;
+  }
+}
