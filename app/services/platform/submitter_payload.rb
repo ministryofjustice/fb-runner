@@ -51,7 +51,7 @@ module Platform
         next if page.components.blank?
 
         {
-          heading: '',
+          heading: heading(page),
           answers: page.components.map do |component|
             {
               field_id: component.id,
@@ -76,6 +76,10 @@ module Platform
       else
         answer
       end
+    end
+
+    def heading(page)
+      page.type == 'page.multiplequestions' ? page.heading : ''
     end
   end
 end

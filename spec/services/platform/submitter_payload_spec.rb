@@ -14,7 +14,9 @@ RSpec.describe Platform::SubmitterPayload do
       'holiday_date_1(3i)' => '30',
       'holiday_date_1(2i)' => '12',
       'holiday_date_1(1i)' => '2020',
-      'burgers_checkboxes_1' => ['Beef, cheese, tomato', 'Chicken, cheese, tomato']
+      'burgers_checkboxes_1' => ['Beef, cheese, tomato', 'Chicken, cheese, tomato'],
+      'star-wars-knowledge_text_1' => "Max Rebo Band",
+      'star-wars-knowledge_radios_1' => "Din Jarrin"
     }
   end
   let(:pdf_heading) do
@@ -115,6 +117,21 @@ RSpec.describe Platform::SubmitterPayload do
             field_id: "burgers_checkboxes_1",
             field_name: "What would you like on your burger?",
             answer: ['Beef, cheese, tomato', 'Chicken, cheese, tomato']
+          }
+        ]
+      },
+      {
+        heading: 'How well do you know Star Wars?',
+        answers: [
+          {
+            field_id: "star-wars-knowledge_text_1",
+            field_name: "What was the name of the band playing in Jabba's palace?",
+            answer: "Max Rebo Band"
+          },
+          {
+            field_id: "star-wars-knowledge_radios_1",
+            field_name: "What is The Mandalorian's real name?",
+            answer: "Din Jarrin"
           }
         ]
       }
