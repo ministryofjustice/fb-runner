@@ -25,6 +25,7 @@ RSpec.feature 'Navigation' do
     and_I_declare_my_dislike_of_star_wars
     and_I_add_my_holiday
     and_I_add_my_burger
+    and_I_add_my_star_wars_knowledge
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -45,6 +46,7 @@ RSpec.feature 'Navigation' do
     and_I_declare_my_dislike_of_star_wars
     and_I_add_my_holiday
     and_I_add_my_burger
+    and_I_add_my_star_wars_knowledge
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -114,6 +116,12 @@ RSpec.feature 'Navigation' do
     and_I_go_to_next_page
   end
 
+  def and_I_add_my_star_wars_knowledge
+    form.palace_band.set('Max Rebo Band')
+    form.mando_name.click
+    and_I_go_to_next_page
+  end
+
   def and_I_check_that_my_answers_are_correct
     expect(form.full_name_checkanswers.text).to include("Full name Han Solo")
     expect(form.email_checkanswers.text).to include(
@@ -128,6 +136,13 @@ RSpec.feature 'Navigation' do
     expect(form.burger_checkanswers.text).to include("Mozzarella, cheddar, feta")
     expect(form.holiday_checkanswers.text).to eq(
       'What is the day that you like to take holidays? 01 June 2021 Change Your answer for What is the day that you like to take holidays?'
+    )
+    expect(form.multiple_questions_heading.text).to include('How well do you know Star Wars?')
+    expect(form.star_wars_knowledge_1_checkanswers.text).to include(
+      "What was the name of the band playing in Jabba's palace? Max Rebo Band Change Your answer for What was the name of the band playing in Jabba's palace?"
+    )
+    expect(form.star_wars_knowledge_2_checkanswers.text).to include(
+      "What is The Mandalorian's real name? Din Jarrin Change Your answer for What is The Mandalorian's real name?"
     )
   end
 

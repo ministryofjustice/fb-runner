@@ -15,7 +15,10 @@ class VersionFixture < SitePrism::Page
   element :cheeseburger, :checkbox, 'Mozzarella, cheddar, feta'
   element :beef_burger, :checkbox, 'Beef, cheese, tomato'
   element :chicken_burger, :checkbox, 'Chicken, cheese, tomato'
+  element :palace_band, :field, "What was the name of the band playing in Jabba's palace?"
+  element :mando_name, :radio_button, 'Din Jarrin'
   element :back_link, :link, 'Back'
+  element :multiple_questions_heading, 'h3'
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
   elements :summary_list, '.govuk-summary-list__row'
@@ -71,5 +74,13 @@ class VersionFixture < SitePrism::Page
 
   def burger_checkanswers
     summary_list[7]
+  end
+
+  def star_wars_knowledge_1_checkanswers
+    summary_list[8]
+  end
+
+  def star_wars_knowledge_2_checkanswers
+    summary_list[9]
   end
 end
