@@ -29,7 +29,7 @@ module Platform
     def meta
       {
         pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'],
-        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING']
+        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s
       }
     end
 
