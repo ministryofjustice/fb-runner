@@ -173,7 +173,7 @@ RSpec.describe Platform::SubmitterPayload do
         .and_return(pdf_subheading)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT')
         .and_return(email_to)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SENDER')
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM')
         .and_return(email_from)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT')
         .and_return(email_subject)

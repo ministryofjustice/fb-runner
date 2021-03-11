@@ -38,7 +38,7 @@ module Platform
         {
           kind: EMAIL,
           to: ENV['SERVICE_EMAIL_OUTPUT'],
-          from: ENV['SERVICE_EMAIL_SENDER'],
+          from: ENV['SERVICE_EMAIL_FROM'],
           subject: ENV['SERVICE_EMAIL_SUBJECT'],
           email_body: ENV['SERVICE_EMAIL_BODY'],
           include_pdf: true
