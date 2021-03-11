@@ -23,7 +23,7 @@ RSpec.describe Platform::SubmitterPayload do
     "Middle Earth characters"
   end
   let(:pdf_subheading) do
-    "Gossip magazine about middle earth characters"
+    nil
   end
   let(:email_to) do
     "middle.earth.entertainment@magazine.co.uk"
@@ -146,12 +146,6 @@ RSpec.describe Platform::SubmitterPayload do
         name: service.service_name
       }
     end
-    let(:meta_payload) do
-      {
-        pdf_heading: pdf_heading,
-        pdf_subheading: pdf_subheading
-      }
-    end
     let(:actions_payload) do
       [
         {
@@ -173,7 +167,7 @@ RSpec.describe Platform::SubmitterPayload do
         .and_return(pdf_subheading)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT')
         .and_return(email_to)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SENDER')
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM')
         .and_return(email_from)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT')
         .and_return(email_subject)
@@ -185,16 +179,27 @@ RSpec.describe Platform::SubmitterPayload do
       expect(submitter_payload.to_h[:service]).to eq(service_payload)
     end
 
-    it 'sends meta info' do
-      expect(submitter_payload.to_h[:meta]).to eq(meta_payload)
-    end
-
     it 'sends actions info' do
       expect(submitter_payload.to_h[:actions]).to eq(actions_payload)
     end
 
     it 'sends pages info' do
       expect(submitter_payload.to_h[:pages]).to eq(pages_payload)
+    end
+
+    describe '#meta_payload' do
+      it 'SERVICE_EMAIL_PDF_SUBHEADING defaults to an empty string' do
+        expect(submitter_payload.to_h[:meta][:pdf_subheading]).to eq("")
+      end
+
+      it 'sends meta info' do
+        expect(submitter_payload.to_h[:meta]).to eq(
+          {
+            :pdf_heading=>pdf_heading,
+            :pdf_subheading=>""
+            }
+          )
+      end
     end
   end
 end

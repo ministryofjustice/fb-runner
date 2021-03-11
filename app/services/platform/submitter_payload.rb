@@ -29,7 +29,7 @@ module Platform
     def meta
       {
         pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'],
-        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING']
+        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s
       }
     end
 
@@ -38,7 +38,7 @@ module Platform
         {
           kind: EMAIL,
           to: ENV['SERVICE_EMAIL_OUTPUT'],
-          from: ENV['SERVICE_EMAIL_SENDER'],
+          from: ENV['SERVICE_EMAIL_FROM'],
           subject: ENV['SERVICE_EMAIL_SUBJECT'],
           email_body: ENV['SERVICE_EMAIL_BODY'],
           include_pdf: true
