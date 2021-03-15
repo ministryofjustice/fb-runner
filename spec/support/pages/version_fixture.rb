@@ -1,5 +1,6 @@
 class VersionFixture < SitePrism::Page
   set_url '/'
+  element :heading, 'h1'
   element :start_button, :button, 'Start'
   element :continue_button, :button, 'Continue'
   element :full_name_field, :field, 'Full name'

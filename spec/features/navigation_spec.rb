@@ -26,6 +26,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_holiday
     and_I_add_my_burger
     and_I_add_my_star_wars_knowledge
+    and_I_visit_the_how_many_lights_page
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -47,6 +48,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_holiday
     and_I_add_my_burger
     and_I_add_my_star_wars_knowledge
+    and_I_visit_the_how_many_lights_page
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -119,6 +121,11 @@ RSpec.feature 'Navigation' do
   def and_I_add_my_star_wars_knowledge
     form.palace_band.set('Max Rebo Band')
     form.mando_name.click
+    and_I_go_to_next_page
+  end
+
+  def and_I_visit_the_how_many_lights_page
+    expect(form.heading.text).to eq('Tell me how many lights you see')
     and_I_go_to_next_page
   end
 
