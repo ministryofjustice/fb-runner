@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+#main-content {
+  margin-bottom: 220px; /* approx height of footer - prevents visual overlap */
+  position: relative;
+}
+
+.fb-footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
