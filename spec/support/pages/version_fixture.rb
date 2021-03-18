@@ -1,4 +1,6 @@
 class VersionFixture < SitePrism::Page
+  extend DataContentId
+
   set_url '/'
   element :heading, 'h1'
   element :start_button, :button, 'Start'
@@ -25,8 +27,8 @@ class VersionFixture < SitePrism::Page
   elements :summary_list, '.govuk-summary-list__row'
   element :accept_and_send_button, :button, 'Accept and send application'
   element :confirmation_heading, '.govuk-panel__title'
-  element :confirmation_lede, '.govuk-panel__body'
-  element :confirmation_body, '.fb-body'
+  data_content_id :confirmation_lede, 'page[lede]'
+  data_content_id :confirmation_body, 'page[body]'
 
   def error_summary
     error_summary_list.map(&:text)

@@ -180,7 +180,9 @@ RSpec.feature 'Navigation' do
   def then_I_should_see_the_confirmation_message
     expect(form.confirmation_heading.text).to eq('Complaint sent')
     expect(form.confirmation_lede.text).to eq('Optional lede')
-    expect(form.confirmation_body.text).to eq("You'll receive a confirmation email")
+    expect(
+      form.confirmation_body.text.gsub('’', "'") # shrug
+    ).to eq("You'll receive a confirmation email")
   end
 
   def then_I_should_see_my_changed_full_name_on_check_your_answers
