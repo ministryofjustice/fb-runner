@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   ]
   rescue_from(*EXCEPTIONS) do |exception|
     Rails.logger.info(exception.message)
+    Sentry.capture_exception(exception)
     render file: 'public/500.html', status: 500
   end
   layout 'metadata_presenter/application'
