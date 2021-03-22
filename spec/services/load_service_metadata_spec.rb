@@ -3,16 +3,21 @@ RSpec.describe LoadServiceMetadata do
 
   describe '#to_h' do
     context 'when service metadata is present' do
+      let(:service_metadata) do
+        File.read(
+          MetadataPresenter::Engine.root.join('fixtures', 'service.json')
+        )
+      end
       let(:attributes) do
         {
-          service_metadata: %{{ "service_name": "Luke" }},
+          service_metadata: service_metadata,
           fixture: nil,
           asset_precompile: nil
         }
       end
 
       it 'returns the service metadata' do
-        expect(load_service_metadata.to_h).to eq({ 'service_name' => 'Luke' })
+        expect(load_service_metadata.to_h).to eq(JSON.parse(service_metadata))
       end
     end
 
@@ -63,6 +68,22 @@ RSpec.describe LoadServiceMetadata do
             }.to raise_error(LoadServiceMetadata::ServiceMetadataNotFoundError)
           end
         end
+      end
+    end
+
+    context 'when metadata is invalid' do
+      let(:attributes) do
+        {
+          service_metadata: %{{ "service_name": "Luke" }},
+          fixture: nil,
+          asset_precompile: nil
+        }
+      end
+
+      it 'raises JSON schema validation error' do
+        expect {
+          load_service_metadata.to_h
+        }.to raise_error(JSON::Schema::ValidationError)
       end
     end
   end
