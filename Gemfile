@@ -21,7 +21,7 @@ gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 5.2'
 gem 'fb-jwt-auth', '0.6.0'
 gem 'sentry-ruby', '~> 4.3.0'
-gem 'sentry-rails', '~> 4.3.1'
+gem 'sentry-rails', '~> 4.3.2'
 
 group :development, :test do
   gem 'brakeman'
