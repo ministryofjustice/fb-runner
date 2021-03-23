@@ -9,14 +9,26 @@ class LoadServiceMetadata
   end
 
   def to_h
-    if @service_metadata.blank? && File.exist?(@fixture)
-      puts("Loading fixture #{@fixture}")
-      return JSON.parse(File.read(@fixture))
+    if metadata_to_load
+      return metadata_to_load if valid_metadata?
     end
 
-    return JSON.parse(@service_metadata) if @service_metadata.present?
-
     raise ServiceMetadataNotFoundError.new(error_message) unless @asset_precompile.present?
+  end
+
+  def metadata_to_load
+    @_metadata_to_load ||= begin
+      if @service_metadata.blank? && File.exist?(@fixture)
+        puts("Loading fixture #{@fixture}")
+        return JSON.parse(File.read(@fixture))
+      end
+
+      return JSON.parse(@service_metadata) if @service_metadata.present?
+    end
+  end
+
+  def valid_metadata?
+    MetadataPresenter::ValidateSchema.validate(metadata_to_load, 'service.base')
   end
 
   def error_message
