@@ -214,11 +214,11 @@ GEM
     sentry-rails (4.3.2)
       rails (>= 5.0)
       sentry-ruby-core (~> 4.3.0)
-    sentry-ruby (4.3.0)
+    sentry-ruby (4.3.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (>= 1.0)
-      sentry-ruby-core (= 4.3.0)
-    sentry-ruby-core (4.3.0)
+      sentry-ruby-core (= 4.3.1)
+    sentry-ruby-core (4.3.1)
       concurrent-ruby
       faraday
     simplecov (0.21.2)
@@ -295,7 +295,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (>= 6)
   sentry-rails (~> 4.3.2)
-  sentry-ruby (~> 4.3.0)
+  sentry-ruby (~> 4.3.1)
   simplecov
   simplecov-console
   site_prism
