@@ -14,7 +14,7 @@ gem 'jwt'
 #     branch: 'submissions-v2'
 #gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
-gem 'metadata_presenter', '0.19.2'
+gem 'metadata_presenter', '0.20.0'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 5.2'
 gem 'rails', '~> 6.1.3'
