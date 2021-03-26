@@ -48,11 +48,12 @@ module Platform
 
     def pages
       service.pages.map do |page|
-        next if page.components.blank?
+        components = strip_content_components(page.components)
+        next if components.empty?
 
         {
           heading: heading(page),
-          answers: page.components.map do |component|
+          answers: components.map do |component|
             {
               field_id: component.id,
               field_name: component.humanised_title,
@@ -80,6 +81,13 @@ module Platform
 
     def heading(page)
       page.type == 'page.multiplequestions' ? page.heading : ''
+    end
+
+    private
+
+    def strip_content_components(components)
+      return [] if components.blank?
+      components.reject(&:content?)
     end
   end
 end
