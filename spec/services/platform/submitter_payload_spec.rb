@@ -3,6 +3,14 @@ RSpec.describe Platform::SubmitterPayload do
     described_class.new(service: service, user_data: user_data)
   end
 
+  def content_components
+    service.pages.map(&:components).compact.flatten.select(&:content?)
+  end
+
+  def content_components_text
+    content_components.map(&:html)
+  end
+
   let(:user_data) do
     {
       'name_text_1' => 'Legolas',
@@ -200,6 +208,14 @@ RSpec.describe Platform::SubmitterPayload do
             }
           )
       end
+    end
+
+    it 'does not send any content components text in the payload' do
+      answers = submitter_payload.to_h[:pages].map do |page_answers|
+        page_answers[:answers].map { |answers| answers[:answer] }
+      end.flatten
+
+      expect(answers & content_components_text).to be_empty
     end
   end
 end
