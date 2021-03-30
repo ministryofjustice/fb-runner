@@ -18,6 +18,9 @@ jobs:
           name: Security check
           command: make security-check
       - run:
+          name: Lint
+          command: make lint
+      - run:
           name: Unit tests
           command: make spec
       - slack/status: &slack_status
