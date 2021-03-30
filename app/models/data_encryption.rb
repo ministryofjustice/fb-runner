@@ -4,7 +4,7 @@ class DataEncryption
   attr_reader :cipher, :key, :iv
 
   def initialize(key:)
-    @cipher = OpenSSL::Cipher::AES.new(256, :CTR)
+    @cipher = OpenSSL::Cipher.new('aes-256-ctr')
     @key = key
     @iv = @key[0..15]
   end

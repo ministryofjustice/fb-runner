@@ -1,5 +1,6 @@
 class UserData
   attr_reader :session
+
   delegate :save, :load_data, to: :adapter
 
   def initialize(session, adapter: nil)

@@ -47,7 +47,7 @@ module Platform
     end
 
     def pages
-      service.pages.map do |page|
+      service.pages.map { |page|
         components = strip_content_components(page.components)
         next if components.empty?
 
@@ -61,7 +61,7 @@ module Platform
             }
           end
         }
-      end.compact
+      }.compact
     end
 
     def answer_for(page, component)
@@ -83,10 +83,11 @@ module Platform
       page.type == 'page.multiplequestions' ? page.heading : ''
     end
 
-    private
+  private
 
     def strip_content_components(components)
       return [] if components.blank?
+
       components.reject(&:content?)
     end
   end

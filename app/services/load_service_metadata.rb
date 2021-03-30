@@ -9,11 +9,11 @@ class LoadServiceMetadata
   end
 
   def to_h
-    if metadata_to_load
-      return metadata_to_load if valid_metadata?
+    if metadata_to_load && valid_metadata?
+      return metadata_to_load
     end
 
-    raise ServiceMetadataNotFoundError.new(error_message) unless @asset_precompile.present?
+    raise ServiceMetadataNotFoundError, error_message if @asset_precompile.blank?
   end
 
   def metadata_to_load

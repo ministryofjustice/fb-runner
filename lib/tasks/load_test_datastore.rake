@@ -4,14 +4,14 @@ namespace :load_test do
   Usage
   rake load_test:engage[service_slug,3000,30]
   "
-  task :engage, [:slug, :concurrency, :duration] => :environment do |_t, args|
+  task :engage, %i[slug concurrency duration] => :environment do |_t, args|
     slug = args[:slug]
     concurrency = args[:concurrency] || 150
     duration = args[:duration] || 25
 
     Fb::Jwt::Auth.configure do |config|
       config.issuer = slug
-      config.namespace = "formbuilder-services-test-dev"
+      config.namespace = 'formbuilder-services-test-dev'
       config.encoded_private_key = ENV['ENCODED_PRIVATE_KEY']
     end
 

@@ -74,7 +74,7 @@ RSpec.describe LoadServiceMetadata do
     context 'when metadata is invalid' do
       let(:attributes) do
         {
-          service_metadata: %{{ "service_name": "Luke" }},
+          service_metadata: %({ "service_name": "Luke" }),
           fixture: nil,
           asset_precompile: nil
         }

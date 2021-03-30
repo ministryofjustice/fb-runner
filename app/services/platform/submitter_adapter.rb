@@ -9,8 +9,7 @@ module Platform
 
     def initialize(payload:,
                    service_slug:,
-                   root_url: ENV['SUBMITTER_URL']
-                   )
+                   root_url: ENV['SUBMITTER_URL'])
       @payload = payload
       @root_url = root_url
       @service_slug = service_slug

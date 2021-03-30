@@ -23,21 +23,21 @@ RSpec.describe Platform::SubmitterPayload do
       'holiday_date_1(2i)' => '12',
       'holiday_date_1(1i)' => '2020',
       'burgers_checkboxes_1' => ['Beef, cheese, tomato', 'Chicken, cheese, tomato'],
-      'star-wars-knowledge_text_1' => "Max Rebo Band",
-      'star-wars-knowledge_radios_1' => "Din Jarrin"
+      'star-wars-knowledge_text_1' => 'Max Rebo Band',
+      'star-wars-knowledge_radios_1' => 'Din Jarrin'
     }
   end
   let(:pdf_heading) do
-    "Middle Earth characters"
+    'Middle Earth characters'
   end
   let(:pdf_subheading) do
     nil
   end
   let(:email_to) do
-    "middle.earth.entertainment@magazine.co.uk"
+    'middle.earth.entertainment@magazine.co.uk'
   end
   let(:email_from) do
-    "MoJ forms <moj-online@digital.justice.gov.uk>"
+    'MoJ forms <moj-online@digital.justice.gov.uk>'
   end
   let(:email_subject) do
     'All info about middle earth characters'
@@ -49,72 +49,12 @@ RSpec.describe Platform::SubmitterPayload do
   let(:pages_payload) do
     [
       {
-        heading: "",
+        heading: '',
         answers: [
           {
-            field_id: "name_text_1",
-            field_name: "Full name",
-            answer: "Legolas"
-          }
-        ]
-      },
-      {
-        heading: "",
-        answers: [
-          {
-            field_id: "email-address_email_1",
-            field_name: "Your email address",
-            answer: "legolas@middle.earth.com"
-          }
-        ]
-      },
-      {
-        heading: "",
-        answers: [
-          {
-            field_id: "parent-name_text_1",
-            field_name: "Parent name",
-            answer: "Thranduil"
-          }
-        ]
-      },
-      {
-        heading: "",
-        answers: [
-          {
-            field_id: "your-age_number_1",
-            field_name: "Your age",
-            answer: "2931"
-          }
-        ]
-      },
-      {
-        heading: "",
-        answers: [
-          {
-            field_id: "family-hobbies_text_1",
-            field_name: "Your family hobbies",
-            answer: "Archery"
-          }
-        ]
-      },
-      {
-        heading: "",
-        answers: [
-          {
-            field_id: "do-you-like-star-wars_radios_1",
-            field_name: "Do you like Star Wars?",
-            answer: "Only on weekends"
-          }
-        ]
-      },
-      {
-        heading: "",
-        answers: [
-          {
-            field_id: "holiday_date_1",
-            field_name: "What is the day that you like to take holidays?",
-            answer: "30 December 2020"
+            field_id: 'name_text_1',
+            field_name: 'Full name',
+            answer: 'Legolas'
           }
         ]
       },
@@ -122,8 +62,68 @@ RSpec.describe Platform::SubmitterPayload do
         heading: '',
         answers: [
           {
-            field_id: "burgers_checkboxes_1",
-            field_name: "What would you like on your burger?",
+            field_id: 'email-address_email_1',
+            field_name: 'Your email address',
+            answer: 'legolas@middle.earth.com'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            field_id: 'parent-name_text_1',
+            field_name: 'Parent name',
+            answer: 'Thranduil'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            field_id: 'your-age_number_1',
+            field_name: 'Your age',
+            answer: '2931'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            field_id: 'family-hobbies_text_1',
+            field_name: 'Your family hobbies',
+            answer: 'Archery'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            field_id: 'do-you-like-star-wars_radios_1',
+            field_name: 'Do you like Star Wars?',
+            answer: 'Only on weekends'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            field_id: 'holiday_date_1',
+            field_name: 'What is the day that you like to take holidays?',
+            answer: '30 December 2020'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            field_id: 'burgers_checkboxes_1',
+            field_name: 'What would you like on your burger?',
             answer: ['Beef, cheese, tomato', 'Chicken, cheese, tomato']
           }
         ]
@@ -132,14 +132,14 @@ RSpec.describe Platform::SubmitterPayload do
         heading: 'How well do you know Star Wars?',
         answers: [
           {
-            field_id: "star-wars-knowledge_text_1",
+            field_id: 'star-wars-knowledge_text_1',
             field_name: "What was the name of the band playing in Jabba's palace?",
-            answer: "Max Rebo Band"
+            answer: 'Max Rebo Band'
           },
           {
-            field_id: "star-wars-knowledge_radios_1",
+            field_id: 'star-wars-knowledge_radios_1',
             field_name: "What is The Mandalorian's real name?",
-            answer: "Din Jarrin"
+            answer: 'Din Jarrin'
           }
         ]
       }
@@ -197,23 +197,23 @@ RSpec.describe Platform::SubmitterPayload do
 
     describe '#meta_payload' do
       it 'SERVICE_EMAIL_PDF_SUBHEADING defaults to an empty string' do
-        expect(submitter_payload.to_h[:meta][:pdf_subheading]).to eq("")
+        expect(submitter_payload.to_h[:meta][:pdf_subheading]).to eq('')
       end
 
       it 'sends meta info' do
         expect(submitter_payload.to_h[:meta]).to eq(
           {
-            :pdf_heading=>pdf_heading,
-            :pdf_subheading=>""
-            }
-          )
+            pdf_heading: pdf_heading,
+            pdf_subheading: ''
+          }
+        )
       end
     end
 
     it 'does not send any content components text in the payload' do
-      answers = submitter_payload.to_h[:pages].map do |page_answers|
+      answers = submitter_payload.to_h[:pages].map { |page_answers|
         page_answers[:answers].map { |answers| answers[:answer] }
-      end.flatten
+      }.flatten
 
       expect(answers & content_components_text).to be_empty
     end
