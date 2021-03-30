@@ -1,0 +1,36 @@
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
+    - config/rails.yml
+
+AllCops:
+  # Exclude anything that isn't really part of our code.
+  # rails_helper is excluded because it's full of solecisms, but it's mostly
+  # generated code and copy-and-pasted snipets from READMEs.
+  Exclude:
+    - "vendor/**/*"
+    - "db/**/*"
+    - "bin/**/*"
+    - "config/**/*"
+    - "tmp/**/*"
+    - "node_modules/**/*"
+    - "spec/support/helpers/feature_steps.rb"
+    - "spec/features/*"
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context', 'let']
+
+Rails/FilePath:
+  EnforcedStyle: arguments

@@ -9,36 +9,38 @@ gem 'faraday_middleware'
 gem 'jwt'
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-#gem 'metadata_presenter',
+# gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 'submissions-v2'
-#gem 'metadata_presenter', path: '../fb-metadata-presenter'
+# gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
+gem 'fb-jwt-auth', '0.6.0'
 gem 'metadata_presenter', '0.22.0'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 5.2'
 gem 'rails', '~> 6.1.3'
 gem 'sass-rails', '>= 6'
-gem 'webpacker', '~> 5.2'
-gem 'fb-jwt-auth', '0.6.0'
-gem 'sentry-ruby', '~> 4.3.1'
 gem 'sentry-rails', '~> 4.3.2'
+gem 'sentry-ruby', '~> 4.3.1'
+gem 'webpacker', '~> 5.2'
 
 group :development, :test do
   gem 'brakeman'
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails'
-  gem 'webmock'
-  gem 'simplecov'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
-  gem 'site_prism'
+  gem 'rspec-rails'
+  gem 'simplecov'
   gem 'simplecov-console'
+  gem 'site_prism'
+  gem 'webmock'
 end
 
 group :development do
   gem 'dotenv-rails'
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.5'
+  gem 'rubocop', '~> 1.10.0'
+  gem 'rubocop-govuk'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console', '>= 3.3.0'
 end
