@@ -29,6 +29,9 @@ class LoadServiceMetadata
 
   def valid_metadata?
     MetadataPresenter::ValidateSchema.validate(metadata_to_load, 'service.base')
+    Array(metadata_to_load['pages']).each do |page|
+      MetadataPresenter::ValidateSchema.validate(page, page['_type'])
+    end
   end
 
   def error_message
