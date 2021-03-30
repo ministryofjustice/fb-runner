@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   EXCEPTIONS = [
     Platform::TimeoutError,
     Platform::ClientError
-  ]
+  ].freeze
   rescue_from(*EXCEPTIONS) do |exception|
     Rails.logger.info(exception.message)
     Sentry.capture_exception(exception)
