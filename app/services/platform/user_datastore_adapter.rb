@@ -31,7 +31,7 @@ module Platform
       {}
     end
 
-  private
+    private
 
     def url
       "/service/#{service_slug}/user/#{subject}"

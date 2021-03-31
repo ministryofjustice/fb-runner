@@ -83,7 +83,7 @@ module Platform
       page.type == 'page.multiplequestions' ? page.heading : ''
     end
 
-  private
+    private
 
     def strip_content_components(components)
       return [] if components.blank?
