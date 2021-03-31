@@ -36,6 +36,7 @@ end
 
 Sentry.init do |config|
   config.breadcrumbs_logger = [:active_support_logger]
+  config.logger =  Logger.new(STDOUT)
 
   config.before_send = lambda do |event, _hint|
     if event.request && event.request.data
