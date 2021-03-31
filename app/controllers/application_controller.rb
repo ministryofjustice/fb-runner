@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   EXCEPTIONS = [
     Platform::TimeoutError,
     Platform::ClientError
-  ]
+  ].freeze
   rescue_from(*EXCEPTIONS) do |exception|
     Rails.logger.info(exception.message)
     Sentry.capture_exception(exception)
-    render file: 'public/500.html', status: 500
+    render file: 'public/500.html', status: :internal_server_error
   end
   layout 'metadata_presenter/application'
 
@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   helper_method :editable?
 
   def answer_params
-    params.permit(:answers => {})[:answers] || {}
+    params.permit(answers: {})[:answers] || {}
   end
 
   def require_basic_auth

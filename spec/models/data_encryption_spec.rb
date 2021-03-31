@@ -1,10 +1,10 @@
 RSpec.describe DataEncryption do
-subject(:data_encryption) do
-  described_class.new(key: key)
-end
+  subject(:data_encryption) do
+    described_class.new(key: key)
+  end
 
-let(:data){'foo'}
-let(:key) {'qwertyqwertyqwertyqwertyqwertyqw'}
+  let(:data) { 'foo' }
+  let(:key) { 'qwertyqwertyqwertyqwertyqwertyqw' }
 
   context 'when encrypting and decrypting the payload' do
     it 'encrypts the payload' do

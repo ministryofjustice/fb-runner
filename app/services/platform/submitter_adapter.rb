@@ -5,12 +5,11 @@ module Platform
 
     SUBSCRIPTION = 'submitter.request'.freeze
     TIMEOUT = 15
-    V2_URL = '/v2/submissions'
+    V2_URL = '/v2/submissions'.freeze
 
     def initialize(payload:,
                    service_slug:,
-                   root_url: ENV['SUBMITTER_URL']
-                   )
+                   root_url: ENV['SUBMITTER_URL'])
       @payload = payload
       @root_url = root_url
       @service_slug = service_slug

@@ -3,14 +3,11 @@ RSpec.describe UserData do
   let(:session) { {} }
   let(:adapter) do
     class MyCustomAdapter
-      def initialize(session)
-      end
+      def initialize(session); end
 
-      def save(params)
-      end
+      def save(params); end
 
-      def load_data
-      end
+      def load_data; end
     end
 
     MyCustomAdapter

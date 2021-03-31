@@ -38,7 +38,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     }
   end
   let(:empty_payload) do
-    JSON.generate({ payload: data_encryption.encrypt("{}") })
+    JSON.generate({ payload: data_encryption.encrypt('{}') })
   end
   let(:data_encryption) { DataEncryption.new(key: session[:user_token]) }
 
