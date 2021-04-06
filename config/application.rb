@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative "../lib/rack_x_robots_tag"
 
 require "rails"
 # Pick the frameworks you want:
@@ -22,6 +23,7 @@ Bundler.require(*Rails.groups)
 module FbRunner
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.middleware.use Rack::XRobotsTag
     config.load_defaults 6.0
 
     # Settings in config/environments/* take precedence over those specified here.

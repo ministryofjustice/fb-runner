@@ -28,6 +28,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'simplecov-console'
