@@ -69,6 +69,17 @@ jobs:
             K8S_NAMESPACE: formbuilder-services-test-production
           command: './deploy-scripts/bin/restart_all_pods'
       - slack/status: *slack_status
+  acceptance_tests:
+    docker: *ecr_image
+    resource_class: large
+    steps:
+      - setup_remote_docker
+      - run: *deploy_scripts
+      - run:
+          name: Run acceptance tests
+          command: './deploy-scripts/bin/acceptance_tests'
+      - slack/status: *slack_status
+
 workflows:
   version: 2
   test_and_build:
@@ -81,3 +92,10 @@ workflows:
             branches:
               only:
                 - main
+      - acceptance_tests:
+          requires:
+            - build_and_deploy_to_test
+          filters:
+            branches:
+              only:
+                - master
