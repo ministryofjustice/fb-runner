@@ -79,6 +79,38 @@ jobs:
           name: Run acceptance tests
           command: './deploy-scripts/bin/acceptance_tests'
       - slack/status: *slack_status
+  build_and_deploy_to_live:
+    docker: *ecr_image
+    steps:
+      - checkout
+      - setup_remote_docker
+      - add_ssh_keys: *ssh_keys
+      - run: *base_environment_variables
+      - run: *deploy_scripts
+      - run:
+          name: build and push docker images
+          environment:
+            ENVIRONMENT_NAME: live
+          command: './deploy-scripts/bin/build'
+      - run:
+          name: Restart the runners live dev
+          environment:
+            PLATFORM_ENV: live
+            DEPLOYMENT_ENV: dev
+            K8S_NAMESPACE: formbuilder-services-live-dev
+          command: './deploy-scripts/bin/restart_all_pods'
+      - run:
+          name: Restart the runners in live production
+          environment:
+            PLATFORM_ENV: live
+            DEPLOYMENT_ENV: production
+            K8S_NAMESPACE: formbuilder-services-live-production
+          command: './deploy-scripts/bin/restart_all_pods'
+      - slack/status:
+          only_for_branches: master
+          success_message: ":rocket:  Successfully deployed to Live  :guitar:"
+          failure_message: ":alert:  Failed to deploy to Live  :try_not_to_cry:"
+          include_job_number_field: false
 
 workflows:
   version: 2
@@ -95,7 +127,10 @@ workflows:
       - acceptance_tests:
           requires:
             - build_and_deploy_to_test
-          filters:
-            branches:
-              only:
-                - main
+      - confirm_live_build:
+          type: approval
+          requires:
+            - acceptance_tests
+      - build_and_deploy_to_live:
+          requires:
+            - confirm_live_build
