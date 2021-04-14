@@ -1,6 +1,10 @@
 RSpec.feature 'Navigation' do
   let(:form) { VersionFixture.new }
 
+  before do
+    allow(VerifySession).to receive(:before).and_return(false)
+  end
+
   background do
     given_the_service_has_a_metadata
   end
