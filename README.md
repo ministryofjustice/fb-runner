@@ -1,9 +1,12 @@
 # README
 
+## Setup
+Ensure you are running on Node version 14.16.1:
+`nvm use 14.16.1`
+
 To run the project locally, execute the following steps:
-- Install Ruby dependencies `bundle install`
-- Install all dependencies `yarn install`
-- Bundle JavaScript assets `./bin/webpack`
+- Install Ruby dependencies: `bundle install`
+- Compile all assets and run webpack: `make assets`
 
 ## Start the Rails server
 

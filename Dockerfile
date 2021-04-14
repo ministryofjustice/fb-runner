@@ -2,7 +2,9 @@ FROM ruby:2.7.2-alpine3.12
 
 ARG UID=1001
 
-RUN apk add --update nodejs yarn build-base bash libcurl git tzdata go
+RUN apk add --update yarn build-base bash libcurl git tzdata go
+
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs=14.16.1-r2 npm
 
 # For load testing
 # Configure Go and install Vegeta

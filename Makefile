@@ -32,3 +32,8 @@ lint:
 spec:
 	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rspec
 
+.PHONY: assets
+assets:
+	yarn install
+	bundle exec rails assets:precompile
+	./bin/webpack
