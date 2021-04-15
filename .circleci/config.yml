@@ -107,7 +107,7 @@ jobs:
             K8S_NAMESPACE: formbuilder-services-live-production
           command: './deploy-scripts/bin/restart_all_pods'
       - slack/status:
-          only_for_branches: master
+          only_for_branches: main
           success_message: ":rocket:  Successfully deployed to Live  :guitar:"
           failure_message: ":alert:  Failed to deploy to Live  :try_not_to_cry:"
           include_job_number_field: false
@@ -127,6 +127,11 @@ workflows:
       - acceptance_tests:
           requires:
             - build_and_deploy_to_test
+      - slack/approval-notification:
+          message: ":portalorangeparrot:  Deployment to Live pending approval  :portalblueparrot:"
+          include_job_number_field: false
+          requires:
+            - acceptance_tests
       - confirm_live_build:
           type: approval
           requires:
