@@ -32,7 +32,8 @@ RSpec.describe Platform::SubmitterAdapter do
       {
         encrypted_submission: DataEncryption.new(key: key).encrypt(
           JSON.generate(payload)
-        )
+        ),
+        service_slug: service_slug
       }
     end
     let(:key) do

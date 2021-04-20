@@ -16,11 +16,14 @@ module Platform
     end
 
     def save
-      request(:post, V2_URL, encrypted_submission)
+      request(:post, V2_URL, request_body)
     end
 
-    def encrypted_submission
-      { encrypted_submission: data_encryption.encrypt(payload.to_json) }
+    def request_body
+      {
+        encrypted_submission: data_encryption.encrypt(payload.to_json),
+        service_slug: service_slug
+      }
     end
 
     def encryption_key
