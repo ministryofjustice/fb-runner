@@ -7,7 +7,9 @@ class VerifySession
   end
 
   def self.allowed_pages?(controller)
-    urls = controller.service.standalone_pages.map(&:url)
+    urls = controller.service.standalone_pages.map do |page|
+      strip_url(page.url)
+    end
 
     controller.request.path == controller.root_path ||
       urls.include?(strip_url(controller.request.path))
