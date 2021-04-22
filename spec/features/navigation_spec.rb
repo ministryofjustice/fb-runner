@@ -136,12 +136,12 @@ RSpec.feature 'Navigation' do
   def and_I_check_that_my_answers_are_correct
     expect(form.full_name_checkanswers.text).to include("Full name Han Solo")
     expect(form.email_checkanswers.text).to include(
-      "Your email address han.solo@gmail.com"
+      "Email address han.solo@gmail.com"
     )
     expect(form.parent_checkanswers.text).to include("Parent name Unknown")
     expect(form.age_checkanswers.text).to include("Your age 31")
     expect(form.family_hobbies_checkanswers.text).to include(
-      "Your family hobbies Play with the dogs Surfing! Change Your answer for Your family hobbies"
+      "Family Hobbies Play with the dogs Surfing! Change Your answer for Family Hobbies"
     )
     expect(form.do_you_like_star_wars_checkanswers.text).to include("Hell no!")
     expect(form.burger_checkanswers.text).to include("Mozzarella, cheddar, feta")
@@ -183,10 +183,10 @@ RSpec.feature 'Navigation' do
 
   def then_I_should_see_the_confirmation_message
     expect(form.confirmation_heading.text).to eq('Complaint sent')
-    expect(form.confirmation_lede.text).to eq('Optional lede')
     expect(
       form.confirmation_body.text.gsub('’', "'") # shrug
-    ).to eq("You'll receive a confirmation email")
+    ).to eq('Some day I will be the most powerful Jedi ever!')
+    expect(form.text).not_to include('Optional lede')
   end
 
   def then_I_should_see_my_changed_full_name_on_check_your_answers

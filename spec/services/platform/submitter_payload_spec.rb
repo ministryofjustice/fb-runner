@@ -14,10 +14,10 @@ RSpec.describe Platform::SubmitterPayload do
   let(:user_data) do
     {
       'name_text_1' => 'Legolas',
-      'email-address_email_1' => 'legolas@middle.earth.com',
+      'email-address_text_1' => 'legolas@middle.earth.com',
       'parent-name_text_1' => 'Thranduil',
       'your-age_number_1' => '2931',
-      'family-hobbies_text_1' => 'Archery',
+      'family-hobbies_textarea_1' => 'Archery',
       'do-you-like-star-wars_radios_1' => 'Only on weekends',
       'holiday_date_1(3i)' => '30',
       'holiday_date_1(2i)' => '12',
@@ -62,8 +62,8 @@ RSpec.describe Platform::SubmitterPayload do
         heading: '',
         answers: [
           {
-            field_id: 'email-address_email_1',
-            field_name: 'Your email address',
+            field_id: 'email-address_text_1',
+            field_name: 'Email address',
             answer: 'legolas@middle.earth.com'
           }
         ]
@@ -92,8 +92,8 @@ RSpec.describe Platform::SubmitterPayload do
         heading: '',
         answers: [
           {
-            field_id: 'family-hobbies_text_1',
-            field_name: 'Your family hobbies',
+            field_id: 'family-hobbies_textarea_1',
+            field_name: 'Family Hobbies',
             answer: 'Archery'
           }
         ]
@@ -150,7 +150,7 @@ RSpec.describe Platform::SubmitterPayload do
     let(:service_payload) do
       {
         id: service.service_id,
-        slug: 'service-name',
+        slug: 'version-fixture',
         name: service.service_name
       }
     end

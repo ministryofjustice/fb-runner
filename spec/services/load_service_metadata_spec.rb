@@ -33,7 +33,7 @@ RSpec.describe LoadServiceMetadata do
 
         it 'returns the service metadata from fixture' do
           expect(load_service_metadata.to_h).to include(
-            'service_name' => 'Service name'
+            'service_name' => 'Version Fixture'
           )
         end
       end
