@@ -22,7 +22,7 @@ gem 'rails', '~> 6.1.3'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 4.3.4'
 gem 'sentry-ruby', '~> 4.3.2'
-gem 'webpacker', '~> 5.2'
+gem 'webpacker', '~> 5.3'
 
 group :development, :test do
   gem 'brakeman'
