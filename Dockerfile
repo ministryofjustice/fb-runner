@@ -2,16 +2,14 @@ FROM ruby:2.7.2-alpine3.12
 
 ARG UID=1001
 
-RUN apk add --update yarn build-base bash libcurl git tzdata go
+RUN apk add --update yarn build-base bash libcurl git tzdata
 
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs=14.16.1-r2 npm
 
 # For load testing
-# Configure Go and install Vegeta
-ENV GOROOT /usr/lib/go
-ENV GOPATH /go
-ENV PATH /go/bin:$PATH
-RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
+# Copy Go and install Vegeta
+COPY --from=golang:1.16-alpine /usr/local/go/ /usr/local/go/
+ENV PATH="/usr/local/go/bin:${PATH}"
 RUN go get -u github.com/tsenart/vegeta
 
 RUN addgroup -g ${UID} -S appgroup && \
