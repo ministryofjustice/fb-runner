@@ -101,7 +101,7 @@ GEM
     faraday-net_http_persistent (1.1.0)
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
-    fb-jwt-auth (0.6.0)
+    fb-jwt-auth (0.7.0)
       activesupport
       json
       jwt
@@ -327,7 +327,7 @@ DEPENDENCIES
   dotenv-rails
   faraday
   faraday_middleware
-  fb-jwt-auth (= 0.6.0)
+  fb-jwt-auth (= 0.7.0)
   jwt
   listen (~> 3.5)
   metadata_presenter (= 1.0.7)
