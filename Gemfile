@@ -7,15 +7,16 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'jwt'
+gem 'fb-jwt-auth', '0.7.0'
+
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-# gem 'metadata_presenter',
-#     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'submissions-v2'
-# gem 'metadata_presenter', path: '../fb-metadata-presenter'
+gem 'metadata_presenter',
+     github: 'ministryofjustice/fb-metadata-presenter',
+     branch: 'render-upload-page'
+#gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
-gem 'fb-jwt-auth', '0.7.0'
-gem 'metadata_presenter', '1.0.8'
+#gem 'metadata_presenter', '1.0.8'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 5.3'
 gem 'rails', '~> 6.1.3'
