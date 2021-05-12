@@ -21,7 +21,7 @@ gem 'puma', '~> 5.3'
 gem 'rails', '~> 6.1.3'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 4.4.0'
-gem 'sentry-ruby', '~> 4.4.1'
+gem 'sentry-ruby', '~> 4.4.2'
 gem 'webpacker', '~> 5.3'
 
 group :development, :test do
