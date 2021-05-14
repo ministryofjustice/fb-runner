@@ -28,6 +28,18 @@ class ApplicationController < ActionController::Base
     UserData.new(session).load_data
   end
 
+  def upload_file
+    @page_answers.page.upload_components.each do |component|
+      user_filestore_payload = Platform::UserFilestorePayload.new(
+        @page_answers.send(component.id)
+      ).call
+      Platform::UserFilestoreAdapter.new(
+        session,
+        payload: user_filestore_payload
+      ).call
+    end
+  end
+
   def create_submission
     Platform::Submission.new(
       service: service,

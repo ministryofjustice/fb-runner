@@ -1,17 +1,55 @@
 module Platform
   class UserFilestorePayload
-    def initialize
+    attr_reader :file_details
+
+    DEFAULT_EXPIRATION = 28.freeze
+    ALLOWED_TYPES = %w[
+      text/plain
+      application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      application/msword
+      application/vnd.oasis.opendocument.text
+      application/pdf
+      image/jpeg
+      image/png
+      application/vnd.ms-excel
+    ].freeze
+    MAX_FILE_SIZE = 7340032.freeze
+
+    def initialize(file_details)
+      @file_details = file_details
     end
 
+    def call
+      {
+        "encrypted_user_id_and_token": encrypted_user_id_and_token,
+        "file": encoded_file,
+        "policy": {
+          "allowed_types": allowed_types,
+            "max_size": MAX_FILE_SIZE,
+            "expires": expires
+        }
+      }
+    end
 
+    def expires
+      DEFAULT_EXPIRATION
+    end
 
+    def allowed_types
+      ALLOWED_TYPES
+    end
 
+    def temp_file
+      File.open(file_details['tempfile']).read
+    end
 
+    def encoded_file
+      Base64.strict_encode64(temp_file)
+    end
 
-
-
-
-
+    def encrypted_user_id_and_token
+      # SHA-256 Hash of session.id + user_data[:user_token] + service_token
+    end
 
 
     # payload = json_request(Base64.strict_encode64(File.open(Rails.root.join('spec/fixtures/files/image.png')).read));
