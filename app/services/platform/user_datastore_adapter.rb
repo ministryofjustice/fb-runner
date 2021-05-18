@@ -38,7 +38,7 @@ module Platform
     end
 
     def encryption_key
-      session[:user_token] ||= SecureRandom.uuid.gsub('-', '')
+      session[:user_token]
     end
 
     def subject

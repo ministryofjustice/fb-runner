@@ -9,6 +9,8 @@ class UserData
   end
 
   def adapter
+    session[:user_token] ||= SecureRandom.hex(16)
+
     return @adapter.new(session) if @adapter.present?
 
     if ENV['DATASTORE_URL'].present?

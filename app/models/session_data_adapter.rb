@@ -8,7 +8,6 @@ class SessionDataAdapter
   def save(answers)
     if answers.present?
       session[:user_data] ||= {}
-      session[:user_token] ||= SecureRandom.hex(256)
 
       answers.each do |field, answer|
         session[:user_data][field] = answer

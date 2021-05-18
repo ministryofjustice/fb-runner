@@ -39,6 +39,13 @@ RSpec.describe UserData do
           Platform::UserDatastoreAdapter
         )
       end
+
+      it 'sets user token before calling the adapter' do
+        allow(SecureRandom).to receive(:hex)
+          .and_return('975e146ab6fe0a2e25fe224f404d11e6')
+        user_data.adapter
+        expect(session[:user_token]).to eq('975e146ab6fe0a2e25fe224f404d11e6')
+      end
     end
 
     context 'when no adapter is passed and there is no datastore url' do
