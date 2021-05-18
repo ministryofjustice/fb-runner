@@ -1,6 +1,6 @@
 module Platform
   class UserFilestorePayload
-    attr_reader :file_details
+    attr_reader :session, :file_details, :service_secret
 
     DEFAULT_EXPIRATION = 28.freeze
     ALLOWED_TYPES = %w[
@@ -15,8 +15,10 @@ module Platform
     ].freeze
     MAX_FILE_SIZE = 7340032.freeze
 
-    def initialize(file_details)
+    def initialize(session, file_details:, service_secret: ENV['SERVICE_SECRET'])
+      @session = session
       @file_details = file_details
+      @service_secret = service_secret
     end
 
     def call
@@ -48,9 +50,8 @@ module Platform
     end
 
     def encrypted_user_id_and_token
-      # SHA-256 Hash of session.id + user_data[:user_token] + service_token
+      DataEncryption.new(key: service_secret).encrypt("#{session[:session_id]}#{session[:user_token]}")
     end
-
 
     # payload = json_request(Base64.strict_encode64(File.open(Rails.root.join('spec/fixtures/files/image.png')).read));
     # jwt_payload = { iat: Time.now.to_i, checksum: Digest::SHA256.hexdigest(payload.to_json) }

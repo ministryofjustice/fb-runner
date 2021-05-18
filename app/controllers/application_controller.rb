@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
   def upload_file
     @page_answers.page.upload_components.each do |component|
       user_filestore_payload = Platform::UserFilestorePayload.new(
+        session,
         @page_answers.send(component.id)
       ).call
       Platform::UserFilestoreAdapter.new(
