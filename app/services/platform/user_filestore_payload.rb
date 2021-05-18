@@ -23,12 +23,12 @@ module Platform
 
     def call
       {
-        "encrypted_user_id_and_token": encrypted_user_id_and_token,
-        "file": encoded_file,
-        "policy": {
-          "allowed_types": allowed_types,
-            "max_size": MAX_FILE_SIZE,
-            "expires": expires
+        'encrypted_user_id_and_token': encrypted_user_id_and_token,
+        'file': encoded_file,
+        'policy': {
+          'allowed_types': allowed_types,
+            'max_size': MAX_FILE_SIZE,
+            'expires': expires
         }
       }
     end
@@ -50,7 +50,15 @@ module Platform
     end
 
     def encrypted_user_id_and_token
-      DataEncryption.new(key: service_secret).encrypt("#{session[:session_id]}#{session[:user_token]}")
+      DataEncryption.new(
+        key: service_secret
+      ).encrypt("#{user_id}#{session[:user_token]}")
+    end
+
+    private
+
+    def user_id
+      session[:session_id]
     end
 
     # payload = json_request(Base64.strict_encode64(File.open(Rails.root.join('spec/fixtures/files/image.png')).read));

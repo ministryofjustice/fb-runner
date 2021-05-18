@@ -7,41 +7,45 @@ RSpec.describe Platform::UserFilestoreAdapter do
       payload: payload
     )
   end
-  let(:session) { double(id: 'some-id') }
+  let(:session) { { session_id: 'some-id' } }
   let(:root_url) { 'http://filestore-svc' }
   let(:service_slug) { 'juggling-license' }
-  let(:payload) { {} }
+  let(:payload) do
+    {
+      'encrypted_user_id_and_token': '12345678901234567890123456789012',
+      'file': encoded_file,
+      'policy': {
+        'allowed_types': Platform::UserFilestorePayload::ALLOWED_TYPES,
+          'max_size': Platform::UserFilestorePayload::MAX_FILE_SIZE,
+          'expires': Platform::UserFilestorePayload::DEFAULT_EXPIRATION
+      }
+    }
+  end
+  let(:encoded_file) do
+    Base64.strict_encode64("THIS IS A KNIFE!\n")
+  end
 
   describe '#call' do
     context 'when there is filestore url' do
       let(:expected_url) do
-        "#{root_url}/service/#{service_slug}/user/#{session.id}"
-      end
-      let(:expected_payload) do
-        {
-          "encrypted_user_id_and_token": '12345678901234567890123456789012',
-          "file": encoded_file,
-          "policy": {
-            "allowed_types": allowed_types,
-              "max_size": MAX_FILE_SIZE,
-              "expires": expires
-          }
-        }
+        "#{root_url}/service/#{service_slug}/user/#{session[:session_id]}"
       end
       let(:expected_headers) do
         {
-          'Content-Type': 'application/JSON',
-          'x-access-token': {
-
-          }
+       	  'Accept' => 'application/json',
+       	  'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+       	  'Authorization' => 'Bearer',
+       	  'Content-Type' => 'application/json',
+       	  'User-Agent' => 'Runner',
+       	  'X-Access-Token-V2' => ''
         }
       end
       let(:response_body) do
         {
-          "url": "/service/{service_slug}/{user_id}/{fingerprint}",
-          "size": "<integer>(bytes)",
-          "type": "<string>(mediatype)",
-          "date": "<integer>(unix_timestamp)"
+          'url': '/service/{service_slug}/{user_id}/{fingerprint}',
+          'size': '<integer>(bytes)',
+          'type': '<string>(mediatype)',
+          'date': '<integer>(unix_timestamp)'
         }
 
         "{\"url\":\"/service/some-service/user/some-user/28d-e71c352d0852ab802592a02168877dc255d9c839a7537d91efed04a5865549c1\",\"size\":173,\"type\":\"image/png\",\"date\":1554734786}"
@@ -49,7 +53,7 @@ RSpec.describe Platform::UserFilestoreAdapter do
 
       before do
         stub_request(:post, expected_url)
-          .with(body: expected_payload, headers: expected_headers)
+          .with(body: payload, headers: expected_headers)
           .to_return(status: 201, body: response_body, headers: {})
       end
 
@@ -57,12 +61,14 @@ RSpec.describe Platform::UserFilestoreAdapter do
         adapter.call
         expect(WebMock).to have_requested(
           :post, expected_url
-        ).with(headers: expected_headers, body: expected_payload)
+        ).with(headers: expected_headers, body: payload)
          .once
       end
     end
 
     context 'when there is not filestore url' do
+      let(:root_url) { nil }
+
       it 'returns nil' do
         expect(adapter.call).to be_nil
       end
