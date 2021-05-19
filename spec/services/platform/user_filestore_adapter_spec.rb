@@ -49,14 +49,12 @@ RSpec.describe Platform::UserFilestoreAdapter do
   describe '#call' do
     context 'when there is filestore url' do
       let(:response_body) do
-        {
+        JSON.generate({
           'url': '/service/{service_slug}/{user_id}/{fingerprint}',
           'size': '<integer>(bytes)',
           'type': '<string>(mediatype)',
           'date': '<integer>(unix_timestamp)'
-        }
-
-        '{"url":"/service/some-service/user/some-user/28d-e71c352d0852ab802592a02168877dc255d9c839a7537d91efed04a5865549c1","size":173,"type":"image/png","date":1554734786}'
+        })
       end
 
       it 'makes a request to filestore' do

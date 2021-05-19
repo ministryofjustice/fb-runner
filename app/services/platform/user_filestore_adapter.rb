@@ -29,7 +29,7 @@ module Platform
       return if root_url.blank?
 
       url = "/service/#{service_slug}/user/#{subject}"
-      response = request(:post, url, payload)
+      request(:post, url, payload)
     rescue Platform::ClientError => e
       response = e.response
 
