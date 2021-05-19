@@ -134,6 +134,7 @@ RSpec.feature 'Navigation' do
   end
 
   def and_I_check_that_my_answers_are_correct
+    expect(page.current_url).to include('check-answers')
     expect(form.full_name_checkanswers.text).to include("Full name Han Solo")
     expect(form.email_checkanswers.text).to include(
       "Email address han.solo@gmail.com"

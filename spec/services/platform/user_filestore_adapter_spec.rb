@@ -16,30 +16,38 @@ RSpec.describe Platform::UserFilestoreAdapter do
       'file': encoded_file,
       'policy': {
         'allowed_types': Platform::UserFilestorePayload::ALLOWED_TYPES,
-          'max_size': Platform::UserFilestorePayload::MAX_FILE_SIZE,
-          'expires': Platform::UserFilestorePayload::DEFAULT_EXPIRATION
+        'max_size': Platform::UserFilestorePayload::MAX_FILE_SIZE,
+        'expires': Platform::UserFilestorePayload::DEFAULT_EXPIRATION
       }
     }
   end
   let(:encoded_file) do
     Base64.strict_encode64("THIS IS A KNIFE!\n")
   end
+  let(:expected_headers) do
+    {
+      'Accept' => 'application/json',
+      'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      'Authorization' => 'Bearer',
+      'Content-Type' => 'application/json',
+      'User-Agent' => 'Runner',
+      'X-Access-Token-V2' => ''
+    }
+  end
+  let(:expected_url) do
+    "#{root_url}/service/#{service_slug}/user/#{session[:session_id]}"
+  end
+  let(:response_body) { '{}' }
+  let(:response_status) { 201 }
+
+  before do
+    stub_request(:post, expected_url)
+      .with(body: payload, headers: expected_headers)
+      .to_return(status: response_status, body: response_body, headers: {})
+  end
 
   describe '#call' do
     context 'when there is filestore url' do
-      let(:expected_url) do
-        "#{root_url}/service/#{service_slug}/user/#{session[:session_id]}"
-      end
-      let(:expected_headers) do
-        {
-       	  'Accept' => 'application/json',
-       	  'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-       	  'Authorization' => 'Bearer',
-       	  'Content-Type' => 'application/json',
-       	  'User-Agent' => 'Runner',
-       	  'X-Access-Token-V2' => ''
-        }
-      end
       let(:response_body) do
         {
           'url': '/service/{service_slug}/{user_id}/{fingerprint}',
@@ -48,13 +56,7 @@ RSpec.describe Platform::UserFilestoreAdapter do
           'date': '<integer>(unix_timestamp)'
         }
 
-        "{\"url\":\"/service/some-service/user/some-user/28d-e71c352d0852ab802592a02168877dc255d9c839a7537d91efed04a5865549c1\",\"size\":173,\"type\":\"image/png\",\"date\":1554734786}"
-      end
-
-      before do
-        stub_request(:post, expected_url)
-          .with(body: payload, headers: expected_headers)
-          .to_return(status: 201, body: response_body, headers: {})
+        '{"url":"/service/some-service/user/some-user/28d-e71c352d0852ab802592a02168877dc255d9c839a7537d91efed04a5865549c1","size":173,"type":"image/png","date":1554734786}'
       end
 
       it 'makes a request to filestore' do
@@ -98,11 +100,27 @@ RSpec.describe Platform::UserFilestoreAdapter do
     end
 
     context 'when there is a virus' do
-      # Send to virus scanning service
-      # Error if file contains virus
-      # code: 400
-      # name: invalid.virus
-      # virus_name: {virus_name}
+      let(:response_body) do
+        JSON.generate({
+          code: 400,
+          name: 'invalid.virus'
+        })
+      end
+      let(:response_status) { 400 }
+
+      it 'returns an error response' do
+        expect(adapter.call.error?).to be_truthy
+      end
+
+      it 'assigns the status' do
+        expect(adapter.call.status).to be(400)
+      end
+
+      it 'assigns the response body' do
+        expect(adapter.call.body).to eq(
+          { 'code' => 400, 'name' => 'invalid.virus' }
+        )
+      end
     end
   end
 end

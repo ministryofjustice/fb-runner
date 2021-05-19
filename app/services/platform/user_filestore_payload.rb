@@ -2,7 +2,7 @@ module Platform
   class UserFilestorePayload
     attr_reader :session, :file_details, :service_secret
 
-    DEFAULT_EXPIRATION = 28.freeze
+    DEFAULT_EXPIRATION = 28
     ALLOWED_TYPES = %w[
       text/plain
       application/vnd.openxmlformats-officedocument.wordprocessingml.document
@@ -13,7 +13,7 @@ module Platform
       image/png
       application/vnd.ms-excel
     ].freeze
-    MAX_FILE_SIZE = 7340032.freeze
+    MAX_FILE_SIZE = 7_340_032
 
     def initialize(session, file_details:, service_secret: ENV['SERVICE_SECRET'])
       @session = session
@@ -27,8 +27,8 @@ module Platform
         'file': encoded_file,
         'policy': {
           'allowed_types': allowed_types,
-            'max_size': MAX_FILE_SIZE,
-            'expires': expires
+          'max_size': MAX_FILE_SIZE,
+          'expires': expires
         }
       }
     end
