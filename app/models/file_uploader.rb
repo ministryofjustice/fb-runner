@@ -15,6 +15,7 @@ class FileUploader
         session,
         file_details: file_details
       ).call
+
       Platform::UserFilestoreAdapter.new(
         session,
         payload: user_filestore_payload

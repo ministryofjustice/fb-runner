@@ -16,7 +16,8 @@ module Platform
 
     def initialize(
       session,
-      payload:, root_url: ENV['FILESTORE_URL'],
+      payload:,
+      root_url: ENV['FILESTORE_URL'],
       service_slug: ENV['SERVICE_SLUG']
     )
       @session = session

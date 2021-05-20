@@ -142,6 +142,16 @@ RSpec.describe Platform::SubmitterPayload do
             answer: 'Din Jarrin'
           }
         ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            answer: {}, # this should be the name of the file
+            field_id: 'dog-picture_upload_1',
+            field_name: 'Upload your best dog photo'
+          }
+        ]
       }
     ]
   end
