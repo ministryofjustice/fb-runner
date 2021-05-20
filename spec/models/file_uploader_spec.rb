@@ -27,6 +27,15 @@ RSpec.describe FileUploader do
 
   describe '#upload' do
     context 'when filestore is enabled' do
+      let(:filestore_response) do
+        {
+          'fingerprint' => '28d-3ed12ce99192845d1da98c32797d7c815280db922e006554991332cf2a2dd832',
+          'size' => 191317,
+          'type' => 'image/png',
+          'date' => 1623933256
+        }
+      end
+
       before do
         allow(ENV).to receive(:[]).with('FILESTORE_URL').and_return(
           'http://filestore-svc/'
@@ -36,9 +45,12 @@ RSpec.describe FileUploader do
       it 'calls filestore adapter' do
         expect_any_instance_of(Platform::UserFilestoreAdapter).to receive(
           :call
+        ).and_return(
+          filestore_response
         )
-
-        file_uploader.upload
+        expect(file_uploader.upload).to eq(
+          UploadedFile.new(file: filestore_response, component: component)
+        )
       end
     end
 

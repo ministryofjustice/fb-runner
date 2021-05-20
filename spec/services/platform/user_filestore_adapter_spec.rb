@@ -115,9 +115,7 @@ RSpec.describe Platform::UserFilestoreAdapter do
       end
 
       it 'assigns the response body' do
-        expect(adapter.call.body).to eq(
-          { 'code' => 400, 'name' => 'invalid.virus' }
-        )
+        expect(adapter.call.error_name).to eq('invalid.virus')
       end
     end
   end

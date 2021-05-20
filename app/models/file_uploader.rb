@@ -1,15 +1,33 @@
 class MissingFilestoreUrlError < StandardError
 end
 
+class UploadedFile
+  include ActiveModel::Model
+  attr_accessor :file, :component
+
+  def ==(other)
+    file == other.file && component == other.component
+  end
+
+  # add tests
+  def error_name
+    file.error_name if file.respond_to? :error_name
+  end
+end
+
 class FileUploader
   include ActiveModel::Model
   attr_accessor :session, :page_answers, :component
 
   def upload
+    UploadedFile.new(file: adapter.call, component: component)
+  end
+
+  def adapter
     if ENV['FILESTORE_URL'].blank?
       raise MissingFilestoreUrlError if Rails.env.production?
 
-      OfflineUploadAdapter.new.call
+      OfflineUploadAdapter.new
     else
       user_filestore_payload = Platform::UserFilestorePayload.new(
         session,
@@ -19,7 +37,7 @@ class FileUploader
       Platform::UserFilestoreAdapter.new(
         session,
         payload: user_filestore_payload
-      ).call
+      )
     end
   end
 

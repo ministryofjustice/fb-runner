@@ -1,7 +1,7 @@
 module Platform
   class FilestoreError
     include ActiveModel::Model
-    attr_accessor :status, :body
+    attr_accessor :status, :error_name
 
     def error?
       true
@@ -30,12 +30,13 @@ module Platform
       return if root_url.blank?
 
       url = "/service/#{service_slug}/user/#{subject}"
-      request(:post, url, payload)
+      request(:post, url, payload).body
     rescue Platform::ClientError => e
       response = e.response
+      response_body = JSON.parse(response[:body], symbolize_names: true)
 
       FilestoreError.new(
-        status: response[:status], body: JSON.parse(response[:body])
+        status: response[:status], error_name: response_body[:name]
       )
     end
 

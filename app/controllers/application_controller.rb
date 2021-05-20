@@ -36,9 +36,7 @@ class ApplicationController < ActionController::Base
         component: component
       ).upload
 
-      @page_answers.uploaded_files.push(
-        UploadedFile.new(file: file, component: component)
-      )
+      @page_answers.uploaded_files.push(file)
     end
   end
 
