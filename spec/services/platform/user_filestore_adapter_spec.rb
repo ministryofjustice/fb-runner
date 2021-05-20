@@ -47,6 +47,20 @@ RSpec.describe Platform::UserFilestoreAdapter do
   end
 
   describe '#call' do
+    RSpec.shared_context "filestore_error_response" do
+      it 'returns an error response' do
+        expect(adapter.call.error?).to be_truthy
+      end
+
+      it 'assigns the status' do
+        expect(adapter.call.status).to be(response_status)
+      end
+
+      it 'assigns the response body' do
+        expect(adapter.call.error_name).to eq(error_name)
+      end
+    end
+
     context 'when there is filestore url' do
       let(:response_body) do
         JSON.generate({
@@ -74,48 +88,55 @@ RSpec.describe Platform::UserFilestoreAdapter do
       end
     end
 
-    context 'when there is no encrypted user id and token in the payload' do
-      # Error if encrypted_user_id_and_token property is not present
-      # code: 403
-      # name: forbidden.user-id-token-missing
+    context 'when there is no encrypted_user_id_and_token in the payload' do
+      include_context 'filestore_error_response' do
+        let(:response_body) do
+          JSON.generate({
+            code: 403,
+            name: 'forbidden.user-id-token-missing'
+          })
+        end
+        let(:response_status) { 403 }
+        let(:error_name) { 'forbidden.user-id-token-missing' }
+      end
     end
 
     context 'when the file is too large' do
-      # Perform size check if policy.max_size is present
-      # Error if file is too large
-      # code: 400
-      # name: invalid.too-large
-      # max_size: {max_size}
-      # size: {file_size}
+      include_context 'filestore_error_response' do
+        let(:response_body) do
+          JSON.generate({
+            code: 400,
+            name: 'invalid.too-large'
+          })
+        end
+        let(:response_status) { 400 }
+        let(:error_name) { 'invalid.too-large' }
+      end
     end
 
     context 'when the file type is not allowed' do
-      # Perform file type checks if policy.allowed_types is present
-      # Error if file is wrong type
-      # code: 400
-      # name: invalid.type
-      # type: {file_type}
+      include_context 'filestore_error_response' do
+        let(:response_body) do
+          JSON.generate({
+            code: 400,
+            name: 'invalid.type'
+          })
+        end
+        let(:response_status) { 400 }
+        let(:error_name) { 'invalid.type' }
+      end
     end
 
     context 'when there is a virus' do
-      let(:response_body) do
-        JSON.generate({
-          code: 400,
-          name: 'invalid.virus'
-        })
-      end
-      let(:response_status) { 400 }
-
-      it 'returns an error response' do
-        expect(adapter.call.error?).to be_truthy
-      end
-
-      it 'assigns the status' do
-        expect(adapter.call.status).to be(400)
-      end
-
-      it 'assigns the response body' do
-        expect(adapter.call.error_name).to eq('invalid.virus')
+      include_context 'filestore_error_response' do
+        let(:response_body) do
+          JSON.generate({
+            code: 400,
+            name: 'invalid.virus'
+          })
+        end
+        let(:response_status) { 400 }
+        let(:error_name) {'invalid.virus'}
       end
     end
   end
