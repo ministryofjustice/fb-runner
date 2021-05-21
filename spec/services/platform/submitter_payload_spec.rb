@@ -183,39 +183,72 @@ RSpec.describe Platform::SubmitterPayload do
         .and_return(email_body)
     end
 
-    it 'sends the service info' do
-      expect(submitter_payload.to_h[:service]).to eq(service_payload)
-    end
-
-    it 'sends actions info' do
-      expect(submitter_payload.to_h[:actions]).to eq(actions_payload)
-    end
-
-    it 'sends pages info' do
-      expect(submitter_payload.to_h[:pages]).to eq(pages_payload)
-    end
-
-    describe '#meta_payload' do
-      it 'SERVICE_EMAIL_PDF_SUBHEADING defaults to an empty string' do
-        expect(submitter_payload.to_h[:meta][:pdf_subheading]).to eq('')
-      end
-
-      it 'sends meta info' do
-        expect(submitter_payload.to_h[:meta]).to eq(
-          {
-            pdf_heading: pdf_heading,
-            pdf_subheading: ''
-          }
+    context 'when optional fields' do
+      subject(:submitter_payload) do
+        described_class.new(
+          service: service,
+          user_data: user_data.merge(
+            {
+              'holiday_date_1(3i)' => '',
+              'holiday_date_1(2i)' => '',
+              'holiday_date_1(1i)' => ''
+            }
+          )
         )
       end
+      let(:answers) do
+        submitter_payload.to_h[:pages].map { |page| page[:answers] }
+      end
+      let(:date_answer) do
+        answers.flatten.find { |answer| answer[:field_id] == 'holiday_date_1' }
+      end
+
+      it 'sends pages info with dates blank' do
+        expect(
+          date_answer
+        ).to eq({
+          field_id: 'holiday_date_1',
+          field_name: 'What is the day that you like to take holidays?',
+          answer: ''
+        })
+      end
     end
 
-    it 'does not send any content components text in the payload' do
-      answers = submitter_payload.to_h[:pages].map { |page_answers|
-        page_answers[:answers].map { |answers| answers[:answer] }
-      }.flatten
+    context 'when all required fields present' do
+      it 'sends the service info' do
+        expect(submitter_payload.to_h[:service]).to eq(service_payload)
+      end
 
-      expect(answers & content_components_text).to be_empty
+      it 'sends actions info' do
+        expect(submitter_payload.to_h[:actions]).to eq(actions_payload)
+      end
+
+      it 'sends pages info' do
+        expect(submitter_payload.to_h[:pages]).to eq(pages_payload)
+      end
+
+      describe '#meta_payload' do
+        it 'SERVICE_EMAIL_PDF_SUBHEADING defaults to an empty string' do
+          expect(submitter_payload.to_h[:meta][:pdf_subheading]).to eq('')
+        end
+
+        it 'sends meta info' do
+          expect(submitter_payload.to_h[:meta]).to eq(
+            {
+              pdf_heading: pdf_heading,
+              pdf_subheading: ''
+            }
+          )
+        end
+      end
+
+      it 'does not send any content components text in the payload' do
+        answers = submitter_payload.to_h[:pages].map { |page_answers|
+          page_answers[:answers].map { |answers| answers[:answer] }
+        }.flatten
+
+        expect(answers & content_components_text).to be_empty
+      end
     end
   end
 end
