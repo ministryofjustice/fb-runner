@@ -68,7 +68,9 @@ module Platform
       page_answers = MetadataPresenter::PageAnswers.new(page, user_data)
       answer = page_answers.send(component.id)
 
-      if answer.is_a?(MetadataPresenter::DateField) && answer.present?
+      if answer.is_a?(MetadataPresenter::DateField)
+        return '' if answer.blank?
+
         # how can we reuse the presenter code? Module?
         I18n.l(
           Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),
