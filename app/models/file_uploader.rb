@@ -1,20 +1,6 @@
 class MissingFilestoreUrlError < StandardError
 end
 
-class UploadedFile
-  include ActiveModel::Model
-  attr_accessor :file, :component
-
-  def ==(other)
-    file == other.file && component == other.component
-  end
-
-  # add tests
-  def error_name
-    file.error_name if file.respond_to? :error_name
-  end
-end
-
 class FileUploader
   include ActiveModel::Model
   attr_accessor :session, :page_answers, :component
