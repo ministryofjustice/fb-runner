@@ -1,4 +1,7 @@
 module Platform
+  class MissingSubmitterUrlError < StandardError
+  end
+
   class Submission
     include ActiveModel::Model
     attr_accessor :service, :user_data
@@ -12,6 +15,7 @@ module Platform
     end
 
     def save
+      raise MissingSubmitterUrlError if ENV['SUBMITTER_URL'].blank? && Rails.env.production?
       invalid? || Platform::SubmitterAdapter.new(service_slug: service.service_slug, payload: submitter_payload).save
     end
 

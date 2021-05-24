@@ -33,9 +33,27 @@ RSpec.describe Platform::Submission do
     context 'when invalid' do
       let(:invalid) { true }
 
-      it 'does not send the submission' do
-        expect_any_instance_of(Platform::SubmitterAdapter).to_not receive(:save)
-        submission.save
+      before do
+        allow(Rails.env).to receive(:production?).and_return(production?)
+      end
+
+      context 'when env is production' do
+        let(:production?) { true }
+
+        it 'raises an error' do
+          expect {
+            submission.save
+          }.to raise_error(Platform::MissingSubmitterUrlError)
+        end
+      end
+
+      context 'when env is not production' do
+        let(:production?) { false }
+
+        it 'does not send the submission' do
+          expect_any_instance_of(Platform::SubmitterAdapter).to_not receive(:save)
+          submission.save
+        end
       end
     end
   end
