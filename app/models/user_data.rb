@@ -1,3 +1,6 @@
+class MissingDatastoreUrlError < StandardError
+end
+
 class UserData
   attr_reader :session
 
@@ -16,6 +19,8 @@ class UserData
     if ENV['DATASTORE_URL'].present?
       Platform::UserDatastoreAdapter.new(session)
     else
+      raise MissingDatastoreUrlError if Rails.env.production?
+
       SessionDataAdapter.new(session)
     end
   end

@@ -53,10 +53,25 @@ RSpec.describe UserData do
 
       before do
         allow(ENV).to receive(:[]).with('DATASTORE_URL').and_return('')
+        allow(Rails.env).to receive(:production?).and_return(production?)
       end
 
-      it 'returns the session adapter' do
-        expect(user_data.adapter).to be_instance_of(SessionDataAdapter)
+      context 'when is production' do
+        let(:production?) { true }
+
+        it 'raises an error' do
+          expect {
+            user_data.adapter
+          }.to raise_error(MissingDatastoreUrlError)
+        end
+      end
+
+      context 'when is not production' do
+        let(:production?) { false }
+
+        it 'returns the session adapter' do
+          expect(user_data.adapter).to be_instance_of(SessionDataAdapter)
+        end
       end
     end
   end
