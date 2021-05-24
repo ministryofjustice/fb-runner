@@ -86,4 +86,8 @@ class VersionFixture < SitePrism::Page
   def star_wars_knowledge_2_checkanswers
     summary_list[9]
   end
+
+  def dog_picture_checkanswers
+    summary_list[10]
+  end
 end
