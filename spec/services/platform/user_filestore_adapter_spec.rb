@@ -47,7 +47,7 @@ RSpec.describe Platform::UserFilestoreAdapter do
   end
 
   describe '#call' do
-    RSpec.shared_context "filestore_error_response" do
+    RSpec.shared_context 'filestore_error_response' do
       it 'returns an error response' do
         expect(adapter.call.error?).to be_truthy
       end
@@ -136,7 +136,7 @@ RSpec.describe Platform::UserFilestoreAdapter do
           })
         end
         let(:response_status) { 400 }
-        let(:error_name) {'invalid.virus'}
+        let(:error_name) { 'invalid.virus' }
       end
     end
   end

@@ -30,9 +30,9 @@ RSpec.describe FileUploader do
       let(:filestore_response) do
         {
           'fingerprint' => '28d-3ed12ce99192845d1da98c32797d7c815280db922e006554991332cf2a2dd832',
-          'size' => 191317,
+          'size' => 191_317,
           'type' => 'image/png',
-          'date' => 1623933256
+          'date' => 1_623_933_256
         }
       end
 
