@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: 26349c96ed39149fe4bd6394e9da4c0d9a5eff05
+  branch: feature/upload-files
+  specs:
+    metadata_presenter (1.0.8)
+      govuk_design_system_formbuilder (>= 2.1.5)
+      json-schema (>= 2.8.1)
+      kramdown (>= 2.3.0)
+      rails (>= 6.0.3.4, < 6.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -112,7 +123,7 @@ GEM
     ffi (1.15.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    govuk_design_system_formbuilder (2.5.0)
+    govuk_design_system_formbuilder (2.5.1)
       actionview (>= 6.0)
       activemodel (>= 6.0)
       activesupport (>= 6.0)
@@ -135,11 +146,6 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
-    metadata_presenter (1.0.8)
-      govuk_design_system_formbuilder (>= 2.1.5)
-      json-schema (>= 2.8.1)
-      kramdown (>= 2.3.0)
-      rails (>= 6.0.3.4, < 6.2.0)
     method_source (1.0.0)
     mini_mime (1.0.3)
     mini_portile2 (2.5.1)
@@ -334,7 +340,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.7.0)
   jwt
   listen (~> 3.5)
-  metadata_presenter (= 1.0.8)
+  metadata_presenter!
   prometheus-client (~> 2.1.0)
   puma (~> 5.3)
   rails (~> 6.1.3)
