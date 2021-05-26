@@ -191,7 +191,8 @@ RSpec.describe Platform::SubmitterPayload do
             {
               'holiday_date_1(3i)' => '',
               'holiday_date_1(2i)' => '',
-              'holiday_date_1(1i)' => ''
+              'holiday_date_1(1i)' => '',
+              'burgers_checkboxes_1' => nil
             }
           )
         )
@@ -210,6 +211,20 @@ RSpec.describe Platform::SubmitterPayload do
           field_id: 'holiday_date_1',
           field_name: 'What is the day that you like to take holidays?',
           answer: ''
+        })
+      end
+
+      let(:checkbox_answer) do
+        answers.flatten.find { |answer| answer[:field_id] == 'burgers_checkboxes_1' }
+      end
+
+      it 'sends pages with blank checkboxes' do
+        expect(
+          checkbox_answer
+        ).to eq({
+          field_id: 'burgers_checkboxes_1',
+          field_name: 'What would you like on your burger?',
+          answer: []
         })
       end
     end
