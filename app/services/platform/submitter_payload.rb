@@ -76,6 +76,8 @@ module Platform
           Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),
           format: '%d %B %Y'
         )
+      elsif component.type == 'checkboxes'
+        answer.to_a
       else
         answer
       end
