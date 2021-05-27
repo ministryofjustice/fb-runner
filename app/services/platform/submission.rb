@@ -4,7 +4,7 @@ module Platform
 
   class Submission
     include ActiveModel::Model
-    attr_accessor :service, :user_data
+    attr_accessor :service, :user_data, :session
 
     REQUIRED_ENV_VARS = %w[SERVICE_EMAIL_OUTPUT SUBMITTER_URL].freeze
 
@@ -23,7 +23,8 @@ module Platform
     def submitter_payload
       Platform::SubmitterPayload.new(
         service: service,
-        user_data: user_data
+        user_data: user_data,
+        session: session
       ).to_h
     end
   end

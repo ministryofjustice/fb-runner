@@ -47,7 +47,8 @@ class ApplicationController < ActionController::Base
   def create_submission
     Platform::Submission.new(
       service: service,
-      user_data: load_user_data
+      user_data: load_user_data,
+      session: session
     ).save
   end
 

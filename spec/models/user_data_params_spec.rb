@@ -24,7 +24,7 @@ RSpec.describe UserDataParams do
         {
           'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
           'size' => 1_392_565,
-          'type' => 'image/png',
+          'type' => 'plain/txt',
           'date' => 1_624_540_833
         }
       end
