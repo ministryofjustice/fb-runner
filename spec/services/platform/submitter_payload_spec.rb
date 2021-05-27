@@ -24,8 +24,18 @@ RSpec.describe Platform::SubmitterPayload do
       'holiday_date_1(1i)' => '2020',
       'burgers_checkboxes_1' => ['Beef, cheese, tomato', 'Chicken, cheese, tomato'],
       'star-wars-knowledge_text_1' => 'Max Rebo Band',
-      'star-wars-knowledge_radios_1' => 'Din Jarrin'
+      'star-wars-knowledge_radios_1' => 'Din Jarrin',
+      'dog-picture_upload_1' => {
+        'original_filename' => 'basset-hound.jpg',
+        'content_type' => 'image/jpg',
+        'tempfile' => upload_file.path
+      }
     }
+  end
+  let(:upload_file) do
+    Rack::Test::UploadedFile.new(
+      './spec/fixtures/basset-hound.jpg', 'image/jpg'
+    )
   end
   let(:pdf_heading) do
     'Middle Earth characters'
@@ -147,7 +157,7 @@ RSpec.describe Platform::SubmitterPayload do
         heading: '',
         answers: [
           {
-            answer: {}, # this should be the name of the file
+            answer: 'basset-hound.jpg',
             field_id: 'dog-picture_upload_1',
             field_name: 'Upload your best dog photo'
           }

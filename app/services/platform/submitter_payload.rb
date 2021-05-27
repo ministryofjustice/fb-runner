@@ -78,6 +78,8 @@ module Platform
         )
       elsif component.type == 'checkboxes'
         answer.to_a
+      elsif component.upload?
+        answer['original_filename']
       else
         answer
       end
