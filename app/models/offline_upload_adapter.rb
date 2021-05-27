@@ -1,3 +1,5 @@
 class OfflineUploadAdapter
-  def call; end
+  def call
+    {}
+  end
 end

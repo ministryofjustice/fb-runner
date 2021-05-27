@@ -21,7 +21,11 @@ class ApplicationController < ActionController::Base
   helper_method :service
 
   def save_user_data
-    UserData.new(session).save(answer_params)
+    UserData.new(session).save(user_data_params)
+  end
+
+  def user_data_params
+    UserDataParams.new(@page_answers).answers
   end
 
   def load_user_data
