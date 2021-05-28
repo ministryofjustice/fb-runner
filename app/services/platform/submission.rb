@@ -17,7 +17,15 @@ module Platform
     def save
       raise MissingSubmitterUrlError if ENV['SUBMITTER_URL'].blank? && Rails.env.production?
 
-      invalid? || Platform::SubmitterAdapter.new(service_slug: service.service_slug, payload: submitter_payload).save
+      invalid? || adapter.save
+    end
+
+    def adapter
+      Platform::SubmitterAdapter.new(
+        session: session,
+        service_slug: service.service_slug,
+        payload: submitter_payload
+      )
     end
 
     def submitter_payload

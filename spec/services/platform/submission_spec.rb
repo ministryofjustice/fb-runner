@@ -1,8 +1,9 @@
 RSpec.describe Platform::Submission do
   subject(:submission) do
-    described_class.new(service: service, user_data: user_data)
+    described_class.new(service: service, user_data: user_data, session: session)
   end
   let(:user_data) { {} }
+  let(:session) { {} }
 
   describe '#save' do
     before do
@@ -23,7 +24,7 @@ RSpec.describe Platform::Submission do
 
       it 'sends the submission' do
         expect(Platform::SubmitterAdapter).to receive(:new)
-          .with(payload: payload, service_slug: service.service_slug)
+          .with(session: session, payload: payload, service_slug: service.service_slug)
           .and_return(adapter)
         expect(adapter).to receive(:save)
         submission.save
