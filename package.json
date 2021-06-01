@@ -2,7 +2,7 @@
   "name": "fb_runner",
   "private": true,
   "engines" : {
-    "node" : "14.16.1"
+    "node" : "14.17.0"
   },
   "dependencies": {
     "@rails/ujs": "^6.1.3",
