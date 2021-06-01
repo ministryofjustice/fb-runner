@@ -1,12 +1,13 @@
 module Platform
   class SubmitterPayload
-    attr_reader :service, :user_data
+    attr_reader :service, :user_data, :session
 
     EMAIL = 'email'.freeze
 
-    def initialize(service:, user_data:)
+    def initialize(service:, user_data:, session:)
       @service = service
       @user_data = user_data
+      @session = session
     end
 
     def to_h
@@ -14,7 +15,8 @@ module Platform
         meta: meta,
         service: service_info,
         actions: actions,
-        pages: pages
+        pages: pages,
+        attachments: attachments
       }
     end
 
@@ -78,6 +80,8 @@ module Platform
         )
       elsif component.type == 'checkboxes'
         answer.to_a
+      elsif component.upload?
+        answer['original_filename']
       else
         answer
       end
@@ -87,12 +91,40 @@ module Platform
       page.type == 'page.multiplequestions' ? page.heading : ''
     end
 
+    def attachments
+      answered_upload_components.map do |component|
+        {
+          url: file_download_url(component['fingerprint']),
+          filename: component['original_filename'],
+          mimetype: component['type'] || component['content_type']
+        }
+      end
+    end
+
     private
 
     def strip_content_components(components)
       return [] if components.blank?
 
       components.reject(&:content?)
+    end
+
+    def answered_upload_components
+      upload_components.map { |component| user_data[component.id] }.compact
+    end
+
+    def upload_components
+      components = service.pages.map do |page|
+        page.components&.select(&:upload?)
+      end
+      components.flatten.compact
+    end
+
+    def file_download_url(fingerprint)
+      "#{ENV['FILESTORE_URL']}" \
+      "/service/#{ENV['SERVICE_SLUG']}" \
+      "/user/#{session[:session_id]}" \
+      "/#{fingerprint}"
     end
   end
 end

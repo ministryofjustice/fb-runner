@@ -31,6 +31,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_burger
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
+    and_I_upload_a_dog_picture
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -53,6 +54,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_burger
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
+    and_I_upload_a_dog_picture
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -134,6 +136,7 @@ RSpec.feature 'Navigation' do
   end
 
   def and_I_check_that_my_answers_are_correct
+    expect(page.current_url).to include('check-answers')
     expect(form.full_name_checkanswers.text).to include("Full name Han Solo")
     expect(form.email_checkanswers.text).to include(
       "Email address han.solo@gmail.com"
@@ -155,6 +158,9 @@ RSpec.feature 'Navigation' do
     expect(form.star_wars_knowledge_2_checkanswers.text).to include(
       "What is The Mandalorian's real name? Din Jarrin Change Your answer for What is The Mandalorian's real name?"
     )
+    expect(form.dog_picture_checkanswers.text).to include(
+      'Upload your best dog photo thats-not-a-knife.txt'
+    )
   end
 
   def and_I_send_my_application
@@ -164,6 +170,15 @@ RSpec.feature 'Navigation' do
   def and_I_change_my_full_name_answer
     form.full_name_change_answer_link.click
     form.full_name_field.set('Jabba')
+    and_I_go_to_next_page
+  end
+
+  def and_I_upload_a_dog_picture
+    # it is not a dog picture but it is a file.
+    attach_file(
+      'answers[dog-picture_upload_1]',
+      'spec/fixtures/thats-not-a-knife.txt'
+    )
     and_I_go_to_next_page
   end
 

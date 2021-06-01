@@ -3,13 +3,15 @@ RSpec.describe Platform::SubmitterAdapter do
     described_class.new(
       payload: payload,
       root_url: root_url,
-      service_slug: service_slug
+      service_slug: service_slug,
+      session: session
     )
   end
   let(:root_url) do
     'http://submitter.com'
   end
   let(:service_slug) { 'lotr' }
+  let(:session) { { session_id: 'fa018e7bef6460c2a52818bab9731304' } }
 
   describe '#save' do
     let(:payload) do
@@ -33,7 +35,8 @@ RSpec.describe Platform::SubmitterAdapter do
         encrypted_submission: DataEncryption.new(key: key).encrypt(
           JSON.generate(payload)
         ),
-        service_slug: service_slug
+        service_slug: service_slug,
+        encrypted_user_id_and_token: 'fa018e7bef6460c2a52818bab9731304'
       }
     end
     let(:key) do

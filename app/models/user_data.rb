@@ -1,3 +1,6 @@
+class MissingDatastoreUrlError < StandardError
+end
+
 class UserData
   attr_reader :session
 
@@ -9,11 +12,15 @@ class UserData
   end
 
   def adapter
+    session[:user_token] ||= SecureRandom.hex(16)
+
     return @adapter.new(session) if @adapter.present?
 
     if ENV['DATASTORE_URL'].present?
       Platform::UserDatastoreAdapter.new(session)
     else
+      raise MissingDatastoreUrlError if Rails.env.production?
+
       SessionDataAdapter.new(session)
     end
   end

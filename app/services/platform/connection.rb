@@ -41,7 +41,7 @@ module Platform
     rescue Faraday::ResourceNotFound => e
       raise Platform::ResourceNotFound, error_message(e)
     rescue StandardError => e
-      raise Platform::ClientError, error_message(e)
+      raise Platform::ClientError, e
     end
 
     def error_message(exception)

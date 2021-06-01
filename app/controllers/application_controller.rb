@@ -21,17 +21,34 @@ class ApplicationController < ActionController::Base
   helper_method :service
 
   def save_user_data
-    UserData.new(session).save(answer_params)
+    UserData.new(session).save(user_data_params)
+  end
+
+  def user_data_params
+    UserDataParams.new(@page_answers).answers
   end
 
   def load_user_data
     UserData.new(session).load_data
   end
 
+  def upload_file
+    @page_answers.page.upload_components.each do |component|
+      file = FileUploader.new(
+        session: session,
+        page_answers: @page_answers,
+        component: component
+      ).upload
+
+      @page_answers.uploaded_files.push(file)
+    end
+  end
+
   def create_submission
     Platform::Submission.new(
       service: service,
-      user_data: load_user_data
+      user_data: load_user_data,
+      session: session
     ).save
   end
 
