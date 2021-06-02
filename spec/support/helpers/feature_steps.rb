@@ -29,6 +29,10 @@ module FeatureSteps
     visit '/burgers'
   end
 
+  def and_I_go_to_dog_picture_page
+    visit '/dog-picture'
+  end
+
   def when_I_visit_the_service
     form.load
     form.start_button.click
@@ -36,5 +40,17 @@ module FeatureSteps
 
   def complain_about_tribunal_metadata
     JSON.parse(File.read(fixtures_directory.join('version.json')))
+  end
+
+  def then_I_should_see_that_I_should_add_a_dog_picture
+    then_I_should_see_the_error_message(
+      'Enter an answer for Upload your best dog photo'
+    )
+  end
+
+  def then_I_should_see_the_error_message(message)
+    expected_message = [message]
+    expect(form.error_summary).to eq(expected_message)
+    expect(form.error_messages).to eq(expected_message)
   end
 end

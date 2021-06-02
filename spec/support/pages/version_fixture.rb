@@ -90,4 +90,8 @@ class VersionFixture < SitePrism::Page
   def dog_picture_checkanswers
     summary_list[10]
   end
+
+  def dog_picture_change_answer_link
+    dog_picture_checkanswers.find('a')
+  end
 end

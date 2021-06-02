@@ -79,10 +79,6 @@ RSpec.feature 'Navigation' do
     then_I_should_see_that_I_should_add_a_dog_picture
   end
 
-  def and_I_go_to_dog_picture_page
-    visit '/dog-picture'
-  end
-
   def and_I_left_my_name_blank
     form.full_name_field.set('')
     and_I_go_to_next_page
@@ -191,17 +187,5 @@ RSpec.feature 'Navigation' do
     then_I_should_see_the_error_message(
       'Enter an answer for What would you like on your burger?'
     )
-  end
-
-  def then_I_should_see_that_I_should_add_a_dog_picture
-    then_I_should_see_the_error_message(
-      'Enter an answer for Upload your best dog photo'
-    )
-  end
-
-  def then_I_should_see_the_error_message(message)
-    expected_message = [message]
-    expect(form.error_summary).to eq(expected_message)
-    expect(form.error_messages).to eq(expected_message)
   end
 end

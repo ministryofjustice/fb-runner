@@ -81,6 +81,30 @@ RSpec.feature 'Navigation' do
     then_I_should_see_cheese_chicken_chosen
   end
 
+  scenario 'when I change an answer on upload component' do
+    and_I_go_to_dog_picture_page
+    and_I_upload_a_dog_picture
+    and_I_change_the_answer_for_dog_picture
+    then_I_should_see_the_dog_picture_filename
+    and_I_go_to_next_page
+    then_I_should_be_on_the_check_your_answers_page
+    and_I_change_the_answer_for_dog_picture
+    and_I_remove_the_file
+    and_I_go_to_next_page
+    then_I_should_see_that_I_should_add_a_dog_picture
+    and_I_upload_a_dog_picture
+    then_I_should_be_on_the_check_your_answers_page
+  end
+
+  def and_I_remove_the_file
+    click_link 'Remove file'
+  end
+
+  def and_I_change_the_answer_for_dog_picture
+    form.dog_picture_change_answer_link.click
+    expect(page.current_url).to include('dog-picture')
+  end
+
   def when_I_visit_a_non_existent_page
     visit '/i-will-initiate-self-destruct'
   end
@@ -135,8 +159,12 @@ RSpec.feature 'Navigation' do
     and_I_go_to_next_page
   end
 
-  def and_I_check_that_my_answers_are_correct
+  def then_I_should_be_on_the_check_your_answers_page
     expect(page.current_url).to include('check-answers')
+  end
+
+  def and_I_check_that_my_answers_are_correct
+    then_I_should_be_on_the_check_your_answers_page
     expect(form.full_name_checkanswers.text).to include("Full name Han Solo")
     expect(form.email_checkanswers.text).to include(
       "Email address han.solo@gmail.com"
@@ -226,4 +254,9 @@ RSpec.feature 'Navigation' do
     expect(form.chicken_burger).to be_checked
     expect(form.cheeseburger).to be_checked
   end
+
+  def then_I_should_see_the_dog_picture_filename
+    expect(form.text).to include('thats-not-a-knife.txt')
+  end
 end
+
