@@ -298,7 +298,7 @@ RSpec.describe Platform::SubmitterPayload do
 
     context 'with uploaded files' do
       before do
-        allow(ENV).to receive(:[]).with('FILESTORE_URL').and_return('https://www.yeah-baby.com')
+        allow(ENV).to receive(:[]).with('USER_FILESTORE_URL').and_return('https://www.yeah-baby.com')
         allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return('groovy')
       end
 

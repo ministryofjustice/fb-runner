@@ -10,7 +10,7 @@ class FileUploader
   end
 
   def adapter
-    if ENV['FILESTORE_URL'].blank?
+    if ENV['USER_FILESTORE_URL'].blank?
       raise MissingFilestoreUrlError if Rails.env.production?
 
       OfflineUploadAdapter.new
