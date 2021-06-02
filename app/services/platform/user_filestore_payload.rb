@@ -4,11 +4,13 @@ module Platform
 
     DEFAULT_EXPIRATION = 28
     ALLOWED_TYPES = %w[
+      text/csv
       text/plain
       application/vnd.openxmlformats-officedocument.wordprocessingml.document
       application/msword
       application/vnd.oasis.opendocument.text
       application/pdf
+      application/rtf
       image/jpeg
       image/png
       application/vnd.ms-excel
