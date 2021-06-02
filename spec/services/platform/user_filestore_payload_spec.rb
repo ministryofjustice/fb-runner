@@ -1,6 +1,6 @@
 RSpec.describe Platform::UserFilestorePayload do
   subject(:user_filestore_payload) do
-    described_class.new(session, file_details: file_details, service_secret: service_secret)
+    described_class.new(session, file_details: file_details, service_secret: service_secret, allowed_file_types: allowed_types)
   end
   let(:session) do
     {
@@ -20,7 +20,7 @@ RSpec.describe Platform::UserFilestorePayload do
           'file': Base64.strict_encode64("THIS IS A KNIFE!\n"),
           'policy': {
             'max_size': Platform::UserFilestorePayload::MAX_FILE_SIZE,
-            'allowed_types': Platform::UserFilestorePayload::ALLOWED_TYPES,
+            'allowed_types': expected_allowed_types,
             'expires': Platform::UserFilestorePayload::DEFAULT_EXPIRATION
           }
         }
@@ -40,8 +40,28 @@ RSpec.describe Platform::UserFilestorePayload do
         )
       end
 
-      it 'returns correct payload' do
-        expect(user_filestore_payload.call).to eq(expected_payload)
+      context 'when there are allowed types set in the upload component' do
+        let(:allowed_types) do
+          service.find_page_by_url('dog-picture').components.first.validation['accept']
+        end
+        let(:expected_allowed_types) do
+          allowed_types
+        end
+
+        it 'adds the allowed filestypes from the component to the payload' do
+          expect(user_filestore_payload.call).to eq(expected_payload)
+        end
+      end
+
+      context 'when there are no allowed types set in the upload component' do
+        let(:allowed_types) { nil }
+        let(:expected_allowed_types) do
+          Platform::UserFilestorePayload::ALLOWED_TYPES
+        end
+
+        it 'adds the default allowed filetypes to the payload' do
+          expect(user_filestore_payload.call).to eq(expected_payload)
+        end
       end
     end
   end

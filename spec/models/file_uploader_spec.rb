@@ -16,7 +16,7 @@ RSpec.describe FileUploader do
       }
     )
   end
-  let(:component) { double(id: 'dog-picture') }
+  let(:component) { double(id: 'dog-picture', validation: { 'accept' => %w[text/csv] }) }
 
   before do
     allow(ENV).to receive(:[])
