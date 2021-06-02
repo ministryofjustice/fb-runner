@@ -8,7 +8,7 @@ Sentry.init do |config|
     transaction_context = sampling_context[:transaction_context]
     transaction_name = transaction_context[:name]
 
-    !transaction_name.in?(EXCLUDE_PATHS)
+    transaction_name.in?(EXCLUDE_PATHS) ? 0.0 : 0.5
   end
 
   config.before_send = lambda do |event, _hint|
