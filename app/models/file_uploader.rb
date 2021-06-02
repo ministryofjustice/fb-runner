@@ -17,7 +17,8 @@ class FileUploader
     else
       user_filestore_payload = Platform::UserFilestorePayload.new(
         session,
-        file_details: file_details
+        file_details: file_details,
+        allowed_file_types: component.validation['accept']
       ).call
 
       Platform::UserFilestoreAdapter.new(

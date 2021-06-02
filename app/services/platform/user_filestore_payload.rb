@@ -1,6 +1,6 @@
 module Platform
   class UserFilestorePayload
-    attr_reader :session, :file_details, :service_secret
+    attr_reader :session, :file_details, :service_secret, :allowed_file_types
 
     DEFAULT_EXPIRATION = 28
     ALLOWED_TYPES = %w[
@@ -17,10 +17,11 @@ module Platform
     ].freeze
     MAX_FILE_SIZE = 7_340_032
 
-    def initialize(session, file_details:, service_secret: ENV['SERVICE_SECRET'])
+    def initialize(session, file_details:, allowed_file_types:, service_secret: ENV['SERVICE_SECRET'])
       @session = session
       @file_details = file_details
       @service_secret = service_secret
+      @allowed_file_types = allowed_file_types
     end
 
     def call
@@ -40,7 +41,7 @@ module Platform
     end
 
     def allowed_types
-      ALLOWED_TYPES
+      allowed_file_types || ALLOWED_TYPES
     end
 
     def temp_file
