@@ -6,7 +6,7 @@ module Platform
 
     attr_reader :session, :root_url, :service_slug
 
-    def initialize(session, root_url: ENV['DATASTORE_URL'], service_slug: ENV['SERVICE_SLUG'])
+    def initialize(session, root_url: ENV['USER_DATASTORE_URL'], service_slug: ENV['SERVICE_SLUG'])
       @session = session
       @root_url = root_url
       @service_slug = service_slug

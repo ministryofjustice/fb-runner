@@ -16,7 +16,7 @@ class UserData
 
     return @adapter.new(session) if @adapter.present?
 
-    if ENV['DATASTORE_URL'].present?
+    if ENV['USER_DATASTORE_URL'].present?
       Platform::UserDatastoreAdapter.new(session)
     else
       raise MissingDatastoreUrlError if Rails.env.production?

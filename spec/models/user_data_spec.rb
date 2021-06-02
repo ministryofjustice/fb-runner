@@ -27,7 +27,7 @@ RSpec.describe UserData do
       subject(:user_data) { described_class.new(session) }
 
       before do
-        allow(ENV).to receive(:[]).with('DATASTORE_URL')
+        allow(ENV).to receive(:[]).with('USER_DATASTORE_URL')
           .and_return('http://localhost:9000')
 
         allow(ENV).to receive(:[]).with('SERVICE_SLUG')
@@ -52,7 +52,7 @@ RSpec.describe UserData do
       subject(:user_data) { described_class.new(session) }
 
       before do
-        allow(ENV).to receive(:[]).with('DATASTORE_URL').and_return('')
+        allow(ENV).to receive(:[]).with('USER_DATASTORE_URL').and_return('')
         allow(Rails.env).to receive(:production?).and_return(production?)
       end
 
