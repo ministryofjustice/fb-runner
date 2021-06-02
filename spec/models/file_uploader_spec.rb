@@ -37,7 +37,7 @@ RSpec.describe FileUploader do
       end
 
       before do
-        allow(ENV).to receive(:[]).with('FILESTORE_URL').and_return(
+        allow(ENV).to receive(:[]).with('USER_FILESTORE_URL').and_return(
           'http://filestore-svc/'
         )
       end
@@ -56,7 +56,7 @@ RSpec.describe FileUploader do
 
     context 'when filestore is not enabled' do
       before do
-        allow(ENV).to receive(:[]).with('FILESTORE_URL').and_return(nil)
+        allow(ENV).to receive(:[]).with('USER_FILESTORE_URL').and_return(nil)
       end
 
       context 'when production environment' do

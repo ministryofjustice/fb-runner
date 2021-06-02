@@ -121,7 +121,7 @@ module Platform
     end
 
     def file_download_url(fingerprint)
-      "#{ENV['FILESTORE_URL']}" \
+      "#{ENV['USER_FILESTORE_URL']}" \
       "/service/#{ENV['SERVICE_SLUG']}" \
       "/user/#{session[:session_id]}" \
       "/#{fingerprint}"
