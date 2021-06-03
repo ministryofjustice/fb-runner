@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
     UserData.new(session).load_data
   end
 
+  def remove_user_data(component_id)
+    UserData.new(session).delete(component_id)
+  end
+
   def upload_file
     user_data = load_user_data
     @page_answers.page.upload_components.each do |component|

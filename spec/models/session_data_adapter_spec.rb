@@ -53,4 +53,18 @@ RSpec.describe SessionDataAdapter do
       end
     end
   end
+
+  describe '#delete' do
+    let(:session) do
+      {
+        user_data: {
+          'dog-picture' => { 'original_filename' => 'basset-hound.png' }
+        }
+      }
+    end
+
+    it 'removes component from session' do
+      expect(adapter.delete('dog-picture')).to eq({})
+    end
+  end
 end

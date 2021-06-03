@@ -18,4 +18,9 @@ class SessionDataAdapter
   def load_data
     session[:user_data] || {}
   end
+
+  def delete(component_id)
+    session[:user_data].delete(component_id)
+    session[:user_data]
+  end
 end
