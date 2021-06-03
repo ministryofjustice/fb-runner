@@ -35,24 +35,27 @@ class ApplicationController < ActionController::Base
   def upload_file
     user_data = load_user_data
     @page_answers.page.upload_components.each do |component|
-
-      file = if user_data[component.id] && user_data[component.id]['original_filename']
-               @page_answers.answers[component.id] = OpenStruct.new(
-          original_filename: user_data[component.id]['original_filename'],
-          tempfile: OpenStruct.new(path: user_data[component.id]['tempfile']),
-          content_type: user_data[component.id]['content_type']
-        )
-               UploadedFile.new(file: user_data[component.id], component: component)
-
-      else
-        FileUploader.new(
-          session: session,
-          page_answers: @page_answers,
-          component: component
-        ).upload
-      end
+      file = file_details(component, user_data)
 
       @page_answers.uploaded_files.push(file)
+    end
+  end
+
+  def file_details(component, user_data)
+    if user_data[component.id] && user_data[component.id]['original_filename']
+      @page_answers.answers[component.id] = OpenStruct.new(
+        original_filename: user_data[component.id]['original_filename'],
+        tempfile: OpenStruct.new(path: user_data[component.id]['tempfile']),
+        content_type: user_data[component.id]['content_type']
+      )
+      UploadedFile.new(file: user_data[component.id], component: component)
+
+    else
+      FileUploader.new(
+        session: session,
+        page_answers: @page_answers,
+        component: component
+      ).upload
     end
   end
 
