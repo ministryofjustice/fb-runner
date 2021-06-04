@@ -47,6 +47,9 @@ module Platform
     end
 
     def temp_file
+      Rails.logger.info('***********************')
+      Rails.logger.info(file_details)
+      Rails.logger.info('***********************')
       File.open(file_details['tempfile']).read
     end
 
