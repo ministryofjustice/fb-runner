@@ -1,5 +1,7 @@
-PATH
-  remote: ../fb-metadata-presenter
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: 4fa78527b3fb5d3a3ad617a5cbf0c61b12d1acc9
+  branch: feature/move-upload-to-gem
   specs:
     metadata_presenter (1.3.0)
       govuk_design_system_formbuilder (>= 2.1.5)
