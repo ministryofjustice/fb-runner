@@ -4,6 +4,7 @@ RSpec.describe Platform::SubmitterAdapter do
       payload: payload,
       root_url: root_url,
       service_slug: service_slug,
+      service_secret: service_secret,
       session: session
     )
   end
@@ -11,7 +12,13 @@ RSpec.describe Platform::SubmitterAdapter do
     'http://submitter.com'
   end
   let(:service_slug) { 'lotr' }
-  let(:session) { { session_id: 'fa018e7bef6460c2a52818bab9731304' } }
+  let(:session) do
+    {
+      session_id: 'fa018e7bef6460c2a52818bab9731304',
+      user_token: '648f6ae5d954373e85769165acf23a9a'
+    }
+  end
+  let(:service_secret) { '499bed391d8d3c937421c4254a0d2b0e' }
 
   describe '#save' do
     let(:payload) do
@@ -36,7 +43,9 @@ RSpec.describe Platform::SubmitterAdapter do
           JSON.generate(payload)
         ),
         service_slug: service_slug,
-        encrypted_user_id_and_token: 'fa018e7bef6460c2a52818bab9731304'
+        encrypted_user_id_and_token: DataEncryption.new(key: service_secret).encrypt(
+          "#{session[:session_id]}#{session[:user_token]}"
+        )
       }
     end
     let(:key) do
@@ -46,7 +55,7 @@ RSpec.describe Platform::SubmitterAdapter do
 
     before do
       expect(Fb::Jwt::Auth::ServiceAccessToken).to receive(:new)
-        .with(issuer: 'lotr')
+        .with(issuer: 'lotr', subject: 'fa018e7bef6460c2a52818bab9731304')
         .and_return(service_access_token)
       allow(service_access_token).to receive(:generate).and_return('some-token')
 

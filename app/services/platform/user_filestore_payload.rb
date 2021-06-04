@@ -1,5 +1,7 @@
 module Platform
   class UserFilestorePayload
+    include Platform::EncryptedUserIdAndToken
+
     attr_reader :session, :file_details, :service_secret, :allowed_file_types
 
     DEFAULT_EXPIRATION = 28
@@ -50,18 +52,6 @@ module Platform
 
     def encoded_file
       Base64.strict_encode64(temp_file)
-    end
-
-    def encrypted_user_id_and_token
-      DataEncryption.new(
-        key: service_secret
-      ).encrypt("#{user_id}#{session[:user_token]}")
-    end
-
-    private
-
-    def user_id
-      session[:session_id]
     end
   end
 end
