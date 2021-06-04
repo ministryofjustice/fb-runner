@@ -46,14 +46,9 @@ class ApplicationController < ActionController::Base
   end
 
   def file_details(component, user_data)
-    if user_data[component.id] && user_data[component.id]['original_filename']
-      @page_answers.answers[component.id] = OpenStruct.new(
-        original_filename: user_data[component.id]['original_filename'],
-        tempfile: OpenStruct.new(path: user_data[component.id]['tempfile']),
-        content_type: user_data[component.id]['content_type']
-      )
+    if user_data[component.id]
+      @page_answers.answers[component.id] = user_data[component.id]
       UploadedFile.new(file: user_data[component.id], component: component)
-
     else
       FileUploader.new(
         session: session,
