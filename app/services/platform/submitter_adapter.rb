@@ -1,7 +1,8 @@
 module Platform
   class SubmitterAdapter
     include Platform::Connection
-    attr_reader :payload, :session, :root_url, :service_slug
+    include Platform::EncryptedUserIdAndToken
+    attr_reader :payload, :session, :root_url, :service_slug, :service_secret
 
     SUBSCRIPTION = 'submitter.request'.freeze
     TIMEOUT = 15
@@ -10,11 +11,13 @@ module Platform
     def initialize(payload:,
                    service_slug:,
                    session:,
+                   service_secret: ENV['SERVICE_SECRET'],
                    root_url: ENV['SUBMITTER_URL'])
       @payload = payload
-      @root_url = root_url
       @service_slug = service_slug
       @session = session
+      @service_secret = service_secret
+      @root_url = root_url
     end
 
     def save
@@ -25,7 +28,7 @@ module Platform
       {
         encrypted_submission: data_encryption.encrypt(payload.to_json),
         service_slug: service_slug,
-        encrypted_user_id_and_token: subject
+        encrypted_user_id_and_token: encrypted_user_id_and_token
       }
     end
 
@@ -51,5 +54,6 @@ module Platform
     def subject
       session[:session_id]
     end
+    alias user_id subject
   end
 end
