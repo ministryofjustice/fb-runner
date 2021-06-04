@@ -46,7 +46,7 @@ RSpec.describe Platform::SubmitterAdapter do
 
     before do
       expect(Fb::Jwt::Auth::ServiceAccessToken).to receive(:new)
-        .with(issuer: 'lotr')
+        .with(issuer: 'lotr', subject: 'fa018e7bef6460c2a52818bab9731304')
         .and_return(service_access_token)
       allow(service_access_token).to receive(:generate).and_return('some-token')
 

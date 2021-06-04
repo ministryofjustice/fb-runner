@@ -25,7 +25,7 @@ module Platform
       {
         encrypted_submission: data_encryption.encrypt(payload.to_json),
         service_slug: service_slug,
-        encrypted_user_id_and_token: session[:session_id]
+        encrypted_user_id_and_token: subject
       }
     end
 
@@ -35,7 +35,8 @@ module Platform
 
     def service_access_token
       @service_access_token ||= Fb::Jwt::Auth::ServiceAccessToken.new(
-        issuer: service_slug
+        issuer: service_slug,
+        subject: subject
       ).generate
     end
 
@@ -45,6 +46,10 @@ module Platform
 
     def timeout
       TIMEOUT
+    end
+
+    def subject
+      session[:session_id]
     end
   end
 end
