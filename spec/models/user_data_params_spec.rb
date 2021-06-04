@@ -30,7 +30,10 @@ RSpec.describe UserDataParams do
       end
       let(:uploaded_files) do
         [
-          UploadedFile.new(file: file, component: page.components.first)
+          MetadataPresenter::UploadedFile.new(
+            file: file,
+            component: page.components.first
+          )
         ]
       end
 

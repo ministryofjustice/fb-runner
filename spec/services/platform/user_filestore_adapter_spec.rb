@@ -1,13 +1,16 @@
 RSpec.describe Platform::UserFilestoreAdapter do
   subject(:adapter) do
     described_class.new(
-      session,
+      session: session,
+      file_details: file_details,
+      allowed_file_types: allowed_file_types,
       root_url: root_url,
-      service_slug: service_slug,
-      payload: payload
+      service_slug: service_slug
     )
   end
   let(:session) { { session_id: 'some-id' } }
+  let(:file_details) { { original_filename: 'this-is-a-knife.png' } }
+  let(:allowed_file_types) { ['long-list-of-alllowed-types'] }
   let(:root_url) { 'http://filestore-svc' }
   let(:service_slug) { 'juggling-license' }
   let(:payload) do
@@ -41,6 +44,11 @@ RSpec.describe Platform::UserFilestoreAdapter do
   let(:response_status) { 201 }
 
   before do
+    allow(Platform::UserFilestorePayload).to receive(:new).with(
+      session: session,
+      file_details: file_details,
+      allowed_file_types: allowed_file_types
+    ).and_return(double(call: payload))
     stub_request(:post, expected_url)
       .with(body: payload, headers: expected_headers)
       .to_return(status: response_status, body: response_body, headers: {})

@@ -36,25 +36,13 @@ class ApplicationController < ActionController::Base
     UserData.new(session).delete(component_id)
   end
 
-  def upload_file
-    user_data = load_user_data
-    @page_answers.page.upload_components.each do |component|
-      file = file_details(component, user_data)
+  def upload_adapter
+    if ENV['USER_FILESTORE_URL'].blank?
+      raise Platform::MissingFilestoreUrlError if Rails.env.production?
 
-      @page_answers.uploaded_files.push(file)
-    end
-  end
-
-  def file_details(component, user_data)
-    if user_data[component.id]
-      @page_answers.answers[component.id] = user_data[component.id]
-      UploadedFile.new(file: user_data[component.id], component: component)
+      MetadataPresenter::OfflineUploadAdapter
     else
-      FileUploader.new(
-        session: session,
-        page_answers: @page_answers,
-        component: component
-      ).upload
+      Platform::UserFilestoreAdapter
     end
   end
 

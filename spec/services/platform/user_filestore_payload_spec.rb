@@ -1,6 +1,11 @@
 RSpec.describe Platform::UserFilestorePayload do
   subject(:user_filestore_payload) do
-    described_class.new(session, file_details: file_details, service_secret: service_secret, allowed_file_types: allowed_types)
+    described_class.new(
+      session: session,
+      file_details: file_details,
+      service_secret: service_secret,
+      allowed_file_types: allowed_types
+    )
   end
   let(:session) do
     {
