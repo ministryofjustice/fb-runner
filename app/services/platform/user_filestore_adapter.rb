@@ -10,20 +10,22 @@ module Platform
 
   class UserFilestoreAdapter
     include Platform::Connection
-    attr_reader :session, :root_url, :service_slug, :payload
+    attr_reader :session, :root_url, :service_slug
 
     SUBSCRIPTION = 'filestore.upload'.freeze
 
     def initialize(
-      session,
-      payload:,
+      session:,
+      file_details:,
+      allowed_file_types:,
       root_url: ENV['USER_FILESTORE_URL'],
       service_slug: ENV['SERVICE_SLUG']
     )
       @session = session
       @root_url = root_url
+      @file_details = file_details
+      @allowed_file_types = allowed_file_types
       @service_slug = service_slug
-      @payload = payload
     end
 
     def call
@@ -50,6 +52,14 @@ module Platform
 
     def timeout
       10
+    end
+
+    def payload
+      UserFilestorePayload.new(
+        session: @session,
+        file_details: @file_details,
+        allowed_file_types: @allowed_file_types
+      ).call
     end
   end
 end

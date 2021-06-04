@@ -169,4 +169,28 @@ RSpec.describe Platform::UserDatastoreAdapter do
       end
     end
   end
+
+  describe '#delete' do
+    let(:existing_answers) { { 'component_id' => {} } }
+    let(:params) { {} }
+    let(:expected_body) do
+      JSON.generate(
+        {
+          payload: data_encryption.encrypt({}.merge(params).to_json)
+        }
+      )
+    end
+
+    before do
+      expect(adapter).to receive(:load_data).and_return(existing_answers)
+
+      stub_request(:post, expected_url)
+        .with(body: expected_body, headers: expected_headers)
+        .to_return(status: 200, body: expected_body, headers: {})
+    end
+
+    it 'removes the user data' do
+      expect(adapter.delete('component_id').body).to eq(JSON.parse(expected_body))
+    end
+  end
 end

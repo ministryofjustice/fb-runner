@@ -8,6 +8,8 @@ RSpec.describe UserData do
       def save(params); end
 
       def load_data; end
+
+      def delete(params); end
     end
 
     MyCustomAdapter
@@ -80,6 +82,13 @@ RSpec.describe UserData do
     it 'delegates to adapter' do
       expect_any_instance_of(adapter).to receive(:save).with(params)
       user_data.save(params)
+    end
+  end
+
+  describe '#delete' do
+    it 'delegates to adapter' do
+      expect_any_instance_of(adapter).to receive(:delete).with(params)
+      user_data.delete(params)
     end
   end
 

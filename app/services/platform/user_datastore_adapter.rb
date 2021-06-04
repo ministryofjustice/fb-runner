@@ -16,6 +16,8 @@ module Platform
       existing_answers = load_data
       all_answers = existing_answers.merge(params)
 
+      yield(all_answers) if block_given?
+
       body = {
         payload: data_encryption.encrypt(all_answers.to_json)
       }
@@ -29,6 +31,12 @@ module Platform
       JSON.parse(data_encryption.decrypt(response))
     rescue Platform::ResourceNotFound
       {}
+    end
+
+    def delete(component_id)
+      save({}) do |all_answers|
+        all_answers.delete(component_id)
+      end
     end
 
     private

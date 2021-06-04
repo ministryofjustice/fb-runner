@@ -11,11 +11,11 @@ gem 'jwt'
 # one of these lines:
 # gem 'metadata_presenter',
 #    github: 'ministryofjustice/fb-metadata-presenter',
-#    branch: 'feature/upload-files'
+#    branch: 'feature/move-upload-to-gem'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
 gem 'fb-jwt-auth', '0.7.0'
-gem 'metadata_presenter', '1.1.0'
+gem 'metadata_presenter', '1.3.0'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 5.3'
 gem 'rails', '~> 6.1.3'
