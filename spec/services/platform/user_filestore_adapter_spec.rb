@@ -10,7 +10,7 @@ RSpec.describe Platform::UserFilestoreAdapter do
   end
   let(:session) { { session_id: 'some-id' } }
   let(:file_details) { { original_filename: 'this-is-a-knife.png' } }
-  let(:allowed_file_types) { ['long-list-of-alllowed-types'] }
+  let(:allowed_file_types) { %w[long-list-of-alllowed-types] }
   let(:root_url) { 'http://filestore-svc' }
   let(:service_slug) { 'juggling-license' }
   let(:payload) do
