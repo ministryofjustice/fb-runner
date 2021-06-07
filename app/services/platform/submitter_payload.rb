@@ -43,7 +43,8 @@ module Platform
           from: ENV['SERVICE_EMAIL_FROM'],
           subject: ENV['SERVICE_EMAIL_SUBJECT'],
           email_body: ENV['SERVICE_EMAIL_BODY'],
-          include_pdf: true
+          include_pdf: true,
+          include_attachments: true
         }
       ]
     end
