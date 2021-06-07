@@ -8,11 +8,11 @@ RSpec.describe DataEncryption do
 
   context 'when encrypting and decrypting the payload' do
     it 'encrypts the payload' do
-      expect(data_encryption.encrypt(data)).to eq("acYk\n")
+      expect(data_encryption.encrypt(data)).to eq("acYk")
     end
 
     it 'decrypts the encrypted payload' do
-      expect(data_encryption.decrypt("acYk\n")).to eq('foo')
+      expect(data_encryption.decrypt("acYk")).to eq('foo')
     end
   end
 
