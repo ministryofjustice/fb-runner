@@ -16,18 +16,25 @@ class DataEncryption
     result = cipher.update(data)
     result << cipher.final
 
-    Base64.encode64(result)
+    Base64.strict_encode64(result)
   end
 
   def decrypt(data)
     cipher.decrypt
     cipher.key = key
     cipher.iv = iv
-    raw_decrypted_data = cipher.update(
-      Base64.decode64(data)
-    )
+    raw_decrypted_data = cipher.update(decode_64(data))
     raw_decrypted_data << cipher.final
 
     raw_decrypted_data
+  end
+
+  private
+
+  def decode_64(data)
+    Base64.strict_decode64(data)
+  rescue ArgumentError
+    Rails.logger.info('Strict decode failed. Attempting standard decode')
+    Base64.decode64(data)
   end
 end

@@ -21,7 +21,7 @@ RSpec.describe Platform::UserFilestorePayload do
     context 'valid payload' do
       let(:expected_payload) do
         {
-          'encrypted_user_id_and_token': "/7danQNZrt06+SZlQUOjsxcRvy9wiuW6Y9lxQg9EF4s8TaXc/Ez/UK2LZkKQ\n/NR0T8WJJTJB3HKlLj3V2F5iWQ==\n",
+          'encrypted_user_id_and_token': '/7danQNZrt06+SZlQUOjsxcRvy9wiuW6Y9lxQg9EF4s8TaXc/Ez/UK2LZkKQ/NR0T8WJJTJB3HKlLj3V2F5iWQ==',
           'file': Base64.strict_encode64("THIS IS A KNIFE!\n"),
           'policy': {
             'max_size': Platform::UserFilestorePayload::MAX_FILE_SIZE,

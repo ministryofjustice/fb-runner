@@ -191,7 +191,8 @@ RSpec.describe Platform::SubmitterPayload do
           from: email_from,
           subject: email_subject,
           email_body: email_body,
-          include_pdf: true
+          include_pdf: true,
+          include_attachments: true
         }
       ]
     end
