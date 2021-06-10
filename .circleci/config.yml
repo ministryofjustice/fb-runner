@@ -112,6 +112,15 @@ jobs:
           success_message: ":rocket:  Successfully deployed to Live  :guitar:"
           failure_message: ":alert:  Failed to deploy to Live  :try_not_to_cry:"
           include_job_number_field: false
+  smoke_tests:
+    docker: *ecr_image
+    steps:
+      - setup_remote_docker
+      - run: *deploy_scripts
+      - run:
+          name: Run smoke tests
+          command: './deploy-scripts/bin/smoke_tests'
+      - slack/status: *slack_status
 
 workflows:
   version: 2
@@ -140,3 +149,6 @@ workflows:
       - build_and_deploy_to_live:
           requires:
             - confirm_live_build
+      - smoke_tests:
+          requires:
+            - build_and_deploy_to_live
