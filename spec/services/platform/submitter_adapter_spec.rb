@@ -37,7 +37,7 @@ RSpec.describe Platform::SubmitterAdapter do
         'User-Agent' => 'Runner'
       }
     end
-    let(:expected_body) do
+    let(:body) do
       {
         encrypted_submission: DataEncryption.new(key: key).encrypt(
           JSON.generate(payload)
@@ -64,15 +64,40 @@ RSpec.describe Platform::SubmitterAdapter do
         .and_return(key)
     end
 
-    it 'sends to submitter with the right payload' do
-      stub_request(:post, expected_url)
-        .with(body: expected_body, headers: expected_headers)
-        .to_return(status: 201, body: '{}', headers: {})
-      adapter.save
-      expect(WebMock).to have_requested(
-        :post, expected_url
-      ).with(headers: expected_headers, body: expected_body)
-       .once
+    shared_context 'request to submitter' do
+      it 'sends to submitter with the right payload' do
+        stub_request(:post, expected_url)
+          .with(body: expected_body, headers: expected_headers)
+          .to_return(status: 201, body: '{}', headers: {})
+        adapter.save
+        expect(WebMock).to have_requested(
+          :post, expected_url
+        ).with(headers: expected_headers, body: expected_body)
+         .once
+      end
+    end
+
+    context 'when service secret is blank' do
+      subject(:adapter) do
+        described_class.new(
+          payload: payload,
+          root_url: root_url,
+          service_slug: service_slug,
+          service_secret: nil,
+          session: session
+        )
+      end
+      let(:expected_body) do
+        body.merge({
+          encrypted_user_id_and_token: ''
+        })
+      end
+      include_context 'request to submitter'
+    end
+
+    context 'when service secret is present' do
+      let(:expected_body) { body }
+      include_context 'request to submitter'
     end
   end
 end
