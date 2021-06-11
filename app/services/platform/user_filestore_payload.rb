@@ -10,6 +10,7 @@ module Platform
       text/plain
       application/vnd.openxmlformats-officedocument.wordprocessingml.document
       application/msword
+      application/vnd.oasis.opendocument.spreadsheet
       application/vnd.oasis.opendocument.text
       application/pdf
       application/rtf
