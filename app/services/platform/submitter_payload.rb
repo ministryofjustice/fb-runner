@@ -82,7 +82,7 @@ module Platform
       elsif component.type == 'checkboxes'
         answer.to_a
       elsif component.upload?
-        answer['original_filename']
+        answer['original_filename'] || ''
       else
         answer
       end
@@ -111,7 +111,7 @@ module Platform
     end
 
     def answered_upload_components
-      upload_components.map { |component| user_data[component.id] }.compact
+      upload_components.map { |component| user_data[component.id] }.compact.reject(&:blank?)
     end
 
     def upload_components

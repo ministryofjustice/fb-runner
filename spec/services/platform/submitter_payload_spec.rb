@@ -222,7 +222,8 @@ RSpec.describe Platform::SubmitterPayload do
               'holiday_date_1(3i)' => '',
               'holiday_date_1(2i)' => '',
               'holiday_date_1(1i)' => '',
-              'burgers_checkboxes_1' => nil
+              'burgers_checkboxes_1' => nil,
+              'dog-picture_upload_1' => {}
             }
           ),
           session: session
@@ -256,6 +257,20 @@ RSpec.describe Platform::SubmitterPayload do
           field_id: 'burgers_checkboxes_1',
           field_name: 'What would you like on your burger?',
           answer: []
+        })
+      end
+
+      let(:upload_answer) do
+        answers.flatten.find { |answer| answer[:field_id] == 'dog-picture_upload_1' }
+      end
+
+      it 'sends an empty string if file uploads have no uploaded file' do
+        expect(
+          upload_answer
+        ).to eq({
+          field_id: 'dog-picture_upload_1',
+          field_name: 'Upload your best dog photo',
+          answer: ''
         })
       end
     end
@@ -318,7 +333,7 @@ RSpec.describe Platform::SubmitterPayload do
       end
 
       context 'with optional file upload questions ie no answer in user data' do
-        let(:user_data) { {} }
+        let(:user_data) { { 'dog-picture_upload_1' => {} } }
 
         it 'sends an empty array in the attachments' do
           expect(submitter_payload.to_h[:attachments]).to eq([])
