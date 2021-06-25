@@ -61,6 +61,7 @@ jobs:
             PLATFORM_ENV: test
             DEPLOYMENT_ENV: dev
             K8S_NAMESPACE: formbuilder-services-test-dev
+            RUNNER_TYPE: fb-runner
           command: './deploy-scripts/bin/restart_all_pods'
       - run:
           name: Restart the runners in test production
@@ -68,6 +69,7 @@ jobs:
             PLATFORM_ENV: test
             DEPLOYMENT_ENV: production
             K8S_NAMESPACE: formbuilder-services-test-production
+            RUNNER_TYPE: fb-runner
           command: './deploy-scripts/bin/restart_all_pods'
       - slack/status: *slack_status
   acceptance_tests:
@@ -109,6 +111,7 @@ jobs:
             PLATFORM_ENV: live
             DEPLOYMENT_ENV: dev
             K8S_NAMESPACE: formbuilder-services-live-dev
+            RUNNER_TYPE: fb-runner
           command: './deploy-scripts/bin/restart_all_pods'
       - run:
           name: Restart the runners in live production
@@ -116,6 +119,7 @@ jobs:
             PLATFORM_ENV: live
             DEPLOYMENT_ENV: production
             K8S_NAMESPACE: formbuilder-services-live-production
+            RUNNER_TYPE: fb-runner
           command: './deploy-scripts/bin/restart_all_pods'
       - slack/status:
           only_for_branches: main
