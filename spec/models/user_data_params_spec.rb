@@ -54,6 +54,19 @@ RSpec.describe UserDataParams do
       end
     end
 
+    context 'page with checkbox components' do
+      let(:page) { service.find_page_by_url('burgers') }
+
+      context 'when optional' do
+        let(:answers) { {} }
+        let(:expected_answers) { { 'burgers_checkboxes_1' => [] } }
+
+        it 'should set an empty array for unanswered optional checkboxes' do
+          expect(user_data_params.answers).to eq(expected_answers)
+        end
+      end
+    end
+
     context 'when other answers' do
       let(:page) { service.find_page_by_url('name') }
       let(:answers) { { 'name_text_1' => 'John Wick' } }

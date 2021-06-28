@@ -5,13 +5,33 @@ class UserDataParams
   end
 
   def answers
+    set_uploaded_file_details
+    set_optional_checkboxes
+
+    @answer_params
+  end
+
+  private
+
+  def set_uploaded_file_details
     if @page_answers.uploaded_files.present?
       @page_answers.uploaded_files.map do |uploaded_file|
         @answer_params[uploaded_file.component.id] =
           @page_answers.send(uploaded_file.component.id).merge(uploaded_file.file)
       end
     end
+  end
 
-    @answer_params
+  def set_optional_checkboxes
+    checkbox_components.each do |component|
+      @answer_params[component.id] = [] if @page_answers.send(component.id).blank?
+    end
+  end
+
+  def checkbox_components
+    # not all pages have components
+    Array(@page_answers.page.components).select do |component|
+      component.type == 'checkboxes'
+    end
   end
 end
