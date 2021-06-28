@@ -15,6 +15,8 @@ class BranchingFixture < SitePrism::Page
   element :itunes, :radio_button, 'iTunes'
   element :moj, :radio_button, 'MoJ'
   element :others, :radio_button, 'Others'
+  element :beef, :checkbox, 'Beef, cheese, tomato'
+  element :chickens, :checkbox, 'Chicken, cheese, tomato'
   element :continue_button, :button, 'Continue'
   element :accept_and_send_button, :button, 'Accept and send application'
 end

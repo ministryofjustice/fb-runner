@@ -44,15 +44,53 @@ RSpec.feature 'Navigation' do
     then_I_should_be_on_best_formbuilder_page
 
     given_that_MoJ_is_the_best_formbuilder
-    then_I_should_be_on_check_your_answers_page
+    then_I_should_be_on_the_burgers_page
 
     given_that_MoJ_is_not_the_best_formbuilder
     then_I_should_be_on_which_formbuilder_page
+
+    given_that_MoJ_is_the_best_formbuilder
+
+    given_that_I_like_burgers_with_beef
+    then_I_should_see_a_content_about_global_warming
+
+    given_that_I_like_chickens
+    then_I_should_see_a_content_about_chickens
+
+    and_I_go_to_next_page
+    then_I_should_be_on_check_your_answers_page
+  end
+
+  def then_I_should_be_on_the_burgers_page
+    expect(form.current_path).to eq('/burgers')
+  end
+
+  def given_that_I_like_burgers_with_beef
+    form.beef.check
+    and_I_go_to_next_page
+  end
+
+  def then_I_should_see_a_content_about_global_warming
+    expect(form.current_path).to eq('/global-warming')
+    expect(form.text).to include('What about the trees?')
+  end
+
+  def given_that_I_like_chickens
+    visit 'burgers'
+    form.beef.uncheck
+    form.chickens.check
+    and_I_go_to_next_page
+  end
+
+  def then_I_should_see_a_content_about_chickens
+    expect(form.current_path).to eq('/we-love-chickens')
+    expect(form.text).to include('We love chickens')
   end
 
   def given_that_MoJ_is_the_best_formbuilder
+    visit 'best-formbuilder'
     form.moj.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_check_your_answers_page
@@ -62,7 +100,7 @@ RSpec.feature 'Navigation' do
   def given_that_MoJ_is_not_the_best_formbuilder
     visit 'best-formbuilder'
     form.others.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_which_formbuilder_page
@@ -84,12 +122,12 @@ RSpec.feature 'Navigation' do
 
   def given_I_add_my_full_name
     form.full_name_field.set('Black Widow')
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def given_I_like_star_wars
     form.star_wars_only_on_weekends.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_star_wars_general_knowledge_page
@@ -99,7 +137,7 @@ RSpec.feature 'Navigation' do
   def given_I_dont_like_star_wars
     visit 'do-you-like-star-wars'
     form.star_wars_hell_no.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_favourite_fruit_page
@@ -108,7 +146,7 @@ RSpec.feature 'Navigation' do
 
   def given_I_like_apples
     form.apples.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_apple_juice_page
@@ -117,7 +155,7 @@ RSpec.feature 'Navigation' do
 
   def given_I_like_apple_juice
     form.yes.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
   alias given_I_like_orange_juice given_I_like_apple_juice
 
@@ -128,7 +166,7 @@ RSpec.feature 'Navigation' do
   def given_I_like_oranges
     visit 'favourite-fruit'
     form.oranges.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_orange_juice_page
@@ -138,11 +176,11 @@ RSpec.feature 'Navigation' do
   def given_I_like_pears
     visit 'favourite-fruit'
     form.pears.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def given_I_dont_answer_the_favourite_band_page
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_best_formbuilder_page
@@ -152,7 +190,7 @@ RSpec.feature 'Navigation' do
   def given_I_like_beatles
     visit '/favourite-band'
     form.beatles.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 
   def then_I_should_be_on_music_app_page
@@ -161,6 +199,6 @@ RSpec.feature 'Navigation' do
 
   def given_I_use_itunes
     form.itunes.choose
-    form.continue_button.click
+    and_I_go_to_next_page
   end
 end
