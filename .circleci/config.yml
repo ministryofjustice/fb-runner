@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   slack: circleci/slack@3.4.2
+  browser-tools: circleci/browser-tools@1.1.3
 
 jobs:
   test:
@@ -70,14 +71,23 @@ jobs:
           command: './deploy-scripts/bin/restart_all_pods'
       - slack/status: *slack_status
   acceptance_tests:
-    docker: *ecr_image
-    resource_class: large
+    docker:
+      - image: 'cimg/ruby:2.7-node'
     steps:
-      - setup_remote_docker
-      - run: *deploy_scripts
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
           name: Run acceptance tests
-          command: './deploy-scripts/bin/acceptance_tests'
+          environment:
+            CI_MODE: 'true'
+          command: |
+            git clone https://github.com/ministryofjustice/fb-acceptance-tests
+
+            cd fb-acceptance-tests/integration
+            cp tests.env.ci tests.env
+            bundle install
+
+            bundle exec rspec spec/features/new_runner_spec.rb
       - slack/status: *slack_status
   build_and_deploy_to_live:
     docker: *ecr_image
