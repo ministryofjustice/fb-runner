@@ -58,6 +58,7 @@ RSpec.feature 'Navigation' do
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
+    and_I_should_not_see_any_back_link
   end
 
   scenario 'when I go back to a page with radio component' do
@@ -94,6 +95,40 @@ RSpec.feature 'Navigation' do
     then_I_should_see_that_I_should_add_a_dog_picture
     and_I_upload_a_dog_picture
     then_I_should_be_on_the_check_your_answers_page
+  end
+
+  scenario 'when I go back from a standalone page' do
+    when_I_visit_the_name_page
+    and_I_click_the_cookies_page
+    and_I_go_back
+    then_I_should_be_on_the_name_page
+    and_I_go_back
+    then_I_should_be_on_the_start_page
+    and_I_should_not_see_any_back_link
+  end
+
+  def when_I_visit_the_name_page
+    visit '/name'
+  end
+
+  def and_I_click_the_cookies_page
+    click_link 'Cookies'
+    expect(form.current_path).to eq('/cookies')
+  end
+
+  def then_I_should_be_on_the_name_page
+    expect(form.current_path).to eq('/name')
+  end
+
+  def then_I_should_be_on_the_start_page
+    expect(form.current_path).to eq('/')
+  end
+
+  def and_I_should_not_see_any_back_link
+    expect(form.text).to_not include('Back')
+    expect {
+      form.back_link
+    }.to raise_error(Capybara::ElementNotFound)
   end
 
   def and_I_remove_the_file
