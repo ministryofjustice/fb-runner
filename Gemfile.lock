@@ -139,7 +139,7 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
-    metadata_presenter (1.6.1)
+    metadata_presenter (1.7.0)
       govuk_design_system_formbuilder (>= 2.1.5)
       json-schema (>= 2.8.1)
       kramdown (>= 2.3.0)
@@ -338,7 +338,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.7.0)
   jwt
   listen (~> 3.5)
-  metadata_presenter (= 1.6.1)
+  metadata_presenter (= 1.7.0)
   prometheus-client (~> 2.1.0)
   puma (~> 5.3)
   rails (~> 6.1.4)
