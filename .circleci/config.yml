@@ -89,7 +89,7 @@ jobs:
             cp tests.env.ci tests.env
             bundle install
 
-            bundle exec rspec spec/features/new_runner_spec.rb
+            bundle exec rspec spec/features/v2
       - slack/status: *slack_status
   build_and_deploy_to_live:
     docker: *ecr_image
