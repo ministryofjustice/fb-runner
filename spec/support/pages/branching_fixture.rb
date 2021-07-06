@@ -17,6 +17,9 @@ class BranchingFixture < SitePrism::Page
   element :others, :radio_button, 'Others'
   element :beef, :checkbox, 'Beef, cheese, tomato'
   element :chickens, :checkbox, 'Chicken, cheese, tomato'
+  element :loki, :radio_button, 'Loki'
+  element :falcon, :radio_button, 'The Falcon and the Winter Soldier'
+  element :wandavision, :radio_button, 'WandaVision'
   element :continue_button, :button, 'Continue'
   element :accept_and_send_button, :button, 'Accept and send application'
 end

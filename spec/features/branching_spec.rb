@@ -58,7 +58,57 @@ RSpec.feature 'Navigation' do
     then_I_should_see_a_content_about_chickens
 
     and_I_go_to_next_page
+    then_I_should_be_on_marvel_best_series
+
+    and_I_choose_loki_as_the_best_marvel_series
+    then_I_should_be_on_marvel_quotes_page
+
+    given_I_choose_falcon_as_the_best_marvel_series
+    then_I_should_be_on_marvel_quotes_page
+
+    given_I_choose_wanda_vision_as_best_marvel_series
     then_I_should_be_on_check_your_answers_page
+
+    given_I_like_star_wars_on_weekends
+    given_I_choose_wanda_vision_as_best_marvel_series
+    then_I_should_be_on_other_quotes_page
+
+    and_I_go_to_next_page
+    then_I_should_be_on_check_your_answers_page
+  end
+
+  def given_I_like_star_wars_on_weekends
+    visit 'do-you-like-star-wars'
+    given_I_like_star_wars
+  end
+
+  def and_I_choose_loki_as_the_best_marvel_series
+    form.loki.choose
+    and_I_go_to_next_page
+  end
+
+  def given_I_choose_falcon_as_the_best_marvel_series
+    visit 'marvel-series'
+    form.falcon.choose
+    and_I_go_to_next_page
+  end
+
+  def given_I_choose_wanda_vision_as_best_marvel_series
+    visit 'marvel-series'
+    form.wandavision.choose
+    and_I_go_to_next_page
+  end
+
+  def then_I_should_be_on_marvel_best_series
+    expect(form.current_path).to eq('/marvel-series')
+  end
+
+  def then_I_should_be_on_marvel_quotes_page
+    expect(form.current_path).to eq('/marvel-quotes')
+  end
+
+  def then_I_should_be_on_other_quotes_page
+    expect(form.current_path).to eq('/other-quotes')
   end
 
   def then_I_should_be_on_the_burgers_page
