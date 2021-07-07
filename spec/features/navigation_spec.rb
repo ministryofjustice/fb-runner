@@ -144,10 +144,6 @@ RSpec.feature 'Navigation' do
     visit '/i-will-initiate-self-destruct'
   end
 
-  def and_I_go_back
-    form.back_link.click
-  end
-
   def and_I_add_my_parent_info
     form.parent_field.set('Unknown')
     and_I_go_to_next_page
