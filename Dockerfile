@@ -1,4 +1,4 @@
-FROM ruby:2.7.3-alpine3.13
+FROM ruby:3.0.0-alpine3.13
 
 ARG UID=1001
 
