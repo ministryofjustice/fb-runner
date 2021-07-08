@@ -67,14 +67,84 @@ RSpec.feature 'Navigation' do
     then_I_should_be_on_marvel_quotes_page
 
     given_I_choose_wanda_vision_as_best_marvel_series
-    then_I_should_be_on_check_your_answers_page
+    then_I_should_be_on_arnold_quotes_page
 
     given_I_like_star_wars_on_weekends
     given_I_choose_wanda_vision_as_best_marvel_series
     then_I_should_be_on_other_quotes_page
 
     and_I_go_to_next_page
+    then_I_should_be_on_arnold_quotes_page
+
+    given_I_choose_the_right_arnold_quotes
+    then_I_should_be_on_the_right_arnold_quotes_page
+
+    and_I_go_back
+    given_I_choose_the_wrong_arnold_quotes
+    then_I_should_be_on_the_wrong_arnold_quotes_page
+
+    and_I_go_back
+    given_I_choose_the_incomplete_arnold_quotes
+    then_I_should_be_on_the_incomplete_arnold_quotes_page
+
+    and_I_go_to_next_page
     then_I_should_be_on_check_your_answers_page
+  end
+
+  def given_I_choose_the_right_arnold_quotes
+    check 'You are not you. You are me'
+    check 'Get to the chopper'
+    check 'You have been terminated'
+    and_I_go_to_next_page
+  end
+
+  def given_I_choose_the_wrong_arnold_quotes
+    check 'I am GROOT'
+    check 'Dance Off, Bro.'
+    and_I_uncheck_the_right_answers
+    and_I_go_to_next_page
+  end
+
+  def and_I_uncheck_the_right_answers
+    uncheck 'You are not you. You are me'
+    uncheck 'Get to the chopper'
+    uncheck 'You have been terminated'
+  end
+
+  def and_I_uncheck_the_wrong_answers
+    uncheck 'I am GROOT'
+    uncheck 'Dance Off, Bro.'
+  end
+
+  def given_I_choose_the_incomplete_arnold_quotes
+    and_I_uncheck_the_right_answers
+    and_I_uncheck_the_wrong_answers
+    check 'You are not you. You are me'
+
+    and_I_go_to_next_page
+  end
+
+  def then_I_should_be_on_arnold_quotes_page
+    expect(form.current_path).to eq('/best-arnold-quote')
+  end
+
+  def then_I_should_be_on_the_right_arnold_quotes_page
+    expect(form.current_path).to eq('/arnold-right-answers')
+    expect(form.text).to include('You are right! Now, talk to the hand!')
+  end
+
+  def then_I_should_be_on_the_wrong_arnold_quotes_page
+    expect(form.current_path).to eq('/arnold-wrong-answers')
+    expect(form.text).to include(
+      'You are wrong! These are from the Guardians of the Galaxy'
+    )
+  end
+
+  def then_I_should_be_on_the_incomplete_arnold_quotes_page
+    expect(form.current_path).to eq('/arnold-incomplete-answers')
+    expect(form.text).to include(
+      'You are wrong! The answers are incomplete.'
+    )
   end
 
   def given_I_like_star_wars_on_weekends

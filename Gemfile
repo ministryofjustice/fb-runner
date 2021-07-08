@@ -10,12 +10,12 @@ gem 'jwt'
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
 # gem 'metadata_presenter',
-#    github: 'ministryofjustice/fb-metadata-presenter',
-#    branch: 'branching-OR-AND'
+#  github: 'ministryofjustice/fb-metadata-presenter',
+#  branch: 'branching-checkboxes-OR-AND'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
 gem 'fb-jwt-auth', '0.7.0'
-gem 'metadata_presenter', '1.7.1'
+gem 'metadata_presenter', '1.7.2'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 5.3'
 gem 'rails', '~> 6.1.4'

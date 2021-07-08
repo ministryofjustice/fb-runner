@@ -3,6 +3,10 @@ module FeatureSteps
     expect(Rails.configuration.service_metadata).to eq(complain_about_tribunal_metadata)
   end
 
+  def and_I_go_back
+    form.back_link.click
+  end
+
   def and_I_go_to_next_page
     form.continue_button.click
   end
