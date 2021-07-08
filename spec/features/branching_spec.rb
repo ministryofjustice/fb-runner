@@ -89,6 +89,24 @@ RSpec.feature 'Navigation' do
 
     and_I_go_to_next_page
     then_I_should_be_on_check_your_answers_page
+
+    and_I_should_see_only_the_question_and_answers_based_on_branching
+  end
+
+  def and_I_should_see_only_the_question_and_answers_based_on_branching
+    expect(form.check_your_answers_list).to match_array([
+      'Full name Black Widow',
+      'Do you like Star Wars? Only on weekends',
+      "What was the name of the band playing in Jabba's palace? ",
+      "What is The Mandalorian's real name? ",
+      'What is your favourite fruit? Pears',
+      'What is your favourite band? Beatles',
+      'Which app do you use to listen music? iTunes',
+      'What is the best form builder? MoJ',
+      'What would you like on your burger? Chicken, cheese, tomato',
+      'What is the best marvel series? WandaVision',
+      'Select all Arnold Schwarzenegger quotes You are not you. You are me'
+    ])
   end
 
   def given_I_choose_the_right_arnold_quotes

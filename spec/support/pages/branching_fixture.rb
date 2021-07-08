@@ -22,5 +22,15 @@ class BranchingFixture < SitePrism::Page
   element :wandavision, :radio_button, 'WandaVision'
   element :back_link, :link, 'Back'
   element :continue_button, :button, 'Continue'
+  elements :summary_list, '.govuk-summary-list__row'
   element :accept_and_send_button, :button, 'Accept and send application'
+
+  def check_your_answers_list
+    summary_list.map do |element|
+      question = element.find('.govuk-summary-list__key').text
+      answer = element.find('.govuk-summary-list__value').text
+
+      "#{question} #{answer}"
+    end
+  end
 end
