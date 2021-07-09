@@ -20,7 +20,7 @@ gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 5.3'
 gem 'rails', '~> 6.1.4'
 gem 'sass-rails', '>= 6'
-gem 'sentry-rails', '~> 4.6.0'
+gem 'sentry-rails', '~> 4.6.1'
 gem 'sentry-ruby', '~> 4.6.0'
 gem 'webpacker', '~> 5.4'
 
