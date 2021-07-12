@@ -222,10 +222,6 @@ RSpec.feature 'Navigation' do
     )
   end
 
-  def and_I_send_my_application
-    form.accept_and_send_button.click
-  end
-
   def and_I_change_my_full_name_answer
     form.full_name_change_answer_link.click
     form.full_name_field.set('Jabba')
@@ -253,14 +249,6 @@ RSpec.feature 'Navigation' do
     expect(form.text).to include(
       "The page you were looking for doesn't exist (404)"
     )
-  end
-
-  def then_I_should_see_the_confirmation_message
-    expect(form.confirmation_heading.text).to eq('Complaint sent')
-    expect(
-      form.confirmation_body.text.gsub('’', "'") # shrug
-    ).to eq('Some day I will be the most powerful Jedi ever!')
-    expect(form.text).not_to include('Optional lede')
   end
 
   def then_I_should_see_my_changed_full_name_on_check_your_answers

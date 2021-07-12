@@ -91,6 +91,8 @@ RSpec.feature 'Navigation' do
     then_I_should_be_on_check_your_answers_page
 
     and_I_should_see_only_the_question_and_answers_based_on_branching
+    and_I_send_my_application
+    then_I_should_see_the_confirmation_message
   end
 
   def and_I_should_see_only_the_question_and_answers_based_on_branching

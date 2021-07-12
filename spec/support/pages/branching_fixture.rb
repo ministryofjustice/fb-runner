@@ -24,6 +24,9 @@ class BranchingFixture < SitePrism::Page
   element :continue_button, :button, 'Continue'
   elements :summary_list, '.govuk-summary-list__row'
   element :accept_and_send_button, :button, 'Accept and send application'
+  element :confirmation_heading, '.govuk-panel__title'
+  data_content_id :confirmation_lede, 'page[lede]'
+  data_content_id :confirmation_body, 'page[body]'
 
   def check_your_answers_list
     summary_list.map do |element|

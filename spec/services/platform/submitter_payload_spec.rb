@@ -179,7 +179,7 @@ RSpec.describe Platform::SubmitterPayload do
     let(:service_payload) do
       {
         id: service.service_id,
-        slug: 'version-fixture',
+        slug: service.service_slug,
         name: service.service_name
       }
     end
@@ -211,6 +211,86 @@ RSpec.describe Platform::SubmitterPayload do
         .and_return(email_subject)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY')
         .and_return(email_body)
+    end
+
+    context 'when branching' do
+      let(:service_metadata) { metadata_fixture(:branching) }
+      let(:user_data) do
+        {
+          'name_text_1' => 'Thor',
+          'do-you-like-star-wars_radios_1' => 'Hell no!',
+          'favourite-fruit_radios_1' => 'Apples',
+          'apple-juice_radios_1' => 'Yes',
+          # Below, this answer will be ignored because
+          # the user's favourite fruit is Apples
+          'orange-juice_radios_1' => 'Yes',
+          'favourite-band_radios_1' => 'Beatles',
+          'music-app_radios_1' => 'iTunes',
+          'best-formbuilder_radios_1' => 'Others',
+          'burgers_checkboxes_1' => ['Mozzarella, cheddar, feta'],
+          'marvel-series_radios_1' => 'Loki',
+          'best-arnold-quote_checkboxes_1' => [
+            'You are not you. You are me',
+            'Get to the chopper',
+            'You have been terminated'
+          ],
+          'which-formbuilder_text_1' => 'MoJ again!'
+        }
+      end
+      let(:pages_payload) do
+        [
+          {
+            heading: '',
+            answers: [{ field_id: 'name_text_1', field_name: 'Full name', answer: 'Thor' }]
+          },
+          { heading: '',
+            answers: [{ field_id: 'do-you-like-star-wars_radios_1',
+                        field_name: 'Do you like Star Wars?',
+                        answer: 'Hell no!' }] },
+          { heading: '',
+            answers: [{ field_id: 'favourite-fruit_radios_1',
+                        field_name: 'What is your favourite fruit?',
+                        answer: 'Apples' }] },
+          { heading: '',
+            answers: [{ field_id: 'apple-juice_radios_1',
+                        field_name: 'Do you like apple juice?',
+                        answer: 'Yes' }] },
+          { heading: '',
+            answers: [{ field_id: 'favourite-band_radios_1',
+                        field_name: 'What is your favourite band?',
+                        answer: 'Beatles' }] },
+          { heading: '',
+            answers: [{ field_id: 'music-app_radios_1',
+                        field_name: 'Which app do you use to listen music?',
+                        answer: 'iTunes' }] },
+          { heading: '',
+            answers: [{ field_id: 'best-formbuilder_radios_1',
+                        field_name: 'What is the best form builder?',
+                        answer: 'Others' }] },
+          { heading: '',
+            answers: [{ field_id: 'which-formbuilder_text_1',
+                        field_name: 'Which Formbuilder is the best?',
+                        answer: 'MoJ again!' }] },
+          { heading: '',
+            answers: [{ field_id: 'burgers_checkboxes_1',
+                        field_name: 'What would you like on your burger?',
+                        answer: ['Mozzarella, cheddar, feta'] }] },
+          { heading: '',
+            answers: [{ field_id: 'marvel-series_radios_1',
+                        field_name: 'What is the best marvel series?',
+                        answer: 'Loki' }] },
+          { heading: '',
+            answers: [{ field_id: 'best-arnold-quote_checkboxes_1',
+                        field_name: 'Select all Arnold Schwarzenegger quotes',
+                        answer: ['You are not you. You are me',
+                                 'Get to the chopper',
+                                 'You have been terminated'] }] }
+        ]
+      end
+
+      it 'sends right pages and ignores answers based on branching' do
+        expect(submitter_payload.to_h[:pages]).to eq(pages_payload)
+      end
     end
 
     context 'when optional fields' do

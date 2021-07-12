@@ -11,6 +11,10 @@ module FeatureSteps
     form.continue_button.click
   end
 
+  def and_I_send_my_application
+    form.accept_and_send_button.click
+  end
+
   def and_I_add_my_full_name
     form.full_name_field.set('Han Solo')
     and_I_go_to_next_page
@@ -56,5 +60,13 @@ module FeatureSteps
     expected_message = [message]
     expect(form.error_summary).to eq(expected_message)
     expect(form.error_messages).to eq(expected_message)
+  end
+
+  def then_I_should_see_the_confirmation_message
+    expect(form.confirmation_heading.text).to eq('Complaint sent')
+    expect(
+      form.confirmation_body.text.gsub('’', "'") # shrug
+    ).to eq('Some day I will be the most powerful Jedi ever!')
+    expect(form.text).not_to include('Optional lede')
   end
 end
