@@ -50,7 +50,7 @@ module Platform
     end
 
     def pages
-      service.pages.map { |page|
+      answered_pages.map { |page|
         components = strip_content_components(page.components)
         next if components.empty?
 
@@ -65,6 +65,10 @@ module Platform
           end
         }
       }.compact
+    end
+
+    def answered_pages
+      MetadataPresenter::TraversedPages.new(service, user_data).all
     end
 
     def answer_for(page, component)
