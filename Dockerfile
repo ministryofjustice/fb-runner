@@ -10,6 +10,7 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/ma
 # Copy Go and install Vegeta
 COPY --from=golang:1.16-alpine /usr/local/go/ /usr/local/go/
 ENV PATH="/usr/local/go/bin:${PATH}"
+ENV GOPATH="/usr/local/go"
 RUN go get -u github.com/tsenart/vegeta
 
 RUN addgroup -g ${UID} -S appgroup && \
