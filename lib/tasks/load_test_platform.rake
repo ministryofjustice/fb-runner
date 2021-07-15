@@ -45,6 +45,6 @@ namespace :load_test do
       subject: subject
     ).generate
 
-    system("'#{Rails.root.join('bin', 'load_test_datastore')}' '#{token}' '#{ENV['USER_FILESTORE_URL']}' '#{subject}' '#{slug}' '#{concurrency}' '#{duration}'")
+    system("'#{Rails.root.join('bin', 'load_test_filestore')}' '#{token}' '#{ENV['USER_FILESTORE_URL']}' '#{subject}' '#{slug}' '#{concurrency}' '#{duration}'")
   end
 end

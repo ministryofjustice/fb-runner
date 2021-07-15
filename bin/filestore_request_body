@@ -1,1 +1,1 @@
-{"encrypted_user_id_and_token":"/7danQNZrt06+SZlQUOjsxcRvy9wiuW6Y9lxQg9EF4s8TaXc/Ez/UK2LZkKQ/NR0T8WJJTJB3HKlLj3V2F5iWQ==","file":"VEhJUyBJUyBBIEtOSUZFIQo=","policy":{"max_size":7,"allowed_types":[],"expires":28}}
+{"encrypted_user_id_and_token":"/7danQNZrt06+SZlQUOjsxcRvy9wiuW6Y9lxQg9EF4s8TaXc/Ez/UK2LZkKQ/NR0T8WJJTJB3HKlLj3V2F5iWQ==","file":"VEhJUyBJUyBBIEtOSUZFIQo=","user_id":"04cf476c2dd02e01304d7ab321764096","policy":{"max_size":7,"allowed_types":["application/txt"],"expires":28},"service_slug":"slug"}
