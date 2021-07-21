@@ -113,7 +113,7 @@ GEM
       activesupport
       json
       jwt
-    ffi (1.15.0)
+    ffi (1.15.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     govuk_design_system_formbuilder (2.7.2)
@@ -130,7 +130,7 @@ GEM
     jwt (2.2.3)
     kramdown (2.3.1)
       rexml
-    listen (3.5.1)
+    listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.10.0)
@@ -199,7 +199,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.6)
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.1.1)
@@ -337,7 +337,7 @@ DEPENDENCIES
   faraday_middleware
   fb-jwt-auth (= 0.7.0)
   jwt
-  listen (~> 3.5)
+  listen (~> 3.6)
   metadata_presenter (= 1.9.0)
   prometheus-client (~> 2.1.0)
   puma (~> 5.3)
