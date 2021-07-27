@@ -100,10 +100,6 @@ RSpec.feature 'Navigation' do
   scenario 'when I go back from a standalone page' do
     when_I_visit_the_name_page
     and_I_click_the_cookies_page
-    and_I_go_back
-    then_I_should_be_on_the_name_page
-    and_I_go_back
-    then_I_should_be_on_the_start_page
     and_I_should_not_see_any_back_link
   end
 
@@ -114,14 +110,6 @@ RSpec.feature 'Navigation' do
   def and_I_click_the_cookies_page
     click_link 'Cookies'
     expect(form.current_path).to eq('/cookies')
-  end
-
-  def then_I_should_be_on_the_name_page
-    expect(form.current_path).to eq('/name')
-  end
-
-  def then_I_should_be_on_the_start_page
-    expect(form.current_path).to eq('/')
   end
 
   def and_I_should_not_see_any_back_link
