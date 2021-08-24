@@ -14,6 +14,7 @@ RSpec.describe Platform::SubmitterAdapter do
   let(:service_slug) { 'lotr' }
   let(:session) do
     {
+      user_id: 'aed3fa4fae7c784cc7675eeb539669c1',
       session_id: 'fa018e7bef6460c2a52818bab9731304',
       user_token: '648f6ae5d954373e85769165acf23a9a'
     }
@@ -37,6 +38,7 @@ RSpec.describe Platform::SubmitterAdapter do
         'User-Agent' => 'Runner'
       }
     end
+    let(:jwt_subject) { session[:user_id] }
     let(:body) do
       {
         encrypted_submission: DataEncryption.new(key: key).encrypt(
@@ -44,7 +46,7 @@ RSpec.describe Platform::SubmitterAdapter do
         ),
         service_slug: service_slug,
         encrypted_user_id_and_token: DataEncryption.new(key: service_secret).encrypt(
-          "#{session[:session_id]}#{session[:user_token]}"
+          "#{session[:user_id]}#{session[:user_token]}"
         )
       }
     end
@@ -53,18 +55,18 @@ RSpec.describe Platform::SubmitterAdapter do
     end
     let(:service_access_token) { double(Fb::Jwt::Auth::ServiceAccessToken) }
 
-    before do
-      expect(Fb::Jwt::Auth::ServiceAccessToken).to receive(:new)
-        .with(issuer: 'lotr', subject: 'fa018e7bef6460c2a52818bab9731304')
-        .and_return(service_access_token)
-      allow(service_access_token).to receive(:generate).and_return('some-token')
-
-      allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[]).with('SUBMISSION_ENCRYPTION_KEY')
-        .and_return(key)
-    end
-
     shared_context 'request to submitter' do
+      before do
+        expect(Fb::Jwt::Auth::ServiceAccessToken).to receive(:new)
+          .with(issuer: 'lotr', subject: jwt_subject)
+          .and_return(service_access_token)
+        allow(service_access_token).to receive(:generate).and_return('some-token')
+
+        allow(ENV).to receive(:[])
+        allow(ENV).to receive(:[]).with('SUBMISSION_ENCRYPTION_KEY')
+          .and_return(key)
+      end
+
       it 'sends to submitter with the right payload' do
         stub_request(:post, expected_url)
           .with(body: expected_body, headers: expected_headers)
@@ -91,6 +93,29 @@ RSpec.describe Platform::SubmitterAdapter do
         body.merge({
           encrypted_user_id_and_token: ''
         })
+      end
+      include_context 'request to submitter'
+    end
+
+    context 'when user id in the session is not present' do
+      let(:expected_body) { body }
+      let(:session) do
+        {
+          session_id: 'fa018e7bef6460c2a52818bab9731304',
+          user_token: '648f6ae5d954373e85769165acf23a9a'
+        }
+      end
+      let(:jwt_subject) { session[:session_id] }
+      let(:body) do
+        {
+          encrypted_submission: DataEncryption.new(key: key).encrypt(
+            JSON.generate(payload)
+          ),
+          service_slug: service_slug,
+          encrypted_user_id_and_token: DataEncryption.new(key: service_secret).encrypt(
+            "#{session[:session_id]}#{session[:user_token]}"
+          )
+        }
       end
       include_context 'request to submitter'
     end

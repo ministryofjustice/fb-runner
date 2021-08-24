@@ -34,6 +34,11 @@ module Platform
       ).generate
     end
 
+    def subject
+      session[:user_id] || session[:session_id]
+    end
+    alias_method :user_id, :subject
+
     def request(verb, url, body)
       connection.send(verb, url, body, headers)
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e

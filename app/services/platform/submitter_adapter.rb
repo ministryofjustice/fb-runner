@@ -50,10 +50,5 @@ module Platform
     def timeout
       TIMEOUT
     end
-
-    def subject
-      session[:session_id]
-    end
-    alias_method :user_id, :subject
   end
 end

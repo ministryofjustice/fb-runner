@@ -42,10 +42,6 @@ module Platform
       )
     end
 
-    def subject
-      session[:session_id]
-    end
-
     def subscription
       SUBSCRIPTION
     end
