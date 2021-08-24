@@ -13,6 +13,7 @@ class UserData
 
   def adapter
     session[:user_token] ||= SecureRandom.hex(16)
+    session[:user_id] ||= SecureRandom.hex(16)
 
     return @adapter.new(session) if @adapter.present?
 
