@@ -8,7 +8,6 @@ RSpec.describe Platform::UserFilestoreAdapter do
       service_slug: service_slug
     )
   end
-  let(:session) { { session_id: 'some-id' } }
   let(:file_details) { { original_filename: 'this-is-a-knife.png' } }
   let(:allowed_file_types) { %w[long-list-of-alllowed-types] }
   let(:root_url) { 'http://filestore-svc' }
@@ -37,8 +36,9 @@ RSpec.describe Platform::UserFilestoreAdapter do
       'X-Access-Token-V2' => ''
     }
   end
+  let(:session) { { session_id: 'some-id', user_id: 'bassetthegodfather' } }
   let(:expected_url) do
-    "#{root_url}/service/#{service_slug}/user/#{session[:session_id]}"
+    "#{root_url}/service/#{service_slug}/user/#{session[:user_id]}"
   end
   let(:response_body) { '{}' }
   let(:response_status) { 201 }
@@ -80,6 +80,23 @@ RSpec.describe Platform::UserFilestoreAdapter do
       end
 
       it 'makes a request to filestore' do
+        adapter.call
+        expect(WebMock).to have_requested(
+          :post, expected_url
+        ).with(headers: expected_headers, body: payload)
+         .once
+      end
+    end
+
+    context 'when there is no user_id in the session' do
+      let(:session) do
+        { session_id: 'two-han-solos-singing-becomes-a-han-duet' }
+      end
+      let(:expected_url) do
+        "#{root_url}/service/#{service_slug}/user/#{session[:session_id]}"
+      end
+
+      it 'makes a request to filestore fallback to the session_id' do
         adapter.call
         expect(WebMock).to have_requested(
           :post, expected_url

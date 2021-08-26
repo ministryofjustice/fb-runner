@@ -8,7 +8,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     'http://user-datastore.com'
   end
   let(:expected_url) do
-    URI.join(root_url, '/service/court-service/user/8b62ea25319b4ad8a889174dca57e061')
+    URI.join(root_url, '/service/court-service/user/60abfdea862c0c6d7aa737aec6e805fa')
   end
   let(:expected_headers) do
     {
@@ -33,6 +33,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
   end
   let(:session) do
     {
+      user_id: '60abfdea862c0c6d7aa737aec6e805fa',
       session_id: '8b62ea25319b4ad8a889174dca57e061',
       user_token: '474c39bf61287d4ec0aa1276f089d2e3'
     }
@@ -145,6 +146,32 @@ RSpec.describe Platform::UserDatastoreAdapter do
   end
 
   describe '#load_data' do
+    context 'when there is no user id in the session' do
+      let(:session) do
+        {
+          session_id: '8b62ea25319b4ad8a889174dca57e061',
+          user_token: '474c39bf61287d4ec0aa1276f089d2e3'
+        }
+      end
+      let(:expected_url) do
+        URI.join(root_url, '/service/court-service/user/8b62ea25319b4ad8a889174dca57e061')
+      end
+
+      before do
+        stub_request(:get, expected_url)
+          .with(body: {}, headers: expected_headers)
+          .to_return(status: 200, body: expected_body, headers: {})
+      end
+
+      it 'fallback to the session id' do
+        adapter.load_data
+        expect(WebMock).to have_requested(
+          :get, expected_url
+        ).with(headers: expected_headers)
+         .once
+      end
+    end
+
     context 'when returning data' do
       before do
         stub_request(:get, expected_url)

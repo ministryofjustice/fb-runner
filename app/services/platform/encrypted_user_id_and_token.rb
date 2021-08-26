@@ -7,9 +7,5 @@ module Platform
         key: service_secret
       ).encrypt("#{user_id}#{session[:user_token]}")
     end
-
-    def user_id
-      session[:session_id]
-    end
   end
 end

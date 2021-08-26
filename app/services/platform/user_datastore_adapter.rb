@@ -49,10 +49,6 @@ module Platform
       session[:user_token]
     end
 
-    def subject
-      session[:session_id]
-    end
-
     def subscription
       SUBSCRIPTION
     end
