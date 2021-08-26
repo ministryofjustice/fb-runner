@@ -1,5 +1,5 @@
 RSpec.describe Platform::SubmitterPayload do
-  let(:session) { { session_id: '1234' } }
+  let(:session) { { user_id: 'user-id-5b10c947cf32bd0558318e77eebc0995' } }
   subject(:submitter_payload) do
     described_class.new(
       service: service,
@@ -403,7 +403,23 @@ RSpec.describe Platform::SubmitterPayload do
           expect(submitter_payload.to_h[:attachments]).to eq(
             [
               {
-                url: 'https://www.yeah-baby.com/service/groovy/user/1234/28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+                url: 'https://www.yeah-baby.com/service/groovy/user/user-id-5b10c947cf32bd0558318e77eebc0995/28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+                filename: 'basset-hound.jpg',
+                mimetype: 'image/jpg'
+              }
+            ]
+          )
+        end
+      end
+
+      context 'when there is no user id' do
+        let(:session) { { session_id: 'bf264550118dc32eef61f1b2e1206a58' } }
+
+        it 'sends the correct attachments object in the payload' do
+          expect(submitter_payload.to_h[:attachments]).to eq(
+            [
+              {
+                url: 'https://www.yeah-baby.com/service/groovy/user/bf264550118dc32eef61f1b2e1206a58/28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
                 filename: 'basset-hound.jpg',
                 mimetype: 'image/jpg'
               }
