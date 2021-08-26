@@ -1,5 +1,6 @@
 module Platform
   class SubmitterPayload
+    include Platform::Connection
     attr_reader :service, :user_data, :session
 
     EMAIL = 'email'.freeze
@@ -128,7 +129,7 @@ module Platform
     def file_download_url(fingerprint)
       "#{ENV['USER_FILESTORE_URL']}" \
       "/service/#{ENV['SERVICE_SLUG']}" \
-      "/user/#{session[:session_id]}" \
+      "/user/#{user_id}" \
       "/#{fingerprint}"
     end
   end
