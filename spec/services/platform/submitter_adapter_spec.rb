@@ -15,7 +15,6 @@ RSpec.describe Platform::SubmitterAdapter do
   let(:session) do
     {
       user_id: 'aed3fa4fae7c784cc7675eeb539669c1',
-      session_id: 'fa018e7bef6460c2a52818bab9731304',
       user_token: '648f6ae5d954373e85769165acf23a9a'
     }
   end
@@ -93,29 +92,6 @@ RSpec.describe Platform::SubmitterAdapter do
         body.merge({
           encrypted_user_id_and_token: ''
         })
-      end
-      include_context 'request to submitter'
-    end
-
-    context 'when user id in the session is not present' do
-      let(:expected_body) { body }
-      let(:session) do
-        {
-          session_id: 'fa018e7bef6460c2a52818bab9731304',
-          user_token: '648f6ae5d954373e85769165acf23a9a'
-        }
-      end
-      let(:jwt_subject) { session[:session_id] }
-      let(:body) do
-        {
-          encrypted_submission: DataEncryption.new(key: key).encrypt(
-            JSON.generate(payload)
-          ),
-          service_slug: service_slug,
-          encrypted_user_id_and_token: DataEncryption.new(key: service_secret).encrypt(
-            "#{session[:session_id]}#{session[:user_token]}"
-          )
-        }
       end
       include_context 'request to submitter'
     end

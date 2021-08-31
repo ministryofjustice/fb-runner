@@ -57,24 +57,9 @@ RSpec.describe UserData do
       end
     end
 
-    context 'when there is a user token but no user id' do
-      let(:session) do
-        {
-          session_id: '627b1048ab1d29539510abc89b79833f',
-          user_token: '6dd78844fb69d634f22143401cfb1851'
-        }
-      end
-
-      it 'assigns session_id as the user_id (to be backwards compatible)' do
-        user_data.adapter
-        expect(session[:user_id]).to eq('627b1048ab1d29539510abc89b79833f')
-      end
-    end
-
     context 'when there is a user token and an user id' do
       let(:session) do
         {
-          session_id: '627b1048ab1d29539510abc89b79833f',
           user_token: '6dd78844fb69d634f22143401cfb1851',
           user_id: '192ba011389fe2f15039b3b717a754f9'
         }

@@ -9,7 +9,7 @@ RSpec.describe Platform::UserFilestorePayload do
   end
   let(:session) do
     {
-      session_id: '04cf476c2dd02e01304d7ab321764096',
+      user_id: '04cf476c2dd02e01304d7ab321764096',
       user_token: '162738e2772348798c657c64c226042e'
     }
   end

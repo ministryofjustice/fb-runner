@@ -25,11 +25,6 @@ class UserData
   end
 
   def create_user_keys
-    if session[:user_token].present?
-      # backwards compatibility to avoid erasing user data during the deployment
-      session[:user_id] ||= session[:session_id]
-    end
-
     session[:user_token] ||= SecureRandom.hex(16)
     session[:user_id] ||= SecureRandom.hex(16)
   end
