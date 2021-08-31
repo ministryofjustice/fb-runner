@@ -35,7 +35,7 @@ module Platform
     end
 
     def subject
-      session[:user_id] || session[:session_id]
+      session[:user_id]
     end
     alias_method :user_id, :subject
 

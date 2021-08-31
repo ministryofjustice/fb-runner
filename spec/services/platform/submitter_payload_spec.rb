@@ -412,22 +412,6 @@ RSpec.describe Platform::SubmitterPayload do
         end
       end
 
-      context 'when there is no user id' do
-        let(:session) { { session_id: 'bf264550118dc32eef61f1b2e1206a58' } }
-
-        it 'sends the correct attachments object in the payload' do
-          expect(submitter_payload.to_h[:attachments]).to eq(
-            [
-              {
-                url: 'https://www.yeah-baby.com/service/groovy/user/bf264550118dc32eef61f1b2e1206a58/28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
-                filename: 'basset-hound.jpg',
-                mimetype: 'image/jpg'
-              }
-            ]
-          )
-        end
-      end
-
       context 'with optional file upload questions ie no answer in user data' do
         let(:user_data) { { 'dog-picture_upload_1' => {} } }
 
