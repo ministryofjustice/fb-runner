@@ -29,7 +29,11 @@ class ApplicationController < ActionController::Base
   end
 
   def load_user_data
-    @load_user_data ||= UserData.new(session).load_data
+    @load_user_data ||= reload_user_data
+  end
+
+  def reload_user_data
+    UserData.new(session).load_data
   end
 
   def remove_user_data(component_id)
