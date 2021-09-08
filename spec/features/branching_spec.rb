@@ -95,6 +95,76 @@ RSpec.feature 'Navigation' do
     then_I_should_see_the_confirmation_message
   end
 
+  scenario 'changing answer on a normal page' do
+    given_I_fill_the_form
+    when_I_click_to_change_my_answer_on_a_page
+    and_I_change_my_name
+    then_I_should_be_on_check_your_answers_page
+  end
+
+  scenario 'changing answer on a branch' do
+    given_I_fill_the_form
+    when_I_click_to_change_my_answer_on_branch
+    and_I_change_my_answer
+    then_I_should_go_one_page_at_a_time_until_the_end_of_the_form
+  end
+
+  scenario 'clicks to change an answer on a branch but keeping same answer' do
+    given_I_fill_the_form
+    when_I_click_to_change_my_answer_on_branch
+    and_I_keep_same_answer
+    then_I_should_be_on_check_your_answers_page
+  end
+
+  def given_I_fill_the_form
+    given_I_enter_in_the_form
+    given_I_add_my_full_name
+    given_I_dont_like_star_wars
+    given_I_like_apples
+    given_I_like_apple_juice
+    given_I_like_beatles
+    given_I_use_itunes
+    given_that_MoJ_is_the_best_formbuilder
+    given_that_I_like_burgers_with_beef
+    and_I_go_to_next_page
+    and_I_choose_loki_as_the_best_marvel_series
+    and_I_go_to_next_page
+    given_I_choose_the_right_arnold_quotes
+    and_I_go_to_next_page
+    then_I_should_be_on_check_your_answers_page
+  end
+
+  def and_I_change_my_name
+    given_I_add_my_full_name(name: "Loki variant #{Kernel.rand(0..100)}")
+  end
+
+  def and_I_change_my_answer
+    given_I_choose_oranges
+  end
+
+  def and_I_keep_same_answer
+    and_I_go_to_next_page
+  end
+
+  def when_I_click_to_change_my_answer_on_a_page
+    form.full_name_change_answer_link.click
+  end
+
+  def when_I_click_to_change_my_answer_on_branch
+    form.favourite_juice_change_answer_link.click
+  end
+
+  def then_I_should_go_one_page_at_a_time_until_the_end_of_the_form
+    then_I_should_be_on_orange_juice_page
+    given_I_like_orange_juice
+    then_I_should_be_on_favourite_band_page
+
+    # navigating until the end of the form
+    9.times { and_I_go_to_next_page }
+
+    then_I_should_be_on_check_your_answers_page
+  end
+
   def and_I_should_see_only_the_question_and_answers_based_on_branching
     expect(form.check_your_answers_list).to match_array([
       'Full name Black Widow',
@@ -260,8 +330,8 @@ RSpec.feature 'Navigation' do
     form.start_button.click
   end
 
-  def given_I_add_my_full_name
-    form.full_name_field.set('Black Widow')
+  def given_I_add_my_full_name(name: 'Black Widow')
+    form.full_name_field.set(name)
     and_I_go_to_next_page
   end
 
@@ -305,6 +375,10 @@ RSpec.feature 'Navigation' do
 
   def given_I_like_oranges
     visit 'favourite-fruit'
+    given_I_choose_oranges
+  end
+
+  def given_I_choose_oranges
     form.oranges.choose
     and_I_go_to_next_page
   end

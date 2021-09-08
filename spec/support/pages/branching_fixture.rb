@@ -36,4 +36,12 @@ class BranchingFixture < SitePrism::Page
       "#{question} #{answer}"
     end
   end
+
+  def full_name_change_answer_link
+    summary_list[0].find('a')
+  end
+
+  def favourite_juice_change_answer_link
+    summary_list[2].find('a')
+  end
 end
