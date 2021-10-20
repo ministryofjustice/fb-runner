@@ -4,7 +4,7 @@ ARG UID=1001
 
 RUN apk add --update yarn build-base bash libcurl git tzdata
 
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs=14.17.6-r0 npm
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs=14.18.1-r0 npm
 
 # For load testing
 # Copy Go and install Vegeta
