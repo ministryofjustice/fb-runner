@@ -20,7 +20,7 @@ module Platform
         conn.options[:timeout] = timeout
 
         # Submitter uses the v3 access token from service token cache
-        conn.authorization :Bearer, service_access_token
+        conn.request :authorization, 'Bearer', service_access_token
       end
     end
 
