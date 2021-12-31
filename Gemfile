@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.3'
+ruby '2.7.5'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
@@ -14,8 +14,8 @@ gem 'jwt'
 #    branch: 'change-your-answers'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
-gem 'fb-jwt-auth', '0.7.0'
-gem 'metadata_presenter', '2.14.1'
+gem 'fb-jwt-auth', '0.8.0'
+gem 'metadata_presenter', '2.15.0'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 5.5'
 gem 'rails', '~> 6.1.4'
