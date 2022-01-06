@@ -37,6 +37,5 @@ updates:
     - dependency-type: all
   reviewers:
   - mattempty
-  - tomas-stefano
   - brenetic
   - njseeto
