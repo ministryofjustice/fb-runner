@@ -10,7 +10,6 @@ updates:
   allow:
     - dependency-type: all
   reviewers:
-  - tomas-stefano
   - brenetic
   - mattempty
   - njseeto
@@ -22,7 +21,6 @@ updates:
     timezone: Europe/London
   open-pull-requests-limit: 10
   reviewers:
-  - tomas-stefano
   - brenetic
   - mattempty
   - njseeto
