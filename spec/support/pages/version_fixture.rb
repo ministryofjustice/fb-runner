@@ -87,8 +87,12 @@ class VersionFixture < SitePrism::Page
     summary_list[9]
   end
 
-  def dog_picture_checkanswers
+  def email_address_checkanswers
     summary_list[10]
+  end
+
+  def dog_picture_checkanswers
+    summary_list[11]
   end
 
   def dog_picture_change_answer_link

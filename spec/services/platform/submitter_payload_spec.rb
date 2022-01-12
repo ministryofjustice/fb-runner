@@ -30,6 +30,7 @@ RSpec.describe Platform::SubmitterPayload do
       'burgers_checkboxes_1' => ['Beef, cheese, tomato', 'Chicken, cheese, tomato'],
       'star-wars-knowledge_text_1' => 'Max Rebo Band',
       'star-wars-knowledge_radios_1' => 'Din Jarrin',
+      'email-address_email_1' => 'bilbo@middle.earth.com',
       'dog-picture_upload_1' => {
         'original_filename' => 'basset-hound.jpg',
         'content_type' => 'image/jpg',
@@ -159,6 +160,16 @@ RSpec.describe Platform::SubmitterPayload do
             field_id: 'star-wars-knowledge_radios_1',
             field_name: "What is The Mandalorian's real name?",
             answer: 'Din Jarrin'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            answer: 'bilbo@middle.earth.com',
+            field_id: 'email-address_email_1',
+            field_name: 'Email address'
           }
         ]
       },

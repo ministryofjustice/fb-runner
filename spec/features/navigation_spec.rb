@@ -31,6 +31,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_burger
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
+    and_I_add_my_email
     and_I_upload_a_dog_picture
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
@@ -54,6 +55,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_burger
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
+    and_I_add_my_email
     and_I_upload_a_dog_picture
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
@@ -204,6 +206,9 @@ RSpec.feature 'Navigation' do
     )
     expect(form.star_wars_knowledge_2_checkanswers.text).to include(
       "What is The Mandalorian's real name? Din Jarrin Change Your answer for What is The Mandalorian's real name?"
+    )
+    expect(form.email_address_checkanswers.text).to include(
+      "Email address han.solo@gmail.com"
     )
     expect(form.dog_picture_checkanswers.text).to include(
       'Upload your best dog photo thats-not-a-knife.txt'
