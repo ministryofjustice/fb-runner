@@ -120,7 +120,7 @@ GEM
       activesupport
       json
       jwt
-    ffi (1.15.4)
+    ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
     govuk_design_system_formbuilder (3.0.0)
