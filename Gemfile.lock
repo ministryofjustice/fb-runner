@@ -129,7 +129,7 @@ GEM
       activesupport (>= 6.1)
       deep_merge (~> 1.2.1)
     hashdiff (1.0.1)
-    i18n (1.8.11)
+    i18n (1.9.0)
       concurrent-ruby (~> 1.0)
     json (2.6.1)
     json-schema (2.8.1)
