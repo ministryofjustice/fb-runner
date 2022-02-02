@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   slack: circleci/slack@3.4.2
-  browser-tools: circleci/browser-tools@1.2.1
+  browser-tools: circleci/browser-tools@1.2.4
 
 jobs:
   test:
@@ -76,7 +76,8 @@ jobs:
     docker:
       - image: 'cimg/ruby:2.7-node'
     steps:
-      - browser-tools/install-browser-tools
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
           name: Check browser tools install
           command: |
