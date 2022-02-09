@@ -2,6 +2,8 @@ FROM ruby:2.7.5-alpine3.15
 
 ARG UID=1001
 
+RUN apk upgrade
+
 RUN apk add --update yarn build-base bash libcurl git tzdata
 
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs=14.18.1-r0 npm
