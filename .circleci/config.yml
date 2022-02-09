@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.11
       - run:
           name: Setup containers
           command: make setup-ci
@@ -38,7 +38,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.11
       - add_ssh_keys: &ssh_keys
           fingerprints:
             - "af:e3:71:5e:fc:fd:08:e1:61:d4:18:10:cd:6b:6d:aa"
@@ -101,7 +101,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.11
       - add_ssh_keys: *ssh_keys
       - run: *base_environment_variables
       - run: *deploy_scripts
