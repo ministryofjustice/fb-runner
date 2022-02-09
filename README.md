@@ -1,8 +1,8 @@
 # README
 
 ## Setup
-Ensure you are running on Node version 14.18.1:
-`nvm use 14.18.1`
+Ensure you are running on Node version 16.13.2:
+`nvm use 16.13.2`
 
 To run the project locally, execute the following steps:
 - Install Ruby dependencies: `bundle install`
