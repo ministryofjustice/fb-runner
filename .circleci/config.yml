@@ -62,7 +62,7 @@ jobs:
             DEPLOYMENT_ENV: dev
             K8S_NAMESPACE: formbuilder-services-test-dev
             RUNNER_TYPE: fb-runner
-          command: './deploy-scripts/bin/restart_all_pods'
+          command: './deploy-scripts/bin/eks_restart_all_pods'
       - run:
           name: Restart the runners in test production
           environment:
@@ -70,7 +70,7 @@ jobs:
             DEPLOYMENT_ENV: production
             K8S_NAMESPACE: formbuilder-services-test-production
             RUNNER_TYPE: fb-runner
-          command: './deploy-scripts/bin/restart_all_pods'
+          command: './deploy-scripts/bin/eks_restart_all_pods'
       - slack/status: *slack_status
   acceptance_tests:
     docker:
@@ -117,7 +117,7 @@ jobs:
             DEPLOYMENT_ENV: dev
             K8S_NAMESPACE: formbuilder-services-live-dev
             RUNNER_TYPE: fb-runner
-          command: './deploy-scripts/bin/restart_all_pods'
+          command: './deploy-scripts/bin/eks_restart_all_pods'
       - run:
           name: Restart the runners in live production
           environment:
@@ -125,7 +125,7 @@ jobs:
             DEPLOYMENT_ENV: production
             K8S_NAMESPACE: formbuilder-services-live-production
             RUNNER_TYPE: fb-runner
-          command: './deploy-scripts/bin/restart_all_pods'
+          command: './deploy-scripts/bin/eks_restart_all_pods'
       - slack/status:
           only_for_branches: main
           success_message: ":rocket:  Successfully deployed to Live  :guitar:"
@@ -156,18 +156,18 @@ workflows:
       - acceptance_tests:
           requires:
             - build_and_deploy_to_test
-      - slack/approval-notification:
-          message: ":portalorangeparrot:  Deployment to Live pending approval  :portalblueparrot:"
-          include_job_number_field: false
-          requires:
-            - acceptance_tests
-      - confirm_live_build:
-          type: approval
-          requires:
-            - acceptance_tests
-      - build_and_deploy_to_live:
-          requires:
-            - confirm_live_build
-      - smoke_tests:
-          requires:
-            - build_and_deploy_to_live
+      # - slack/approval-notification:
+      #     message: ":portalorangeparrot:  Deployment to Live pending approval  :portalblueparrot:"
+      #     include_job_number_field: false
+      #     requires:
+      #       - acceptance_tests
+      # - confirm_live_build:
+      #     type: approval
+      #     requires:
+      #       - acceptance_tests
+      # - build_and_deploy_to_live:
+      #     requires:
+      #       - confirm_live_build
+      # - smoke_tests:
+      #     requires:
+      #       - build_and_deploy_to_live
