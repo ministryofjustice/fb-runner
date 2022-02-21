@@ -1,35 +1,67 @@
 version: 2.1
 orbs:
+  ruby: circleci/ruby@1.4.0
+  node: circleci/node@4.5.1
   slack: circleci/slack@3.4.2
   browser-tools: circleci/browser-tools@1.2.4
 
 jobs:
-  test:
-    working_directory: ~/circle
+  build:
     docker:
-      - image: cimg/ruby:2.7.5
+      - image: 'cimg/ruby:2.7.5-node'
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.11
-      - run:
-          name: Setup containers
-          command: make setup-ci
-      - run:
-          name: Security check
-          command: make security-check
-      - run:
-          name: Lint
-          command: make lint
-      - run:
-          name: Unit tests
-          command: make spec
+      - ruby/install-deps
+      - run: &node_version
+          name: Swap node versions
+          command: |
+            set +e
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+            nvm install v14.19.0
+            nvm alias default 14.19.0
+
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - node/install-packages:
+          pkg-manager: yarn
       - slack/status: &slack_status
           fail_only: true
           only_for_branches: main
-          failure_message: ":facepalm: Failed job $CIRCLE_JOB  :homer-disappear:"
+          failure_message: ":facepalm:  Failed job $CIRCLE_JOB  :homer-disappear:"
           include_job_number_field: false
-  build_and_deploy_to_test:
+  lint:
+    docker:
+      - image: 'cimg/ruby:2.7.5-node'
+    steps:
+      - checkout
+      - ruby/install-deps
+      - ruby/rubocop-check:
+          format: progress
+          label: running rubocop
+      - slack/status: *slack_status
+  security:
+    docker:
+      - image: 'cimg/ruby:2.7.5-node'
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run: bundle exec brakeman -q --no-pager
+      - slack/status: *slack_status
+  test:
+    docker:
+      - image: cimg/ruby:2.7.5-node
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run: *node_version
+      - node/install-packages:
+          pkg-manager: yarn
+      - run: bundle exec rspec
+      - slack/status: *slack_status
+  build_and_push_image:
     docker: &ecr_image
       - image: $AWS_BUILD_IMAGE_ECR_ACCOUNT_URL
         aws_auth:
@@ -39,9 +71,6 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 20.10.11
-      - add_ssh_keys: &ssh_keys
-          fingerprints:
-            - "af:e3:71:5e:fc:fd:08:e1:61:d4:18:10:cd:6b:6d:aa"
       - run: &base_environment_variables
           name: Setup base environment variable
           command: |
@@ -55,6 +84,18 @@ jobs:
           environment:
             ENVIRONMENT_NAME: test
           command: './deploy-scripts/bin/build'
+      - slack/status: *slack_status
+  deploy_to_test:
+    docker: *ecr_image
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.11
+      - add_ssh_keys: &ssh_keys
+          fingerprints:
+            - "af:e3:71:5e:fc:fd:08:e1:61:d4:18:10:cd:6b:6d:aa"
+      - run: *base_environment_variables
+      - run: *deploy_scripts
       - run:
           name: Restart the runners test dev
           environment:
@@ -96,7 +137,7 @@ jobs:
 
             bundle exec rspec spec/features/v2
       - slack/status: *slack_status
-  build_and_deploy_to_live:
+  deploy_to_live:
     docker: *ecr_image
     steps:
       - checkout
@@ -105,11 +146,6 @@ jobs:
       - add_ssh_keys: *ssh_keys
       - run: *base_environment_variables
       - run: *deploy_scripts
-      - run:
-          name: build and push docker images
-          environment:
-            ENVIRONMENT_NAME: live
-          command: './deploy-scripts/bin/build'
       - run:
           name: Restart the runners live dev
           environment:
@@ -145,17 +181,31 @@ workflows:
   version: 2
   test_and_build:
     jobs:
-      - test
-      - build_and_deploy_to_test:
+      - build
+      - lint:
           requires:
+            - build
+      - security:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
+      - build_and_push_image:
+          requires:
+            - lint
+            - security
             - test
+      - deploy_to_test:
+          requires:
+            - build_and_push_image
           filters:
             branches:
               only:
                 - main
       - acceptance_tests:
           requires:
-            - build_and_deploy_to_test
+            - deploy_to_test
       # - slack/approval-notification:
       #     message: ":portalorangeparrot:  Deployment to Live pending approval  :portalblueparrot:"
       #     include_job_number_field: false
@@ -165,9 +215,9 @@ workflows:
       #     type: approval
       #     requires:
       #       - acceptance_tests
-      # - build_and_deploy_to_live:
+      # - deploy_to_live:
       #     requires:
       #       - confirm_live_build
       # - smoke_tests:
       #     requires:
-      #       - build_and_deploy_to_live
+      #       - deploy_to_live
