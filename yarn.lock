@@ -1856,14 +1856,14 @@ browserify-zlib@^0.2.0:
     pako "~1.0.5"
 
 browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.16.6, browserslist@^4.17.5, browserslist@^4.19.1, browserslist@^4.6.4:
-  version "4.19.1"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.19.1.tgz#4ac0435b35ab655896c31d53018b6dd5e9e4c9a3"
-  integrity sha512-u2tbbG5PdKRTUoctO3NBD8FQ5HdPh1ZXPHzp1rwaa5jTc+RV9/+RlWiAIKmjRPQF+xbGM9Kklj5bZQFa2s/38A==
+  version "4.19.3"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.19.3.tgz#29b7caad327ecf2859485f696f9604214bedd383"
+  integrity sha512-XK3X4xtKJ+Txj8G5c30B4gsm71s69lqXlkYui4s6EkKxuv49qjYlY6oVd+IFJ73d4YymtM3+djvvt/R/iJwwDg==
   dependencies:
-    caniuse-lite "^1.0.30001286"
-    electron-to-chromium "^1.4.17"
+    caniuse-lite "^1.0.30001312"
+    electron-to-chromium "^1.4.71"
     escalade "^3.1.1"
-    node-releases "^2.0.1"
+    node-releases "^2.0.2"
     picocolors "^1.0.0"
 
 buffer-from@^1.0.0:
@@ -2011,15 +2011,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109:
-  version "1.0.30001300"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001300.tgz#11ab6c57d3eb6f964cba950401fd00a146786468"
-  integrity sha512-cVjiJHWGcNlJi8TZVKNMnvMid3Z3TTdDHmLDzlOdIiZq138Exvo0G+G0wTdVYolxKb4AYwC+38pxodiInVtJSA==
-
-caniuse-lite@^1.0.30001286:
-  version "1.0.30001307"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001307.tgz#27a67f13ebc4aa9c977e6b8256a11d5eafb30f27"
-  integrity sha512-+MXEMczJ4FuxJAUp0jvAl6Df0NI/OfW1RWEE61eSmzS7hw6lz4IKutbhbXendwq8BljfFuHtu26VWsg4afQ7Ng==
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001312:
+  version "1.0.30001312"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz#e11eba4b87e24d22697dae05455d5aea28550d5f"
+  integrity sha512-Wiz1Psk2MEK0pX3rUzWaunLTZzqS2JYZFzNKqAiJGiuxIjRPLgV6+VDPOg6lQOUxmDwhTlh198JsTTi8Hzw6aQ==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
@@ -2781,10 +2776,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-electron-to-chromium@^1.4.17:
-  version "1.4.68"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.68.tgz#d79447b6bd1bec9183f166bb33d4bef0d5e4e568"
-  integrity sha512-cId+QwWrV8R1UawO6b9BR1hnkJ4EJPCPAr4h315vliHUtVUJDk39Sg1PMNnaWKfj5x+93ssjeJ9LKL6r8LaMiA==
+electron-to-chromium@^1.4.71:
+  version "1.4.73"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.73.tgz#422f6f514315bcace9615903e4a9b6b9fa283137"
+  integrity sha512-RlCffXkE/LliqfA5m29+dVDPB2r72y2D2egMMfIy3Le8ODrxjuZNVo4NIC2yPL01N4xb4nZQLwzi6Z5tGIGLnA==
 
 elliptic@^6.5.3:
   version "6.5.4"
@@ -4586,7 +4581,7 @@ node-libs-browser@^2.2.1:
     util "^0.11.0"
     vm-browserify "^1.0.1"
 
-node-releases@^2.0.1:
+node-releases@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.2.tgz#7139fe71e2f4f11b47d4d2986aaf8c48699e0c01"
   integrity sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==
@@ -5465,9 +5460,9 @@ postcss-place@^4.0.1:
     postcss-values-parser "^2.0.0"
 
 postcss-preset-env@^6.7.0:
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-6.7.0.tgz#c34ddacf8f902383b35ad1e030f178f4cdf118a5"
-  integrity sha512-eU4/K5xzSFwUFJ8hTdTQzo2RBLbDVt83QZrAvI07TULOkmyQlnYlpwep+2yIK+K+0KlZO4BvFcleOCCcUtwchg==
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-6.7.1.tgz#26563d2e9395d626a45a836450844540694bfcef"
+  integrity sha512-rlRkgX9t0v2On33n7TK8pnkcYOATGQSv48J2RS8GsXhqtg+xk6AummHP88Y5mJo0TLJelBjePvSjScTNkj3+qw==
   dependencies:
     autoprefixer "^9.6.1"
     browserslist "^4.6.4"
@@ -5583,10 +5578,18 @@ postcss-selector-parser@^5.0.0-rc.3, postcss-selector-parser@^5.0.0-rc.4:
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss-selector-parser@^6.0.0, postcss-selector-parser@^6.0.2:
+postcss-selector-parser@^6.0.0:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.5.tgz#042d74e137db83e6f294712096cb413f5aa612c4"
   integrity sha512-aFYPoYmXbZ1V6HZaSvat08M97A8HqO6Pjz+PiNpw/DhuRrC72XWAdp3hL6wusDCN31sSmcZyMGa2hZEuX+Xfhg==
+  dependencies:
+    cssesc "^3.0.0"
+    util-deprecate "^1.0.2"
+
+postcss-selector-parser@^6.0.2:
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.9.tgz#ee71c3b9ff63d9cd130838876c13a2ec1a992b2f"
+  integrity sha512-UO3SgnZOVTwu4kyLR22UQ1xZh086RyNZppb7lLAKBFK8a32ttG5i87Y/P3+2bRSjZNyJ1B7hfFNo273tKe9YxQ==
   dependencies:
     cssesc "^3.0.0"
     util-deprecate "^1.0.2"
