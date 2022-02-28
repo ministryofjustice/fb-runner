@@ -7,7 +7,7 @@ orbs:
 
 jobs:
   build:
-    docker:
+    docker: &ruby_image
       - image: 'cimg/ruby:2.7.5-node'
     steps:
       - checkout
@@ -33,8 +33,7 @@ jobs:
           failure_message: ":facepalm:  Failed job $CIRCLE_JOB  :homer-disappear:"
           include_job_number_field: false
   lint:
-    docker:
-      - image: 'cimg/ruby:2.7.5-node'
+    docker: *ruby_image
     steps:
       - checkout
       - ruby/install-deps
@@ -43,16 +42,14 @@ jobs:
           label: running rubocop
       - slack/status: *slack_status
   security:
-    docker:
-      - image: 'cimg/ruby:2.7.5-node'
+    docker: *ruby_image
     steps:
       - checkout
       - ruby/install-deps
       - run: bundle exec brakeman -q --no-pager
       - slack/status: *slack_status
   test:
-    docker:
-      - image: cimg/ruby:2.7.5-node
+    docker: *ruby_image
     steps:
       - checkout
       - ruby/install-deps
@@ -61,7 +58,7 @@ jobs:
           pkg-manager: yarn
       - run: bundle exec rspec
       - slack/status: *slack_status
-  build_and_push_image:
+  build_and_push_image_test:
     docker: &ecr_image
       - image: $AWS_BUILD_IMAGE_ECR_ACCOUNT_URL
         aws_auth:
@@ -69,8 +66,9 @@ jobs:
           aws_secret_access_key: $AWS_BUILD_IMAGE_SECRET_ACCESS_KEY
     steps:
       - checkout
-      - setup_remote_docker:
+      - setup_remote_docker: &remote_docker
           version: 20.10.11
+          docker_layer_caching: true
       - run: &base_environment_variables
           name: Setup base environment variable
           command: |
@@ -80,17 +78,16 @@ jobs:
           name: cloning deploy scripts
           command: 'git clone git@github.com:ministryofjustice/fb-deploy.git deploy-scripts'
       - run:
-          name: build and push docker images
+          name: build and push docker images for test
           environment:
             ENVIRONMENT_NAME: test
           command: './deploy-scripts/bin/build'
       - slack/status: *slack_status
-  deploy_to_test:
+  deploy_to_test_dev:
     docker: *ecr_image
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.11
+      - setup_remote_docker: *remote_docker
       - add_ssh_keys: &ssh_keys
           fingerprints:
             - "af:e3:71:5e:fc:fd:08:e1:61:d4:18:10:cd:6b:6d:aa"
@@ -104,6 +101,15 @@ jobs:
             K8S_NAMESPACE: formbuilder-services-test-dev
             RUNNER_TYPE: fb-runner
           command: './deploy-scripts/bin/eks_restart_all_pods'
+      - slack/status: *slack_status
+  deploy_to_test_production:
+    docker: *ecr_image
+    steps:
+      - checkout
+      - setup_remote_docker: *remote_docker
+      - add_ssh_keys: *ssh_keys
+      - run: *base_environment_variables
+      - run: *deploy_scripts
       - run:
           name: Restart the runners in test production
           environment:
@@ -114,8 +120,7 @@ jobs:
           command: './deploy-scripts/bin/eks_restart_all_pods'
       - slack/status: *slack_status
   acceptance_tests:
-    docker:
-      - image: 'cimg/ruby:2.7-node'
+    docker: *ruby_image
     steps:
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
@@ -137,12 +142,24 @@ jobs:
 
             bundle exec rspec spec/features/v2
       - slack/status: *slack_status
-  deploy_to_live:
+  build_and_push_image_live:
     docker: *ecr_image
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.11
+      - setup_remote_docker: *remote_docker
+      - run: *base_environment_variables
+      - run: *deploy_scripts
+      - run:
+          name: build and push docker images for live
+          environment:
+            ENVIRONMENT_NAME: live
+          command: './deploy-scripts/bin/build'
+      - slack/status: *slack_status
+  deploy_to_live_dev:
+    docker: *ecr_image
+    steps:
+      - checkout
+      - setup_remote_docker: *remote_docker
       - add_ssh_keys: *ssh_keys
       - run: *base_environment_variables
       - run: *deploy_scripts
@@ -154,6 +171,19 @@ jobs:
             K8S_NAMESPACE: formbuilder-services-live-dev
             RUNNER_TYPE: fb-runner
           command: './deploy-scripts/bin/eks_restart_all_pods'
+      - slack/status:
+          only_for_branches: main
+          success_message: ":rocket:  Successfully deployed to Live Dev  :guitar:"
+          failure_message: ":alert:  Failed to deploy to Live Dev  :try_not_to_cry:"
+          include_job_number_field: false
+  deploy_to_live_production:
+    docker: *ecr_image
+    steps:
+      - checkout
+      - setup_remote_docker: *remote_docker
+      - add_ssh_keys: *ssh_keys
+      - run: *base_environment_variables
+      - run: *deploy_scripts
       - run:
           name: Restart the runners in live production
           environment:
@@ -164,13 +194,13 @@ jobs:
           command: './deploy-scripts/bin/eks_restart_all_pods'
       - slack/status:
           only_for_branches: main
-          success_message: ":rocket:  Successfully deployed to Live  :guitar:"
-          failure_message: ":alert:  Failed to deploy to Live  :try_not_to_cry:"
+          success_message: ":rocket:  Successfully deployed to Live Production  :guitar:"
+          failure_message: ":alert:  Failed to deploy to Live Production  :try_not_to_cry:"
           include_job_number_field: false
   smoke_tests:
     docker: *ecr_image
     steps:
-      - setup_remote_docker
+      - setup_remote_docker: *remote_docker
       - run: *deploy_scripts
       - run:
           name: Run smoke tests
@@ -191,33 +221,46 @@ workflows:
       - test:
           requires:
             - build
-      - build_and_push_image:
+      - build_and_push_image_test:
           requires:
             - lint
             - security
             - test
-      - deploy_to_test:
-          requires:
-            - build_and_push_image
           filters:
             branches:
               only:
                 - main
+      - deploy_to_test_dev:
+          requires:
+            - build_and_push_image_test
+      - deploy_to_test_production:
+          requires:
+            - build_and_push_image_test
       - acceptance_tests:
           requires:
-            - deploy_to_test
-      # - slack/approval-notification:
-      #     message: ":portalorangeparrot:  Deployment to Live pending approval  :portalblueparrot:"
-      #     include_job_number_field: false
-      #     requires:
-      #       - acceptance_tests
-      # - confirm_live_build:
-      #     type: approval
-      #     requires:
-      #       - acceptance_tests
-      # - deploy_to_live:
-      #     requires:
-      #       - confirm_live_build
-      # - smoke_tests:
-      #     requires:
-      #       - deploy_to_live
+            - deploy_to_test_dev
+            - deploy_to_test_production
+      - build_and_push_image_live:
+          requires:
+            - acceptance_tests
+      - slack/approval-notification:
+          message: ":portalorangeparrot:  Deployment to Live pending approval  :portalblueparrot:"
+          include_job_number_field: false
+          requires:
+            - acceptance_tests
+      - confirm_live_build:
+          type: approval
+          requires:
+            - acceptance_tests
+      - deploy_to_live_dev:
+          requires:
+            - confirm_live_build
+            - build_and_push_image_live
+      - deploy_to_live_production:
+          requires:
+            - confirm_live_build
+            - build_and_push_image_live
+      - smoke_tests:
+          requires:
+            - deploy_to_live_dev
+            - deploy_to_live_production
