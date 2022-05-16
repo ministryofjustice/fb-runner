@@ -7,12 +7,11 @@ updates:
     time: "03:00"
     timezone: Europe/London
   open-pull-requests-limit: 10
-  allow:
-    - dependency-type: all
   reviewers:
   - brenetic
   - mattempty
   - njseeto
+  - chrispymm
 - package-ecosystem: docker
   directory: "/"
   schedule:
@@ -24,6 +23,7 @@ updates:
   - brenetic
   - mattempty
   - njseeto
+  - chrispymm
 - package-ecosystem: npm
   directory: "/"
   schedule:
@@ -31,9 +31,8 @@ updates:
     time: "03:00"
     timezone: Europe/London
   open-pull-requests-limit: 10
-  allow:
-    - dependency-type: all
   reviewers:
   - mattempty
   - brenetic
   - njseeto
+  - chrispymm
