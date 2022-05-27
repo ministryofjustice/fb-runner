@@ -137,55 +137,55 @@ RSpec.feature 'Navigation' do
 
   def then_I_should_see_that_I_should_answer_my_name
     then_I_should_see_the_error_message(
-      'Enter an answer for Full name'
+      'Enter an answer for "Full name"'
     )
   end
 
   def then_I_should_see_that_I_should_answer_my_age
     then_I_should_see_the_error_message(
-      'Enter an answer for Your age'
+      'Enter an answer for "Your age"'
     )
   end
 
   def then_I_should_see_that_my_name_is_too_short
     then_I_should_see_the_error_message(
-      "Your answer for 'Full name' is too short (2 characters at least)"
+      'Your answer for "Full name" must be 2 characters or more'
     )
   end
 
   def then_I_should_see_that_my_name_is_too_large
     then_I_should_see_the_error_message(
-      "Your answer for 'Full name' is too long (10 characters at most)"
+      'Your answer for "Full name" must be 10 characters or fewer'
     )
   end
 
   def then_I_should_see_that_I_should_enter_a_number
     then_I_should_see_the_error_message(
-      'Enter a number for Your age'
+      'Enter a number for "Your age"'
     )
   end
 
   def then_I_should_see_that_I_should_choose_a_radio_option
     then_I_should_see_the_error_message(
-      'Enter an answer for Do you like Star Wars?'
+      'Enter an answer for "Do you like Star Wars?"'
     )
   end
 
   def then_I_should_see_that_I_should_add_a_holiday
     then_I_should_see_the_error_message(
-      'Enter an answer for What is the day that you like to take holidays?'
+      'Enter an answer for "What is the day that you like to take holidays?"'
     )
   end
 
   def then_I_should_see_that_I_should_add_a_valid_holiday
     then_I_should_see_the_error_message(
-      'Enter a valid date for What is the day that you like to take holidays?'
+      'Enter a valid date for "What is the day that you like to take holidays?"'
     )
   end
 
   def then_I_should_see_choose_a_checkbox
     then_I_should_see_the_error_message(
-      'Enter an answer for What would you like on your burger?'
+      'Enter an answer for "What would you like on your burger?"'
     )
   end
 end

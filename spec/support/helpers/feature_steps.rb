@@ -52,7 +52,7 @@ module FeatureSteps
 
   def then_I_should_see_that_I_should_add_a_dog_picture
     then_I_should_see_the_error_message(
-      'Enter an answer for Upload your best dog photo'
+      'Enter an answer for "Upload your best dog photo"'
     )
   end
 
