@@ -7,7 +7,7 @@
   "dependencies": {
     "@rails/ujs": "^7.0.3",
     "@rails/webpacker": "^5.4.3",
-    "govuk-frontend": "^3.14.0"
+    "govuk-frontend": "^4.1.0"
   },
   "version": "0.1.0",
   "devDependencies": {
