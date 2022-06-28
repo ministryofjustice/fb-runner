@@ -3,7 +3,7 @@ class BranchingFixture < SitePrism::Page
 
   set_url '/'
   element :heading, 'h1'
-  element :start_button, :button, 'Start'
+  element :start_button, :button, I18n.t('actions.start')
   element :full_name_field, :field, 'Full name'
   element :star_wars_only_on_weekends, :radio_button, 'Only on weekends'
   element :star_wars_hell_no, :radio_button, 'Hell no!'
@@ -21,9 +21,9 @@ class BranchingFixture < SitePrism::Page
   element :falcon, :radio_button, 'The Falcon and the Winter Soldier'
   element :wandavision, :radio_button, 'WandaVision'
   element :back_link, :link, 'Back'
-  element :continue_button, :button, 'Continue'
+  element :continue_button, :button, I18n.t('actions.continue')
   elements :summary_list, '.govuk-summary-list__row'
-  element :accept_and_send_button, :button, 'Accept and send application'
+  element :accept_and_send_button, :button, I18n.t('actions.submit')
   element :confirmation_heading, '.govuk-panel__title'
   data_content_id :confirmation_lede, 'page[lede]'
   data_content_id :confirmation_body, 'page[body]'
