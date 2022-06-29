@@ -1,19 +1,29 @@
-FROM ruby:2.7.5-alpine3.13
+FROM ruby:2.7.6-alpine3.16 AS base
+
+RUN apk add --update yarn build-base bash libcurl git tzdata && rm -rf /var/cache/apk/*
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs npm
+
+FROM base AS dependencies
+
+RUN apk add --update build-base
+
+COPY Gemfile* .ruby-version ./
+RUN bundle config set without 'development test' && bundle install --jobs=3 --retry=3
+
+COPY package.json yarn.lock ./
+RUN yarn install --production --check-files --frozen-lockfile
+
+FROM base
 
 ARG UID=1001
 
-RUN apk add --update yarn build-base bash libcurl git tzdata
-
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs npm
-
-# For load testing
+# Uncomment for load testing
 # Copy Go and install Vegeta
-COPY --from=golang:1.16-alpine /usr/local/go/ /usr/local/go/
-ENV PATH="/usr/local/go/bin:${PATH}"
-RUN go get -u github.com/tsenart/vegeta
+# COPY --from=golang:1.16-alpine /usr/local/go/ /usr/local/go/
+# ENV PATH="/usr/local/go/bin:${PATH}"
+# RUN go get -u github.com/tsenart/vegeta
 
-RUN addgroup -g ${UID} -S appgroup && \
-  adduser -u ${UID} -S appuser -G appgroup
+RUN addgroup -g ${UID} -S appgroup && adduser -u ${UID} -S appuser -G appgroup
 
 WORKDIR /app
 
@@ -25,14 +35,8 @@ RUN cat ./rds-ca-2019-root.pem > ./rds-ca-bundle-root.crt
 RUN cat ./rds-ca-2015-root.pem >> ./rds-ca-bundle-root.crt
 RUN chown appuser:appgroup ./rds-ca-bundle-root.crt
 
-COPY --chown=appuser:appgroup Gemfile* .ruby-version ./
-
-RUN gem install bundler
-
-RUN bundle config set no-cache 'true'
-ARG BUNDLE_ARGS='--jobs 2 --retry 3 --without test development'
-RUN bundle install ${BUNDLE_ARGS}
-
+COPY --chown=appuser:appgroup --from=dependencies /usr/local/bundle/ /usr/local/bundle/
+COPY --chown=appuser:appgroup --from=dependencies /node_modules/ node_modules/
 COPY --chown=appuser:appgroup . .
 
 ENV APP_PORT 3000
@@ -41,7 +45,9 @@ EXPOSE $APP_PORT
 USER ${UID}
 
 ARG RAILS_ENV=production
-RUN yarn install --production --check-files
+
+RUN gem install bundler
 RUN ./bin/webpack
 RUN ASSET_PRECOMPILE=true RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rake secret) bundle exec rake assets:precompile --trace
+
 CMD bundle exec rails s -e ${RAILS_ENV} -p ${APP_PORT} --binding=0.0.0.0
