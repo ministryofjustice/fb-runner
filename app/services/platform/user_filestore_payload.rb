@@ -15,9 +15,11 @@ module Platform
       application/vnd.oasis.opendocument.text
       application/pdf
       application/rtf
+      application/csv
       image/jpeg
       image/png
       application/vnd.ms-excel
+      application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     ].freeze
     MAX_FILE_SIZE = 7_340_032
 
