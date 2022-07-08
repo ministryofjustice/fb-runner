@@ -63,6 +63,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :editable?
 
+  def items_present?
+    false
+  end
+  helper_method :items_present?
+
   def answer_params
     params.permit(answers: {})[:answers] || {}
   end
