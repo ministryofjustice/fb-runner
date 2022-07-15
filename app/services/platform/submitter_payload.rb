@@ -3,6 +3,7 @@ module Platform
     include Platform::Connection
     attr_reader :service, :user_data, :session
 
+    CSV = 'csv'.freeze
     EMAIL = 'email'.freeze
 
     def initialize(service:, user_data:, session:)
@@ -32,22 +33,13 @@ module Platform
     def meta
       {
         pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'],
-        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s
+        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s,
+        submission_at: Time.zone.now.iso8601
       }
     end
 
     def actions
-      [
-        {
-          kind: EMAIL,
-          to: ENV['SERVICE_EMAIL_OUTPUT'],
-          from: ENV['SERVICE_EMAIL_FROM'],
-          subject: ENV['SERVICE_EMAIL_SUBJECT'],
-          email_body: ENV['SERVICE_EMAIL_BODY'],
-          include_pdf: true,
-          include_attachments: true
-        }
-      ]
+      [email_action, csv_action].compact
     end
 
     def pages
@@ -108,6 +100,34 @@ module Platform
     end
 
     private
+
+    def email_action
+      return if ENV['SERVICE_EMAIL_OUTPUT'].blank?
+
+      {
+        kind: EMAIL,
+        to: ENV['SERVICE_EMAIL_OUTPUT'],
+        from: ENV['SERVICE_EMAIL_FROM'],
+        subject: ENV['SERVICE_EMAIL_SUBJECT'],
+        email_body: ENV['SERVICE_EMAIL_BODY'],
+        include_attachments: true,
+        include_pdf: true
+      }
+    end
+
+    def csv_action
+      return if ENV['SERVICE_EMAIL_OUTPUT'].blank? || ENV['SERVICE_CSV_OUTPUT'].blank?
+
+      {
+        kind: CSV,
+        to: ENV['SERVICE_EMAIL_OUTPUT'],
+        from: ENV['SERVICE_EMAIL_FROM'],
+        subject: "CSV - #{ENV['SERVICE_EMAIL_SUBJECT']}",
+        email_body: '',
+        include_attachments: true,
+        include_pdf: false
+      }
+    end
 
     def strip_content_components(components)
       return [] if components.blank?

@@ -193,6 +193,15 @@ RSpec.describe Platform::SubmitterPayload do
           email_body: email_body,
           include_pdf: true,
           include_attachments: true
+        },
+        {
+          kind: 'csv',
+          to: email_to,
+          from: email_from,
+          subject: "CSV - #{email_subject}",
+          email_body: '',
+          include_pdf: false,
+          include_attachments: true
         }
       ]
     end
@@ -211,6 +220,8 @@ RSpec.describe Platform::SubmitterPayload do
         .and_return(email_subject)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY')
         .and_return(email_body)
+      allow(ENV).to receive(:[]).with('SERVICE_CSV_OUTPUT')
+        .and_return('true')
     end
 
     context 'when branching' do
@@ -374,12 +385,16 @@ RSpec.describe Platform::SubmitterPayload do
         end
 
         it 'sends meta info' do
-          expect(submitter_payload.to_h[:meta]).to eq(
-            {
-              pdf_heading: pdf_heading,
-              pdf_subheading: ''
-            }
-          )
+          date = Time.zone.now
+          Timecop.freeze(date) do
+            expect(submitter_payload.to_h[:meta]).to eq(
+              {
+                pdf_heading: pdf_heading,
+                pdf_subheading: '',
+                submission_at: date.iso8601
+              }
+            )
+          end
         end
       end
 
@@ -418,6 +433,78 @@ RSpec.describe Platform::SubmitterPayload do
         it 'sends an empty array in the attachments' do
           expect(submitter_payload.to_h[:attachments]).to eq([])
         end
+      end
+    end
+  end
+
+  describe '#actions' do
+    before do
+      allow(ENV).to receive(:[])
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM').and_return(email_from)
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
+    end
+
+    context 'when email and csv outputs are required' do
+      let(:expected_actions) do
+        [
+          {
+            kind: 'email',
+            to: email_to,
+            from: email_from,
+            subject: email_subject,
+            email_body: email_body,
+            include_pdf: true,
+            include_attachments: true
+          },
+          {
+            kind: 'csv',
+            to: email_to,
+            from: email_from,
+            subject: "CSV - #{email_subject}",
+            email_body: '',
+            include_pdf: false,
+            include_attachments: true
+          }
+        ]
+      end
+
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(email_to)
+        allow(ENV).to receive(:[]).with('SERVICE_CSV_OUTPUT').and_return('true')
+      end
+
+      it 'shoud return both actions' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
+
+    context 'when email output only is required' do
+      let(:expected_actions) do
+        [
+          {
+            kind: 'email',
+            to: email_to,
+            from: email_from,
+            subject: email_subject,
+            email_body: email_body,
+            include_pdf: true,
+            include_attachments: true
+          }
+        ]
+      end
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(email_to)
+      end
+
+      it 'shoud return just the email action' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
+
+    context 'when not outputs are required' do
+      it 'shoud return an empty array' do
+        expect(subject.actions).to be_empty
       end
     end
   end
