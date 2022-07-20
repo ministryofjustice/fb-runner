@@ -33,6 +33,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'simplecov-console'
   gem 'site_prism'
+  gem 'timecop'
   gem 'webmock'
 end
 
