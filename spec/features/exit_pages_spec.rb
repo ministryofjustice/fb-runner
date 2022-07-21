@@ -81,7 +81,8 @@ RSpec.feature 'Exit pages' do
   end
 
   def and_I_should_not_see_a_continue_button
-    expect(page).not_to have_selector('.govuk-button')
+    expect(page).to have_selector('#new_answers')
+    expect(page).not_to have_selector('#new_answers .govuk-button')
   end
 
   def then_I_should_be_on_check_your_answers_page
