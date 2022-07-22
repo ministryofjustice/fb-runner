@@ -26,6 +26,15 @@ the metadata presenter fixture dir:
   SERVICE_FIXTURE=version bundle exec rails s
 ```
 
+If you need to have any autocomplete fixtures for local development you can use
+set AUTOCOMPELTE_FIXTURE to be the name of your fixture file containing the JSON
+representation of your items. By default this will set the contents of a fixture
+file called `countries.json` which can be found in the MetadataPresenter.
+
+```
+  AUTOCOMPLETE_FIXTURE=countries bundle exec rails s
+```
+
 - The application should run on `localhost:3000`
 
 ## Datastore integration

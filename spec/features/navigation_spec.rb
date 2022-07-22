@@ -1,8 +1,10 @@
 RSpec.feature 'Navigation' do
   let(:form) { VersionFixture.new }
+  let(:autocomplete_items) { metadata_fixture(:countries) }
 
   before do
     allow(VerifySession).to receive(:before).and_return(false)
+    allow(Rails.configuration).to receive(:autocomplete_items).and_return(autocomplete_items)
   end
 
   background do
@@ -32,6 +34,7 @@ RSpec.feature 'Navigation' do
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
     and_I_upload_a_dog_picture
+    and_I_choose_a_country
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -55,6 +58,8 @@ RSpec.feature 'Navigation' do
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
     and_I_upload_a_dog_picture
+    then_I_should_be_on_the_countries_page
+    and_I_go_to_next_page
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -85,6 +90,7 @@ RSpec.feature 'Navigation' do
   scenario 'when I change an answer on upload component' do
     and_I_go_to_dog_picture_page
     and_I_upload_a_dog_picture
+    and_I_go_to_next_page
     and_I_change_the_answer_for_dog_picture
     then_I_should_see_the_dog_picture_filename
     and_I_go_to_next_page
@@ -178,6 +184,10 @@ RSpec.feature 'Navigation' do
     and_I_go_to_next_page
   end
 
+  def then_I_should_be_on_the_countries_page
+    expect(page.current_url).to include('countries')
+  end
+
   def then_I_should_be_on_the_check_your_answers_page
     expect(page.current_url).to include('check-answers')
   end
@@ -222,6 +232,12 @@ RSpec.feature 'Navigation' do
       'answers[dog-picture_upload_1]',
       'spec/fixtures/thats-not-a-knife.txt'
     )
+    and_I_go_to_next_page
+  end
+
+  def and_I_choose_a_country
+    expect(form.heading.text).to eq('Countries')
+    # Picks the first one in the list by default
     and_I_go_to_next_page
   end
 

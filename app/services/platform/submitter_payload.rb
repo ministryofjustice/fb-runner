@@ -68,18 +68,8 @@ module Platform
       page_answers = MetadataPresenter::PageAnswers.new(page, user_data)
       answer = page_answers.send(component.id)
 
-      if answer.is_a?(MetadataPresenter::DateField)
-        return '' if answer.blank?
-
-        # how can we reuse the presenter code? Module?
-        I18n.l(
-          Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),
-          format: '%d %B %Y'
-        )
-      elsif component.type == 'checkboxes'
-        answer.to_a
-      elsif component.upload?
-        answer['original_filename'] || ''
+      if self.class.private_method_defined?(component.type.to_sym)
+        send(component.type.to_sym, answer)
       else
         answer
       end
@@ -151,6 +141,29 @@ module Platform
       "/service/#{ENV['SERVICE_SLUG']}" \
       "/user/#{user_id}" \
       "/#{fingerprint}"
+    end
+
+    def date(answer)
+      return '' if answer.blank?
+
+      I18n.l(
+        Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),
+        format: '%d %B %Y'
+      )
+    end
+
+    def checkboxes(answer)
+      answer.to_a
+    end
+
+    def upload(answer)
+      answer['original_filename'] || ''
+    end
+
+    def autocomplete(answer)
+      return '' if answer.blank?
+
+      JSON.parse(answer)['value']
     end
   end
 end

@@ -39,4 +39,36 @@ RSpec.describe ApplicationController do
       end
     end
   end
+
+  describe '#autocomplete_items' do
+    let(:components) { service.find_page_by_url('/countries').components }
+    let(:autocomplete_items) do
+      expected_items.merge({
+        '12346' => [{ 'text': 'cat', 'value': 'dog' }],
+        '45679' => [{ 'text': 'red', 'value': 'blue' }],
+        '67890' => [{ 'text': 'green', 'value': 'yellow' }]
+      })
+    end
+    let(:expected_items) do
+      {
+        components.first.uuid => [{ 'text': 'abc', 'value': '123' }]
+      }
+    end
+
+    context 'when the service has autocomplete items' do
+      before do
+        allow(Rails.configuration).to receive(:autocomplete_items).and_return(autocomplete_items)
+      end
+
+      it 'returns the autocomplete items' do
+        expect(controller.autocomplete_items(components)).to eq(expected_items)
+      end
+    end
+
+    context 'when the service does not have autocomplete items' do
+      it 'returns an nil' do
+        expect(controller.autocomplete_items(components)).to be_empty
+      end
+    end
+  end
 end

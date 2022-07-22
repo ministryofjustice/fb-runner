@@ -38,7 +38,8 @@ RSpec.describe Platform::SubmitterPayload do
         'size' => 1_392_565,
         'type' => 'image/jpg',
         'date' => 1_624_540_833
-      }
+      },
+      'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}'
     }
   end
   let(:upload_file) do
@@ -169,6 +170,16 @@ RSpec.describe Platform::SubmitterPayload do
             answer: 'basset-hound.jpg',
             field_id: 'dog-picture_upload_1',
             field_name: 'Upload your best dog photo'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            answer: 'MW',
+            field_id: 'countries_autocomplete_1',
+            field_name: 'Countries'
           }
         ]
       }
