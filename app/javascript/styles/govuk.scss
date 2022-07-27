@@ -1,6 +1,6 @@
 $govuk-assets-path: "~govuk-frontend/govuk/assets/";
 @import "govuk-frontend/govuk/all";
-
+@import "accessible-autocomplete/dist/accessible-autocomplete.min.css";
 // Corrective tweak to make area non-full width in large view
 // Pointed out by design and shown in this example (at time of writing)
 // https://design-system.service.gov.uk/patterns/confirmation-pages/default/index.html 
@@ -10,4 +10,11 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
   @include govuk-media-query($until: tablet) {
     width: 100%;
   }
+}
+
+// Now the design system has white bg for fields, the autocomplete dropdown
+// triangle is hidden.  This z-index change fixes that.
+// See: https://github.com/alphagov/accessible-autocomplete/issues/351
+.autocomplete__wrapper {
+  z-index: 0;
 }
