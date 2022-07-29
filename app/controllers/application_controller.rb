@@ -74,4 +74,14 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def autocomplete_items(components)
+    return {} if Rails.configuration.autocomplete_items.nil?
+
+    components.each_with_object({}) do |component, hash|
+      next unless component.autocomplete?
+
+      hash[component.uuid] = Rails.configuration.autocomplete_items[component.uuid]
+    end
+  end
 end
