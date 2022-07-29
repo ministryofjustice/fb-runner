@@ -59,7 +59,7 @@ RSpec.feature 'Navigation' do
     and_I_visit_the_how_many_lights_page
     and_I_upload_a_dog_picture
     then_I_should_be_on_the_countries_page
-    and_I_go_to_next_page
+    and_I_choose_a_country
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -90,7 +90,7 @@ RSpec.feature 'Navigation' do
   scenario 'when I change an answer on upload component' do
     and_I_go_to_dog_picture_page
     and_I_upload_a_dog_picture
-    and_I_go_to_next_page
+    and_I_choose_a_country
     and_I_change_the_answer_for_dog_picture
     then_I_should_see_the_dog_picture_filename
     and_I_go_to_next_page
@@ -238,6 +238,8 @@ RSpec.feature 'Navigation' do
   def and_I_choose_a_country
     expect(form.heading.text).to eq('Countries')
     # Picks the first one in the list by default
+    form.country_field.select('Afghanistan')
+    # form.find('Afghanistan', visible: true).first.click
     and_I_go_to_next_page
   end
 
