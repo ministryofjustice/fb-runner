@@ -144,7 +144,7 @@ RSpec.describe Platform::SubmitterPayload do
           {
             field_id: 'burgers_checkboxes_1',
             field_name: 'What would you like on your burger?',
-            answer: ['Beef, cheese, tomato', 'Chicken, cheese, tomato']
+            answer: 'Beef, cheese, tomato; Chicken, cheese, tomato'
           }
         ]
       },
@@ -296,17 +296,19 @@ RSpec.describe Platform::SubmitterPayload do
           { heading: '',
             answers: [{ field_id: 'burgers_checkboxes_1',
                         field_name: 'What would you like on your burger?',
-                        answer: ['Mozzarella, cheddar, feta'] }] },
+                        answer: 'Mozzarella, cheddar, feta' }] },
           { heading: '',
             answers: [{ field_id: 'marvel-series_radios_1',
                         field_name: 'What is the best marvel series?',
                         answer: 'Loki' }] },
           { heading: '',
-            answers: [{ field_id: 'best-arnold-quote_checkboxes_1',
-                        field_name: 'Select all Arnold Schwarzenegger quotes',
-                        answer: ['You are not you. You are me',
-                                 'Get to the chopper',
-                                 'You have been terminated'] }] }
+            answers: [
+              {
+                field_id: 'best-arnold-quote_checkboxes_1',
+                field_name: 'Select all Arnold Schwarzenegger quotes',
+                answer: 'You are not you. You are me; Get to the chopper; You have been terminated'
+              }
+            ] }
         ]
       end
 
@@ -358,7 +360,7 @@ RSpec.describe Platform::SubmitterPayload do
         ).to eq({
           field_id: 'burgers_checkboxes_1',
           field_name: 'What would you like on your burger?',
-          answer: []
+          answer: ''
         })
       end
 
