@@ -20,6 +20,7 @@ class VersionFixture < SitePrism::Page
   element :chicken_burger, :checkbox, 'Chicken, cheese, tomato'
   element :palace_band, :field, "What was the name of the band playing in Jabba's palace?"
   element :mando_name, :radio_button, 'Din Jarrin'
+  element :country_field, :field, 'Countries'
   element :back_link, :link, 'Back'
   element :multiple_questions_heading, 'h3'
   elements :error_summary_list, '.govuk-error-summary__list'

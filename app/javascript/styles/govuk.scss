@@ -11,3 +11,10 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
     width: 100%;
   }
 }
+
+// Now the design system has white bg for fields, the autocomplete dropdown
+// triangle is hidden.  This z-index change fixes that.
+// See: https://github.com/alphagov/accessible-autocomplete/issues/351
+.autocomplete__wrapper {
+  z-index: 0;
+}

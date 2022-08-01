@@ -4,8 +4,22 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-window.analytics = require("packs/analytics")
 
+const accessibleAutocomplete = require("accessible-autocomplete")
+import 'accessible-autocomplete/dist/accessible-autocomplete.min.css' 
+
+const elements = document.querySelectorAll('.fb-autocomplete');
+
+Array.prototype.forEach.call(elements, function(element) {
+  accessibleAutocomplete.enhanceSelectElement({
+    defaultValue: '',
+    autoselect: false,
+    showAllValues: true,
+    selectElement: element,
+  });
+});
+
+window.analytics = require("../src/analytics")
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.

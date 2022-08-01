@@ -1,12 +1,13 @@
 {
   "name": "fb_runner",
   "private": true,
-  "engines" : {
-    "node" : ">=14.19.0"
+  "engines": {
+    "node": ">=14.19.0"
   },
   "dependencies": {
     "@rails/ujs": "^7.0.3",
     "@rails/webpacker": "^5.4.3",
+    "accessible-autocomplete": "^2.0.4",
     "govuk-frontend": "^3.14.0"
   },
   "version": "0.1.0",
