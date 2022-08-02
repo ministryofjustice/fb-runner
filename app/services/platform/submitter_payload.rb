@@ -153,7 +153,7 @@ module Platform
     end
 
     def checkboxes(answer)
-      answer.to_a
+      answer.to_a.join('; ')
     end
 
     def upload(answer)
