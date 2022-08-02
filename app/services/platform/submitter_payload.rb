@@ -71,7 +71,7 @@ module Platform
       if self.class.private_method_defined?(component.type.to_sym)
         send(component.type.to_sym, answer)
       else
-        answer
+        answer&.strip
       end
     end
 
