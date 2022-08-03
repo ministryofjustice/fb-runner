@@ -22,7 +22,7 @@ RSpec.describe Platform::SubmitterPayload do
       'email-address_email_1' => 'legolas@middle.earth.com',
       'parent-name_text_1' => 'Thranduil',
       'your-age_number_1' => '2931',
-      'family-hobbies_textarea_1' => 'Archery',
+      'family-hobbies_textarea_1' => textarea_answer,
       'do-you-like-star-wars_radios_1' => 'Only on weekends',
       'holiday_date_1(3i)' => '30',
       'holiday_date_1(2i)' => '12',
@@ -41,6 +41,9 @@ RSpec.describe Platform::SubmitterPayload do
       },
       'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}'
     }
+  end
+  let(:textarea_answer) do
+    "        Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.\nDe carne lumbering animata corpora quaeritis. Sicut malus putrid voodoo horror. Nigh tofth eliv ingdead.\r\n\r\n       "
   end
   let(:upload_file) do
     Rack::Test::UploadedFile.new(
@@ -114,7 +117,7 @@ RSpec.describe Platform::SubmitterPayload do
           {
             field_id: 'family-hobbies_textarea_1',
             field_name: 'Family Hobbies',
-            answer: 'Archery'
+            answer: expected_textarea
           }
         ]
       },
@@ -184,6 +187,9 @@ RSpec.describe Platform::SubmitterPayload do
         ]
       }
     ]
+  end
+  let(:expected_textarea) do
+    "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.\nDe carne lumbering animata corpora quaeritis. Sicut malus putrid voodoo horror. Nigh tofth eliv ingdead."
   end
 
   describe '#to_h' do
