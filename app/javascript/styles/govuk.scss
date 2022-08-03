@@ -18,3 +18,13 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
 .autocomplete__wrapper {
   z-index: 0;
 }
+
+// Enables the footer color to go to the base of the window
+// and forces min height of content area
+html {
+  background-color: #F3F2F1;
+}
+
+#main-content {
+  min-height: 55vh;
+}
