@@ -243,22 +243,13 @@ workflows:
       - build_and_push_image_live:
           requires:
             - acceptance_tests
-      - slack/approval-notification:
-          message: ":portalorangeparrot:  Deployment to Live pending approval  :portalblueparrot:"
-          include_job_number_field: false
-          requires:
-            - acceptance_tests
-      - confirm_live_build:
-          type: approval
-          requires:
-            - acceptance_tests
       - deploy_to_live_dev:
           requires:
-            - confirm_live_build
+            - acceptance_tests
             - build_and_push_image_live
       - deploy_to_live_production:
           requires:
-            - confirm_live_build
+            - acceptance_tests
             - build_and_push_image_live
       - smoke_tests:
           requires:
