@@ -3,8 +3,8 @@ class VersionFixture < SitePrism::Page
 
   set_url '/'
   element :heading, 'h1'
-  element :start_button, :button, I18n.t('actions.start')
-  element :continue_button, :button, I18n.t('actions.continue')
+  element :start_button, :button, I18n.t('presenter.actions.start')
+  element :continue_button, :button, I18n.t('presenter.actions.continue')
   element :full_name_field, :field, 'Full name'
   element :parent_field, :field, 'Parent name'
   element :email_field, :field, 'Email address'
@@ -26,7 +26,7 @@ class VersionFixture < SitePrism::Page
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
   elements :summary_list, '.govuk-summary-list__row'
-  element :accept_and_send_button, :button, I18n.t('actions.submit')
+  element :accept_and_send_button, :button, I18n.t('presenter.actions.submit')
   element :confirmation_heading, '.govuk-panel__title'
   data_content_id :confirmation_lede, 'page[lede]'
   data_content_id :confirmation_body, 'page[body]'
