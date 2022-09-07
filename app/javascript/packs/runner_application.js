@@ -4,9 +4,15 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
+require("../src/runner/contentloaded.js")
+require("../src/runner/analytics")
+require("../src/runner/index")
+
+// Entry point for fb-editor stylesheets
+import "../styles/application.scss"
 
 const accessibleAutocomplete = require("accessible-autocomplete")
-import 'accessible-autocomplete/dist/accessible-autocomplete.min.css' 
+import 'accessible-autocomplete/dist/accessible-autocomplete.min.css'
 
 // Initialise autocomplete components
 const autocompleteElements = document.querySelectorAll('.fb-autocomplete');
@@ -47,7 +53,6 @@ if(autocompleteComponent) {
   });
 }
 
-window.analytics = require("../src/analytics")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -55,3 +60,4 @@ window.analytics = require("../src/analytics")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
