@@ -1,6 +1,5 @@
 const {
-  htmlAdjustment,
-  markdownAdjustment
+  htmlAdjustment
 } = require('../shared/content');
 
 const ENVIRONMENT_PREVIEW = "preview";
