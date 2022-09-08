@@ -1,6 +1,8 @@
 $govuk-assets-path: "~govuk-frontend/govuk/assets/";
 @import "govuk-frontend/govuk/all";
 
+@import"./emergency_banner"; 
+
 // Corrective tweak to make area non-full width in large view
 // Pointed out by design and shown in this example (at time of writing)
 // https://design-system.service.gov.uk/patterns/confirmation-pages/default/index.html 
