@@ -25,14 +25,14 @@ function preventCookieBannerInPreview() {
 }
 
 
-/* Enhances the edited content should it require special formatting
+/* Enhances the edited (or static) content should it require special formatting
  * or non-standard elements.
  * e.g.
  *  - Adds GovUk classes to any <table> element
  *  - Changes supported GovSpeak markup to required HTML.
  **/
 function supportGovUkContent() {
-  var content = document.querySelectorAll("[data-fb-content-type=content]");
+  var content = document.querySelectorAll("[data-fb-content-type=content], [data-fb-content-type=static]");
   for( var c=0; c<content.length; ++c) {
     content[c].innerHTML = htmlAdjustment(content[c].innerHTML);
   }
