@@ -1,0 +1,12 @@
+
+/* Emulate GovSpeak styles
+ * -------------------------------- */
+.call-to-action {
+  background-color: govuk-colour("light-grey");
+  margin: 2em 0;
+  padding: 2em
+}
+
+.call-to-action > p {
+  margin: 0;
+}

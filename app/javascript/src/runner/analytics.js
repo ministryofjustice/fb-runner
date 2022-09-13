@@ -46,9 +46,14 @@ function deleteCookie (cookieName) {
   document.cookie = `${cookieName}=; Path=/; Domain=.justice.gov.uk; Expires=Thu, 01 Jan 1970 00:00:01 UTC;`
 }
 
-module.exports = {
+
+// So we can just access required functions from the window object
+window.analytics = {
   accept: accept,
   reject: reject,
   hideCookieBanner: hideCookieBanner,
   removeAnalyticsCookies: removeAnalyticsCookies
 }
+
+// In case we want to require it like a module
+module.exports = window.analytics;
