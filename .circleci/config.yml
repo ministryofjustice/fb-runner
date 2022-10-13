@@ -229,28 +229,29 @@ workflows:
             branches:
               only:
                 - main
+                - maintenance-page
       - deploy_to_test_dev:
           requires:
             - build_and_push_image_test
       - deploy_to_test_production:
           requires:
             - build_and_push_image_test
-      - acceptance_tests:
-          requires:
-            - deploy_to_test_dev
-            - deploy_to_test_production
-      - build_and_push_image_live:
-          requires:
-            - acceptance_tests
-      - deploy_to_live_dev:
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-      - deploy_to_live_production:
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-      - smoke_tests:
-          requires:
-            - deploy_to_live_dev
-            - deploy_to_live_production
+      # - acceptance_tests:
+      #     requires:
+      #       - deploy_to_test_dev
+      #       - deploy_to_test_production
+      # - build_and_push_image_live:
+      #     requires:
+      #       - acceptance_tests
+      # - deploy_to_live_dev:
+      #     requires:
+      #       - acceptance_tests
+      #       - build_and_push_image_live
+      # - deploy_to_live_production:
+      #     requires:
+      #       - acceptance_tests
+      #       - build_and_push_image_live
+      # - smoke_tests:
+      #     requires:
+      #       - deploy_to_live_dev
+      #       - deploy_to_live_production

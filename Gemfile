@@ -9,9 +9,9 @@ gem 'faraday_middleware'
 gem 'jwt'
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-# gem 'metadata_presenter',
-#    github: 'ministryofjustice/fb-metadata-presenter',
-#    branch: 'change-your-answers'
+gem 'metadata_presenter',
+    github: 'ministryofjustice/fb-metadata-presenter',
+    branch: 'maintenance-page'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
 gem 'fb-jwt-auth', '0.8.0'
