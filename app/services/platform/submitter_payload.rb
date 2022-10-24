@@ -39,7 +39,7 @@ module Platform
     end
 
     def actions
-      [email_action, csv_action].compact
+      [email_action, csv_action, confirmation_email_action].compact
     end
 
     def pages
@@ -119,6 +119,20 @@ module Platform
       }
     end
 
+    def confirmation_email_action
+      return if confirmation_email_answer.blank?
+
+      {
+        kind: EMAIL,
+        to: confirmation_email_answer,
+        from: ENV['SERVICE_EMAIL_FROM'],
+        subject: ENV['CONFIRMATION_EMAIL_SUBJECT'],
+        email_body: ENV['CONFIRMATION_EMAIL_BODY'],
+        include_attachments: true,
+        include_pdf: true
+      }
+    end
+
     def strip_content_components(components)
       return [] if components.blank?
 
@@ -164,6 +178,10 @@ module Platform
       return '' if answer.blank?
 
       JSON.parse(answer)['value']
+    end
+
+    def confirmation_email_answer
+      @confirmation_email_answer ||= user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']]
     end
   end
 end
