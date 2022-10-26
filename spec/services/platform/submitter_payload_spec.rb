@@ -68,6 +68,13 @@ RSpec.describe Platform::SubmitterPayload do
   let(:email_body) do
     'Please find attached Elfs info!'
   end
+  let(:email_component_id) { 'email-address_email_1' }
+  let(:confirmation_email_subject) do
+    'Delicious dinosaurs'
+  end
+  let(:confirmation_email_body) do
+    'Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl'
+  end
 
   let(:pages_payload) do
     [
@@ -219,6 +226,15 @@ RSpec.describe Platform::SubmitterPayload do
           email_body: '',
           include_pdf: false,
           include_attachments: true
+        },
+        {
+          kind: 'email',
+          to: user_data[email_component_id],
+          from: email_from,
+          subject: confirmation_email_subject,
+          email_body: confirmation_email_body,
+          include_pdf: true,
+          include_attachments: true
         }
       ]
     end
@@ -239,6 +255,12 @@ RSpec.describe Platform::SubmitterPayload do
         .and_return(email_body)
       allow(ENV).to receive(:[]).with('SERVICE_CSV_OUTPUT')
         .and_return('true')
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT')
+        .and_return(confirmation_email_subject)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY')
+        .and_return(confirmation_email_body)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID')
+        .and_return(email_component_id)
     end
 
     context 'when branching' do
@@ -462,9 +484,11 @@ RSpec.describe Platform::SubmitterPayload do
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM').and_return(email_from)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT').and_return(confirmation_email_subject)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(confirmation_email_body)
     end
 
-    context 'when email and csv outputs are required' do
+    context 'when email, csv outputs and confirmation email are required' do
       let(:expected_actions) do
         [
           {
@@ -484,6 +508,15 @@ RSpec.describe Platform::SubmitterPayload do
             email_body: '',
             include_pdf: false,
             include_attachments: true
+          },
+          {
+            kind: 'email',
+            to: user_data[email_component_id],
+            from: email_from,
+            subject: confirmation_email_subject,
+            email_body: confirmation_email_body,
+            include_pdf: true,
+            include_attachments: true
           }
         ]
       end
@@ -491,9 +524,10 @@ RSpec.describe Platform::SubmitterPayload do
       before do
         allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(email_to)
         allow(ENV).to receive(:[]).with('SERVICE_CSV_OUTPUT').and_return('true')
+        allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(email_component_id)
       end
 
-      it 'shoud return both actions' do
+      it 'should return three actions' do
         expect(subject.actions).to eq(expected_actions)
       end
     end
@@ -516,13 +550,53 @@ RSpec.describe Platform::SubmitterPayload do
         allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(email_to)
       end
 
-      it 'shoud return just the email action' do
+      it 'should return just the email action' do
         expect(subject.actions).to eq(expected_actions)
       end
     end
 
-    context 'when not outputs are required' do
-      it 'shoud return an empty array' do
+    context 'when confirmation email output only is required' do
+      let(:expected_actions) do
+        [
+          {
+            kind: 'email',
+            to: user_data[email_component_id],
+            from: email_from,
+            subject: confirmation_email_subject,
+            email_body: confirmation_email_body,
+            include_pdf: true,
+            include_attachments: true
+          }
+        ]
+      end
+
+      before do
+        allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(email_component_id)
+      end
+
+      context 'and the user has submitted an email' do
+        it 'should return just the confirmation email action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+
+      context 'and the user has not submitted an email' do
+        let(:user_data) do
+          {
+            'name_text_1' => 'Legolas',
+            'email-address_email_1' => '',
+            'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}'
+          }
+        end
+
+        it 'should not return the confirmation email action' do
+          expect(subject.actions).to eq([])
+        end
+      end
+    end
+
+    context 'when no outputs are required' do
+      it 'should return an empty array' do
         expect(subject.actions).to be_empty
       end
     end
