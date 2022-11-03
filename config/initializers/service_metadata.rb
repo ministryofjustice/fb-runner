@@ -1,6 +1,7 @@
 Rails.application.reloader.to_prepare do
   begin
     Rails.configuration.service_metadata = LoadServiceMetadata.new(
+      service_id: ENV['SERVICE_ID'],
       service_metadata: ENV['SERVICE_METADATA'],
       fixture: ENV['SERVICE_FIXTURE'],
       asset_precompile: ENV['ASSET_PRECOMPILE']
