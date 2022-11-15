@@ -1,30 +1,43 @@
+require 'fileutils'
+
 class LoadAutocompleteItems
-  def initialize(autocomplete_items:, fixture:)
+  include MetadataFiles
+
+  def initialize(service_id:, autocomplete_items:, fixture:)
+    @service_id = service_id
     @autocomplete_items = autocomplete_items
     @fixture = MetadataPresenter::Engine.root.join('fixtures', "#{fixture}.json")
   end
 
+  AUTOCOMPLETE_FILE = 'autocomplete_items.json'.freeze
+
   def to_h
-    if metadata_to_load && valid_metadata?
-      metadata_to_load
-    end
+    metadata = metadata_to_load
+    metadata if metadata.present? && valid_metadata?(metadata)
   end
 
   def metadata_to_load
-    @metadata_to_load ||= begin
-      if @autocomplete_items.blank? && File.exist?(@fixture)
-        Rails.logger.debug("Loading fixture #{@fixture}")
-        return JSON.parse(File.read(@fixture))
-      end
+    return download_metadata(object_key) if @service_id.present?
 
-      return JSON.parse(@autocomplete_items) if @autocomplete_items.present?
+    if @autocomplete_items.blank? && File.exist?(@fixture)
+      Rails.logger.debug("Loading fixture #{@fixture}")
+      return JSON.parse(File.read(@fixture))
+    end
+
+    if @autocomplete_items.present?
+      Rails.logger.info('Loading autocomplete items from environment')
+      JSON.parse(@autocomplete_items)
     end
   end
 
-  def valid_metadata?
-    return if metadata_to_load.blank?
+  def object_key
+    "#{@service_id}_#{AUTOCOMPLETE_FILE}"
+  end
 
-    metadata_to_load.each do |_, items|
+  def valid_metadata?(metadata)
+    return if metadata.blank?
+
+    metadata.each do |_, items|
       MetadataPresenter::ValidateSchema.validate(items, 'definition.select')
     end
   end
