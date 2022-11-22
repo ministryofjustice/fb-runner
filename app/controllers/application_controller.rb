@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ReferenceNumberHelper
   protect_from_forgery with: :exception
 
   before_action :require_basic_auth
@@ -51,11 +52,16 @@ class ApplicationController < ActionController::Base
   end
 
   def create_submission
+    if ENV['REFERENCE_NUMBER'].present?
+      session['user_data'] = session['user_data'].merge(reference_number)
+    end
+    # rubocop: disable Rails/SaveBang
     Platform::Submission.new(
       service: service,
       user_data: load_user_data,
       session: session
     ).save
+    # rubocop: enable Rails/SaveBang
   end
 
   def editable?
@@ -85,8 +91,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def reference_number_enabled?
-    false
+  def reference_number
+    { 'reference_number' => generate_reference_number }
   end
-  helper_method :reference_number_enabled?
 end
