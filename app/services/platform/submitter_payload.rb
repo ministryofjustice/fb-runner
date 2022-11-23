@@ -30,9 +30,15 @@ module Platform
       }
     end
 
+    def concatenation_with_reference_number(text)
+      return text unless ENV['REFERENCE_NUMBER'].present? && user_data.key?('moj_forms_reference_number')
+
+      text.gsub('{{reference_number}}', user_data['moj_forms_reference_number'])
+    end
+
     def meta
       {
-        pdf_heading: ENV['SERVICE_EMAIL_PDF_HEADING'],
+        pdf_heading: concatenation_with_reference_number(ENV['SERVICE_EMAIL_PDF_HEADING']),
         pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s,
         submission_at: Time.zone.now.iso8601
       }
@@ -98,8 +104,8 @@ module Platform
         kind: EMAIL,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
         from: ENV['SERVICE_EMAIL_FROM'],
-        subject: ENV['SERVICE_EMAIL_SUBJECT'],
-        email_body: ENV['SERVICE_EMAIL_BODY'],
+        subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
+        email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
         include_attachments: true,
         include_pdf: true
       }
@@ -112,7 +118,7 @@ module Platform
         kind: CSV,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
         from: ENV['SERVICE_EMAIL_FROM'],
-        subject: "CSV - #{ENV['SERVICE_EMAIL_SUBJECT']}",
+        subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
         email_body: '',
         include_attachments: true,
         include_pdf: false
@@ -126,8 +132,8 @@ module Platform
         kind: EMAIL,
         to: confirmation_email_answer,
         from: ENV['SERVICE_EMAIL_FROM'],
-        subject: ENV['CONFIRMATION_EMAIL_SUBJECT'],
-        email_body: ENV['CONFIRMATION_EMAIL_BODY'],
+        subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
+        email_body: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_BODY']),
         include_attachments: true,
         include_pdf: true
       }

@@ -601,4 +601,38 @@ RSpec.describe Platform::SubmitterPayload do
       end
     end
   end
+
+  describe '#concatenation_with_reference_number' do
+    let(:dummy_reference) { '1234-ABC-567' }
+    let(:user_data) { double(session: session, key?: true) }
+    let(:text_without_reference_number) { 'email subject or email body.' }
+    let(:text_with_reference_number) { 'email subject or email body. Your reference number is {{reference_number}}' }
+
+    before do
+      allow(ENV).to receive(:[])
+      allow(user_data).to receive(:[]).with('moj_forms_reference_number').and_return(dummy_reference)
+    end
+
+    context 'reference is not enabled' do
+      before do
+        allow(ENV).to receive(:[]).with('REFERENCE_NUMBER').and_return(nil)
+      end
+
+      it 'should return empty string' do
+        expect(submitter_payload.concatenation_with_reference_number(text_without_reference_number))
+        .to eq(text_without_reference_number)
+      end
+    end
+
+    context 'reference number is enabled' do
+      before do
+        allow(ENV).to receive(:[]).with('REFERENCE_NUMBER').and_return('1')
+      end
+
+      it 'should return a reference number' do
+        expect(submitter_payload.concatenation_with_reference_number(text_with_reference_number))
+        .to eq(text_with_reference_number.gsub('{{reference_number}}', dummy_reference))
+      end
+    end
+  end
 end
