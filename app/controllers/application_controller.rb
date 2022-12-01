@@ -84,4 +84,9 @@ class ApplicationController < ActionController::Base
       hash[component.uuid] = Rails.configuration.autocomplete_items[component.uuid]
     end
   end
+
+  def reference_number_enabled?
+    false
+  end
+  helper_method :reference_number_enabled?
 end
