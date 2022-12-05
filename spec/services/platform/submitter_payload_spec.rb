@@ -437,6 +437,22 @@ RSpec.describe Platform::SubmitterPayload do
             )
           end
         end
+
+        context 'when reference number is not present' do
+          it 'does not include the reference number' do
+            expect(submitter_payload.to_h[:meta].key?(:reference_number)).to be_falsey
+          end
+        end
+
+        context 'when reference number is present' do
+          let(:reference_number) { 'some-reference-number' }
+          let(:user_data) { { 'moj_forms_reference_number' => reference_number } }
+
+          it 'adds the reference number attribute and value' do
+            meta_payload = submitter_payload.to_h[:meta]
+            expect(meta_payload[:reference_number]).to eq(reference_number)
+          end
+        end
       end
 
       it 'does not send any content components text in the payload' do
