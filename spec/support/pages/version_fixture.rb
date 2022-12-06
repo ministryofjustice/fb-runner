@@ -22,7 +22,6 @@ class VersionFixture < SitePrism::Page
   element :mando_name, :radio_button, 'Din Jarrin'
   element :country_field, :field, 'Countries'
   element :back_link, :link, 'Back'
-  element :multiple_questions_heading, 'h3'
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
   elements :summary_list, '.govuk-summary-list__row'
@@ -42,6 +41,10 @@ class VersionFixture < SitePrism::Page
     inline_error_messages.map do |error_message|
       error_message.text.gsub('Error: ', '')
     end
+  end
+
+  def multiple_questions_heading
+    page.find(:css, 'h2', text: 'How well do you know Star Wars?')
   end
 
   def full_name_checkanswers
