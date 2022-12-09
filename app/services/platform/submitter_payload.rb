@@ -134,7 +134,7 @@ module Platform
         to: confirmation_email_answer,
         from: ENV['SERVICE_EMAIL_FROM'],
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
-        email_body: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_BODY']),
+        email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
         include_attachments: true,
         include_pdf: true
       }
@@ -189,6 +189,14 @@ module Platform
 
     def confirmation_email_answer
       @confirmation_email_answer ||= user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']]
+    end
+
+    def inject_reference_payment_content(text)
+      concatenation_with_reference_number(text).gsub('{{payment_link}}', payment_reference)
+    end
+
+    def payment_reference
+      "#{ENV['PAYMENT_LINK']}#{user_data['moj_forms_reference_number']}"
     end
   end
 end
