@@ -199,6 +199,17 @@ RSpec.describe Platform::SubmitterPayload do
     "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.\nDe carne lumbering animata corpora quaeritis. Sicut malus putrid voodoo horror. Nigh tofth eliv ingdead."
   end
 
+  before do
+    allow(ENV).to receive(:[])
+    allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM').and_return(email_from)
+    allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
+    allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
+    allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT').and_return(confirmation_email_subject)
+    allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(confirmation_email_body)
+    allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_HEADING').and_return(pdf_heading)
+    allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_SUBHEADING').and_return(pdf_subheading)
+  end
+
   describe '#to_h' do
     let(:service_payload) do
       {
@@ -240,27 +251,9 @@ RSpec.describe Platform::SubmitterPayload do
     end
 
     before do
-      allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_HEADING')
-        .and_return(pdf_heading)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_SUBHEADING')
-        .and_return(pdf_subheading)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT')
-        .and_return(email_to)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM')
-        .and_return(email_from)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT')
-        .and_return(email_subject)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY')
-        .and_return(email_body)
-      allow(ENV).to receive(:[]).with('SERVICE_CSV_OUTPUT')
-        .and_return('true')
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT')
-        .and_return(confirmation_email_subject)
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY')
-        .and_return(confirmation_email_body)
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID')
-        .and_return(email_component_id)
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(email_to)
+      allow(ENV).to receive(:[]).with('SERVICE_CSV_OUTPUT').and_return('true')
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(email_component_id)
     end
 
     context 'when branching' do
@@ -495,15 +488,6 @@ RSpec.describe Platform::SubmitterPayload do
   end
 
   describe '#actions' do
-    before do
-      allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM').and_return(email_from)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT').and_return(confirmation_email_subject)
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(confirmation_email_body)
-    end
-
     context 'when email, csv outputs and confirmation email are required' do
       let(:expected_actions) do
         [
@@ -620,20 +604,14 @@ RSpec.describe Platform::SubmitterPayload do
 
   describe '#concatenation_with_reference_number' do
     let(:dummy_reference) { '1234-ABC-567' }
-    let(:user_data) { double(session: session, key?: true) }
     let(:text_without_reference_number) { 'email subject or email body.' }
     let(:text_with_reference_number) { 'email subject or email body. Your reference number is {{reference_number}}' }
 
     before do
-      allow(ENV).to receive(:[])
       allow(user_data).to receive(:[]).with('moj_forms_reference_number').and_return(dummy_reference)
     end
 
     context 'reference is not enabled' do
-      before do
-        allow(ENV).to receive(:[]).with('REFERENCE_NUMBER').and_return(nil)
-      end
-
       it 'should return empty string' do
         expect(submitter_payload.concatenation_with_reference_number(text_without_reference_number))
         .to eq(text_without_reference_number)
@@ -649,6 +627,45 @@ RSpec.describe Platform::SubmitterPayload do
         expect(submitter_payload.concatenation_with_reference_number(text_with_reference_number))
         .to eq(text_with_reference_number.gsub('{{reference_number}}', dummy_reference))
       end
+    end
+  end
+
+  context 'payment links' do
+    let(:payment_link) { 'http://www.mustafa.com/vader-tax?reference=' }
+    let(:dummy_reference) { '1234-ABC-567' }
+    let(:confirmation_email_body) do
+      'some email body {{payment_link}}'
+    end
+    let(:expected_confirmation_email_body) do
+      "some email body #{payment_link}#{dummy_reference}"
+    end
+    let(:expected_actions) do
+      [
+        {
+          kind: 'email',
+          to: user_data[email_component_id],
+          from: email_from,
+          subject: confirmation_email_subject,
+          email_body: expected_confirmation_email_body,
+          include_pdf: true,
+          include_attachments: true
+        }
+      ]
+    end
+    let(:user_data) do
+      {
+        'moj_forms_reference_number' => dummy_reference,
+        'email-address_email_1' => 'legolas@middle.earth.com'
+      }
+    end
+
+    before do
+      allow(ENV).to receive(:[]).with('PAYMENT_LINK').and_return(payment_link)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(email_component_id)
+    end
+
+    it 'should insert the payment link' do
+      expect(submitter_payload.to_h[:actions]).to eq(expected_actions)
     end
   end
 end
