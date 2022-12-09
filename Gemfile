@@ -21,8 +21,8 @@ gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.0'
 gem 'rails', '>= 6.1.4.6'
 gem 'sass-rails', '>= 6'
-gem 'sentry-rails', '~> 5.5.0'
-gem 'sentry-ruby', '~> 5.5.0'
+gem 'sentry-rails', '~> 5.7.0'
+gem 'sentry-ruby', '~> 5.7.0'
 gem 'webpacker', '~> 5.4'
 
 group :development, :test do
