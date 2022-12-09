@@ -31,9 +31,7 @@ module Platform
     end
 
     def concatenation_with_reference_number(text)
-      return text unless ENV['REFERENCE_NUMBER'].present? && user_data.key?('moj_forms_reference_number')
-
-      text.gsub('{{reference_number}}', user_data['moj_forms_reference_number'])
+      text.gsub('{{reference_number}}', user_data['moj_forms_reference_number'] || '')
     end
 
     def meta
