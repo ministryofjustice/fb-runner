@@ -631,13 +631,13 @@ RSpec.describe Platform::SubmitterPayload do
   end
 
   context 'payment links' do
-    let(:payment_link) { 'http://www.mustafa.com/vader-tax?reference=' }
+    let(:payment_link) { 'http://www.mustafa.com/vader-tax' }
     let(:dummy_reference) { '1234-ABC-567' }
     let(:confirmation_email_body) do
       'some email body {{payment_link}}'
     end
     let(:expected_confirmation_email_body) do
-      "some email body #{payment_link}#{dummy_reference}"
+      "some email body #{payment_link}?reference=#{dummy_reference}"
     end
     let(:expected_actions) do
       [

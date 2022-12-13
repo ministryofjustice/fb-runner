@@ -194,7 +194,7 @@ module Platform
     end
 
     def payment_reference
-      "#{ENV['PAYMENT_LINK']}#{user_data['moj_forms_reference_number']}"
+      "#{ENV['PAYMENT_LINK']}?reference=#{user_data['moj_forms_reference_number']}"
     end
   end
 end
