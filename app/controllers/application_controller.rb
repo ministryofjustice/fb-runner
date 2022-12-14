@@ -112,4 +112,9 @@ class ApplicationController < ActionController::Base
     load_user_data['moj_forms_reference_number']
   end
   helper_method :show_reference_number
+
+  def payment_link_enabled?
+    ENV['PAYMENT_LINK'].present?
+  end
+  helper_method :payment_link_enabled?
 end
