@@ -119,7 +119,7 @@ class ApplicationController < ActionController::Base
   helper_method :payment_link_enabled?
 
   def payment_link_url
-    ENV['PAYMENT_LINK']
+    ENV['PAYMENT_LINK'] + show_reference_number
   end
   helper_method :payment_link_url
 end
