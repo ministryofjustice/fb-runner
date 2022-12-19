@@ -99,6 +99,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    date (3.3.3)
     diff-lcs (1.5.0)
     docile (1.4.0)
     dotenv (2.8.1)
@@ -161,11 +162,14 @@ GEM
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.1)
+    mail (2.8.0)
       mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
-    metadata_presenter (2.17.28)
+    metadata_presenter (2.17.29)
       govuk_design_system_formbuilder (>= 2.1.5)
       json-schema (= 2.8.1)
       kramdown (>= 2.3.0)
@@ -176,6 +180,15 @@ GEM
     minitest (5.16.3)
     msgpack (1.6.0)
     multipart-post (2.2.3)
+    net-imap (0.3.2)
+      date
+      net-protocol
+    net-pop (0.1.2)
+      net-protocol
+    net-protocol (0.2.1)
+      timeout
+    net-smtp (0.3.3)
+      net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
@@ -184,7 +197,7 @@ GEM
     parser (3.1.2.1)
       ast (~> 2.4.1)
     prometheus-client (2.1.0)
-    public_suffix (5.0.0)
+    public_suffix (5.0.1)
     puma (6.0.0)
       nio4r (~> 2.0)
     racc (1.6.1)
@@ -322,6 +335,7 @@ GEM
     thor (1.2.1)
     tilt (2.0.10)
     timecop (0.9.6)
+    timeout (0.3.1)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.2.0)
@@ -361,7 +375,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.8.0)
   jwt
   listen (~> 3.7)
-  metadata_presenter (= 2.17.28)
+  metadata_presenter (= 2.17.29)
   prometheus-client (~> 2.1.0)
   puma (~> 6.0)
   rails (>= 6.1.4.6)
