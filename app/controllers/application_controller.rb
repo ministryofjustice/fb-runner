@@ -117,4 +117,9 @@ class ApplicationController < ActionController::Base
     ENV['PAYMENT_LINK'].present?
   end
   helper_method :payment_link_enabled?
+
+  def payment_link_url
+    ENV['PAYMENT_LINK']
+  end
+  helper_method :payment_link_url
 end
