@@ -6,7 +6,6 @@ RSpec.feature 'Navigation' do
   end
 
   background do
-    given_the_service_has_a_metadata
     when_I_visit_the_service
   end
 

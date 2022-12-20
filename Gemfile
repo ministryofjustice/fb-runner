@@ -16,7 +16,7 @@ gem 'jwt'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 #
 gem 'fb-jwt-auth', '0.8.0'
-gem 'metadata_presenter', '2.17.29'
+gem 'metadata_presenter', '2.17.30'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.0'
 gem 'rails', '>= 6.1.4.6'

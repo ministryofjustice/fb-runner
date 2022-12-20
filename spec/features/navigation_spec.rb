@@ -7,10 +7,6 @@ RSpec.feature 'Navigation' do
     allow(Rails.configuration).to receive(:autocomplete_items).and_return(autocomplete_items)
   end
 
-  background do
-    given_the_service_has_a_metadata
-  end
-
   scenario 'when I navigate forward and back through the form' do
     when_I_visit_the_service
     and_I_add_my_full_name
