@@ -1,8 +1,4 @@
 module FeatureSteps
-  def given_the_service_has_a_metadata
-    expect(Rails.configuration.service_metadata).to eq(complain_about_tribunal_metadata)
-  end
-
   def and_I_go_back
     form.back_link.click
   end
