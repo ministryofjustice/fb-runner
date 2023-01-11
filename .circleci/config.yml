@@ -210,17 +210,23 @@ workflows:
   version: 2
   test_and_build:
     jobs:
-      - build
+      - build:
+        context: &moj-forms-context
+          - moj-forms
       - lint:
+          context: *moj-forms-context
           requires:
             - build
       - security:
+          context: *moj-forms-context
           requires:
             - build
       - test:
+          context: *moj-forms-context
           requires:
             - build
       - build_and_push_image_test:
+          context: *moj-forms-context
           requires:
             - lint
             - security
@@ -230,27 +236,34 @@ workflows:
               only:
                 - main
       - deploy_to_test_dev:
+          context: *moj-forms-context
           requires:
             - build_and_push_image_test
       - deploy_to_test_production:
+          context: *moj-forms-context
           requires:
             - build_and_push_image_test
       - acceptance_tests:
+          context: *moj-forms-context
           requires:
             - deploy_to_test_dev
             - deploy_to_test_production
       - build_and_push_image_live:
+          context: *moj-forms-context
           requires:
             - acceptance_tests
       - deploy_to_live_dev:
+          context: *moj-forms-context
           requires:
             - acceptance_tests
             - build_and_push_image_live
       - deploy_to_live_production:
+          context: *moj-forms-context
           requires:
             - acceptance_tests
             - build_and_push_image_live
       - smoke_tests:
+          context: *moj-forms-context
           requires:
             - deploy_to_live_dev
             - deploy_to_live_production
