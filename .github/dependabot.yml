@@ -8,10 +8,11 @@ updates:
     timezone: Europe/London
   open-pull-requests-limit: 10
   reviewers:
-  - brenetic
   - mattempty
   - njseeto
   - chrispymm
+  - H3ll3m4
+  - StevenLeighton21
 - package-ecosystem: docker
   directory: "/"
   schedule:
@@ -20,10 +21,11 @@ updates:
     timezone: Europe/London
   open-pull-requests-limit: 10
   reviewers:
-  - brenetic
   - mattempty
   - njseeto
   - chrispymm
+  - H3ll3m4
+  - StevenLeighton21
 - package-ecosystem: npm
   directory: "/"
   schedule:
@@ -33,6 +35,7 @@ updates:
   open-pull-requests-limit: 10
   reviewers:
   - mattempty
-  - brenetic
   - njseeto
   - chrispymm
+  - H3ll3m4
+  - StevenLeighton21
