@@ -72,7 +72,7 @@ jobs:
           name: Setup base environment variable
           command: |
             echo "export BUILD_SHA=$CIRCLE_SHA1" >> $BASH_ENV
-            echo "export SSH_FILE_FOR_SECRETS=~/.ssh/id_rsa_afe3715efcfd08e161d41810cd6b6daa" >> $BASH_ENV
+            echo "export SSH_FILE_FOR_SECRETS=~/.ssh/id_rsa_23329fec1881113a3b02b7ad212ab271" >> $BASH_ENV
       - run: &deploy_scripts
           name: cloning deploy scripts
           command: 'git clone git@github.com:ministryofjustice/fb-deploy.git deploy-scripts'
@@ -89,7 +89,7 @@ jobs:
       - setup_remote_docker: *remote_docker
       - add_ssh_keys: &ssh_keys
           fingerprints:
-            - "af:e3:71:5e:fc:fd:08:e1:61:d4:18:10:cd:6b:6d:aa"
+            - "23:32:9f:ec:18:81:11:3a:3b:02:b7:ad:21:2a:b2:71"
       - run: *base_environment_variables
       - run: *deploy_scripts
       - run:
@@ -212,15 +212,20 @@ workflows:
     jobs:
       - build
       - lint:
+          context: &moj-forms-context
+            - moj-forms
           requires:
             - build
       - security:
+          context: *moj-forms-context
           requires:
             - build
       - test:
+          context: *moj-forms-context
           requires:
             - build
       - build_and_push_image_test:
+          context: *moj-forms-context
           requires:
             - lint
             - security
@@ -230,27 +235,34 @@ workflows:
               only:
                 - main
       - deploy_to_test_dev:
+          context: *moj-forms-context
           requires:
             - build_and_push_image_test
       - deploy_to_test_production:
+          context: *moj-forms-context
           requires:
             - build_and_push_image_test
       - acceptance_tests:
+          context: *moj-forms-context
           requires:
             - deploy_to_test_dev
             - deploy_to_test_production
       - build_and_push_image_live:
+          context: *moj-forms-context
           requires:
             - acceptance_tests
       - deploy_to_live_dev:
+          context: *moj-forms-context
           requires:
             - acceptance_tests
             - build_and_push_image_live
       - deploy_to_live_production:
+          context: *moj-forms-context
           requires:
             - acceptance_tests
             - build_and_push_image_live
       - smoke_tests:
+          context: *moj-forms-context
           requires:
             - deploy_to_live_dev
             - deploy_to_live_production
