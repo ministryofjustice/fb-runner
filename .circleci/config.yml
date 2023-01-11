@@ -210,11 +210,10 @@ workflows:
   version: 2
   test_and_build:
     jobs:
-      - build:
-        context: &moj-forms-context
-          - moj-forms
+      - build
       - lint:
-          context: *moj-forms-context
+          context: &moj-forms-context
+            - moj-forms
           requires:
             - build
       - security:
