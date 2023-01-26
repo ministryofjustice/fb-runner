@@ -10,3 +10,8 @@
 .call-to-action > p {
   margin: 0;
 }
+
+// Apply GOVUk link styles to all links in editable content areas
+.fb-editable[data-fb-content-type="content"] a {
+  @extend %govuk-link;
+}
