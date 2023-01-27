@@ -2,7 +2,7 @@ class VerifySession
   def self.before(controller)
     if !allowed_pages?(controller) && controller.session[:session_id].blank?
       controller.reset_session
-      controller.redirect_to controller.root_path
+      controller.redirect_to '/session/expired'
     end
   end
 
