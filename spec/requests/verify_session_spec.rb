@@ -1,4 +1,6 @@
 RSpec.describe 'verify session', type: :request do
+  let(:session_expired_path) { '/session/expired' }
+
   context 'when session id exists' do
     before do
       allow_any_instance_of(
@@ -14,7 +16,7 @@ RSpec.describe 'verify session', type: :request do
       end
 
       it 'does not redirect the user' do
-        expect(response).to_not redirect_to('/')
+        expect(response).to_not redirect_to(session_expired_path)
       end
     end
   end
@@ -26,7 +28,7 @@ RSpec.describe 'verify session', type: :request do
       end
 
       it 'does not redirect the user' do
-        expect(response).to_not redirect_to('/')
+        expect(response).to_not redirect_to(session_expired_path)
       end
     end
 
@@ -36,7 +38,7 @@ RSpec.describe 'verify session', type: :request do
       end
 
       it 'does not redirect the user' do
-        expect(response).to_not redirect_to('/')
+        expect(response).to_not redirect_to(session_expired_path)
       end
     end
 
@@ -46,7 +48,7 @@ RSpec.describe 'verify session', type: :request do
       end
 
       it 'redirects the user' do
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to(session_expired_path)
       end
     end
   end
