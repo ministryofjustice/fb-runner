@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - run: bundle exec brakeman -q --no-pager
+      - run: bundle exec brakeman -q --no-pager -i brakeman.ignore
       - slack/status: *slack_status
   test:
     docker: *ruby_image
