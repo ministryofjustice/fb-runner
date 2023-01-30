@@ -600,6 +600,46 @@ RSpec.describe Platform::SubmitterPayload do
         expect(subject.actions).to be_empty
       end
     end
+
+    context 'when email output and confirmation email to address are the same' do
+      let(:email_to) do
+        'legolas@middle.earth.com'
+      end
+      let(:confirmation_to) do
+        'legolas+confirmation@middle.earth.com'
+      end
+      let(:expected_actions) do
+        [
+          {
+            kind: 'email',
+            to: email_to,
+            from: email_from,
+            subject: email_subject,
+            email_body: email_body,
+            include_pdf: true,
+            include_attachments: true
+          },
+          {
+            kind: 'email',
+            to: confirmation_to,
+            from: email_from,
+            subject: confirmation_email_subject,
+            email_body: confirmation_email_body,
+            include_pdf: true,
+            include_attachments: true
+          }
+        ]
+      end
+
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(email_to)
+        allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(email_component_id)
+      end
+
+      it 'should return confirmation email to address with "+confirmation@"' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
   end
 
   describe '#concatenation_with_reference_number' do

@@ -186,7 +186,7 @@ module Platform
     end
 
     def confirmation_email_answer
-      @confirmation_email_answer ||= user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']]
+      @confirmation_email_answer ||= confirmation_email if user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']].present?
     end
 
     def inject_reference_payment_content(text)
@@ -195,6 +195,14 @@ module Platform
 
     def payment_reference
       "#{ENV['PAYMENT_LINK']}#{user_data['moj_forms_reference_number']}"
+    end
+
+    def confirmation_email
+      if user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']] == ENV['SERVICE_EMAIL_OUTPUT']
+        user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']].gsub('@', '+confirmation@')
+      else
+        user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']]
+      end
     end
   end
 end
