@@ -1,5 +1,5 @@
 RSpec.describe LoadServiceMetadata do
-  subject(:load_service_metadata) { described_class.new(attributes) }
+  subject(:load_service_metadata) { described_class.new(**attributes) }
 
   describe '#to_h' do
     let(:service_id) { nil }
