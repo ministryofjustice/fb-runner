@@ -1,13 +1,13 @@
 RSpec.describe LoadAutocompleteItems do
-  subject(:load_autocomplete_items) { described_class.new(attributes) }
+  subject(:load_autocomplete_items) { described_class.new(**attributes) }
   let(:service_id) { nil }
   let(:autocomplete_items) { nil }
   let(:fixture) { nil }
   let(:attributes) do
     {
-      service_id: service_id,
-      autocomplete_items: autocomplete_items,
-      fixture: fixture
+      service_id:,
+      autocomplete_items:,
+      fixture:
     }
   end
 

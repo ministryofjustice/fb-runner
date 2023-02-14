@@ -1,6 +1,6 @@
 RSpec.describe DataEncryption do
   subject(:data_encryption) do
-    described_class.new(key: key)
+    described_class.new(key:)
   end
 
   let(:data) { 'foo' }

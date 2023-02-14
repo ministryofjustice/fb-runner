@@ -22,7 +22,7 @@ module Platform
 
     def adapter
       Platform::SubmitterAdapter.new(
-        session: session,
+        session:,
         service_slug: service.service_slug,
         payload: submitter_payload
       )
@@ -30,9 +30,9 @@ module Platform
 
     def submitter_payload
       Platform::SubmitterPayload.new(
-        service: service,
-        user_data: user_data,
-        session: session
+        service:,
+        user_data:,
+        session:
       ).to_h
     end
   end

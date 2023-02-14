@@ -11,7 +11,7 @@ class AwsS3Client
   private
 
   def s3
-    @s3 ||= Aws::S3::Client.new(region: REGION, credentials: credentials)
+    @s3 ||= Aws::S3::Client.new(region: REGION, credentials:)
   end
 
   def credentials

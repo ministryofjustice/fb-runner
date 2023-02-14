@@ -1,5 +1,5 @@
 RSpec.describe UserData do
-  subject(:user_data) { described_class.new(session, adapter: adapter) }
+  subject(:user_data) { described_class.new(session, adapter:) }
   let(:session) { {} }
   let(:adapter) do
     class MyCustomAdapter
@@ -18,7 +18,7 @@ RSpec.describe UserData do
 
   describe '#adapter' do
     context 'when adapter is overwritten in the initialise' do
-      subject(:user_data) { described_class.new(session, adapter: adapter) }
+      subject(:user_data) { described_class.new(session, adapter:) }
 
       it 'returns the adapter passed in initialize' do
         expect(user_data.adapter).to be_instance_of(adapter)

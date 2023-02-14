@@ -17,7 +17,7 @@ namespace :load_test do
 
     subject = SecureRandom.uuid
     token = Fb::Jwt::Auth::ServiceAccessToken.new(
-      subject: subject
+      subject:
     ).generate
 
     system("'#{Rails.root.join('bin', 'load_test_datastore')}' '#{token}' '#{ENV['USER_DATASTORE_URL']}' '#{subject}' '#{slug}' '#{concurrency}' '#{duration}'")

@@ -1,6 +1,6 @@
 RSpec.describe Platform::UserDatastoreAdapter do
   subject(:adapter) do
-    described_class.new(session, root_url: root_url, service_slug: service_slug)
+    described_class.new(session, root_url:, service_slug:)
   end
 
   let(:service_slug) { 'court-service' }
