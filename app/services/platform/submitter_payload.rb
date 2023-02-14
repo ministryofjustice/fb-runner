@@ -14,11 +14,11 @@ module Platform
 
     def to_h
       {
-        meta: meta,
+        meta:,
         service: service_info,
-        actions: actions,
-        pages: pages,
-        attachments: attachments
+        actions:,
+        pages:,
+        attachments:
       }
     end
 

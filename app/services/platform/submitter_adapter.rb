@@ -27,8 +27,8 @@ module Platform
     def request_body
       {
         encrypted_submission: data_encryption.encrypt(payload.to_json),
-        service_slug: service_slug,
-        encrypted_user_id_and_token: encrypted_user_id_and_token
+        service_slug:,
+        encrypted_user_id_and_token:
       }
     end
 
@@ -39,7 +39,7 @@ module Platform
     def service_access_token
       @service_access_token ||= Fb::Jwt::Auth::ServiceAccessToken.new(
         issuer: service_slug,
-        subject: subject
+        subject:
       ).generate
     end
 

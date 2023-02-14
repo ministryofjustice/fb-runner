@@ -22,7 +22,7 @@ RSpec.describe AwsS3Client do
 
     it 'should get an object from s3' do
       expect(s3_object_stub).to receive(:get_object).with(
-        bucket: bucket,
+        bucket:,
         key: object_key
       ).and_return(response)
 

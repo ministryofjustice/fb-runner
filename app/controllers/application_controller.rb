@@ -65,9 +65,9 @@ class ApplicationController < ActionController::Base
     user_data = update_session_with_reference_number_if_enabled(session)
     # rubocop: disable Rails/SaveBang
     Platform::Submission.new(
-      service: service,
-      user_data: user_data,
-      session: session
+      service:,
+      user_data:,
+      session:
     ).save
     # rubocop: enable Rails/SaveBang
   end

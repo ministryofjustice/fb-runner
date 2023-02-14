@@ -5,9 +5,9 @@ RSpec.describe LoadAutocompleteItems do
   let(:fixture) { nil }
   let(:attributes) do
     {
-      service_id: service_id,
-      autocomplete_items: autocomplete_items,
-      fixture: fixture
+      service_id:,
+      autocomplete_items:,
+      fixture:
     }
   end
 

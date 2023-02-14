@@ -1,11 +1,11 @@
 RSpec.describe Platform::UserFilestoreAdapter do
   subject(:adapter) do
     described_class.new(
-      session: session,
-      file_details: file_details,
-      allowed_file_types: allowed_file_types,
-      root_url: root_url,
-      service_slug: service_slug
+      session:,
+      file_details:,
+      allowed_file_types:,
+      root_url:,
+      service_slug:
     )
   end
   let(:file_details) { { original_filename: 'this-is-a-knife.png' } }
@@ -45,9 +45,9 @@ RSpec.describe Platform::UserFilestoreAdapter do
 
   before do
     allow(Platform::UserFilestorePayload).to receive(:new).with(
-      session: session,
-      file_details: file_details,
-      allowed_file_types: allowed_file_types
+      session:,
+      file_details:,
+      allowed_file_types:
     ).and_return(double(call: payload))
     stub_request(:post, expected_url)
       .with(body: payload, headers: expected_headers)

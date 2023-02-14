@@ -2,9 +2,9 @@ RSpec.describe Platform::SubmitterPayload do
   let(:session) { { user_id: 'user-id-5b10c947cf32bd0558318e77eebc0995' } }
   subject(:submitter_payload) do
     described_class.new(
-      service: service,
-      user_data: user_data,
-      session: session
+      service:,
+      user_data:,
+      session:
     )
   end
 
@@ -225,7 +225,7 @@ RSpec.describe Platform::SubmitterPayload do
           to: email_to,
           from: email_from,
           subject: email_subject,
-          email_body: email_body,
+          email_body:,
           include_pdf: true,
           include_attachments: true
         },
@@ -341,7 +341,7 @@ RSpec.describe Platform::SubmitterPayload do
     context 'when optional fields' do
       subject(:submitter_payload) do
         described_class.new(
-          service: service,
+          service:,
           user_data: user_data.merge(
             {
               'holiday_date_1(3i)' => '',
@@ -351,7 +351,7 @@ RSpec.describe Platform::SubmitterPayload do
               'dog-picture_upload_1' => {}
             }
           ),
-          session: session
+          session:
         )
       end
       let(:answers) do
@@ -423,7 +423,7 @@ RSpec.describe Platform::SubmitterPayload do
           Timecop.freeze(date) do
             expect(submitter_payload.to_h[:meta]).to eq(
               {
-                pdf_heading: pdf_heading,
+                pdf_heading:,
                 pdf_subheading: '',
                 submission_at: date.iso8601
               }
@@ -496,7 +496,7 @@ RSpec.describe Platform::SubmitterPayload do
             to: email_to,
             from: email_from,
             subject: email_subject,
-            email_body: email_body,
+            email_body:,
             include_pdf: true,
             include_attachments: true
           },
@@ -540,7 +540,7 @@ RSpec.describe Platform::SubmitterPayload do
             to: email_to,
             from: email_from,
             subject: email_subject,
-            email_body: email_body,
+            email_body:,
             include_pdf: true,
             include_attachments: true
           }
@@ -615,7 +615,7 @@ RSpec.describe Platform::SubmitterPayload do
             to: email_to,
             from: email_from,
             subject: email_subject,
-            email_body: email_body,
+            email_body:,
             include_pdf: true,
             include_attachments: true
           },

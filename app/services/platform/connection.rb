@@ -30,7 +30,7 @@ module Platform
 
     def service_access_token
       @service_access_token ||= Fb::Jwt::Auth::ServiceAccessToken.new(
-        subject: subject
+        subject:
       ).generate
     end
 

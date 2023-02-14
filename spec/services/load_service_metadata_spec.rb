@@ -8,10 +8,10 @@ RSpec.describe LoadServiceMetadata do
     let(:asset_precompile) { nil }
     let(:attributes) do
       {
-        service_id: service_id,
-        service_metadata: service_metadata,
-        fixture: fixture,
-        asset_precompile: asset_precompile
+        service_id:,
+        service_metadata:,
+        fixture:,
+        asset_precompile:
       }
     end
 

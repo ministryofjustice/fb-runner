@@ -1,11 +1,11 @@
 RSpec.describe Platform::SubmitterAdapter do
   subject(:adapter) do
     described_class.new(
-      payload: payload,
-      root_url: root_url,
-      service_slug: service_slug,
-      service_secret: service_secret,
-      session: session
+      payload:,
+      root_url:,
+      service_slug:,
+      service_secret:,
+      session:
     )
   end
   let(:root_url) do
@@ -40,10 +40,10 @@ RSpec.describe Platform::SubmitterAdapter do
     let(:jwt_subject) { session[:user_id] }
     let(:body) do
       {
-        encrypted_submission: DataEncryption.new(key: key).encrypt(
+        encrypted_submission: DataEncryption.new(key:).encrypt(
           JSON.generate(payload)
         ),
-        service_slug: service_slug,
+        service_slug:,
         encrypted_user_id_and_token: DataEncryption.new(key: service_secret).encrypt(
           "#{session[:user_id]}#{session[:user_token]}"
         )
@@ -81,11 +81,11 @@ RSpec.describe Platform::SubmitterAdapter do
     context 'when service secret is blank' do
       subject(:adapter) do
         described_class.new(
-          payload: payload,
-          root_url: root_url,
-          service_slug: service_slug,
+          payload:,
+          root_url:,
+          service_slug:,
           service_secret: nil,
-          session: session
+          session:
         )
       end
       let(:expected_body) do
