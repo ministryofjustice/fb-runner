@@ -18,6 +18,9 @@ class UserDataParams
       @page_answers.uploaded_files.map do |uploaded_file|
         @answer_params[uploaded_file.component.id] =
           @page_answers.send(uploaded_file.component.id).merge(uploaded_file.file)
+
+      rescue Platform::FilestoreError
+        Rails.logger.info("Error while retrieving #{uploaded_file} from filestore")
       end
     end
   end
