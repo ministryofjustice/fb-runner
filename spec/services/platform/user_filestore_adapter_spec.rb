@@ -147,5 +147,18 @@ RSpec.describe Platform::UserFilestoreAdapter do
         let(:error_name) { 'invalid.virus' }
       end
     end
+
+    context 'when therequest times out' do
+      include_context 'filestore_error_response' do
+        let(:response_body) do
+          JSON.generate({
+            code: 408,
+            name: 'timeout'
+          })
+        end
+        let(:response_status) { 408 }
+        let(:error_name) { 'timeout' }
+      end
+    end
   end
 end
