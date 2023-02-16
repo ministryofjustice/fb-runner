@@ -148,7 +148,7 @@ RSpec.describe Platform::UserFilestoreAdapter do
       end
     end
 
-    context 'when therequest times out' do
+    context 'when the request times out' do
       include_context 'filestore_error_response' do
         let(:response_body) do
           JSON.generate({
