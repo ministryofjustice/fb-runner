@@ -155,7 +155,7 @@ GEM
     jwt (2.7.0)
     kramdown (2.4.0)
       rexml
-    listen (3.7.1)
+    listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.19.1)
@@ -360,7 +360,7 @@ DEPENDENCIES
   faraday_middleware
   fb-jwt-auth (= 0.10.0)
   jwt
-  listen (~> 3.7)
+  listen (~> 3.8)
   metadata_presenter (= 2.17.36)
   prometheus-client (~> 2.1.0)
   puma (~> 6.0)
