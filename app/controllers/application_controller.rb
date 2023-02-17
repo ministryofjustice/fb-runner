@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :require_basic_auth
   before_action VerifySession
 
+  add_flash_types :confirmation, :expired_session
+
   EXCEPTIONS = [
     Platform::TimeoutError,
     Platform::ClientError
@@ -70,6 +72,8 @@ class ApplicationController < ActionController::Base
       session:
     ).save
     # rubocop: enable Rails/SaveBang
+
+    delete_session
   end
 
   def editable?
@@ -122,4 +126,8 @@ class ApplicationController < ActionController::Base
     ENV['PAYMENT_LINK'] + show_reference_number
   end
   helper_method :payment_link_url
+
+  def delete_session
+    flash[:confirmation] = 'Session will expired'
+  end
 end
