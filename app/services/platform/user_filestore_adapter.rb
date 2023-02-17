@@ -47,7 +47,7 @@ module Platform
     end
 
     def timeout
-      20
+      30
     end
 
     def payload
