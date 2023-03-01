@@ -65,6 +65,7 @@ RSpec.describe Platform::SubmitterPayload do
   let(:confirmation_email_reply_to) do
     'MoJ forms <reply_to@digital.justice.gov.uk>'
   end
+  let(:default_email_address) { Platform::SubmitterPayload::DEFAULT_EMAIL_ADDRESS }
   let(:email_subject) do
     'All info about middle earth characters'
   end
@@ -226,7 +227,7 @@ RSpec.describe Platform::SubmitterPayload do
         {
           kind: 'email',
           to: email_to,
-          from: email_from,
+          from: default_email_address,
           subject: email_subject,
           email_body:,
           include_pdf: true,
@@ -235,7 +236,7 @@ RSpec.describe Platform::SubmitterPayload do
         {
           kind: 'csv',
           to: email_to,
-          from: email_from,
+          from: default_email_address,
           subject: "CSV - #{email_subject}",
           email_body: '',
           include_pdf: false,
@@ -497,7 +498,7 @@ RSpec.describe Platform::SubmitterPayload do
           {
             kind: 'email',
             to: email_to,
-            from: email_from,
+            from: default_email_address,
             subject: email_subject,
             email_body:,
             include_pdf: true,
@@ -506,7 +507,7 @@ RSpec.describe Platform::SubmitterPayload do
           {
             kind: 'csv',
             to: email_to,
-            from: email_from,
+            from: default_email_address,
             subject: "CSV - #{email_subject}",
             email_body: '',
             include_pdf: false,
@@ -541,7 +542,7 @@ RSpec.describe Platform::SubmitterPayload do
           {
             kind: 'email',
             to: email_to,
-            from: email_from,
+            from: default_email_address,
             subject: email_subject,
             email_body:,
             include_pdf: true,
@@ -616,7 +617,7 @@ RSpec.describe Platform::SubmitterPayload do
           {
             kind: 'email',
             to: email_to,
-            from: email_from,
+            from: default_email_address,
             subject: email_subject,
             email_body:,
             include_pdf: true,
@@ -718,7 +719,7 @@ RSpec.describe Platform::SubmitterPayload do
         {
           kind: 'email',
           to: email_to,
-          from: expected_email,
+          from: default_email_address,
           subject: email_subject,
           email_body:,
           include_pdf: true,
@@ -727,7 +728,7 @@ RSpec.describe Platform::SubmitterPayload do
         {
           kind: 'csv',
           to: email_to,
-          from: expected_email,
+          from: default_email_address,
           subject: "CSV - #{email_subject}",
           email_body: '',
           include_pdf: false,
