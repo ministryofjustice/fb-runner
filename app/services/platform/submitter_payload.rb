@@ -102,7 +102,7 @@ module Platform
       {
         kind: EMAIL,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
-        from: ENV['SERVICE_EMAIL_FROM'],
+        from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
         email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
         include_attachments: true,
@@ -116,7 +116,7 @@ module Platform
       {
         kind: CSV,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
-        from: ENV['SERVICE_EMAIL_FROM'],
+        from: confirmation_email_reply_to,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
         email_body: '',
         include_attachments: true,
@@ -130,7 +130,7 @@ module Platform
       {
         kind: EMAIL,
         to: confirmation_email_answer,
-        from: ENV['SERVICE_EMAIL_FROM'],
+        from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
         email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
         include_attachments: true,
@@ -203,6 +203,10 @@ module Platform
       else
         user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']]
       end
+    end
+
+    def confirmation_email_reply_to
+      @confirmation_email_reply_to ||= ENV['CONFIRMATION_EMAIL_REPLY_TO'].presence || ENV['SERVICE_EMAIL_FROM']
     end
   end
 end

@@ -62,6 +62,9 @@ RSpec.describe Platform::SubmitterPayload do
   let(:email_from) do
     'MoJ forms <moj-online@digital.justice.gov.uk>'
   end
+  let(:confirmation_email_reply_to) do
+    'MoJ forms <reply_to@digital.justice.gov.uk>'
+  end
   let(:email_subject) do
     'All info about middle earth characters'
   end
@@ -706,6 +709,79 @@ RSpec.describe Platform::SubmitterPayload do
 
     it 'should insert the payment link' do
       expect(submitter_payload.to_h[:actions]).to eq(expected_actions)
+    end
+  end
+
+  shared_examples 'a reply to email action' do
+    let(:expected_actions) do
+      [
+        {
+          kind: 'email',
+          to: email_to,
+          from: expected_email,
+          subject: email_subject,
+          email_body:,
+          include_pdf: true,
+          include_attachments: true
+        },
+        {
+          kind: 'csv',
+          to: email_to,
+          from: expected_email,
+          subject: "CSV - #{email_subject}",
+          email_body: '',
+          include_pdf: false,
+          include_attachments: true
+        },
+        {
+          kind: 'email',
+          to: user_data[email_component_id],
+          from: expected_email,
+          subject: confirmation_email_subject,
+          email_body: confirmation_email_body,
+          include_pdf: true,
+          include_attachments: true
+        }
+      ]
+    end
+
+    before do
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(email_to)
+      allow(ENV).to receive(:[]).with('SERVICE_CSV_OUTPUT').and_return('true')
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(email_component_id)
+    end
+
+    describe '#actions' do
+      context 'when email, csv outputs and confirmation email are required' do
+        it 'should return three actions with reply_to_email' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+    end
+
+    describe '#to_h' do
+      context 'when all required fields present' do
+        it 'sends actions info with reply_to_email' do
+          expect(submitter_payload.to_h[:actions]).to eq(expected_actions)
+        end
+      end
+    end
+  end
+
+  describe '#confirmation_email_reply_to' do
+    context 'when reply to email is present' do
+      before do
+        allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_REPLY_TO').and_return(confirmation_email_reply_to)
+      end
+      let(:expected_email) { confirmation_email_reply_to }
+
+      it_behaves_like 'a reply to email action'
+    end
+
+    context 'when reply to email is not present' do
+      let(:expected_email) { email_from }
+
+      it_behaves_like 'a reply to email action'
     end
   end
 end
