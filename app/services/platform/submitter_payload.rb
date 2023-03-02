@@ -103,7 +103,7 @@ module Platform
       {
         kind: EMAIL,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
-        from: DEFAULT_EMAIL_ADDRESS,
+        from: default_email_from,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
         email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
         include_attachments: true,
@@ -117,7 +117,7 @@ module Platform
       {
         kind: CSV,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
-        from: DEFAULT_EMAIL_ADDRESS,
+        from: default_email_from,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
         email_body: '',
         include_attachments: true,
@@ -206,8 +206,20 @@ module Platform
       end
     end
 
+    def confirmation_email_from_address
+      @confirmation_email_from_address ||= ENV['CONFIRMATION_EMAIL_REPLY_TO'].presence || ENV['SERVICE_EMAIL_FROM']
+    end
+
+    def service_name
+      @service_name ||= service.service_name
+    end
+
     def confirmation_email_reply_to
-      @confirmation_email_reply_to ||= ENV['CONFIRMATION_EMAIL_REPLY_TO'].presence || ENV['SERVICE_EMAIL_FROM']
+      @confirmation_email_reply_to ||= "#{service_name} <#{confirmation_email_from_address}>"
+    end
+
+    def default_email_from
+      @default_email_from ||= "#{service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
     end
   end
 end
