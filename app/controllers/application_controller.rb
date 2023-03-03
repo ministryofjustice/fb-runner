@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action VerifySession
 
   add_flash_types :confirmation, :expired_session
+  rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
   EXCEPTIONS = [
     Platform::TimeoutError,
@@ -129,5 +130,9 @@ class ApplicationController < ActionController::Base
 
   def delete_session
     flash[:confirmation] = 'Session will expired'
+  end
+
+  def redirect_to_expired_page
+    redirect_to '/session/expired'
   end
 end
