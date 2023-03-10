@@ -5,6 +5,7 @@ module Platform
 
     CSV = 'csv'.freeze
     EMAIL = 'email'.freeze
+    DEFAULT_EMAIL_ADDRESS = 'no-reply-moj-forms@digital.justice.gov.uk'.freeze
 
     def initialize(service:, user_data:, session:)
       @service = service
@@ -102,7 +103,7 @@ module Platform
       {
         kind: EMAIL,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
-        from: ENV['SERVICE_EMAIL_FROM'],
+        from: default_email_from,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
         email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
         include_attachments: true,
@@ -116,7 +117,7 @@ module Platform
       {
         kind: CSV,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
-        from: ENV['SERVICE_EMAIL_FROM'],
+        from: default_email_from,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
         email_body: '',
         include_attachments: true,
@@ -130,7 +131,7 @@ module Platform
       {
         kind: EMAIL,
         to: confirmation_email_answer,
-        from: ENV['SERVICE_EMAIL_FROM'],
+        from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
         email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
         include_attachments: true,
@@ -203,6 +204,22 @@ module Platform
       else
         user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']]
       end
+    end
+
+    def confirmation_email_from_address
+      @confirmation_email_from_address ||= ENV['CONFIRMATION_EMAIL_REPLY_TO'].presence || ENV['SERVICE_EMAIL_FROM']
+    end
+
+    def service_name
+      @service_name ||= service.service_name
+    end
+
+    def confirmation_email_reply_to
+      @confirmation_email_reply_to ||= "#{service_name} <#{confirmation_email_from_address}>"
+    end
+
+    def default_email_from
+      @default_email_from ||= "#{service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
     end
   end
 end
