@@ -234,6 +234,7 @@ workflows:
             branches:
               only:
                 - main
+                - extend-session-on-action
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
@@ -247,22 +248,22 @@ workflows:
           requires:
             - deploy_to_test_dev
             - deploy_to_test_production
-      - build_and_push_image_live:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-      - deploy_to_live_dev:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-      - deploy_to_live_production:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-      - smoke_tests:
-          context: *moj-forms-context
-          requires:
-            - deploy_to_live_dev
-            - deploy_to_live_production
+      # - build_and_push_image_live:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - acceptance_tests
+      # - deploy_to_live_dev:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - acceptance_tests
+      #       - build_and_push_image_live
+      # - deploy_to_live_production:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - acceptance_tests
+      #       - build_and_push_image_live
+      # - smoke_tests:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - deploy_to_live_dev
+      #       - deploy_to_live_production
