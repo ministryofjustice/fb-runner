@@ -41,7 +41,7 @@ function supportGovUkContent() {
 
 /* Page initialiser section
  **/
-contentLoaded(window, () => {
+contentLoaded(window, function() {
   preventCookieBannerInPreview();
   supportGovUkContent();
 });

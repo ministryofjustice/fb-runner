@@ -2,10 +2,13 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
+import 'promise-polyfill/src/polyfill';
+import 'whatwg-fetch'
 
 require("@rails/ujs").start()
 require("../src/runner/contentloaded.js")
 require("../src/runner/analytics")
+require("../src/runner/session")
 require("../src/runner/index")
 
 // Entry point for fb-editor stylesheets
@@ -44,7 +47,7 @@ if(autocompleteComponent) {
     const form = event.target;
     const autocompleteField = form.querySelector('input.autocomplete__input');
     const autocompleteSelect = form.querySelector('.fb-autocomplete');
-    
+
     // if the select is not empty and the values do not match or if the
     // autocomplete is empty trigger validation
     if(autocompleteSelect.value != '' && !autocompleteSelect.value.includes(autocompleteField.value) || autocompleteField.value == '') {
