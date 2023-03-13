@@ -11,6 +11,7 @@ class VerifySession
       controller.reset_session
       controller.redirect_to '/session/expired'
     end
+    controller.session[:expire_after] = 20.minutes
   end
 
   def self.allowed_pages?(controller)

@@ -6,6 +6,7 @@ RSpec.describe 'verify session', type: :request do
       {
         session_id: SecureRandom.hex(24),
         user_id: 'eb380609ce7706bb930b5991c8acc51f',
+        expire_after: 2.minutes,
         user_data:
           {
             'num_number_1' => '42',
@@ -22,6 +23,10 @@ RSpec.describe 'verify session', type: :request do
       end
       it 'does not redirect the user' do
         expect(response).to_not redirect_to(session_expired_path)
+      end
+
+      it 'extends the session expiry' do
+        expect(dummy_session[:expire_after]).to eq(20.minutes)
       end
     end
 
