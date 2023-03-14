@@ -198,7 +198,7 @@ GEM
       ast (~> 2.4.1)
     prometheus-client (2.1.0)
     public_suffix (5.0.0)
-    puma (6.0.2)
+    puma (6.1.1)
       nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.6.3)
@@ -377,7 +377,7 @@ DEPENDENCIES
   listen (~> 3.8)
   metadata_presenter (= 2.17.38)
   prometheus-client (~> 2.1.0)
-  puma (~> 6.0)
+  puma (~> 6.1)
   rails (= 6.1.7.1)
   rails-controller-testing
   rspec-rails
