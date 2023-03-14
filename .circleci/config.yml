@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@1.4.0
-  node: circleci/node@4.5.1
+  node: circleci/node@5.1.0
   slack: circleci/slack@3.4.2
   browser-tools: circleci/browser-tools@1.2.4
 
@@ -16,12 +16,12 @@ jobs:
           name: Swap node versions
           command: |
             set +e
-            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            nvm install v14.19.0
-            nvm alias default 14.19.0
+            nvm install v16.19.1
+            nvm alias default 16.19.1
 
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
