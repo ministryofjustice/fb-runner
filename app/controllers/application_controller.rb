@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   add_flash_types :confirmation, :expired_session
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
+  SESSION_DURATION = 20.minutes
+
   EXCEPTIONS = [
     Platform::TimeoutError,
     Platform::ClientError
@@ -134,5 +136,22 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_expired_page
     redirect_to '/session/expired'
+  end
+
+  def in_progress?
+    request.path == root_path ||
+      allowed_pages.include?(strip_url(request.path))
+  end
+  helper_method :in_progress?
+
+  def allowed_pages
+    urls = service.standalone_pages.map do |page|
+      strip_url(page.url)
+    end
+    urls << 'session/expired'
+  end
+
+  def strip_url(url)
+    url.to_s.chomp('/').reverse.chomp('/').reverse
   end
 end
