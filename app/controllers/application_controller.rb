@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :confirmation, :expired_session
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
+  SERVICE_NAME = "Apply for a property and affairs deputyship order".freeze
   SESSION_DURATION = 20.minutes
 
   EXCEPTIONS = [
@@ -31,6 +32,10 @@ class ApplicationController < ActionController::Base
   end
 
   def user_data_params
+    if service.service_name == SERVICE_NAME
+      Rails.logger.debug("Logging page answers: #{@page_answers}")
+    end
+
     UserDataParams.new(@page_answers).answers
   end
 
