@@ -4,11 +4,13 @@
 // that code so it'll be compiled.
 import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch'
+import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
+import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
 
 require("@rails/ujs").start()
 require("../src/runner/contentloaded.js")
 require("../src/runner/analytics")
-require("../src/runner/session")
+import TimeoutWarning from '../src/runner/timeout-warning.js'
 require("../src/runner/index")
 
 // Entry point for fb-editor stylesheets
@@ -28,6 +30,11 @@ Array.prototype.forEach.call(autocompleteElements, function(element) {
   });
 });
 
+const $timeoutWarning = document.querySelector('[data-module="govuk-timeout-warning"]');
+console.log($timeoutWarning);
+if($timeoutWarning) {
+  new TimeoutWarning($timeoutWarning).init()
+}
 // the autocomplete component only updates the underlying <select> element when
 // a valid option is chosen. If a user sets an answer, then returns to change
 // their answer and either blanks the autocomplete or enters an invalid/partial string

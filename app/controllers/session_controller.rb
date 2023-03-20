@@ -8,8 +8,17 @@ class SessionController < ApplicationController
   end
 
   def extend
-    reset_session
+    session[:expire_after] = SESSION_DURATION
     session[:expires_at] = Time.zone.now + SESSION_DURATION
     head :ok
+  end
+
+  def reset
+    reset_session
+    if request.xhr?
+      head :ok
+    else
+      redirect_to '/session/expired'
+    end
   end
 end

@@ -138,6 +138,11 @@ class ApplicationController < ActionController::Base
     redirect_to '/session/expired'
   end
 
+  def session_expiry_time
+    session[:expires_at]
+  end
+  helper_method :session_expiry_time
+
   def in_progress?
     request.path == root_path ||
       allowed_pages.include?(strip_url(request.path))

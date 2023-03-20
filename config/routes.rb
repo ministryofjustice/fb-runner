@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get '/session/remaining', to: 'session#remaining'
   get 'session/extend', to: 'session#extend'
+  get 'session/reset', to: 'session#reset'
 
   mount MetadataPresenter::Engine => "/"
 end
