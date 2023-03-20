@@ -10,7 +10,7 @@ class ExitPagesFixture < SitePrism::Page
   element :page_l_field, :field, 'Page L'
   element :page_knowhere_field, :field, 'Road to knowhere'
   element :page_ghost_field, :field, 'Ghost town'
-  element :continue_button, :button, I18n.t('presenter.actions.continue')
+  element :continue_button, 'button[type="submit"]', text: I18n.t('presenter.actions.continue'), visible: true
   element :item_3, :radio_button, 'Item 3'
   element :item_2, :radio_button, 'Item 2'
   element :back_link, :link, 'Back'
