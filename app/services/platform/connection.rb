@@ -18,6 +18,7 @@ module Platform
         conn.use :instrumentation, name: subscription
         conn.options[:open_timeout] = timeout
         conn.options[:timeout] = timeout
+        conn.options[:read_timeout] = timeout
 
         # Submitter uses the v3 access token from service token cache
         conn.request :authorization, 'Bearer', service_access_token
