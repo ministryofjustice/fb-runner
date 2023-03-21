@@ -5,7 +5,7 @@ module Platform
     attr_reader :payload, :session, :root_url, :service_slug, :service_secret
 
     SUBSCRIPTION = 'submitter.request'.freeze
-    TIMEOUT = 15
+    TIMEOUT = 30
     V2_URL = '/v2/submissions'.freeze
 
     def initialize(payload:,
