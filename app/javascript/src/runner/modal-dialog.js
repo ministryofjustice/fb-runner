@@ -38,9 +38,7 @@ ModalDialog.prototype.init = function (options) {
   this.$focussable = this.$dialogBox.querySelectorAll(this.focussable.toString())
   this.$focusableLast = this.$focussable[this.$focussable.length - 1]
   this.$focusElement = this.options.focusElement || this.$dialogBox
-  console.log(this.$module.dataset)
   this.$inertContainer = document.querySelector( this.$module.dataset.inertContainer || '.govuk-modal-dialogue-inert-container' )
-  console.log(this.$inertContainer)
 
   // Check that dialog element has native or polyfill support
   if (!this.dialogSupported()) {

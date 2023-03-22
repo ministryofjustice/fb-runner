@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 3dcb164251f9011e6e2d64e7e244fcf697cddace
+  revision: 92a57964723aacc7600858a71ce332f2e265c946
   branch: show-timeout-warning-modal
   specs:
     metadata_presenter (2.17.40)

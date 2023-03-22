@@ -17,8 +17,9 @@ function TimeoutWarning ($module) {
   this.idleMinutesBeforeTimeOut = $module.getAttribute('data-minutes-idle-timeout') ? $module.getAttribute('data-minutes-idle-timeout') : 25
   this.timeOutRedirectUrl = $module.getAttribute('data-url-redirect') ? $module.getAttribute('data-url-redirect') : 'timeout'
   this.minutesTimeOutModalVisible = $module.getAttribute('data-minutes-modal-visible') ? $module.getAttribute('data-minutes-modal-visible') : 5
-  this.timeUserLastInteractedWithPage = ''
-
+  this.timerText = $module.getAttribute('data-timer-text') ? $module.getAttribute('data-timer-text') : 'Your session will be reset in '
+  this.timerExtraText = $module.getAttribute('data-timer-extra-text') ? $module.getAttribute('data-timer-extra-text') : 'This is to protect your data.'
+  this.timerRedirectText = $module.getAttribute('data-timer-redirect-text') ? $module.getAttribute('data-timer-redirect-text') : 'You are about to be redirected'
 }
 
 // Initialise component
@@ -37,11 +38,9 @@ TimeoutWarning.prototype.init = function () {
 // Reset idle time counter when user interacts with the page
 // If user is idle for specified time period, open timeout warning as dialog
 TimeoutWarning.prototype.countIdleTime = function () {
-  console.log('counting idle time')
   var debounce
   var idleTime
   var milliSecondsBeforeTimeOut = this.idleMinutesBeforeTimeOut * 60000
-  console.log(milliSecondsBeforeTimeOut/1000);
 
   // As user interacts with the page, keep resetting the timer
   window.onload = resetIdleTime.bind(this)
@@ -53,13 +52,11 @@ TimeoutWarning.prototype.countIdleTime = function () {
 
   function resetIdleTime () {
     if(!this.isDialogOpen()) {
-      console.log('resetting idle time')
       // As user has interacted with the page, reset idle time
       clearTimeout(idleTime)
       clearTimeout(debounce)
 
       function idleTimer() {
-        console.log('starting new idle time countdown')
         this.extendTimeOnServer();
         idleTime = setTimeout(this.openDialog.bind(this), milliSecondsBeforeTimeOut)
       }
@@ -70,7 +67,6 @@ TimeoutWarning.prototype.countIdleTime = function () {
 }
 
 TimeoutWarning.prototype.openDialog = function () {
-    console.log('time to open the dialog');
     this.modalDialog.open();
     this.startUiCountdown()
 
@@ -81,8 +77,6 @@ TimeoutWarning.prototype.openDialog = function () {
 
 TimeoutWarning.prototype.dialogFallback = function () {
   // TODO show the fallback
-  console.log('dialog not supported callbck');
-  console.log(this);
   this.$fallbackElement.style.display = 'block'
 }
 
@@ -125,8 +119,8 @@ TimeoutWarning.prototype.startUiCountdown = function () {
 
     // Below string will get read out by screen readers every time the timeout refreshes (every 15 secs. See below).
     // Please add additional information in the modal body content or in below extraText which will get announced to AT the first time the time out opens
-    var text = 'We will reset your form if you do not continue in <span class="countdown">' + minutesText + secondsText + '</span>.'
-    var atText = 'We will reset your form if you do not continue in' + atMinutesText
+    var text = '<p>' + $module.timerText +'<span class="countdown"> ' + minutesText + secondsText + '</span>.</p>'
+    var atText = $module.timerText + ' ' + atMinutesText
     if (atSecondsText) {
       if (minutesLeft > 0) {
         atText += ' and'
@@ -135,14 +129,13 @@ TimeoutWarning.prototype.startUiCountdown = function () {
     } else {
       atText += '.'
     }
-    var extraText = ' Any answers you have entered so far will be cleared to protect your information.'
+    var extraText = '<p>' + $module.timerExtraText + '</p>'
 
     if (timerExpired) {
 
-      $countdown.innerHTML = 'You are about to be redirected'
-      $accessibleCountdown.innerHTML = 'You are about to be redirected'
+      $accessibleCountdown.innerHTML = $module.timerRedirectText
 
-      setTimeout($module.redirect.bind($module), 2000)
+      setTimeout($module.redirect.bind($module), 1000)
     } else {
       seconds--
 
@@ -196,7 +189,6 @@ TimeoutWarning.prototype.isDialogOpen = function () {
 }
 
 TimeoutWarning.prototype.dialogClose = function () {
-  console.log('dialog close callback');
   if (this.isDialogOpen()) {
     this.clearTimers()
     this.extendTimeOnServer();
@@ -226,11 +218,9 @@ TimeoutWarning.prototype.redirect = function () {
 
 // Example function for sending last active time of user to server
 TimeoutWarning.prototype.extendTimeOnServer = function () {
-    console.log('extedning session');
      var xhttp = new XMLHttpRequest()
      xhttp.onreadystatechange = function () {
        if (this.readyState === 4 && this.status === 200) {
-         console.log('time extended')
        }
      }
 
