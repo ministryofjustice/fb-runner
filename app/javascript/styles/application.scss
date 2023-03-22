@@ -23,6 +23,7 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
 @import "govuk-frontend/govuk/helpers/all";
 
 @import "govuk-frontend/govuk/core/links";
-@import "./components/modal-dialog.scss";
-@import "./components/timeout-warning.scss";
+@import "./components/modal-dialog";
+@import "./components/timeout-warning";
+@import "./utilities/scroll-disabled";
 @import "./shared/content";

@@ -38,6 +38,9 @@ ModalDialog.prototype.init = function (options) {
   this.$focussable = this.$dialogBox.querySelectorAll(this.focussable.toString())
   this.$focusableLast = this.$focussable[this.$focussable.length - 1]
   this.$focusElement = this.options.focusElement || this.$dialogBox
+  console.log(this.$module.dataset)
+  this.$inertContainer = document.querySelector( this.$module.dataset.inertContainer || '.govuk-modal-dialogue-inert-container' )
+  console.log(this.$inertContainer)
 
   // Check that dialog element has native or polyfill support
   if (!this.dialogSupported()) {
@@ -95,6 +98,8 @@ ModalDialog.prototype.handleOpen = function (event) {
   // Disable scrolling, show wrapper
   this.$container.classList.add('govuk-!-scroll-disabled')
   this.$module.classList.add('govuk-modal-dialogue--open')
+  this.$inertContainer.inert = true
+  this.$inertContainer.setAttribute('aria-hidden', 'true')
 
   // Close on escape key, trap focus
   document.addEventListener('keydown', this.boundKeyDown, true)
@@ -133,6 +138,8 @@ ModalDialog.prototype.handleClose = function (event) {
   // Hide wrapper, enable scrolling
   this.$module.classList.remove('govuk-modal-dialogue--open')
   this.$container.classList.remove('govuk-!-scroll-disabled')
+  this.$inertContainer.inert = false
+  this.$inertContainer.setAttribute('aria-hidden', 'false')
 
   // Restore focus to last active element
   this.$lastActiveElement.focus()
