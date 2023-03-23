@@ -89,7 +89,6 @@ TimeoutWarning.prototype.startUiCountdown = function () {
   var $accessibleCountdown = this.$accessibleCountdown
   var minutes = this.minutesTimeOutModalVisible
   var timerRunOnce = false
-  var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
   var timers = this.timers
 
   var seconds = 60 * minutes
@@ -132,9 +131,7 @@ TimeoutWarning.prototype.startUiCountdown = function () {
     var extraText = '<p>' + $module.timerExtraText + '</p>'
 
     if (timerExpired) {
-
       $accessibleCountdown.innerHTML = $module.timerRedirectText
-
       setTimeout($module.redirect.bind($module), 1000)
     } else {
       seconds--
@@ -146,13 +143,7 @@ TimeoutWarning.prototype.startUiCountdown = function () {
       }
 
       if (!timerRunOnce) {
-        // Read out the extra content only once. Don't read out on iOS VoiceOver which stalls on the longer text
-
-        if (iOS) {
-          $accessibleCountdown.innerHTML = atText
-        } else {
-          $accessibleCountdown.innerHTML = atText + extraText
-        }
+        $accessibleCountdown.innerHTML = atText + extraText
         timerRunOnce = true
       } else if (secondsLeft % 15 === 0) {
         // Update screen reader friendly content every 15 secs
