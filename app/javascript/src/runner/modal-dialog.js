@@ -1,3 +1,52 @@
+/*
+  Modal Dialog Component
+  ----------------------
+   Shows content in an accessible modal dialog
+
+   Minimum required markup is shown below.
+
+   |==========================================================================|
+   |  NOTE: the dialog *must* be outside of the inert container otherwise it  |
+   | will be impossible to interact with the modal as it will be made inert.  |
+   |==========================================================================|
+
+  <body>
+   <div class="govuk-modal-dialogue-inert-container">
+     <!-- all your page content here -->
+   </div>
+    <div class="govuk-modal-dialogue" data-inert-container=".govuk-modal-dialogue-inert-container">
+       <div class="govuk-modal-dialogue__wrapper" >
+         <dialog class="govuk-modal-dialogue__box" aria-labelledby="modal-title" aria-modal="true" role="modal" tabindex="-1">
+           <div class="govuk-modal-dialogue__header">
+             <button type="button" class="govuk-button govuk-modal-dialogue__close" aria-label="close" data-element="govuk-modal-dialogue-close">x</button>
+           </div>
+           <div class="govuk-modal-dialogue__content">
+             <h2 class="govuk-modal-dialogue__heading govuk-heading-l" id="modal-title">Title</h2>
+             <div class="govuk-modal-dialogue__description govuk-body">
+                Content
+             </div>
+           </div>
+         </dialog>
+       </div>
+       <div class="govuk-modal-dialogue__backdrop"></div>
+     </div>
+   </body>
+
+   Instantiate
+   -----------
+   var dialog = new ModalDialog(element).init(options)
+
+   Options
+   -------
+   An object which can contain the following keys:
+   triggerElement: node which will have a click event listener added to trigger opening of the modal
+   focusElement: element that should gain focus when the dialog opens (defaults to the dialog itself)
+   onOpen: a callback function which will be invoked when the modal is opened
+   onClose: a callback function which will be invoked when the modal is closed
+   onDialogNotSupported: a callback function that will be invoked if there is no native <dialog> or dialog polyfill support
+
+*/
+
 import { nodeListForEach } from 'govuk-frontend/govuk/common.js'
 import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
 import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
@@ -16,16 +65,6 @@ function ModalDialog ($module) {
     'select',
     'textarea'
   ]
-}
-
-// Initialize component
-ModalDialog.prototype.init = function (options) {
-// Check for module
-  if (!this.$module) {
-    return
-  }
-
-  this.options = options || {}
 
   this.open = this.handleOpen.bind(this)
   this.close = this.handleClose.bind(this)
@@ -37,10 +76,22 @@ ModalDialog.prototype.init = function (options) {
   this.$closeButtons = this.$dialogBox.querySelectorAll('[data-element="govuk-modal-dialogue-close"]')
   this.$focussable = this.$dialogBox.querySelectorAll(this.focussable.toString())
   this.$focusableLast = this.$focussable[this.$focussable.length - 1]
-  this.$focusElement = this.options.focusElement || this.$dialogBox
   this.$inertContainer = document.querySelector( this.$module.dataset.inertContainer || '.govuk-modal-dialogue-inert-container' )
+}
 
-  // Check that dialog element has native or polyfill support
+// Initialize component
+ModalDialog.prototype.init = function (options) {
+// Check for module
+  if (!this.$module) {
+    return
+  }
+
+  this.options = options || {}
+
+  this.$focusElement = this.options.focusElement || this.$dialogBox
+
+  // Check for native dialog (or polyfill) support
+  // if no support trigger a callback allowing us to show a fallback
   if (!this.dialogSupported()) {
     if (typeof this.options.onDialogNotSupported === 'function') {
       this.options.onDialogNotSupported.call()
@@ -67,7 +118,7 @@ ModalDialog.prototype.dialogSupported = function () {
       window.dialogPolyfill.registerDialog(this.$dialog)
       return true
     } catch (error) {
-      // Doesn't support polyfill (IE8) - display fallback element
+      // Doesn't support polyfill (IE8)
       return false
     }
   }
@@ -96,7 +147,10 @@ ModalDialog.prototype.handleOpen = function (event) {
   // Disable scrolling, show wrapper
   this.$container.classList.add('govuk-!-scroll-disabled')
   this.$module.classList.add('govuk-modal-dialogue--open')
+
+  //make the content of the page inert
   this.$inertContainer.inert = true
+  // hide content from screen readers in browsers that do not support inert
   this.$inertContainer.setAttribute('aria-hidden', 'true')
 
   // Close on escape key, trap focus
@@ -136,6 +190,7 @@ ModalDialog.prototype.handleClose = function (event) {
   // Hide wrapper, enable scrolling
   this.$module.classList.remove('govuk-modal-dialogue--open')
   this.$container.classList.remove('govuk-!-scroll-disabled')
+  // make content active again, and un-hide from AT
   this.$inertContainer.inert = false
   this.$inertContainer.setAttribute('aria-hidden', 'false')
 

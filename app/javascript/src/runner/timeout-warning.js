@@ -1,4 +1,70 @@
+/*
+  Timeout Warning Component
+  ----------------------
+   Shows a session tiemout warning with a countdown in an accessible modal dialog
 
+   Minimum required markup is shown below.
+
+   |==========================================================================|
+   |  NOTE: the dialog *must* be outside of the inert container otherwise it  |
+   | will be impossible to interact with the modal as it will be made inert.  |
+   |==========================================================================|
+
+  <body>
+   <div class="govuk-modal-dialogue-inert-container">
+     <div class="govuk-timeout-warning-fallback">
+        Your session will be reset at <TIMESTAMP>. This is to protect your data.
+     </div>
+     <!-- all your page content here -->
+   </div>
+   <div class="govuk-timeout-warning" data-module="govuk-timeout-warning">
+
+      <div class="govuk-modal-dialogue" data-inert-container=".govuk-modal-dialogue-inert-container">
+         <div class="govuk-modal-dialogue__wrapper" >
+           <dialog class="govuk-modal-dialogue__box" aria-labelledby="modal-title" aria-modal="true" role="modal" tabindex="-1">
+             <div class="govuk-modal-dialogue__header">
+               <button type="button" class="govuk-button govuk-modal-dialogue__close" aria-label="close" data-element="govuk-modal-dialogue-close">x</button>
+             </div>
+             <div class="govuk-modal-dialogue__content">
+               <h2 class="govuk-modal-dialogue__heading govuk-heading-l" id="modal-title">Title</h2>
+               <div class="govuk-modal-dialogue__description govuk-body">
+                 <div class="govuk-timeout-warning__timer" aria-hidden="true"></div>
+                 <div class="govuk-timeout-warning__at-timer govuk-visually-hidden" role="status" id="at-timer"></div>
+               </div>
+             </div>
+           </dialog>
+         </div>
+         <div class="govuk-modal-dialogue__backdrop"></div>
+       </div>
+
+     </div>
+   </body>
+
+   The above markup would result in the following modal dialog being shown after 25 minutes of inactivity
+   If the user did not close the modal within those 5 minutes they would be rediected to /timeout
+   -------------------------------------------------
+   |                                             X |
+   |-----------------------------------------------|
+   |  Title                                        |
+   |                                               |
+   |  Your session will reset in 5 minutes.        |
+   |  This is to protect your data.                |
+   |                                               |
+   -------------------------------------------------
+
+   Data Attributes
+   ---------------
+   data-minutes-idle-timeout [25] - number of minutes of inactivity before modal is shown
+   data-minutes-modal-visible [5] - number of minutes the modal is show for (length of countdown)
+   data-url-redirect [timeout] - url that the user is redirected to if there is no interaction
+   data-timer-text [Your session will be reset in] - text preceding the countdown, announced every time the countdown updates for AT users
+   data-timer-extra-text [This is to protect your data] - text following the countdown, will only be read once
+   data-timer-redirect-text [You are about to be redirected] - text announced to screenreader users just prior to redirection
+
+   If there is no JS, or the browser does not support dialogs then the fallback text will be shown.
+   This should contain a timestamp of when the users session will expire.
+
+*/
 import ModalDialog from './modal-dialog.js'
 
 function TimeoutWarning ($module) {
@@ -11,8 +77,8 @@ function TimeoutWarning ($module) {
   })
   this.timers = []
   // UI countdown timer specific markup
-  this.$countdown = $module.querySelector('.timer')
-  this.$accessibleCountdown = $module.querySelector('.at-timer')
+  this.$countdown = $module.querySelector('.govuk-timeout-warning__timer')
+  this.$accessibleCountdown = $module.querySelector('.govuk-timeout-warning__at-timer')
   // UI countdown specific settings
   this.idleMinutesBeforeTimeOut = $module.getAttribute('data-minutes-idle-timeout') ? $module.getAttribute('data-minutes-idle-timeout') : 25
   this.timeOutRedirectUrl = $module.getAttribute('data-url-redirect') ? $module.getAttribute('data-url-redirect') : 'timeout'
@@ -76,7 +142,6 @@ TimeoutWarning.prototype.openDialog = function () {
 }
 
 TimeoutWarning.prototype.dialogFallback = function () {
-  // TODO show the fallback
   this.$fallbackElement.style.display = 'block'
 }
 
