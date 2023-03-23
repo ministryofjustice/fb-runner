@@ -98,6 +98,9 @@ TimeoutWarning.prototype.init = function () {
   // Start watching for idleness
   this.countIdleTime()
 
+  if (window.history.pushState) {
+    this.disableBackButtonWhenOpen()
+  }
 }
 
 // Count idle time (user not interacting with page)
@@ -136,9 +139,9 @@ TimeoutWarning.prototype.openDialog = function () {
     this.modalDialog.open();
     this.startUiCountdown()
 
-    // if (window.history.pushState) {
-    //   window.history.pushState('', '') // This updates the History API to enable state to be "popped" to detect browser navigation for disableBackButtonWhenOpen
-    // }
+    if (window.history.pushState) {
+      window.history.pushState('', '') // This updates the History API to enable state to be "popped" to detect browser navigation for disableBackButtonWhenOpen
+    }
 }
 
 TimeoutWarning.prototype.dialogFallback = function () {
@@ -245,7 +248,7 @@ TimeoutWarning.prototype.isDialogOpen = function () {
 }
 
 TimeoutWarning.prototype.dialogClose = function () {
-  if (this.isDialogOpen()) {
+  if (!this.isDialogOpen()) {
     this.clearTimers()
     this.extendTimeOnServer();
   }
@@ -259,9 +262,10 @@ TimeoutWarning.prototype.clearTimers = function () {
 }
 
 TimeoutWarning.prototype.disableBackButtonWhenOpen = function () {
+  var module = this
   window.addEventListener('popstate', function () {
-    if (this.isDialogOpen()) {
-      this.closeDialog()
+    if (module.isDialogOpen()) {
+      module.modalDialog.close()
     } else {
       window.history.go(-1)
     }

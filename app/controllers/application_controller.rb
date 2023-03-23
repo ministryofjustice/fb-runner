@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :confirmation, :expired_session
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
-  SESSION_DURATION = 20.minutes
+  SESSION_DURATION = 30.minutes
 
   EXCEPTIONS = [
     Platform::TimeoutError,
