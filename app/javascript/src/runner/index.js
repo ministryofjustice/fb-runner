@@ -13,6 +13,19 @@ function environment() {
   return location.pathname.search(/^\/services\/.*?\/preview\/$/) >= 0 ? ENVIRONMENT_PREVIEW : ENVIRONMENT_RUNNER;
 }
 
+/*
+ * If the user has just accepted or rejected cookies show the confirmation
+ * message in the cookie banner
+ * determined by presence of ?analytics={accepted|rejected} url param
+ */
+function showAnalyticsConfirmationMessage() {
+  var queryString = location.search;
+  if(queryString.includes('analytics')) {
+    var status = queryString.split('=').pop();
+    window.analytics.showMessage(status);
+  }
+}
+
 
 /* Stop cookie banner from showing in preview mode.
  * We don't need cookie or analytics related warnings
@@ -53,4 +66,5 @@ contentLoaded(window, () => {
   preventCookieBannerInPreview();
   initializeTimeoutWarning();
   supportGovUkContent();
+  showAnalyticsConfirmationMessage();
 });

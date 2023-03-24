@@ -1,14 +1,14 @@
 function accept (cookieName) {
   setAnalyticsCookie(cookieName, 'accepted')
   hideCookieMessage()
-  showMessage('accepted')
+  window.location.replace(window.location.pathname+'?analytics=accepted')
 }
 
 function reject (cookieName) {
   setAnalyticsCookie(cookieName, 'rejected')
   removeAnalyticsCookies()
   hideCookieMessage()
-  showMessage('rejected')
+  window.location.replace(window.location.pathname+'?analytics=rejected')
 }
 
 function setAnalyticsCookie (cookieName, cookieValue) {
@@ -52,7 +52,8 @@ window.analytics = {
   accept: accept,
   reject: reject,
   hideCookieBanner: hideCookieBanner,
-  removeAnalyticsCookies: removeAnalyticsCookies
+  removeAnalyticsCookies: removeAnalyticsCookies,
+  showMessage: showMessage
 }
 
 // In case we want to require it like a module
