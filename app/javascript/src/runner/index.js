@@ -1,3 +1,4 @@
+import TimeoutWarning from './timeout-warning.js'
 const {
   htmlAdjustment
 } = require('../shared/content');
@@ -24,6 +25,13 @@ function preventCookieBannerInPreview() {
   }
 }
 
+function initializeTimeoutWarning() {
+  const $timeoutWarning = document.querySelector('[data-module="govuk-timeout-warning"]');
+  if($timeoutWarning && environment() != ENVIRONMENT_PREVIEW) {
+    new TimeoutWarning($timeoutWarning).init()
+  }
+}
+
 
 /* Enhances the edited (or static) content should it require special formatting
  * or non-standard elements.
@@ -43,5 +51,6 @@ function supportGovUkContent() {
  **/
 contentLoaded(window, () => {
   preventCookieBannerInPreview();
+  initializeTimeoutWarning();
   supportGovUkContent();
 });
