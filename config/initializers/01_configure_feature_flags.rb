@@ -1,1 +1,1 @@
-ENV['SAVE_AND_RETURN'] = 'enabled' if Rails.env.development?
+ENV['SAVE_AND_RETURN'] = 'enabled' unless ENV['PLATFORM_ENV'] == 'live'
