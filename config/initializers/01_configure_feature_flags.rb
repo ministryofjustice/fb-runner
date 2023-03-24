@@ -1,0 +1,1 @@
+ENV['SAVE_AND_RETURN'] = 'enabled' if Rails.env.development?
