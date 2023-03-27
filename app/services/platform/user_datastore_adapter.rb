@@ -1,7 +1,7 @@
 module Platform
   class UserDatastoreAdapter
     include Platform::Connection
-    TIMEOUT = 15
+    TIMEOUT = 30
     SUBSCRIPTION = 'datastore.request'.freeze
 
     attr_reader :session, :root_url, :service_slug
