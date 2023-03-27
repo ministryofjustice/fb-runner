@@ -15,9 +15,6 @@ gem 'jwt'
 #     branch: 'show-timeout-warning-modal'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 gem 'fb-jwt-auth', '0.10.0'
-
-# gem 'metadata_presenter', path: '../fb-metadata-presenter'
-#
 gem 'metadata_presenter', '2.17.41'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
