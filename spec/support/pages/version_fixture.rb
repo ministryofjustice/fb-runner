@@ -4,7 +4,7 @@ class VersionFixture < SitePrism::Page
   set_url '/'
   element :heading, 'h1'
   element :start_button, :button, I18n.t('presenter.actions.start')
-  element :continue_button, :button, I18n.t('presenter.actions.continue')
+  element :continue_button, 'button[type="submit"]', text: I18n.t('presenter.actions.continue'), visible: true
   element :full_name_field, :field, 'Full name'
   element :parent_field, :field, 'Parent name'
   element :email_field, :field, 'Email address'

@@ -4,11 +4,12 @@
 // that code so it'll be compiled.
 import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch'
+import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
+import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
 
 require("@rails/ujs").start()
 require("../src/runner/contentloaded.js")
 require("../src/runner/analytics")
-require("../src/runner/session")
 require("../src/runner/index")
 
 // Entry point for fb-editor stylesheets
@@ -27,6 +28,7 @@ Array.prototype.forEach.call(autocompleteElements, function(element) {
     selectElement: element,
   });
 });
+
 
 // the autocomplete component only updates the underlying <select> element when
 // a valid option is chosen. If a user sets an answer, then returns to change

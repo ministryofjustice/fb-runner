@@ -26,7 +26,7 @@ RSpec.describe 'verify session', type: :request do
       end
 
       it 'extends the session expiry' do
-        expect(dummy_session[:expire_after]).to eq(20.minutes)
+        expect(dummy_session[:expire_after]).to eq(30.minutes)
       end
     end
 

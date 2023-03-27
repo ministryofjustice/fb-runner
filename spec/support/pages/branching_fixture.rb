@@ -21,7 +21,7 @@ class BranchingFixture < SitePrism::Page
   element :falcon, :radio_button, 'The Falcon and the Winter Soldier'
   element :wandavision, :radio_button, 'WandaVision'
   element :back_link, :link, 'Back'
-  element :continue_button, :button, I18n.t('presenter.actions.continue')
+  element :continue_button, 'button[type="submit"]', text: I18n.t('presenter.actions.continue'), visible: true
   elements :summary_list, '.govuk-summary-list__row'
   element :accept_and_send_button, :button, I18n.t('presenter.actions.submit')
   element :confirmation_heading, '.govuk-panel__title'
