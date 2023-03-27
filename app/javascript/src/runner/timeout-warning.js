@@ -158,10 +158,9 @@ TimeoutWarning.prototype.startUiCountdown = function () {
   var minutes = this.minutesTimeOutModalVisible
   var timerRunOnce = false
   var timers = this.timers
-
   var seconds = 60 * minutes
 
-  $countdown.innerHTML = minutes + ' minute' + (minutes > 1 ? 's' : '');
+  $countdown.innerText = minutes + ' minute' + (minutes > 1 ? 's' : '');
 
   (function runTimer () {
     var minutesLeft = parseInt(seconds / 60, 10)
@@ -186,7 +185,15 @@ TimeoutWarning.prototype.startUiCountdown = function () {
 
     // Below string will get read out by screen readers every time the timeout refreshes (every 15 secs. See below).
     // Please add additional information in the modal body content or in below extraText which will get announced to AT the first time the time out opens
-    var text = '<p>' + $module.timerText +'<span class="countdown"> ' + minutesText + secondsText + '</span>.</p>'
+    var text = document.createElement('p')
+    var timerText = document.createTextNode($module.timerText)
+    text.appendChild(timerText);
+
+    var countdown = document.createElement('span');
+    countdown.setAttribute('class', 'countdown');
+    countdown.innerHTML = ' ' + minutesText + secondsText + '.'
+    text.appendChild(countdown);
+
     var atText = $module.timerText + ' ' + atMinutesText
     if (atSecondsText) {
       if (minutesLeft > 0) {
@@ -196,26 +203,30 @@ TimeoutWarning.prototype.startUiCountdown = function () {
     } else {
       atText += '.'
     }
-    var extraText = '<p>' + $module.timerExtraText + '</p>'
+
+    var extraText = document.createElement('p')
+    extraText.innerText = $module.timerExtraText
 
     if (timerExpired) {
-      $accessibleCountdown.innerHTML = $module.timerRedirectText
+      $accessibleCountdown.innerText = $module.timerRedirectText
       setTimeout($module.redirect.bind($module), 1000)
     } else {
       seconds--
 
-      $countdown.innerHTML = text + extraText
+      $countdown.innerText = ''
+      $countdown.appendChild(text)
+      $countdown.appendChild(extraText)
 
       if (minutesLeft < 1 && secondsLeft < 20) {
         $accessibleCountdown.setAttribute('aria-live', 'assertive')
       }
 
       if (!timerRunOnce) {
-        $accessibleCountdown.innerHTML = atText + extraText
+        $accessibleCountdown.innerText = atText + $module.timerExtraText
         timerRunOnce = true
       } else if (secondsLeft % 15 === 0) {
         // Update screen reader friendly content every 15 secs
-        $accessibleCountdown.innerHTML = atText
+        $accessibleCountdown.innerText = atText
       }
 
       // JS doesn't allow resetting timers globally so timers need to be retained for resetting.
