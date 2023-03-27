@@ -121,6 +121,7 @@ jobs:
   acceptance_tests:
     docker: *ruby_image
     steps:
+      - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -199,6 +200,7 @@ jobs:
   smoke_tests:
     docker: *ecr_image
     steps:
+      - checkout
       - setup_remote_docker: *remote_docker
       - run: *deploy_scripts
       - run:
