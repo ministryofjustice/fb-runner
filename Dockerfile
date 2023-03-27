@@ -1,4 +1,4 @@
-FROM ruby:3.1.3-alpine3.16 AS base
+FROM ruby:3.2.1-alpine3.16 AS base
 
 RUN apk add --update yarn build-base bash libcurl git tzdata && rm -rf /var/cache/apk/*
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ nodejs npm
