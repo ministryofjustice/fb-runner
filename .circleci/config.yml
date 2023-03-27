@@ -241,10 +241,10 @@ workflows:
           context: *moj-forms-context
           requires:
             - build_and_push_image_test
-      # - deploy_to_test_production:
-      #     context: *moj-forms-context
-      #     requires:
-      #       - build_and_push_image_test
+      - deploy_to_test_production:
+          context: *moj-forms-context
+          requires:
+            - build_and_push_image_test
       # - acceptance_tests:
       #     context: *moj-forms-context
       #     requires:
