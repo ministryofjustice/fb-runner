@@ -284,7 +284,7 @@ TimeoutWarning.prototype.disableBackButtonWhenOpen = function () {
 }
 
 TimeoutWarning.prototype.redirect = function () {
-  window.location.replace(this.timeOutRedirectUrl)
+  window.location.replace(encodeURI(this.timeOutRedirectUrl))
 }
 
 // Example function for sending last active time of user to server
