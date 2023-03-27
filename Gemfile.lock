@@ -1,3 +1,12 @@
+PATH
+  remote: ../fb-metadata-presenter
+  specs:
+    metadata_presenter (2.17.41)
+      govuk_design_system_formbuilder (>= 2.1.5)
+      json-schema (= 2.8.1)
+      kramdown (>= 2.3.0)
+      rails (>= 6.0.3.4, < 6.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -65,7 +74,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.737.0)
+    aws-partitions (1.735.0)
     aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -169,16 +178,11 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
-    metadata_presenter (2.17.45)
-      govuk_design_system_formbuilder (>= 2.1.5)
-      json-schema (= 2.8.1)
-      kramdown (>= 2.3.0)
-      rails (>= 6.0.3.4, < 6.2.0)
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
     minitest (5.18.0)
-    msgpack (1.7.0)
+    msgpack (1.6.1)
     multipart-post (2.3.0)
     net-imap (0.3.4)
       date
@@ -198,7 +202,7 @@ GEM
       ast (~> 2.4.1)
     prometheus-client (2.1.0)
     public_suffix (5.0.1)
-    puma (6.2.0)
+    puma (6.1.1)
       nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.6.4)
@@ -375,7 +379,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter (= 2.17.45)
+  metadata_presenter!
   prometheus-client (~> 2.1.0)
   puma (~> 6.1)
   rails (= 6.1.7.1)
