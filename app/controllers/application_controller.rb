@@ -143,11 +143,17 @@ class ApplicationController < ActionController::Base
   end
   helper_method :session_expiry_time
 
+  # DEPRECATED - remove once all references to in_progress? changed to allowed_page?
   def in_progress?
+    allowed_page?
+  end
+  helper_method :in_progress?
+
+  def allowed_page?
     request.path == root_path ||
       allowed_pages.include?(strip_url(request.path))
   end
-  helper_method :in_progress?
+  helper_method :allowed_page?
 
   def allowed_pages
     urls = service.standalone_pages.map do |page|

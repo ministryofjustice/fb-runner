@@ -1,15 +1,15 @@
 class VerifySession
   def self.before(controller)
-    if !controller.in_progress? && controller.flash[:expired_session].present?
+    if !controller.allowed_page? && controller.flash[:expired_session].present?
       controller.reset_session
       controller.redirect_to '/session/expired'
     end
 
-    if !controller.in_progress? && controller.flash[:confirmation].present?
+    if !controller.allowed_page? && controller.flash[:confirmation].present?
       controller.flash[:expired_session] = 'Session has expired'
     end
 
-    if !controller.in_progress? && controller.session[:session_id].blank?
+    if !controller.allowed_page? && controller.session[:session_id].blank?
       controller.reset_session
       controller.redirect_to '/session/expired'
     end
