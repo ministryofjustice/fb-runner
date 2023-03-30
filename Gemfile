@@ -26,7 +26,7 @@ gem 'webpacker', '~> 5.4'
 
 group :development, :test do
   gem 'brakeman'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug'
   gem 'capybara'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
