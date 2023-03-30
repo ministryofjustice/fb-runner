@@ -1,1 +1,0 @@
-ENV['SAVE_AND_RETURN'] = 'enabled' unless ENV['PLATFORM_ENV'] == 'live'
