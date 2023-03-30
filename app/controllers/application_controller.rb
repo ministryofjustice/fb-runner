@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
     UserData.new(session).save(user_data_params)
   end
 
+  def save_form_progress
+    SavedProgress.new(session).save_progress
+    byebug
+  end
+
   def user_data_params
     UserDataParams.new(@page_answers).answers
   end
