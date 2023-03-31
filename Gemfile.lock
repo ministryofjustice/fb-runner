@@ -1,5 +1,7 @@
-PATH
-  remote: ../fb-metadata-presenter
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: d677e14ce4208bb120bee0c01b1a8bb55cff4c20
+  branch: submit-save-and-return
   specs:
     metadata_presenter (2.17.45)
       govuk_design_system_formbuilder (>= 2.1.5)
