@@ -23,4 +23,8 @@ class SessionDataAdapter
     session[:user_data].delete(component_id)
     session[:user_data]
   end
+
+  def save_progress
+    session[:saved_form]
+  end
 end

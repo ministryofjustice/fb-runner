@@ -32,7 +32,6 @@ class ApplicationController < ActionController::Base
 
   def save_form_progress
     SavedProgress.new(session).save_progress
-    byebug
   end
 
   def user_data_params
@@ -82,6 +81,14 @@ class ApplicationController < ActionController::Base
     # rubocop: enable Rails/SaveBang
 
     delete_session
+  end
+
+  def create_save_and_return_submission
+    Platform::SaveAndReturn.new(
+      service:,
+      user_data: save_form_progress,
+      session:
+    ).save
   end
 
   def editable?
