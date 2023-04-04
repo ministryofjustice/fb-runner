@@ -26,7 +26,9 @@ module Platform
     end
 
     def get_saved_progress(uuid)
-      request(:get, save_form_get_url(uuid), {})['payload']
+      x = request(:get, save_form_get_url(uuid), {})
+      puts x
+      x
     end
 
     def save_progress
