@@ -61,11 +61,11 @@ module Platform
     end
 
     def magic_link
-      @magic_link ||= "https://#{service.service_slug}.form.justice.gov.uk/#{user_token}"
+      @magic_link ||= "https://#{service.service_slug}.form.justice.gov.uk/#{record_uuid}"
     end
 
-    def user_token
-      @user_token ||= user_data['user_token']
+    def record_uuid
+      @record_uuid ||= user_data['id']
     end
   end
 end
