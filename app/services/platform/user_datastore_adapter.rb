@@ -26,6 +26,7 @@ module Platform
     end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     def get_saved_progress(uuid)
       request(:get, save_form_get_url(uuid), {}).body
     end
@@ -34,6 +35,9 @@ module Platform
       body = session[:saved_form].to_json
 =======
     def get_saved_progress
+=======
+    def get_saved_progress(uuid)
+>>>>>>> d583b93 (Pass uuid)
       request(:get, save_form_get_url(uuid), body)
     end
 
