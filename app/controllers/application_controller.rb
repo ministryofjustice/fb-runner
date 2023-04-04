@@ -34,8 +34,8 @@ class ApplicationController < ActionController::Base
     SavedProgress.new(session).save_progress
   end
 
-  def get_saved_progress(service_slug, uuid)
-    SavedProgress.new(session).get_saved_progress(service_slug, uuid)
+  def get_saved_progress(uuid)
+    SavedProgress.new(session).get_saved_progress(uuid)
   end
 
   def user_data_params
