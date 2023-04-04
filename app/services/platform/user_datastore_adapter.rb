@@ -35,10 +35,11 @@ module Platform
       # all_answers = existing_answers.merge(params[:user_data])
 
       # yield(all_answers) if block_given?
-
-      body = {
-        payload: data_encryption.encrypt(session[:saved_form].to_json)
-      }
+      # byebug
+      # body = {
+      #   payload: data_encryption.encrypt(session[:saved_form].to_json)
+      # }
+      body = session[:saved_form].to_json
 
       request(:post, save_form_url, body)
     end
