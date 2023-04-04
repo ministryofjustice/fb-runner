@@ -4,7 +4,7 @@ end
 class SavedProgress
   attr_reader :session
 
-  delegate :save_progress, :load_data, :delete, to: :adapter
+  delegate :save_progress, :get_saved_progress, :load_data, :delete, to: :adapter
 
   def initialize(session, adapter: nil)
     @session = session
@@ -15,13 +15,13 @@ class SavedProgress
     create_user_keys
     return @adapter.new(session) if @adapter.present?
 
-    if ENV['USER_DATASTORE_URL'].present?
+    # if ENV['USER_DATASTORE_URL'].present?
       Platform::UserDatastoreAdapter.new(session)
-    else
-      raise MissingDatastoreUrlError if Rails.env.production?
+    # else
+    #   raise MissingDatastoreUrlError if Rails.env.production?
 
-      SessionDataAdapter.new(session)
-    end
+    #   SessionDataAdapter.new(session)
+    # end
   end
 
   def create_user_keys
