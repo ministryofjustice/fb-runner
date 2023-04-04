@@ -54,7 +54,7 @@ module Platform
     end
 
     def save_form_url
-      "/service/#{service_slug}/saved/#{subject}"
+      "/service/#{service_slug}/saved/"
     end
 
     def encryption_key
