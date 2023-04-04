@@ -25,12 +25,29 @@ module Platform
       request(:post, url, body)
     end
 
+<<<<<<< HEAD
     def get_saved_progress(uuid)
       request(:get, save_form_get_url(uuid), {}).body
     end
 
     def save_progress
       body = session[:saved_form].to_json
+=======
+    def get_saved_progress
+      request(:get, save_form_get_url(uuid), body)
+    end
+
+    def save_progress
+      # byebug
+      # existing_answers = load_data
+      # all_answers = existing_answers.merge(params[:user_data])
+
+      # yield(all_answers) if block_given?
+
+      body = {
+        payload: data_encryption.encrypt(session[:saved_form].to_json)
+      }
+>>>>>>> 526be05 (Trying to get saved progress)
 
       request(:post, save_form_url, body)
     end
