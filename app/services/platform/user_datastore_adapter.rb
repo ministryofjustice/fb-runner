@@ -26,9 +26,7 @@ module Platform
     end
 
     def get_saved_progress(uuid)
-      response = request(:get, save_form_get_url(uuid), {})['payload']
-
-      JSON.parse(data_encryption.decrypt(response))
+      request(:get, save_form_get_url(uuid), {})['payload']
     end
 
     def save_progress
