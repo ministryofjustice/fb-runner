@@ -25,7 +25,17 @@ module Platform
       request(:post, url, body)
     end
 
+    def get_saved_progress
+      request(:get, save_form_get_url(uuid), body)
+    end
+
     def save_progress
+      # byebug
+      # existing_answers = load_data
+      # all_answers = existing_answers.merge(params[:user_data])
+
+      # yield(all_answers) if block_given?
+
       body = {
         payload: data_encryption.encrypt(session[:saved_form].to_json)
       }
@@ -51,6 +61,10 @@ module Platform
 
     def url
       "/service/#{service_slug}/user/#{subject}"
+    end
+
+    def save_form_get_url(subject)
+      "/service/#{service_slug}/saved/#{subject}"
     end
 
     def save_form_url
