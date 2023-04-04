@@ -26,7 +26,7 @@ module Platform
     end
 
     def get_saved_progress(uuid)
-      x = request(:get, save_form_get_url(uuid), {})
+      x = request(:get, save_form_get_url(uuid), {}).body
       Rails.logger.info(x)
       x
     end
