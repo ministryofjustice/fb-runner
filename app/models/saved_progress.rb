@@ -16,7 +16,7 @@ class SavedProgress
     return @adapter.new(session) if @adapter.present?
 
     # if ENV['USER_DATASTORE_URL'].present?
-      Platform::UserDatastoreAdapter.new(session)
+    Platform::UserDatastoreAdapter.new(session)
     # else
     #   raise MissingDatastoreUrlError if Rails.env.production?
 
