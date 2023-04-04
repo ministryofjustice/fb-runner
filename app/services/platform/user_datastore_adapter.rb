@@ -26,21 +26,10 @@ module Platform
     end
 
     def get_saved_progress(uuid)
-      x = request(:get, save_form_get_url(uuid), {}).body
-      Rails.logger.info(x)
-      x
+      request(:get, save_form_get_url(uuid), {}).body
     end
 
     def save_progress
-      # byebug
-      # existing_answers = load_data
-      # all_answers = existing_answers.merge(params[:user_data])
-
-      # yield(all_answers) if block_given?
-      # byebug
-      # body = {
-      #   payload: data_encryption.encrypt(session[:saved_form].to_json)
-      # }
       body = session[:saved_form].to_json
 
       request(:post, save_form_url, body)
