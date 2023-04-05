@@ -15,13 +15,13 @@ class SavedProgress
     create_user_keys
     return @adapter.new(session) if @adapter.present?
 
-    # if ENV['USER_DATASTORE_URL'].present?
-    Platform::UserDatastoreAdapter.new(session)
-    # else
-    #   raise MissingDatastoreUrlError if Rails.env.production?
+    if ENV['USER_DATASTORE_URL'].present?
+      Platform::UserDatastoreAdapter.new(session)
+    else
+      raise MissingDatastoreUrlError if Rails.env.production?
 
-    #   SessionDataAdapter.new(session)
-    # end
+      SessionDataAdapter.new(session)
+    end
   end
 
   def create_user_keys
