@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 8a3b801487373c9385d9dfe9aef31233f7102dcd
+  revision: 31eb133b47f3756bb9b5a9c6bf6cb56095631e4a
   branch: submit-save-and-return
   specs:
-    metadata_presenter (2.17.45)
+    metadata_presenter (2.18)
       govuk_design_system_formbuilder (>= 2.1.5)
       json-schema (= 2.8.1)
       kramdown (>= 2.3.0)
@@ -76,7 +76,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.741.0)
+    aws-partitions (1.742.0)
     aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -85,7 +85,7 @@ GEM
     aws-sdk-kms (1.63.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.120.0)
+    aws-sdk-s3 (1.120.1)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
