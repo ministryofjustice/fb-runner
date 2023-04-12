@@ -12,7 +12,7 @@ gem 'jwt'
 # one of these lines:
 gem 'metadata_presenter',
     github: 'ministryofjustice/fb-metadata-presenter',
-    branch: 'submit-save-and-return'
+    branch: 'submitter-save-return'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 gem 'fb-jwt-auth', '0.10.0'
 # gem 'metadata_presenter', '2.17.45'
