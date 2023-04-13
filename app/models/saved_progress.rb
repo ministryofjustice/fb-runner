@@ -4,7 +4,7 @@ end
 class SavedProgress
   attr_reader :session
 
-  delegate :save_progress, :get_saved_progress, :load_data, :delete, to: :adapter
+  delegate :save_progress, :get_saved_progress, :load_data, :delete, :increment_record_counter, to: :adapter
 
   def initialize(session, adapter: nil)
     @session = session
