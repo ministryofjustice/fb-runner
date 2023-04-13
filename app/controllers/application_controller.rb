@@ -40,6 +40,10 @@ class ApplicationController < ActionController::Base
     SavedProgress.new(session).get_saved_progress(uuid)
   end
 
+  def increment_record_counter(uuid)
+    SavedProgress.new(session).increment_record_counter(uuid)
+  end
+
   def user_data_params
     UserDataParams.new(@page_answers).answers
   end

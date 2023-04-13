@@ -35,6 +35,10 @@ module Platform
       request(:post, save_form_url, body)
     end
 
+    def increment_record_counter(uuid)
+      request(:get, save_form_increment_url(uuid), {}).body
+    end
+
     def load_data
       response = request(:get, url, {}).body['payload']
 
@@ -57,6 +61,10 @@ module Platform
 
     def save_form_get_url(subject)
       "/service/#{service_slug}/saved/#{subject}"
+    end
+
+    def save_form_increment_url(subject)
+      "/service/#{service_slug}/saved/#{subject}/increment"
     end
 
     def save_form_url
