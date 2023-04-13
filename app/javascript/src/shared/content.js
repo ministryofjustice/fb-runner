@@ -48,7 +48,9 @@ function supportGovUKTableCSS(html) {
  * ---------------------------------------------------------------------------
  *
  * 1. If we're passing HTML then we expect
- *       <p>$cta something like this $cta </p>
+ *       <p>$cta something like this $cta </p> or
+ *       <p><br>$cta something like this $cta <br></p> or
+ *
  *
  *    and want to turn it into
  *       <div class=\"call-to-action\"><p>something like this</p></div>
@@ -74,10 +76,25 @@ function supportGovUKTableCSS(html) {
  *
  **/
 function supportGovSpeakCtaMarkup(content) {
-  // 1.
-  content = content.replace(/<p>\$cta\n?(.*)?\n?\$cta<\/p>/mig, "<div class=\"call-to-action\"><p>$1</p></div>");
-  // 2.
-  content = content.replace(/\$cta It looks like this. \$cta/, "$cta\nIt looks like this.\n$cta");
+  // 1.   \$cta             - match fixed string $cta
+  //      (?:<br\s?\/>)?    - optionally match <br> | <br/> | <br /> without capturing group
+  //      \n?               - optional newline
+  //      (.+?(?=\$cta))?   - optional capture all characters until the next fixed $cta string (this allows us to match multiple $cta blocks)
+  //      \n?               - optional newline
+  //      \$cta             - match fixed $cta string
+  //      flags
+  //      (i) case-insensitive,
+  //      (g) global - allows multiple matches,
+  //      (s) single line - allows . to include newline characters.
+  content = content.replace(/<p>\$cta(?:<br\s?\/?>)?\n?(.+?(?=\$cta))?\n?\$cta<\/p>/igs, "<div class=\"call-to-action\"><p>$1</p></div>");
+
+  // 2.   \$cta                    - match fixed string $cta
+  //      (?:\s)?                  - optional space (non-capturing)
+  //      (.+?(?=[\n\r]?\$cta))    - capture everything upto the next fixed $cta string  [\n\r]? allows the $cta to optionally be on a newline, without capturing the newline)
+  //      (?:\s)?                  - optional space (non-capturing)
+  //      \$cta                    - match fixed string $cta
+  content = content.replace(/\$cta(?:\s)?(.+?(?=[\n\r]?\$cta))(?:\s)?\$cta/migs, "\$cta\n$1\n\$cta");
+
   return content;
 }
 
