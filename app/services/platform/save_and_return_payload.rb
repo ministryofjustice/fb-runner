@@ -17,8 +17,12 @@ module Platform
         meta:,
         service: service_info,
         actions:,
+<<<<<<< HEAD
         pages:,
         attachments: []
+=======
+        pages:
+>>>>>>> 1ec2d74 (Save and Return Payload)
       }
     end
 
@@ -76,6 +80,25 @@ module Platform
 
     def email
       @email ||= user_data[:email]
+    end
+
+    def pages
+      @pages ||= [
+        {
+          heading: '',
+          answers: [
+            {
+              field_id: 'save_and_return',
+              field_name: 'Save and Return email',
+              answer: email
+            }
+          ]
+        }
+      ]
+    end
+
+    def email
+      @email ||= user_data['email']
     end
 
     def pages
