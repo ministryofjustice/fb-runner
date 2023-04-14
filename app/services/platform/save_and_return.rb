@@ -6,7 +6,7 @@ module Platform
     include ActiveModel::Model
     attr_accessor :service, :user_data, :session
 
-    REQUIRED_ENV_VARS = %w[SUBMITTER_URL].freeze
+    REQUIRED_ENV_VARS = %w[SAVE_AND_RETURN_EMAIL SUBMITTER_URL].freeze
 
     validate do
       if REQUIRED_ENV_VARS.any? { |env_var| ENV[env_var].blank? }
