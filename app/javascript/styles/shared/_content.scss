@@ -7,8 +7,12 @@
   padding: 2em
 }
 
-.call-to-action > p {
-  margin: 0;
+.call-to-action > p:first-child {
+  margin-top: 0;
+}
+
+.call-to-action > p:last-child {
+  margin-bottom: 0;
 }
 
 // Apply GOVUk link styles to all links in editable content areas
