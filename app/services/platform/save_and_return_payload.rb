@@ -13,7 +13,17 @@ module Platform
     end
 
     def to_h
-      { service: service_info }
+      {
+        meta:,
+        service: service_info,
+        actions:,
+        pages:,
+        attachments: []
+      }
+    end
+
+    def meta
+      { submission_at: Time.zone.now.iso8601 }
     end
 
     def service_info
@@ -26,10 +36,6 @@ module Platform
 
     def actions
       [email_action].compact
-    end
-
-    def email
-      @email ||= user_data['email']
     end
 
     private
@@ -65,7 +71,26 @@ module Platform
     end
 
     def record_uuid
-      @record_uuid ||= user_data['id']
+      @record_uuid ||= user_data[:id]
+    end
+
+    def email
+      @email ||= user_data[:email]
+    end
+
+    def pages
+      @pages ||= [
+        {
+          heading: '',
+          answers: [
+            {
+              field_id: 'save_and_return',
+              field_name: 'Save and Return email',
+              answer: email
+            }
+          ]
+        }
+      ]
     end
   end
 end

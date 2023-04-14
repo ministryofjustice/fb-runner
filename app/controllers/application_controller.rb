@@ -93,10 +93,10 @@ class ApplicationController < ActionController::Base
     delete_session
   end
 
-  def create_save_and_return_submission
+  def create_save_and_return_submission(user_data)
     Platform::SaveAndReturn.new(
       service:,
-      user_data: save_form_progress,
+      user_data:,
       session:
     ).save
   end
