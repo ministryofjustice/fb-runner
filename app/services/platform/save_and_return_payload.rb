@@ -92,24 +92,5 @@ module Platform
         }
       ]
     end
-
-    def email
-      @email ||= user_data['email']
-    end
-
-    def pages
-      @pages ||= [
-        {
-          heading: '',
-          answers: [
-            {
-              field_id: 'save_and_return',
-              field_name: 'Save and Return email',
-              answer: email
-            }
-          ]
-        }
-      ]
-    end
   end
 end
