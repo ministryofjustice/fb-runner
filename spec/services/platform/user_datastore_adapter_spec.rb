@@ -224,12 +224,12 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
   describe '#get_saved_progress' do
     let(:uuid) { SecureRandom.uuid }
-    let(:expected_response_body) do 
-      JSON.generate({ 
+    let(:expected_response_body) do
+      JSON.generate({
         id: uuid,
         user_id: '1234',
         user_token: 'token'
-      }) 
+      })
     end
 
     let(:expected_url) do
@@ -248,25 +248,25 @@ RSpec.describe Platform::UserDatastoreAdapter do
   end
 
   describe '#increment_record_counter' do
-  let(:uuid) { SecureRandom.uuid }
-  let(:expected_response_body) do 
-    JSON.generate({ 
-      id: uuid,
-    }) 
-  end
+    let(:uuid) { SecureRandom.uuid }
+    let(:expected_response_body) do
+      JSON.generate({
+        id: uuid
+      })
+    end
 
-  let(:expected_url) do
-    URI.join(root_url, "/service/court-service/saved/#{uuid}/increment")
-  end
+    let(:expected_url) do
+      URI.join(root_url, "/service/court-service/saved/#{uuid}/increment")
+    end
 
-  before do
-    stub_request(:get, expected_url)
-      .with(body: {}, headers: expected_headers)
-      .to_return(status: 200, body: expected_response_body, headers: {})
-  end
+    before do
+      stub_request(:get, expected_url)
+        .with(body: {}, headers: expected_headers)
+        .to_return(status: 200, body: expected_response_body, headers: {})
+    end
 
-  it 'gets the saved form by uuid' do
-    expect(adapter.increment_record_counter(uuid)).to eq(JSON.parse(expected_response_body))
+    it 'gets the saved form by uuid' do
+      expect(adapter.increment_record_counter(uuid)).to eq(JSON.parse(expected_response_body))
+    end
   end
-end
 end

@@ -7,7 +7,7 @@ module ReferenceNumberHelper
 
   def generate_reference_number
     s = StringIO.new
-    (0..9).each do |i|
+    10.times do |i|
       s << if i % 4 == 2
              RANDOM_SOURCE_SET_2[SecureRandom.rand(RANDOM_SOURCE_SET_2.length)]
            else
