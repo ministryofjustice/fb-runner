@@ -17,12 +17,8 @@ module Platform
         meta:,
         service: service_info,
         actions:,
-<<<<<<< HEAD
         pages:,
         attachments: []
-=======
-        pages:
->>>>>>> 1ec2d74 (Save and Return Payload)
       }
     end
 

@@ -31,12 +31,6 @@ module Platform
 
     def save_progress
       body = session[:saved_form].to_json
-    end
-
-    def save_progress
-      body = {
-        payload: data_encryption.encrypt(session[:saved_form].to_json)
-      }
 
       request(:post, save_form_url, body)
     end
