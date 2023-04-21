@@ -243,7 +243,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     end
 
     it 'gets the saved form by uuid' do
-      expect(adapter.get_saved_progress(uuid)).to eq(JSON.parse(expected_response_body))
+      expect(adapter.get_saved_progress(uuid).body).to eq(JSON.parse(expected_response_body))
     end
   end
 
