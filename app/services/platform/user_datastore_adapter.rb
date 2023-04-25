@@ -32,7 +32,7 @@ module Platform
       result.body['user_id'] = saved_form_data_encryption.decrypt(result.body['user_id'])
       result.body['user_token'] = saved_form_data_encryption.decrypt(result.body['user_token'])
 
-      return result
+      result
     end
 
     def save_progress

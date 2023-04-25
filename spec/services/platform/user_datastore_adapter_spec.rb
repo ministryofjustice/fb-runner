@@ -49,7 +49,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
   let(:saved_forms_encryption_key) { 'qwertyqwertyqwertyqwertyqwertyqw' }
   let(:data_encryption) { DataEncryption.new(key: session[:user_token]) }
-  let(:saved_form_data_encryption) { DataEncryption.new(key: saved_forms_encryption_key)}
+  let(:saved_form_data_encryption) { DataEncryption.new(key: saved_forms_encryption_key) }
 
   before do
     allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)

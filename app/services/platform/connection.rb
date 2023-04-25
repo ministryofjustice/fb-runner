@@ -30,7 +30,7 @@ module Platform
     end
 
     def saved_form_data_encryption
-      @saved_form_encryption ||= DataEncryption.new(key: saved_form_encryption_key)
+      @saved_form_data_encryption ||= DataEncryption.new(key: saved_form_encryption_key)
     end
 
     def service_access_token
