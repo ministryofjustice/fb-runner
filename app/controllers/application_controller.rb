@@ -173,6 +173,7 @@ class ApplicationController < ActionController::Base
 
   def allowed_page?
     request.path == root_path ||
+      request.path.include?('return') ||
       allowed_pages.include?(strip_url(request.path))
   end
   helper_method :allowed_page?

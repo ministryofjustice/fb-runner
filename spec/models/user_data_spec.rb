@@ -34,6 +34,9 @@ RSpec.describe UserData do
 
         allow(ENV).to receive(:[]).with('SERVICE_SLUG')
           .and_return('court-or-tribunal')
+
+        allow(ENV).to receive(:[]).with('SAVED_FORMS_KEY')
+        .and_return('cqwertyqwertyqwertyqweertyqwerty')
       end
 
       it 'returns the datastore adapter' do

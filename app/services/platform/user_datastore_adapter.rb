@@ -26,13 +26,23 @@ module Platform
     end
 
     def get_saved_progress(uuid)
-      request(:get, save_form_get_url(uuid), {})
+      result = request(:get, save_form_get_url(uuid), {})
+
+      result.body['email'] = saved_form_data_encryption.decrypt(result.body['email'])
+      result.body['user_id'] = saved_form_data_encryption.decrypt(result.body['user_id'])
+      result.body['user_token'] = saved_form_data_encryption.decrypt(result.body['user_token'])
+
+      return result
     end
 
     def save_progress
-      body = session[:saved_form].to_json
+      saved_form = session[:saved_form]
 
-      request(:post, save_form_url, body)
+      saved_form[:user_id] = saved_form_data_encryption.encrypt(saved_form[:user_id])
+      saved_form[:user_token] = saved_form_data_encryption.encrypt(saved_form[:user_token])
+      saved_form[:email] = saved_form_data_encryption.encrypt(saved_form[:email])
+
+      request(:post, save_form_url, saved_form.to_json)
     end
 
     def increment_record_counter(uuid)
@@ -73,6 +83,10 @@ module Platform
 
     def encryption_key
       session[:user_token]
+    end
+
+    def saved_form_encryption_key
+      ENV['SAVED_FORMS_KEY']
     end
 
     def subscription

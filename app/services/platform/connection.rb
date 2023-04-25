@@ -29,6 +29,10 @@ module Platform
       @data_encryption ||= DataEncryption.new(key: encryption_key)
     end
 
+    def saved_form_data_encryption
+      @saved_form_encryption ||= DataEncryption.new(key: saved_form_encryption_key)
+    end
+
     def service_access_token
       @service_access_token ||= Fb::Jwt::Auth::ServiceAccessToken.new(
         subject:

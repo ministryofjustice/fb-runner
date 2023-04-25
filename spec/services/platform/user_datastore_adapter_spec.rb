@@ -36,18 +36,27 @@ RSpec.describe Platform::UserDatastoreAdapter do
       user_id: '60abfdea862c0c6d7aa737aec6e805fa',
       user_token: '474c39bf61287d4ec0aa1276f089d2e3',
       saved_form: {
-        field: 'value'
+        field: 'value',
+        email: 'email@email.com',
+        user_id: 'userid',
+        user_token: 'some_token'
       }
     }
   end
   let(:empty_payload) do
     JSON.generate({ payload: data_encryption.encrypt('{}') })
   end
+
+  let(:saved_forms_encryption_key) { 'qwertyqwertyqwertyqwertyqwertyqw' }
   let(:data_encryption) { DataEncryption.new(key: session[:user_token]) }
+  let(:saved_form_data_encryption) { DataEncryption.new(key: saved_forms_encryption_key)}
 
   before do
     allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)
       .and_return(service_access_token)
+
+    allow(ENV).to receive(:[])
+    allow(ENV).to receive(:[]).with('SAVED_FORMS_KEY').and_return(saved_forms_encryption_key)
   end
 
   describe '#save' do
@@ -206,8 +215,12 @@ RSpec.describe Platform::UserDatastoreAdapter do
       { question_one: 'Be careful not to choke on your aspirations.' }
     end
     let(:expected_body) do
+      cloned_session = session[:saved_form].clone
+      cloned_session[:email] = saved_form_data_encryption.encrypt(cloned_session[:email])
+      cloned_session[:user_token] = saved_form_data_encryption.encrypt(cloned_session[:user_token])
+      cloned_session[:user_id] = saved_form_data_encryption.encrypt(cloned_session[:user_id])
       JSON.generate(
-        session[:saved_form]
+        cloned_session
       )
     end
 
@@ -224,11 +237,20 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
   describe '#get_saved_progress' do
     let(:uuid) { SecureRandom.uuid }
+    let(:encrypted_response_body) do
+      JSON.generate({
+        id: uuid,
+        user_id: saved_form_data_encryption.encrypt('1234'),
+        user_token: saved_form_data_encryption.encrypt('token'),
+        email: saved_form_data_encryption.encrypt('email@email.com')
+      })
+    end
     let(:expected_response_body) do
       JSON.generate({
         id: uuid,
         user_id: '1234',
-        user_token: 'token'
+        user_token: 'token',
+        email: 'email@email.com'
       })
     end
 
@@ -239,7 +261,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     before do
       stub_request(:get, expected_url)
         .with(body: {}, headers: expected_headers)
-        .to_return(status: 200, body: expected_response_body, headers: {})
+        .to_return(status: 200, body: encrypted_response_body, headers: {})
     end
 
     it 'gets the saved form by uuid' do
