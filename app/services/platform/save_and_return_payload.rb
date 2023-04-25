@@ -71,11 +71,11 @@ module Platform
     end
 
     def record_uuid
-      @record_uuid ||= user_data[:id]
+      @record_uuid ||= user_data['id']
     end
 
     def email
-      @email ||= user_data[:email]
+      @email ||= user_data['email']
     end
 
     def pages
