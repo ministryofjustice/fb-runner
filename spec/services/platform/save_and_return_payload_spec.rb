@@ -9,8 +9,8 @@ RSpec.describe Platform::SaveAndReturnPayload do
   end
   let(:user_data) do
     {
-      'id' => 'some-id',
-      'email' => 'middle.earth.entertainment@magazine.co.uk'
+      id: 'some-id',
+      email: 'middle.earth.entertainment@magazine.co.uk'
     }
   end
   let(:email_to) do
