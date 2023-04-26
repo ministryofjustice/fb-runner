@@ -39,7 +39,8 @@ RSpec.describe Platform::UserDatastoreAdapter do
         'field' => 'value',
         'email' => 'email@email.com',
         'user_id' => 'userid',
-        'user_token' => 'some_token'
+        'user_token' => 'some_token',
+        'secret_answer' => 'a cool secret'
       }
     }
   end
@@ -219,6 +220,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       cloned_session['email'] = saved_form_data_encryption.encrypt(cloned_session['email'])
       cloned_session['user_token'] = saved_form_data_encryption.encrypt(cloned_session['user_token'])
       cloned_session['user_id'] = saved_form_data_encryption.encrypt(cloned_session['user_id'])
+      cloned_session['secret_answer'] = saved_form_data_encryption.encrypt(cloned_session['secret_answer'])
       JSON.generate(
         cloned_session
       )
@@ -242,7 +244,8 @@ RSpec.describe Platform::UserDatastoreAdapter do
         id: uuid,
         user_id: saved_form_data_encryption.encrypt('1234'),
         user_token: saved_form_data_encryption.encrypt('token'),
-        email: saved_form_data_encryption.encrypt('email@email.com')
+        email: saved_form_data_encryption.encrypt('email@email.com'),
+        secret_answer: saved_form_data_encryption.encrypt('a cool secret')
       })
     end
     let(:expected_response_body) do
@@ -250,7 +253,8 @@ RSpec.describe Platform::UserDatastoreAdapter do
         id: uuid,
         user_id: '1234',
         user_token: 'token',
-        email: 'email@email.com'
+        email: 'email@email.com',
+        secret_answer: 'a cool secret'
       })
     end
 

@@ -31,6 +31,7 @@ module Platform
       result.body['email'] = saved_form_data_encryption.decrypt(result.body['email'])
       result.body['user_id'] = saved_form_data_encryption.decrypt(result.body['user_id'])
       result.body['user_token'] = saved_form_data_encryption.decrypt(result.body['user_token'])
+      result.body['secret_answer'] = saved_form_data_encryption.decrypt(result.body['secret_answer'])
 
       result
     end
@@ -41,6 +42,7 @@ module Platform
       saved_form['user_id'] = saved_form_data_encryption.encrypt(saved_form['user_id'])
       saved_form['user_token'] = saved_form_data_encryption.encrypt(saved_form['user_token'])
       saved_form['email'] = saved_form_data_encryption.encrypt(saved_form['email'])
+      saved_form['secret_answer'] = saved_form_data_encryption.encrypt(saved_form['secret_answer'])
 
       request(:post, save_form_url, saved_form.to_json)
     end
