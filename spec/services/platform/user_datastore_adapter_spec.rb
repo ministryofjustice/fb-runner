@@ -275,24 +275,19 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
   describe '#increment_record_counter' do
     let(:uuid) { SecureRandom.uuid }
-    let(:expected_response_body) do
-      JSON.generate({
-        id: uuid
-      })
-    end
 
     let(:expected_url) do
       URI.join(root_url, "/service/court-service/saved/#{uuid}/increment")
     end
 
     before do
-      stub_request(:get, expected_url)
+      stub_request(:post, expected_url)
         .with(body: {}, headers: expected_headers)
-        .to_return(status: 200, body: expected_response_body, headers: {})
+        .to_return(status: 200, body: {}.to_json, headers: {})
     end
 
     it 'gets the saved form by uuid' do
-      expect(adapter.increment_record_counter(uuid)).to eq(JSON.parse(expected_response_body))
+      expect(adapter.increment_record_counter(uuid).status).to eq(200)
     end
   end
 end

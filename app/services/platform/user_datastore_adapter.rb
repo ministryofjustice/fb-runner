@@ -48,7 +48,7 @@ module Platform
     end
 
     def increment_record_counter(uuid)
-      request(:get, save_form_increment_url(uuid), {}).body
+      request(:post, save_form_increment_url(uuid), {})
     end
 
     def load_data
