@@ -38,9 +38,9 @@ module Platform
     def save_progress
       saved_form = session[:saved_form]
 
-      saved_form[:user_id] = saved_form_data_encryption.encrypt(saved_form[:user_id])
-      saved_form[:user_token] = saved_form_data_encryption.encrypt(saved_form[:user_token])
-      saved_form[:email] = saved_form_data_encryption.encrypt(saved_form[:email])
+      saved_form['user_id'] = saved_form_data_encryption.encrypt(saved_form['user_id'])
+      saved_form['user_token'] = saved_form_data_encryption.encrypt(saved_form['user_token'])
+      saved_form['email'] = saved_form_data_encryption.encrypt(saved_form['email'])
 
       request(:post, save_form_url, saved_form.to_json)
     end

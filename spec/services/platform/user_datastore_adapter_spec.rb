@@ -36,10 +36,10 @@ RSpec.describe Platform::UserDatastoreAdapter do
       user_id: '60abfdea862c0c6d7aa737aec6e805fa',
       user_token: '474c39bf61287d4ec0aa1276f089d2e3',
       saved_form: {
-        field: 'value',
-        email: 'email@email.com',
-        user_id: 'userid',
-        user_token: 'some_token'
+        'field' => 'value',
+        'email' => 'email@email.com',
+        'user_id' => 'userid',
+        'user_token' => 'some_token'
       }
     }
   end
@@ -216,9 +216,9 @@ RSpec.describe Platform::UserDatastoreAdapter do
     end
     let(:expected_body) do
       cloned_session = session[:saved_form].clone
-      cloned_session[:email] = saved_form_data_encryption.encrypt(cloned_session[:email])
-      cloned_session[:user_token] = saved_form_data_encryption.encrypt(cloned_session[:user_token])
-      cloned_session[:user_id] = saved_form_data_encryption.encrypt(cloned_session[:user_id])
+      cloned_session['email'] = saved_form_data_encryption.encrypt(cloned_session['email'])
+      cloned_session['user_token'] = saved_form_data_encryption.encrypt(cloned_session['user_token'])
+      cloned_session['user_id'] = saved_form_data_encryption.encrypt(cloned_session['user_id'])
       JSON.generate(
         cloned_session
       )
