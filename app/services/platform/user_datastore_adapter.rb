@@ -37,7 +37,7 @@ module Platform
     end
 
     def save_progress
-      saved_form = session[:saved_form]
+      saved_form = session[:saved_form].clone
 
       saved_form['user_id'] = saved_form_data_encryption.encrypt(saved_form['user_id'])
       saved_form['user_token'] = saved_form_data_encryption.encrypt(saved_form['user_token'])
