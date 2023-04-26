@@ -56,7 +56,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       .and_return(service_access_token)
 
     allow(ENV).to receive(:[])
-    allow(ENV).to receive(:[]).with('SAVED_FORMS_KEY').and_return(saved_forms_encryption_key)
+    allow(ENV).to receive(:[]).with('SUBMISSION_ENCRYPTION_KEY').and_return(saved_forms_encryption_key)
   end
 
   describe '#save' do

@@ -86,7 +86,7 @@ module Platform
     end
 
     def saved_form_encryption_key
-      ENV['SAVED_FORMS_KEY']
+      ENV['SUBMISSION_ENCRYPTION_KEY']
     end
 
     def subscription
