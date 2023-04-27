@@ -26,7 +26,18 @@ module Platform
     end
 
     def get_saved_progress(uuid)
-      result = request(:get, save_form_get_url(uuid), {})
+      begin
+        result = request(:get, save_form_get_url(uuid), {})
+      rescue Platform::ClientError => e
+        if e.response[:status] == 400
+          return OpenStruct.new(status: 400)
+        end
+        if e.response[:status] == 422
+          return OpenStruct.new(status: 422)
+        end
+      rescue Platform::ResourceNotFound
+        return OpenStruct.new(status: 404)
+      end
 
       result.body['email'] = saved_form_data_encryption.decrypt(result.body['email'])
       result.body['user_id'] = saved_form_data_encryption.decrypt(result.body['user_id'])

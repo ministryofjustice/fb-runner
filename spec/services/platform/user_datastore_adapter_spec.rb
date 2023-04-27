@@ -271,6 +271,44 @@ RSpec.describe Platform::UserDatastoreAdapter do
     it 'gets the saved form by uuid' do
       expect(adapter.get_saved_progress(uuid).body).to eq(JSON.parse(expected_response_body))
     end
+
+    context 'error codes' do
+      context '400 (too many attempts)' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 400, body: {}.to_json, headers: {})
+        end
+
+        it 'returns the response with code and empty body' do
+          expect(adapter.get_saved_progress(uuid).status).to eq(400)
+        end
+      end
+
+      context '422 (already used)' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 422, body: {}.to_json, headers: {})
+        end
+
+        it 'returns the response with code and empty body' do
+          expect(adapter.get_saved_progress(uuid).status).to eq(422)
+        end
+      end
+
+      context '404 (record deleted)' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 404, body: {}.to_json, headers: {})
+        end
+
+        it 'returns the response with code and empty body' do
+          expect(adapter.get_saved_progress(uuid).status).to eq(404)
+        end
+      end
+    end
   end
 
   describe '#increment_record_counter' do
