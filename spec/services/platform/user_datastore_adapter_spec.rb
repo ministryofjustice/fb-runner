@@ -327,6 +327,32 @@ RSpec.describe Platform::UserDatastoreAdapter do
     it 'increments the record counter' do
       expect(adapter.increment_record_counter(uuid).status).to eq(200)
     end
+
+    context 'record already invalidated' do
+      context 'because it has been deleted' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 404, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.increment_record_counter(uuid).status).to eq(404)
+        end
+      end
+
+      context 'because it has been used or attempted too many times' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 422, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.increment_record_counter(uuid).status).to eq(422)
+        end
+      end
+    end
   end
 
   describe '#invalidate' do
@@ -344,6 +370,32 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
     it 'invalidates the record' do
       expect(adapter.invalidate(uuid).status).to eq(202)
+    end
+
+    context 'record already invalidated' do
+      context 'because it has been deleted' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 404, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.invalidate(uuid).status).to eq(404)
+        end
+      end
+
+      context 'because it has been used or attempted too many times' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 422, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.invalidate(uuid).status).to eq(422)
+        end
+      end
     end
   end
 end
