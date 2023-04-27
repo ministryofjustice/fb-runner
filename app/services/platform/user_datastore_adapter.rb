@@ -62,6 +62,10 @@ module Platform
       request(:post, save_form_increment_url(uuid), {})
     end
 
+    def invalidate(uuid)
+      request(:post, save_form_invalidate_url(uuid), {})
+    end
+
     def load_data
       response = request(:get, url, {}).body['payload']
 
@@ -88,6 +92,10 @@ module Platform
 
     def save_form_increment_url(subject)
       "/service/#{service_slug}/saved/#{subject}/increment"
+    end
+
+    def save_form_invalidate_url(subject)
+      "/service/#{service_slug}/saved/#{subject}/invalidate"
     end
 
     def save_form_url

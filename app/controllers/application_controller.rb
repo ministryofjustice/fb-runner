@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
     SavedProgress.new(session).increment_record_counter(uuid)
   end
 
+  def invalidate(uuid)
+    SavedProgress.new(session).invalidate(uuid)
+  end
+
   def user_data_params
     UserDataParams.new(@page_answers).answers
   end

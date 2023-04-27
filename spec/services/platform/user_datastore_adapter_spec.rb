@@ -324,8 +324,26 @@ RSpec.describe Platform::UserDatastoreAdapter do
         .to_return(status: 200, body: {}.to_json, headers: {})
     end
 
-    it 'gets the saved form by uuid' do
+    it 'increments the record counter' do
       expect(adapter.increment_record_counter(uuid).status).to eq(200)
     end
   end
+
+  describe '#invalidate' do
+  let(:uuid) { SecureRandom.uuid }
+
+  let(:expected_url) do
+    URI.join(root_url, "/service/court-service/saved/#{uuid}/invalidate")
+  end
+
+  before do
+    stub_request(:post, expected_url)
+      .with(body: {}, headers: expected_headers)
+      .to_return(status: 202, body: {}.to_json, headers: {})
+  end
+
+  it 'invalidates the record' do
+    expect(adapter.invalidate(uuid).status).to eq(202)
+  end
+end
 end
