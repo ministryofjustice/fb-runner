@@ -330,20 +330,20 @@ RSpec.describe Platform::UserDatastoreAdapter do
   end
 
   describe '#invalidate' do
-  let(:uuid) { SecureRandom.uuid }
+    let(:uuid) { SecureRandom.uuid }
 
-  let(:expected_url) do
-    URI.join(root_url, "/service/court-service/saved/#{uuid}/invalidate")
-  end
+    let(:expected_url) do
+      URI.join(root_url, "/service/court-service/saved/#{uuid}/invalidate")
+    end
 
-  before do
-    stub_request(:post, expected_url)
-      .with(body: {}, headers: expected_headers)
-      .to_return(status: 202, body: {}.to_json, headers: {})
-  end
+    before do
+      stub_request(:post, expected_url)
+        .with(body: {}, headers: expected_headers)
+        .to_return(status: 202, body: {}.to_json, headers: {})
+    end
 
-  it 'invalidates the record' do
-    expect(adapter.invalidate(uuid).status).to eq(202)
+    it 'invalidates the record' do
+      expect(adapter.invalidate(uuid).status).to eq(202)
+    end
   end
-end
 end
