@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
     SavedProgress.new(session).increment_record_counter(uuid)
   end
 
-  def invalidate(uuid)
+  def invalidate_record(uuid)
     SavedProgress.new(session).invalidate(uuid)
   end
 

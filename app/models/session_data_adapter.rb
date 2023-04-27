@@ -52,4 +52,8 @@ class SessionDataAdapter
   def increment_record_counter(_uuid)
     OpenStruct.new(status: 200)
   end
+
+  def invalidate(_uuid)
+    OpenStruct.new(status: 202)
+  end
 end
