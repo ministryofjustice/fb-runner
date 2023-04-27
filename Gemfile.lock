@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: fd523b5e4503e4c9f685d1f7bae9c6a19a344849
+  revision: aad0addc0e768a5efc304f8bbc4c15f53748b779
   branch: save-and-return-resume
   specs:
     metadata_presenter (2.18.5)
@@ -76,7 +76,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.754.0)
+    aws-partitions (1.755.0)
     aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -150,13 +150,13 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    govuk_design_system_formbuilder (3.3.0)
+    govuk_design_system_formbuilder (4.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
-      html-attributes-utils (~> 0.9, >= 0.9.2)
+      html-attributes-utils (~> 1)
     hashdiff (1.0.1)
-    html-attributes-utils (0.9.2)
+    html-attributes-utils (1.0.0)
       activesupport (>= 6.1.4.4)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
