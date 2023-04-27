@@ -67,7 +67,8 @@ module Platform
     end
 
     def magic_link
-      @magic_link ||= "https://#{service.service_slug}.form.justice.gov.uk/#{record_uuid}"
+      env = ENV['PLATFORM_ENV'] == 'test' ? 'dev.test.' : ''
+      @magic_link ||= "https://#{service.service_slug}.#{env}form.justice.gov.uk/return/#{record_uuid}"
     end
 
     def record_uuid
