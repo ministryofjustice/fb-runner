@@ -67,8 +67,7 @@ module Platform
     end
 
     def magic_link
-      env = ENV['PLATFORM_ENV'] == 'test' ? 'dev.test.' : ''
-      @magic_link ||= "https://#{service.service_slug}.#{env}form.justice.gov.uk/return/#{record_uuid}"
+      @magic_link ||= ENV['PLATFORM_ENV'] == 'live' ? editor_live_url : editor_test_url
     end
 
     def record_uuid
@@ -92,6 +91,30 @@ module Platform
           ]
         }
       ]
+    end
+
+    def editor_test_url
+      ENV['DEPLOYMENT_ENV'] == 'production' ? editor_test_production_url : editor_test_dev_url
+    end
+
+    def editor_live_url
+      ENV['DEPLOYMENT_ENV'] == 'production' ? editor_live_production_url : editor_live_dev_url
+    end
+
+    def editor_live_production_url
+      "https://#{service.service_slug}.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+    end
+
+    def editor_live_dev_url
+      "https://#{service.service_slug}.dev.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+    end
+
+    def editor_test_production_url
+      "https://#{service.service_slug}.test.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+    end
+
+    def editor_test_dev_url
+      "https://#{service.service_slug}.dev.test.form.service.justice.gov.uk/return/#{record_uuid}".freeze
     end
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
     "Resuming your application to #{service.service_name}"
   end
   let(:email_body) do
-    'save and return email body'
+    'Magic link: {{save_and_return_link}}'
   end
   let(:pages) do
     [
@@ -54,10 +54,13 @@ RSpec.describe Platform::SaveAndReturnPayload do
       }
     ]
   end
+  let(:expected_email_body) { 'Magic link: https://version-fixture.dev.test.form.service.justice.gov.uk/return/some-id' }
 
   before do
     allow(ENV).to receive(:[])
     allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL').and_return(email_body)
+    allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
+    allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
   end
 
   describe '#to_h' do
@@ -75,7 +78,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
           to: email_to,
           from: expected_email_from,
           subject: email_subject,
-          email_body:,
+          email_body: expected_email_body,
           include_pdf: false,
           include_attachments: false
         }
@@ -117,7 +120,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
             to: email_to,
             from: expected_email_from,
             subject: email_subject,
-            email_body:,
+            email_body: expected_email_body,
             include_pdf: false,
             include_attachments: false
           }
@@ -126,10 +129,53 @@ RSpec.describe Platform::SaveAndReturnPayload do
 
       before do
         allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL').and_return(email_body)
+        allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
+        allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
       end
 
-      it 'should return email action' do
-        expect(subject.actions).to eq(expected_actions)
+      context 'when deployment environment is test-dev' do
+        it 'should return email action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+
+      context 'when deployment environment is test-production' do
+        let(:expected_email_body) { 'Magic link: https://version-fixture.test.form.service.justice.gov.uk/return/some-id' }
+
+        before do
+          allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
+          allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('production')
+        end
+
+        it 'should return email action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+
+      context 'when deployment environment is live-dev' do
+        let(:expected_email_body) { 'Magic link: https://version-fixture.dev.form.service.justice.gov.uk/return/some-id' }
+
+        before do
+          allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('live')
+          allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
+        end
+
+        it 'should return email action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+
+      context 'when deployment environment is live-production' do
+        let(:expected_email_body) { 'Magic link: https://version-fixture.form.service.justice.gov.uk/return/some-id' }
+
+        before do
+          allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('live')
+          allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('production')
+        end
+
+        it 'should return email action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
       end
     end
 
