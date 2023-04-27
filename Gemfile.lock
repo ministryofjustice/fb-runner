@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: ebb86e48de045ab569203108ad63d72cb0274af9
+  revision: f545a4ce5100678cf9115d7baf91e50d5e32588b
   branch: save-and-return-resume
   specs:
-    metadata_presenter (2.18.5)
+    metadata_presenter (2.18.6)
       govuk_design_system_formbuilder (>= 2.1.5)
       json-schema (= 2.8.1)
       kramdown (>= 2.3.0)

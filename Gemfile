@@ -15,7 +15,7 @@ gem 'metadata_presenter',
     branch: 'save-and-return-resume'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 gem 'fb-jwt-auth', '0.10.0'
-# gem 'metadata_presenter', '2.18.4'
+# gem 'metadata_presenter', '2.18.6'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
 gem 'rails', '6.1.7.1'
