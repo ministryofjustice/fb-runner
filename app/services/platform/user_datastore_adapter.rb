@@ -59,27 +59,23 @@ module Platform
     end
 
     def increment_record_counter(uuid)
-      begin
-        request(:post, save_form_increment_url(uuid), {})
-      rescue Platform::ClientError => e
-        if e.response[:status] == 422
-          return OpenStruct.new(status: 422)
-        end
-      rescue Platform::ResourceNotFound
-        return OpenStruct.new(status: 404)
+      request(:post, save_form_increment_url(uuid), {})
+    rescue Platform::ClientError => e
+      if e.response[:status] == 422
+        OpenStruct.new(status: 422)
       end
+    rescue Platform::ResourceNotFound
+      OpenStruct.new(status: 404)
     end
 
     def invalidate(uuid)
-      begin
-        request(:post, save_form_invalidate_url(uuid), {})
-      rescue Platform::ClientError => e
-        if e.response[:status] == 422
-          return OpenStruct.new(status: 422)
-        end
-      rescue Platform::ResourceNotFound
-        return OpenStruct.new(status: 404)
+      request(:post, save_form_invalidate_url(uuid), {})
+    rescue Platform::ClientError => e
+      if e.response[:status] == 422
+        OpenStruct.new(status: 422)
       end
+    rescue Platform::ResourceNotFound
+      OpenStruct.new(status: 404)
     end
 
     def load_data
