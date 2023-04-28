@@ -249,7 +249,7 @@ RSpec.feature 'Navigation' do
 
   def then_I_should_see_not_found_page
     expect(form.text).to include(
-      "The page you were looking for doesn't exist (404)"
+      "Page not found"
     )
   end
 
