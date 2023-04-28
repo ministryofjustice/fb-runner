@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: e7ed81f5708f292d1f5826c60e912ffe268c63ba
+  revision: 944a89a40bf5e5c0faaa2fa55154ab8484c3ee65
   branch: save-and-return-resume
   specs:
     metadata_presenter (2.18.6)
@@ -76,7 +76,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.755.0)
+    aws-partitions (1.756.0)
     aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -364,7 +364,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.7)
+    zeitwerk (2.6.8)
 
 PLATFORMS
   ruby
