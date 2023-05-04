@@ -63,7 +63,7 @@ module Platform
     end
 
     def default_subject
-      @default_subject ||= "Resuming your application to #{service.service_name}"
+      @default_subject ||= "Your saved form - '#{service.service_name}'"
     end
 
     def magic_link
