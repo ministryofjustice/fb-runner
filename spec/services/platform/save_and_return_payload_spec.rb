@@ -21,7 +21,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
   end
   let(:default_email_address) { Platform::SaveAndReturnPayload::DEFAULT_EMAIL_ADDRESS }
   let(:email_subject) do
-    "Resuming your application to #{service.service_name}"
+    "Your saved form - '#{service.service_name}'"
   end
   let(:email_body) do
     'Magic link: {{save_and_return_link}}'

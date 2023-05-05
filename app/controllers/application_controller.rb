@@ -197,4 +197,9 @@ class ApplicationController < ActionController::Base
     ENV['SAVE_AND_RETURN'].present?
   end
   helper_method :save_and_return_enabled?
+
+  def editor_preview?
+    false
+  end
+  helper_method :editor_preview?
 end
