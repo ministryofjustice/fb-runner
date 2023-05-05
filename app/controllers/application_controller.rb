@@ -192,4 +192,9 @@ class ApplicationController < ActionController::Base
   def strip_url(url)
     url.to_s.chomp('/').reverse.chomp('/').reverse
   end
+
+  def save_and_return_enabled?
+    ENV['SAVE_AND_RETURN'].present?
+  end
+  helper_method :save_and_return_enabled?
 end
