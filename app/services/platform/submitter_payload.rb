@@ -1,6 +1,9 @@
 module Platform
   class SubmitterPayload
     include Platform::Connection
+    include ActionView::Context
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::TextHelper
     attr_reader :service, :user_data, :session
 
     CSV = 'csv'.freeze
@@ -95,6 +98,20 @@ module Platform
       end
     end
 
+    def confirmation_email_answers_html
+      tag.h2('Your answers') +
+        tag.table do
+          pages.collect { |page|
+            concat(tag.tr(tag.td(page[:heading], colspan: 2))) if page[:heading].present?
+            page[:answers].collect { |answer|
+              concat(
+                tag.tr(tag.td(answer[:field_name]) + tag.td(human_value(answer[:answer])))
+              )
+            }.join.html_safe
+          }.join.html_safe
+        end
+    end
+
     private
 
     def email_action
@@ -133,7 +150,7 @@ module Platform
         to: confirmation_email_answer,
         from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
-        email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
+        email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']) + confirmation_email_answers_html,
         include_attachments: true,
         include_pdf: true
       }
@@ -230,6 +247,10 @@ module Platform
         url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
         key: ENV['SERVICE_OUTPUT_JSON_KEY']
       }
+    end
+
+    def human_value(answer)
+      answer.is_a?(Array) ? answer.join("\n\n") : answer
     end
   end
 end
