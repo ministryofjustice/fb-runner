@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 457dfd6c52c125c9763994679d662987099b071c
+  revision: 6e0efff128207bccb261d5a00306eb34b7a35f41
   branch: save-and-return-resume
   specs:
     metadata_presenter (2.18.7)
@@ -8,6 +8,7 @@ GIT
       json-schema (= 2.8.1)
       kramdown (>= 2.3.0)
       rails (>= 6.0.3.4, < 6.2.0)
+      sassc-rails (= 2.1.2)
 
 GEM
   remote: https://rubygems.org/
@@ -76,8 +77,8 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.759.0)
-    aws-sdk-core (3.171.0)
+    aws-partitions (1.760.0)
+    aws-sdk-core (3.171.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
@@ -85,7 +86,7 @@ GEM
     aws-sdk-kms (1.64.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.121.0)
+    aws-sdk-s3 (1.122.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
