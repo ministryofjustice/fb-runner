@@ -81,27 +81,27 @@ RSpec.describe SessionDataAdapter do
     describe 'get saved progress' do
       it 'returns 404 if you match with notfound' do
         expect(adapter.get_saved_progress('notfound').status).to eq(404)
-        expect(adapter.get_saved_progress('notfound').body).to eq({})        
+        expect(adapter.get_saved_progress('notfound').body).to eq({})
       end
 
       it 'returns 422 if you match with inactive' do
         expect(adapter.get_saved_progress('inactive').status).to eq(422)
-        expect(adapter.get_saved_progress('inactive').body).to eq({})        
+        expect(adapter.get_saved_progress('inactive').body).to eq({})
       end
 
       it 'returns 400 if you match with attempted' do
         expect(adapter.get_saved_progress('attempted').status).to eq(400)
-        expect(adapter.get_saved_progress('attempted').body).to eq({})        
+        expect(adapter.get_saved_progress('attempted').body).to eq({})
       end
 
       it 'returns 200 if you match, and the version id matches the runner local metadata' do
         expect(adapter.get_saved_progress('match').status).to eq(200)
-        expect(adapter.get_saved_progress('match').body['service_version']).to eq('27dc30c9-f7b8-4dec-973a-bd153f6797df')        
+        expect(adapter.get_saved_progress('match').body['service_version']).to eq('27dc30c9-f7b8-4dec-973a-bd153f6797df')
       end
 
       it 'returns 200 if you match anything else, and the version id does not match the runner local metadata' do
         expect(adapter.get_saved_progress('anything').status).to eq(200)
-        expect(adapter.get_saved_progress('anything').body['service_version']).to_not eq('27dc30c9-f7b8-4dec-973a-bd153f6797df')        
+        expect(adapter.get_saved_progress('anything').body['service_version']).to_not eq('27dc30c9-f7b8-4dec-973a-bd153f6797df')
       end
     end
 
