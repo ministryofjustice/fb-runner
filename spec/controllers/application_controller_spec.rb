@@ -99,5 +99,23 @@ RSpec.describe ApplicationController do
         expect(user_data.key?('moj_forms_reference_number')).to be_truthy
       end
     end
+
+    describe '#save_and_return_enabled?' do
+      context 'when save and return is enabled' do
+        before do
+          allow(ENV).to receive(:[]).with('SAVE_AND_RETURN').and_return('enabled')
+        end
+
+        it 'returns true' do
+          expect(controller.save_and_return_enabled?).to eq(true)
+        end
+      end
+
+      context 'when save and return is disabled' do
+        it 'returns false' do
+          expect(controller.save_and_return_enabled?).to eq(false)
+        end
+      end
+    end
   end
 end

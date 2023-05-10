@@ -35,6 +35,14 @@ file called `countries.json` which can be found in the MetadataPresenter.
   AUTOCOMPLETE_FIXTURE=countries bundle exec rails s
 ```
 
+If you would like to go through the save and return flow locally, you can pass
+in the SAVE_AND_RETURN environment variable when starting a local server.
+
+```
+  SAVE_AND_RETURN=enabled bundle exec rails s
+```
+
+
 - The application should run on `localhost:3000`
 
 ## Datastore integration

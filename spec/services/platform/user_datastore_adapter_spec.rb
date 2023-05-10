@@ -34,17 +34,30 @@ RSpec.describe Platform::UserDatastoreAdapter do
   let(:session) do
     {
       user_id: '60abfdea862c0c6d7aa737aec6e805fa',
-      user_token: '474c39bf61287d4ec0aa1276f089d2e3'
+      user_token: '474c39bf61287d4ec0aa1276f089d2e3',
+      saved_form: {
+        'field' => 'value',
+        'email' => 'email@email.com',
+        'user_id' => 'userid',
+        'user_token' => 'some_token',
+        'secret_answer' => 'a cool secret'
+      }
     }
   end
   let(:empty_payload) do
     JSON.generate({ payload: data_encryption.encrypt('{}') })
   end
+
+  let(:saved_forms_encryption_key) { 'qwertyqwertyqwertyqwertyqwertyqw' }
   let(:data_encryption) { DataEncryption.new(key: session[:user_token]) }
+  let(:saved_form_data_encryption) { DataEncryption.new(key: saved_forms_encryption_key) }
 
   before do
     allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)
       .and_return(service_access_token)
+
+    allow(ENV).to receive(:[])
+    allow(ENV).to receive(:[]).with('SUBMISSION_ENCRYPTION_KEY').and_return(saved_forms_encryption_key)
   end
 
   describe '#save' do
@@ -191,6 +204,198 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
     it 'removes the user data' do
       expect(adapter.delete('component_id').body).to eq(JSON.parse(expected_body))
+    end
+  end
+
+  describe '#save_progress' do
+    let(:expected_response_body) { JSON.generate({ id: 'i-am-a-uuid' }) }
+    let(:expected_url) do
+      URI.join(root_url, '/service/court-service/saved/')
+    end
+    let(:params) do
+      { question_one: 'Be careful not to choke on your aspirations.' }
+    end
+    let(:expected_body) do
+      cloned_session = session[:saved_form].clone
+      cloned_session['email'] = saved_form_data_encryption.encrypt(cloned_session['email'])
+      cloned_session['user_token'] = saved_form_data_encryption.encrypt(cloned_session['user_token'])
+      cloned_session['user_id'] = saved_form_data_encryption.encrypt(cloned_session['user_id'])
+      cloned_session['secret_answer'] = saved_form_data_encryption.encrypt(cloned_session['secret_answer'])
+      JSON.generate(
+        cloned_session
+      )
+    end
+
+    before do
+      stub_request(:post, expected_url)
+        .with(body: expected_body, headers: expected_headers)
+        .to_return(status: 200, body: expected_response_body, headers: {})
+    end
+
+    it 'saves the object' do
+      expect(adapter.save_progress.body).to eq(JSON.parse(expected_response_body))
+    end
+  end
+
+  describe '#get_saved_progress' do
+    let(:uuid) { SecureRandom.uuid }
+    let(:encrypted_response_body) do
+      JSON.generate({
+        id: uuid,
+        user_id: saved_form_data_encryption.encrypt('1234'),
+        user_token: saved_form_data_encryption.encrypt('token'),
+        email: saved_form_data_encryption.encrypt('email@email.com'),
+        secret_answer: saved_form_data_encryption.encrypt('a cool secret')
+      })
+    end
+    let(:expected_response_body) do
+      JSON.generate({
+        id: uuid,
+        user_id: '1234',
+        user_token: 'token',
+        email: 'email@email.com',
+        secret_answer: 'a cool secret'
+      })
+    end
+
+    let(:expected_url) do
+      URI.join(root_url, "/service/court-service/saved/#{uuid}")
+    end
+
+    before do
+      stub_request(:get, expected_url)
+        .with(body: {}, headers: expected_headers)
+        .to_return(status: 200, body: encrypted_response_body, headers: {})
+    end
+
+    it 'gets the saved form by uuid' do
+      expect(adapter.get_saved_progress(uuid).body).to eq(JSON.parse(expected_response_body))
+    end
+
+    context 'error codes' do
+      context '400 (too many attempts)' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 400, body: {}.to_json, headers: {})
+        end
+
+        it 'returns the response with code and empty body' do
+          expect(adapter.get_saved_progress(uuid).status).to eq(400)
+        end
+      end
+
+      context '422 (already used)' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 422, body: {}.to_json, headers: {})
+        end
+
+        it 'returns the response with code and empty body' do
+          expect(adapter.get_saved_progress(uuid).status).to eq(422)
+        end
+      end
+
+      context '404 (record deleted)' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 404, body: {}.to_json, headers: {})
+        end
+
+        it 'returns the response with code and empty body' do
+          expect(adapter.get_saved_progress(uuid).status).to eq(404)
+        end
+      end
+    end
+  end
+
+  describe '#increment_record_counter' do
+    let(:uuid) { SecureRandom.uuid }
+
+    let(:expected_url) do
+      URI.join(root_url, "/service/court-service/saved/#{uuid}/increment")
+    end
+
+    before do
+      stub_request(:post, expected_url)
+        .with(body: {}, headers: expected_headers)
+        .to_return(status: 200, body: {}.to_json, headers: {})
+    end
+
+    it 'increments the record counter' do
+      expect(adapter.increment_record_counter(uuid).status).to eq(200)
+    end
+
+    context 'record already invalidated' do
+      context 'because it has been deleted' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 404, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.increment_record_counter(uuid).status).to eq(404)
+        end
+      end
+
+      context 'because it has been used or attempted too many times' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 422, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.increment_record_counter(uuid).status).to eq(422)
+        end
+      end
+    end
+  end
+
+  describe '#invalidate' do
+    let(:uuid) { SecureRandom.uuid }
+
+    let(:expected_url) do
+      URI.join(root_url, "/service/court-service/saved/#{uuid}/invalidate")
+    end
+
+    before do
+      stub_request(:post, expected_url)
+        .with(body: {}, headers: expected_headers)
+        .to_return(status: 202, body: {}.to_json, headers: {})
+    end
+
+    it 'invalidates the record' do
+      expect(adapter.invalidate(uuid).status).to eq(202)
+    end
+
+    context 'record already invalidated' do
+      context 'because it has been deleted' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 404, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.invalidate(uuid).status).to eq(404)
+        end
+      end
+
+      context 'because it has been used or attempted too many times' do
+        before do
+          stub_request(:post, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_return(status: 422, body: {}.to_json, headers: {})
+        end
+
+        it 'captures the error and returns a usable status' do
+          expect(adapter.invalidate(uuid).status).to eq(422)
+        end
+      end
     end
   end
 end

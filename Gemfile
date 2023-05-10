@@ -12,10 +12,10 @@ gem 'jwt'
 # one of these lines:
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'show-timeout-warning-modal'
+#     branch: 'save-and-return-resume'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 gem 'fb-jwt-auth', '0.10.0'
-gem 'metadata_presenter', '2.18.7'
+gem 'metadata_presenter', '2.19.2'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
 gem 'rails', '6.1.7.1'
@@ -26,7 +26,7 @@ gem 'webpacker', '~> 5.4'
 
 group :development, :test do
   gem 'brakeman'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug'
   gem 'capybara'
   gem 'rails-controller-testing'
   gem 'rspec-rails'

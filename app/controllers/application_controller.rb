@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :require_basic_auth
   before_action VerifySession
 
+  skip_before_action VerifySession, :require_basic_auth, only: :get_saved_progress
+
   add_flash_types :confirmation, :expired_session
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
@@ -28,6 +30,22 @@ class ApplicationController < ActionController::Base
 
   def save_user_data
     UserData.new(session).save(user_data_params)
+  end
+
+  def save_form_progress
+    SavedProgress.new(session).save_progress
+  end
+
+  def get_saved_progress(uuid)
+    SavedProgress.new(session).get_saved_progress(uuid)
+  end
+
+  def increment_record_counter(uuid)
+    SavedProgress.new(session).increment_record_counter(uuid)
+  end
+
+  def invalidate_record(uuid)
+    SavedProgress.new(session).invalidate(uuid)
   end
 
   def user_data_params
@@ -77,6 +95,14 @@ class ApplicationController < ActionController::Base
     # rubocop: enable Rails/SaveBang
 
     delete_session
+  end
+
+  def create_save_and_return_submission(user_data)
+    Platform::SaveAndReturn.new(
+      service:,
+      user_data:,
+      session:
+    ).save
   end
 
   def editable?
@@ -143,8 +169,15 @@ class ApplicationController < ActionController::Base
   end
   helper_method :session_expiry_time
 
+  # DEPRECATED - remove once all references to in_progress? changed to allowed_page?
+  def in_progress?
+    allowed_page?
+  end
+  helper_method :in_progress?
+
   def allowed_page?
     request.path == root_path ||
+      request.path.include?('return') ||
       allowed_pages.include?(strip_url(request.path))
   end
   helper_method :allowed_page?
@@ -159,4 +192,14 @@ class ApplicationController < ActionController::Base
   def strip_url(url)
     url.to_s.chomp('/').reverse.chomp('/').reverse
   end
+
+  def save_and_return_enabled?
+    ENV['SAVE_AND_RETURN'].present?
+  end
+  helper_method :save_and_return_enabled?
+
+  def editor_preview?
+    false
+  end
+  helper_method :editor_preview?
 end
