@@ -231,7 +231,7 @@ workflows:
           requires:
             - lint
             - security
-            # - test
+            - test
           filters:
             branches:
               only:
