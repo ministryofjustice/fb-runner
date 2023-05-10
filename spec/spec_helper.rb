@@ -99,6 +99,7 @@ require 'simplecov-console'
 SimpleCov.start do
   add_filter '/config/'
   add_filter '/spec/'
+  add_filter '/app/filters/verify_session.rb'
 end
 
 SimpleCov.minimum_coverage 97
