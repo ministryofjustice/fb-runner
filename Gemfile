@@ -12,10 +12,10 @@ gem 'jwt'
 # one of these lines:
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'save-and-return-resume'
+#     branch: 'round-two-test-fixes'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 gem 'fb-jwt-auth', '0.10.0'
-gem 'metadata_presenter', '2.19.2'
+gem 'metadata_presenter', '2.19.3'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
 gem 'rails', '6.1.7.1'
