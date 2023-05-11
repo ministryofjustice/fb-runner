@@ -300,10 +300,10 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
-    sentry-rails (5.8.0)
+    sentry-rails (5.9.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.8.0)
-    sentry-ruby (5.8.0)
+      sentry-ruby (~> 5.9.0)
+    sentry-ruby (5.9.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -385,8 +385,8 @@ DEPENDENCIES
   rubocop (~> 1.35.0)
   rubocop-govuk
   sass-rails (>= 6)
-  sentry-rails (~> 5.8.0)
-  sentry-ruby (~> 5.8.0)
+  sentry-rails (~> 5.9.0)
+  sentry-ruby (~> 5.9.0)
   simplecov
   simplecov-console
   site_prism
