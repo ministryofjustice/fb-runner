@@ -17,7 +17,7 @@ RSpec.describe ConfirmationEmailHelper do
     ]
   end
 
-  describe '#table_header'
+  describe '#table_heading'
   it 'should build the h2' do
     expect(helper.table_heading).to eql '<h2>Your answers</h2>'
   end
@@ -30,22 +30,9 @@ RSpec.describe ConfirmationEmailHelper do
     end
   end
 
-  describe '#human_value' do
-    let(:arry) { %w[one two three] }
-
-    it 'should join array values with newlines' do
-      expect(helper.human_value(arry)).to eql "one\n\ntwo\n\nthree"
-    end
-
-    it 'should pass through string values' do
-      expect(helper.human_value('string')).to eql 'string'
-    end
-  end
-
   describe '#answer_cell' do
     it 'generates the table cell html with merged styles' do
-      allow(helper).to receive(:cell_styles).and_return({ color: 'red' })
-      allow(helper).to receive(:answer_styles).and_return({ font_size: '100px' })
+      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
 
       expect(helper.answer_cell('answer')).to eql '<td style="color: red; font-size: 100px;">answer</td>'
     end
@@ -53,20 +40,26 @@ RSpec.describe ConfirmationEmailHelper do
 
   describe '#question_cell' do
     it 'generates the table cell html with merged styles' do
-      allow(helper).to receive(:cell_styles).and_return({ color: 'red' })
-      allow(helper).to receive(:question_styles).and_return({ font_size: '100px' })
+      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
 
-      expect(helper.question_cell('question')).to eql '<td style="color: red; font-size: 100px;">question</td>'
+      expect(helper.question_cell('question')).to eql '<td style="color: red; width: 50%;">question</td>'
     end
   end
 
   describe '#answer_row' do
     it 'generates the table row html with merged styles' do
-      allow(helper).to receive(:cell_styles).and_return({ color: 'red' })
-      allow(helper).to receive(:answer_styles).and_return({ font_size: '100px' })
-      allow(helper).to receive(:question_styles).and_return({ width: '50%' })
+      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
+      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
 
       expect(helper.answer_row('question', 'answer')).to eql '<tr><td style="color: red; width: 50%;">question</td><td style="color: red; font-size: 100px;">answer</td></tr>'
+    end
+  end
+
+  describe '#heading_row' do
+    it 'generates the heading row html' do
+      allow(helper).to receive(:heading_styles).and_return('font-size: 20px;')
+
+      expect(helper.heading_row('Heading')).to eql '<tr><td colspan="2" style="font-size: 20px;">Heading</td></tr>'
     end
   end
 
@@ -82,33 +75,31 @@ RSpec.describe ConfirmationEmailHelper do
     let(:a4) { '<td style="color: red; font-size: 100px;">Answer 4</td>' }
 
     it 'generates the table html' do
-      allow(helper).to receive(:cell_styles).and_return({ color: 'red' })
-      allow(helper).to receive(:answer_styles).and_return({ font_size: '100px' })
-      allow(helper).to receive(:question_styles).and_return({ width: '50%' })
-      allow(helper).to receive(:heading_styles).and_return({ color: 'blue' })
-      # "<table>
-      #       <tr>
-      #       <td style=\"color: red; width: 50%;\">Question 1</td>
-      #       <td style=\"color: red; font-size: 100px;\">Answer 1</td>
-      #       </tr>
-      #       <tr>
-      #       <td style=\"color: red; width: 50%;\">Question 2</td>
-      #       <td style=\"color: red; font-size: 100px;\">Answer 2</td>
-      #       </tr>
-      #       <tr>
-      #       <td colspan=\"2\" style=\"color: blue;\">Page Heading</td>
-      #       </tr>
-      #       <tr>
-      #       <td style=\"color: red; width: 50%;\">Question 3</td>
-      #       <td style=\"color: red; font-size: 100px;\">Answer 3</td>
-      #       </tr>
-      #       <tr>
-      #       <td style=\"color: red; width: 50%;\">Question 4</td>
-      #       <td style=\"color: red; font-size: 100px;\">Answer 4</td>
-      #       </tr>
-      #       </table>"
-      #       byebug
+      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
+      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
+      allow(helper).to receive(:heading_styles).and_return('color: blue;')
+
       expect(helper.answers_table(pages)).to eql "<table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr></table>"
+    end
+  end
+
+  describe '#answers_html' do
+    let(:q1) { '<td style="color: red; width: 50%;">Question 1</td>' }
+    let(:a1) { '<td style="color: red; font-size: 100px;">Answer 1</td>' }
+    let(:q2) { '<td style="color: red; width: 50%;">Question 2</td>' }
+    let(:a2) { '<td style="color: red; font-size: 100px;">Answer 2</td>' }
+    let(:heading) { '<td colspan="2" style="color: blue;">Page Heading</td>' }
+    let(:q3) { '<td style="color: red; width: 50%;">Question 3</td>' }
+    let(:a3) { '<td style="color: red; font-size: 100px;">Answer 3</td>' }
+    let(:q4) { '<td style="color: red; width: 50%;">Question 4</td>' }
+    let(:a4) { '<td style="color: red; font-size: 100px;">Answer 4</td>' }
+
+    it 'generates the table html' do
+      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
+      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
+      allow(helper).to receive(:heading_styles).and_return('color: blue;')
+
+      expect(helper.answers_html(pages)).to eql "<h2>Your answers</h2><table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr></table>"
     end
   end
 end
