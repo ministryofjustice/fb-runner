@@ -3,6 +3,29 @@ module ConfirmationEmailHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
 
+  STYLES = {
+    heading: {
+      font_size: '20px',
+      font_weight: 'bold',
+      padding_top: '20px',
+      padding_bottom: '15px'
+    },
+    cell: {
+      width: '50%',
+      padding_top: '5px',
+      padding_bottom: '5px',
+      border_bottom: '1px solid #C4C4C4',
+      vertical_align: 'top'
+    },
+    question: {
+      font_weight: 'bold',
+      padding_right: '5px'
+    },
+    answer: {
+      padding_left: '5px'
+    }
+  }.freeze
+
   def answers_html(pages)
     table_heading + answers_table(pages)
   end
@@ -13,7 +36,7 @@ module ConfirmationEmailHelper
 
   def heading_row(content)
     tag.tr do
-      tag.td colspan: 2, style: inline_style_string(heading_styles) do
+      tag.td colspan: 2, style: heading_styles do
         content
       end
     end
@@ -25,7 +48,7 @@ module ConfirmationEmailHelper
         concat(heading_row(page[:heading])) if page[:heading].present?
 
         page[:answers].collect { |answer|
-          concat answer_row(answer[:field_name], human_value(answer[:answer]))
+          concat answer_row(answer[:field_name], answer[:answer])
         }.join.html_safe
       }.join.html_safe
     end
@@ -36,49 +59,26 @@ module ConfirmationEmailHelper
   end
 
   def question_cell(content)
-    tag.td(content, style: inline_style_string(cell_styles.merge(question_styles)))
+    tag.td(content, style: question_styles)
   end
 
   def answer_cell(content)
-    tag.td(content, style: inline_style_string(cell_styles.merge(answer_styles)))
+    tag.td(content, style: answer_styles)
   end
 
-  def human_value(answer)
-    answer.is_a?(Array) ? answer.join("\n\n") : answer
+  def heading_styles
+    inline_style_string(STYLES[:heading])
+  end
+
+  def question_styles
+    inline_style_string(STYLES[:cell].merge(STYLES[:question]))
+  end
+
+  def answer_styles
+    inline_style_string(STYLES[:cell].merge(STYLES[:answer]))
   end
 
   def inline_style_string(attributes)
     attributes.reduce('') { |str, (prop, val)| str + "#{prop.to_s.dasherize}: #{val}; " }.rstrip
-  end
-
-  def heading_styles
-    {
-      font_size: '20px',
-      padding_top: '15px',
-      padding_bottom: '15px'
-    }
-  end
-
-  def question_styles
-    {
-      font_weight: 'bold',
-      padding_right: '5px'
-    }
-  end
-
-  def answer_styles
-    {
-      padding_left: '5px'
-    }
-  end
-
-  def cell_styles
-    {
-      width: '50%',
-      padding_top: '5px',
-      padding_bottom: '5px',
-      border_bottom: '1px solid #C4C4C4',
-      vertical_align: 'top'
-    }
   end
 end
