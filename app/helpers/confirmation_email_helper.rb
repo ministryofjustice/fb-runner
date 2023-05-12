@@ -5,8 +5,6 @@ module ConfirmationEmailHelper
 
   STYLES = {
     heading: {
-      font_size: '20px',
-      font_weight: 'bold',
       padding_top: '20px',
       padding_bottom: '15px'
     },
@@ -36,8 +34,8 @@ module ConfirmationEmailHelper
 
   def heading_row(content)
     tag.tr do
-      tag.td colspan: 2 do
-        tag.h3 content
+      tag.td colspan: 2, style: heading_styles do
+        tag.h3 content, style: 'margin: 0 !important;'
       end
     end
   end
