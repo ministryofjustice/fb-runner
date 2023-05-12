@@ -3,26 +3,34 @@ module ConfirmationEmailHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
 
-  STYLES = {
-    heading: {
-      padding_top: '20px',
-      padding_bottom: '15px'
-    },
-    cell: {
-      width: '50%',
-      padding_top: '5px',
-      padding_bottom: '5px',
-      border_bottom: '1px solid #C4C4C4',
-      vertical_align: 'top'
-    },
-    question: {
-      font_weight: 'bold',
-      padding_right: '5px'
-    },
-    answer: {
-      padding_left: '5px'
-    }
-  }.freeze
+  def styles
+    {
+      heading_row: {
+        padding_top: '20px',
+        padding_bottom: '10px'
+      },
+      h3: {
+        margin: '0 !important'
+      },
+      cell: {
+        width: '50%',
+        padding_top: '5px',
+        padding_bottom: '5px',
+        border_bottom: '1px solid #C4C4C4',
+        vertical_align: 'top'
+      },
+      question_cell: {
+        font_weight: 'bold',
+        padding_right: '5px'
+      },
+      answer_cell: {
+        padding_left: '5px'
+      },
+      last_row_cell: {
+        padding_bottom: '20px'
+      }
+    }.freeze
+  end
 
   def answers_html(pages)
     table_heading + answers_table(pages)
@@ -34,8 +42,8 @@ module ConfirmationEmailHelper
 
   def heading_row(content)
     tag.tr do
-      tag.td colspan: 2, style: heading_styles do
-        tag.h3 content, style: 'margin: 0 !important;'
+      tag.td colspan: 2, style: heading_row_styles do
+        tag.h3 content, style: h3_styles
       end
     end
   end
@@ -45,38 +53,56 @@ module ConfirmationEmailHelper
       pages.collect { |page|
         concat(heading_row(page[:heading])) if page[:heading].present?
 
-        page[:answers].collect { |answer|
-          concat answer_row(answer[:field_name], answer[:answer])
+        page[:answers].each_with_index.collect { |answer, index|
+          if last_answer_on_multiquestion_page(page[:answers], index)
+            concat answer_row(question: answer[:field_name], answer: answer[:answer], last_row: true)
+          else
+            concat answer_row(question: answer[:field_name], answer: answer[:answer])
+          end
         }.join.html_safe
       }.join.html_safe
     end
   end
 
-  def answer_row(question, answer)
-    tag.tr(question_cell(question) + answer_cell(answer))
+  def answer_row(question:, answer:, last_row: false)
+    tag.tr(question_cell(content: question, last_row:) + answer_cell(content: answer, last_row:))
   end
 
-  def question_cell(content)
-    tag.td(content, style: question_styles)
+  def question_cell(content:, last_row: false)
+    tag.td(content, style: question_cell_styles(last_row:))
   end
 
-  def answer_cell(content)
-    tag.td(content, style: answer_styles)
+  def answer_cell(content:, last_row: false)
+    tag.td(content, style: answer_cell_styles(last_row:))
   end
 
-  def heading_styles
-    inline_style_string(STYLES[:heading])
+  def heading_row_styles
+    inline_style_string(styles[:heading_row])
   end
 
-  def question_styles
-    inline_style_string(STYLES[:cell].merge(STYLES[:question]))
+  def h3_styles
+    inline_style_string(styles[:h3])
   end
 
-  def answer_styles
-    inline_style_string(STYLES[:cell].merge(STYLES[:answer]))
+  def question_cell_styles(last_row: false)
+    question_styles = styles[:cell].merge(styles[:question_cell])
+    question_styles.merge!(styles[:last_row_cell]) if last_row
+    inline_style_string(question_styles)
+  end
+
+  def answer_cell_styles(last_row: false)
+    answer_styles = styles[:cell].merge(styles[:answer_cell])
+    answer_styles.merge!(styles[:last_row_cell]) if last_row
+    inline_style_string(answer_styles)
   end
 
   def inline_style_string(attributes)
+    return '' unless attributes.is_a? Hash
+
     attributes.reduce('') { |str, (prop, val)| str + "#{prop.to_s.dasherize}: #{val}; " }.rstrip
+  end
+
+  def last_answer_on_multiquestion_page(answers, index)
+    answers.size > 1 && index == answers.size - 1
   end
 end

@@ -17,9 +17,19 @@ RSpec.describe ConfirmationEmailHelper do
     ]
   end
 
-  describe '#table_heading'
-  it 'should build the h2' do
-    expect(helper.table_heading).to eql '<h2>Your answers</h2>'
+  let(:test_styles) do
+    {
+      heading_row: { color: 'green' },
+      h3: { color: 'blue' },
+      cell: { width: '50%' },
+      question_cell: { color: 'red ' },
+      answer_cell: { font_size: '100px' },
+      last_row_cell: { padding_bottom: '20px' }
+    }
+  end
+
+  before do
+    allow(helper).to receive(:styles).and_return(test_styles)
   end
 
   describe '#inline_style_string' do
@@ -28,77 +38,143 @@ RSpec.describe ConfirmationEmailHelper do
     it 'should genrate a style string from hash' do
       expect(helper.inline_style_string(styles)).to eql 'font-weight: bold; font-size: 24px;'
     end
+
+    it 'should return empty string if not given a hash' do
+      expect(helper.inline_style_string('not a hash')).to eql ''
+    end
+  end
+
+  describe '#last_answer_on_multiquestion_page' do
+    let(:single_q_page) { %w[answer] }
+    let(:multi_q_page) { %w[answer1 answer2] }
+
+    it 'is false for single question pages' do
+      expect(helper.last_answer_on_multiquestion_page(single_q_page, 0)).to be false
+    end
+
+    it 'is false when not the last answer on a multiquestion page' do
+      expect(helper.last_answer_on_multiquestion_page(multi_q_page, 0)).to be false
+    end
+
+    it 'is true when the last answer on a multiquestion page' do
+      expect(helper.last_answer_on_multiquestion_page(multi_q_page, 1)).to be true
+    end
+  end
+
+  describe '#answer_cell_styles' do
+    let(:test_styles) do
+      {
+        cell: { width: '50%', padding_bottom: '10px' },
+        answer_cell: { font_size: '100px' },
+        last_row_cell: { padding_bottom: '20px' }
+      }
+    end
+
+    it 'merges the cell and answer cell styles' do
+      expect(helper.answer_cell_styles).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
+    end
+
+    it 'inlcudes the last row cell styles when last_row=true' do
+      expect(helper.answer_cell_styles(last_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
+    end
+  end
+
+  describe '#question_cell_styles' do
+    let(:test_styles) do
+      {
+        cell: { width: '50%', padding_bottom: '10px' },
+        question_cell: { font_size: '100px' },
+        last_row_cell: { padding_bottom: '20px' }
+      }
+    end
+
+    it 'merges the cell and question cell styles' do
+      expect(helper.question_cell_styles).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
+    end
+
+    it 'inlcudes the last row cell styles when last_row=true' do
+      expect(helper.question_cell_styles(last_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
+    end
+  end
+
+  describe '#table_heading' do
+    it 'should build the h2' do
+      expect(helper.table_heading).to eql '<h2>Your answers</h2>'
+    end
   end
 
   describe '#answer_cell' do
     it 'generates the table cell html with merged styles' do
-      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
-
-      expect(helper.answer_cell('answer')).to eql '<td style="color: red; font-size: 100px;">answer</td>'
+      allow(helper).to receive(:answer_cell_styles).and_return('color: red; width: 50%;')
+      expect(helper.answer_cell(content: 'answer')).to eql '<td style="color: red; width: 50%;">answer</td>'
     end
   end
 
   describe '#question_cell' do
     it 'generates the table cell html with merged styles' do
-      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
+      allow(helper).to receive(:question_cell_styles).and_return('color: red; width: 50%;')
 
-      expect(helper.question_cell('question')).to eql '<td style="color: red; width: 50%;">question</td>'
+      expect(helper.question_cell(content: 'question')).to eql '<td style="color: red; width: 50%;">question</td>'
     end
   end
 
   describe '#answer_row' do
+    let(:test_styles) do
+      {
+        cell: { width: '50%' },
+        question_cell: { color: 'red' },
+        answer_cell: { color: 'blue' },
+        last_row_cell: { padding_bottom: '20px' }
+      }
+    end
     it 'generates the table row html with merged styles' do
-      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
-      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
+      expect(helper.answer_row(question: 'question', answer: 'answer')).to eql '<tr><td style="width: 50%; color: red;">question</td><td style="width: 50%; color: blue;">answer</td></tr>'
+    end
 
-      expect(helper.answer_row('question', 'answer')).to eql '<tr><td style="color: red; width: 50%;">question</td><td style="color: red; font-size: 100px;">answer</td></tr>'
+    it 'generates the last table row html with merged styles' do
+      expect(helper.answer_row(question: 'question', answer: 'answer', last_row: true)).to eql '<tr><td style="width: 50%; color: red; padding-bottom: 20px;">question</td><td style="width: 50%; color: blue; padding-bottom: 20px;">answer</td></tr>'
     end
   end
 
   describe '#heading_row' do
+    let(:test_styles) do
+      {
+        heading_row: { color: 'green' },
+        h3: { color: 'blue' }
+      }
+    end
     it 'generates the heading row html' do
-      allow(helper).to receive(:heading_styles).and_return('font-size: 20px;')
-
-      expect(helper.heading_row('Heading')).to eql '<tr><td colspan="2" style="font-size: 20px;">Heading</td></tr>'
+      expect(helper.heading_row('Heading')).to eql '<tr><td colspan="2" style="color: green;"><h3 style="color: blue;">Heading</h3></td></tr>'
     end
   end
 
-  describe '#answers_table' do
+  describe '#answers_table and #answers_html' do
+    let(:test_styles) do
+      {
+        heading_row: { color: 'green' },
+        h3: { color: 'blue' },
+        cell: { color: 'red' },
+        question_cell: { width: '50%' },
+        answer_cell: { font_size: '100px' },
+        last_row_cell: { padding_bottom: '20px' }
+      }
+    end
+
     let(:q1) { '<td style="color: red; width: 50%;">Question 1</td>' }
     let(:a1) { '<td style="color: red; font-size: 100px;">Answer 1</td>' }
-    let(:q2) { '<td style="color: red; width: 50%;">Question 2</td>' }
-    let(:a2) { '<td style="color: red; font-size: 100px;">Answer 2</td>' }
-    let(:heading) { '<td colspan="2" style="color: blue;">Page Heading</td>' }
+    let(:q2) { '<td style="color: red; width: 50%; padding-bottom: 20px;">Question 2</td>' }
+    let(:a2) { '<td style="color: red; font-size: 100px; padding-bottom: 20px;">Answer 2</td>' }
+    let(:heading) { '<td colspan="2" style="color: green;"><h3 style="color: blue;">Page Heading</h3></td>' }
     let(:q3) { '<td style="color: red; width: 50%;">Question 3</td>' }
     let(:a3) { '<td style="color: red; font-size: 100px;">Answer 3</td>' }
-    let(:q4) { '<td style="color: red; width: 50%;">Question 4</td>' }
-    let(:a4) { '<td style="color: red; font-size: 100px;">Answer 4</td>' }
+    let(:q4) { '<td style="color: red; width: 50%; padding-bottom: 20px;">Question 4</td>' }
+    let(:a4) { '<td style="color: red; font-size: 100px; padding-bottom: 20px;">Answer 4</td>' }
 
     it 'generates the table html' do
-      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
-      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
-      allow(helper).to receive(:heading_styles).and_return('color: blue;')
-
       expect(helper.answers_table(pages)).to eql "<table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr></table>"
     end
-  end
-
-  describe '#answers_html' do
-    let(:q1) { '<td style="color: red; width: 50%;">Question 1</td>' }
-    let(:a1) { '<td style="color: red; font-size: 100px;">Answer 1</td>' }
-    let(:q2) { '<td style="color: red; width: 50%;">Question 2</td>' }
-    let(:a2) { '<td style="color: red; font-size: 100px;">Answer 2</td>' }
-    let(:heading) { '<td colspan="2" style="color: blue;">Page Heading</td>' }
-    let(:q3) { '<td style="color: red; width: 50%;">Question 3</td>' }
-    let(:a3) { '<td style="color: red; font-size: 100px;">Answer 3</td>' }
-    let(:q4) { '<td style="color: red; width: 50%;">Question 4</td>' }
-    let(:a4) { '<td style="color: red; font-size: 100px;">Answer 4</td>' }
 
     it 'generates the table html' do
-      allow(helper).to receive(:answer_styles).and_return('color: red; font-size: 100px;')
-      allow(helper).to receive(:question_styles).and_return('color: red; width: 50%;')
-      allow(helper).to receive(:heading_styles).and_return('color: blue;')
-
       expect(helper.answers_html(pages)).to eql "<h2>Your answers</h2><table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr></table>"
     end
   end
