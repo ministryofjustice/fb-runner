@@ -87,9 +87,9 @@ RSpec.describe Platform::SubmitterPayload do
   end
   let(:answers_html) do
     ' <p>Your answers...</p>'
-  end  
+  end
   let(:env_confirmation_email_body) do
-    "Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl"
+    'Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl'
   end
   let(:confirmation_email_body) do
     "Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl#{answers_html}"

@@ -36,8 +36,8 @@ module ConfirmationEmailHelper
 
   def heading_row(content)
     tag.tr do
-      tag.td colspan: 2, style: heading_styles do
-        content
+      tag.td colspan: 2 do
+        tag.h3 content
       end
     end
   end
