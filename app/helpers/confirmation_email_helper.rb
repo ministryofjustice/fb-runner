@@ -5,15 +5,19 @@ module ConfirmationEmailHelper
 
   def styles
     {
+      table: {
+        width: '100%',
+        border_collapse: 'collapse'
+      },
+      multiquestion_table: {
+        margin_bottom: '20px'
+      },
       heading_row: {
         padding_top: '20px',
         padding_bottom: '10px'
       },
       h3: {
         margin: '0 !important'
-      },
-      multiquestion_table: {
-        margin_bottom: '20px'
       },
       cell: {
         width: '50%',
@@ -52,19 +56,29 @@ module ConfirmationEmailHelper
   end
 
   def answers_table(pages)
-    tag.table do
+    tag.table('cell-padding': 0, 'cell-spacing': 0, style: table_styles) do
       pages.collect { |page|
         if page[:answers].size > 1
-          concat(
-            tag.table(style: multiquestion_table_styles) do
-              concat(heading_row(page[:heading])) if page[:heading].present?
-              concat(answer_rows(page[:answers]))
-            end
-          )
+          concat(multiquestion_page_row(page))
         else
-          concat(answer_rows(page[:answers]))
+          answer_rows(page[:answers])
         end
       }.join.html_safe
+    end
+  end
+
+  def multiquestion_page_row(page)
+    tag.tr do
+      tag.td(colspan: 2) do
+        multiquestion_page_answers_table(page)
+      end
+    end
+  end
+
+  def multiquestion_page_answers_table(page)
+    tag.table('cell-padding': 0, 'cell-spacing': 0, style: multiquestion_table_styles) do
+      concat(heading_row(page[:heading])) if page[:heading].present?
+      answer_rows(page[:answers])
     end
   end
 
@@ -84,6 +98,10 @@ module ConfirmationEmailHelper
 
   def answer_cell(content:, last_row: false)
     tag.td(content, style: answer_cell_styles(last_row:))
+  end
+
+  def table_styles
+    inline_style_string(styles[:table])
   end
 
   def heading_row_styles
@@ -107,7 +125,7 @@ module ConfirmationEmailHelper
   end
 
   def multiquestion_table_styles
-    inline_style_string(styles[:multiquestion_table])
+    inline_style_string(styles[:table].merge(styles[:multiquestion_table]))
   end
 
   def inline_style_string(attributes)
