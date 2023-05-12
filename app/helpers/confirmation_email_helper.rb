@@ -12,6 +12,9 @@ module ConfirmationEmailHelper
       h3: {
         margin: '0 !important'
       },
+      multiquestion_table: {
+        margin_bottom: '20px'
+      },
       cell: {
         width: '50%',
         padding_top: '5px',
@@ -51,17 +54,24 @@ module ConfirmationEmailHelper
   def answers_table(pages)
     tag.table do
       pages.collect { |page|
-        concat(heading_row(page[:heading])) if page[:heading].present?
-
-        page[:answers].each_with_index.collect { |answer, index|
-          if last_answer_on_multiquestion_page(page[:answers], index)
-            concat answer_row(question: answer[:field_name], answer: answer[:answer], last_row: true)
-          else
-            concat answer_row(question: answer[:field_name], answer: answer[:answer])
-          end
-        }.join.html_safe
+        if page[:answers].size > 1
+          concat(
+            tag.table(style: multiquestion_table_styles) do
+              concat(heading_row(page[:heading])) if page[:heading].present?
+              concat(answer_rows(page[:answers]))
+            end
+          )
+        else
+          concat(answer_rows(page[:answers]))
+        end
       }.join.html_safe
     end
+  end
+
+  def answer_rows(answers)
+    answers.each_with_index.collect { |answer, _index|
+      concat answer_row(question: answer[:field_name], answer: answer[:answer])
+    }.join.html_safe
   end
 
   def answer_row(question:, answer:, last_row: false)
@@ -94,6 +104,10 @@ module ConfirmationEmailHelper
     answer_styles = styles[:cell].merge(styles[:answer_cell])
     answer_styles.merge!(styles[:last_row_cell]) if last_row
     inline_style_string(answer_styles)
+  end
+
+  def multiquestion_table_styles
+    inline_style_string(styles[:multiquestion_table])
   end
 
   def inline_style_string(attributes)
