@@ -46,7 +46,7 @@ module Platform
     end
 
     def actions
-      [email_action, csv_action, confirmation_email_action].compact
+      [email_action, csv_action, confirmation_email_action, json_action].compact
     end
 
     def pages
