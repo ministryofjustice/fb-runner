@@ -6,6 +6,7 @@ module Platform
     CSV = 'csv'.freeze
     EMAIL = 'email'.freeze
     DEFAULT_EMAIL_ADDRESS = 'no-reply-moj-forms@digital.justice.gov.uk'.freeze
+    JSON = 'json'.freeze
 
     def initialize(service:, user_data:, session:)
       @service = service
@@ -220,6 +221,17 @@ module Platform
 
     def default_email_from
       @default_email_from ||= "#{service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
+    end
+
+    def json_action
+      return if ENV['SERVICE_OUTPUT_JSON_ENDPOINT'].blank? || ENV['SERVICE_OUTPUT_JSON_KEY'].blank?
+
+      {
+        kind: JSON,
+        url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
+        data_url: 'some field',
+        encryption_key: ENV['SERVICE_OUTPUT_JSON_KEY']
+      }
     end
   end
 end
