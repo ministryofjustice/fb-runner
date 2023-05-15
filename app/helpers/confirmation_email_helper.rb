@@ -26,8 +26,8 @@ module ConfirmationEmailHelper
       answer_cell: {
         padding_left: '5px'
       },
-      last_row_cell: {
-        padding_bottom: '20px'
+      first_row_cell: {
+        padding_top: '20px'
       }
     }.freeze
   end
@@ -50,30 +50,32 @@ module ConfirmationEmailHelper
 
   def answers_table(pages)
     tag.table do
+      previous_page_was_multiquestion = false
       pages.collect { |page|
         concat(heading_row(page[:heading])) if page[:heading].present?
-
         page[:answers].each_with_index.collect { |answer, index|
           if last_answer_on_multiquestion_page(page[:answers], index)
-            concat answer_row(question: answer[:field_name], answer: answer[:answer], last_row: true)
-          else
             concat answer_row(question: answer[:field_name], answer: answer[:answer])
+            previous_page_was_multiquestion = true
+          else
+            concat answer_row(question: answer[:field_name], answer: answer[:answer], first_row: previous_page_was_multiquestion)
+            previous_page_was_multiquestion = false
           end
         }.join.html_safe
       }.join.html_safe
     end
   end
 
-  def answer_row(question:, answer:, last_row: false)
-    tag.tr(question_cell(content: question, last_row:) + answer_cell(content: answer, last_row:))
+  def answer_row(question:, answer:, first_row: false)
+    tag.tr(question_cell(content: question, first_row:) + answer_cell(content: answer, first_row:))
   end
 
-  def question_cell(content:, last_row: false)
-    tag.td(content, style: question_cell_styles(last_row:))
+  def question_cell(content:, first_row: false)
+    tag.td(content, style: question_cell_styles(first_row:))
   end
 
-  def answer_cell(content:, last_row: false)
-    tag.td(content, style: answer_cell_styles(last_row:))
+  def answer_cell(content:, first_row: false)
+    tag.td(content, style: answer_cell_styles(first_row:))
   end
 
   def heading_row_styles
@@ -84,15 +86,15 @@ module ConfirmationEmailHelper
     inline_style_string(styles[:h3])
   end
 
-  def question_cell_styles(last_row: false)
+  def question_cell_styles(first_row: false)
     question_styles = styles[:cell].merge(styles[:question_cell])
-    question_styles.merge!(styles[:last_row_cell]) if last_row
+    question_styles.merge!(styles[:first_row_cell]) if first_row
     inline_style_string(question_styles)
   end
 
-  def answer_cell_styles(last_row: false)
+  def answer_cell_styles(first_row: false)
     answer_styles = styles[:cell].merge(styles[:answer_cell])
-    answer_styles.merge!(styles[:last_row_cell]) if last_row
+    answer_styles.merge!(styles[:first_row_cell]) if first_row
     inline_style_string(answer_styles)
   end
 

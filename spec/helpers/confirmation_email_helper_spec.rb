@@ -3,7 +3,11 @@ RSpec.describe ConfirmationEmailHelper do
     [
       {
         answers: [
-          { field_name: 'Question 1', answer: 'Answer 1' },
+          { field_name: 'Question 1', answer: 'Answer 1' }
+        ]
+      },
+      {
+        answers: [
           { field_name: 'Question 2', answer: 'Answer 2' }
         ]
       },
@@ -12,6 +16,11 @@ RSpec.describe ConfirmationEmailHelper do
         answers: [
           { field_name: 'Question 3', answer: 'Answer 3' },
           { field_name: 'Question 4', answer: 'Answer 4' }
+        ]
+      },
+      {
+        answers: [
+          { field_name: 'Question 1', answer: 'Answer 1' }
         ]
       }
     ]
@@ -24,12 +33,12 @@ RSpec.describe ConfirmationEmailHelper do
       cell: { width: '50%' },
       question_cell: { color: 'red ' },
       answer_cell: { font_size: '100px' },
-      last_row_cell: { padding_bottom: '20px' }
+      first_row_cell: { padding_bottom: '20px' }
     }
   end
 
   before do
-    allow(helper).to receive(:styles).and_return(test_styles)
+    # allow(helper).to receive(:styles).and_return(test_styles)
   end
 
   describe '#inline_style_string' do
