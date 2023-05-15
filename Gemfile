@@ -10,12 +10,12 @@ gem 'faraday_middleware'
 gem 'jwt'
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-# gem 'metadata_presenter',
-#     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'round-two-test-fixes'
+gem 'metadata_presenter',
+    github: 'ministryofjustice/fb-metadata-presenter',
+    branch: 'suffix-duplicate-file-upload'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 gem 'fb-jwt-auth', '0.10.0'
-gem 'metadata_presenter', '2.19.3'
+# gem 'metadata_presenter', '2.19.3'
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
 gem 'rails', '6.1.7.1'
@@ -32,7 +32,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'simplecov-console'
-  gem 'site_prism'
+  gem 'site_prism', '4.0'
   gem 'timecop'
   gem 'webmock'
 end
