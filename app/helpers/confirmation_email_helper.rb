@@ -54,7 +54,7 @@ module ConfirmationEmailHelper
       pages.collect { |page|
         concat(heading_row(page[:heading])) if page[:heading].present?
         page[:answers].each_with_index.collect { |answer, index|
-          if last_answer_on_multiquestion_page(page[:answers], index)
+          if multiquestion_page?(page[:answers])
             concat answer_row(question: answer[:field_name], answer: answer[:answer])
             previous_page_was_multiquestion = true
           else
@@ -104,7 +104,7 @@ module ConfirmationEmailHelper
     attributes.reduce('') { |str, (prop, val)| str + "#{prop.to_s.dasherize}: #{val}; " }.rstrip
   end
 
-  def last_answer_on_multiquestion_page(answers, index)
-    answers.size > 1 && index == answers.size - 1
+  def multiquestion_page?(answers)
+    answers.size > 1
   end
 end
