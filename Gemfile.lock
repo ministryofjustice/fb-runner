@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 1022050792bf81d2c928a8fa28d2a54b36222d3b
+  revision: a42945761e8cafdabe3b900aff13a7c7ddf7a0b6
   branch: suffix-duplicate-file-upload
   specs:
     metadata_presenter (2.19.3)
