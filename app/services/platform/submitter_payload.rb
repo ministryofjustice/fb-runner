@@ -45,7 +45,7 @@ module Platform
     end
 
     def actions
-      [email_action, csv_action, confirmation_email_action].compact
+      [email_action, csv_action, confirmation_email_action, json_action].compact
     end
 
     def pages
@@ -220,6 +220,16 @@ module Platform
 
     def default_email_from
       @default_email_from ||= "#{service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
+    end
+
+    def json_action
+      return if ENV['SERVICE_OUTPUT_JSON_ENDPOINT'].blank? || ENV['SERVICE_OUTPUT_JSON_KEY'].blank?
+
+      {
+        kind: 'json',
+        url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
+        key: ENV['SERVICE_OUTPUT_JSON_KEY']
+      }
     end
   end
 end

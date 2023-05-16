@@ -653,6 +653,29 @@ RSpec.describe Platform::SubmitterPayload do
         expect(subject.actions).to eq(expected_actions)
       end
     end
+
+    context 'when json api submission is required' do
+      let(:api_endpoint_url) { 'https://json-endpoint.url' }
+      let(:api_endpoint_key) { 'json-key' }
+      let(:expected_actions) do
+        [
+          {
+            kind: 'json',
+            url: api_endpoint_url,
+            key: api_endpoint_key
+          }
+        ]
+      end
+
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(api_endpoint_url)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(api_endpoint_key)
+      end
+
+      it 'should return just the email action' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
   end
 
   describe '#concatenation_with_reference_number' do
