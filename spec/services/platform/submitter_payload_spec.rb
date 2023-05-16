@@ -660,9 +660,9 @@ RSpec.describe Platform::SubmitterPayload do
       let(:expected_actions) do
         [
           {
-            kind: 'email',
+            kind: 'json',
             url: api_endpoint_url,
-            key: api_endpoint_key
+            encryption_key: api_endpoint_key
           }
         ]
       end
