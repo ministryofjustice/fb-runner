@@ -656,13 +656,13 @@ RSpec.describe Platform::SubmitterPayload do
 
     context 'when json api submission is required' do
       let(:api_endpoint_url) { 'https://json-endpoint.url' }
-      let(:api_endpoint_key) { 'encryption-key' }
+      let(:api_endpoint_key) { 'json-key' }
       let(:expected_actions) do
         [
           {
             kind: 'json',
             url: api_endpoint_url,
-            encryption_key: api_endpoint_key
+            key: api_endpoint_key
           }
         ]
       end

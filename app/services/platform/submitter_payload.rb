@@ -228,7 +228,7 @@ module Platform
       {
         kind: 'json',
         url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
-        encryption_key: ENV['SERVICE_OUTPUT_JSON_KEY']
+        key: ENV['SERVICE_OUTPUT_JSON_KEY']
       }
     end
   end
