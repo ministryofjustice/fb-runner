@@ -236,9 +236,5 @@ module Platform
         key: ENV['SERVICE_OUTPUT_JSON_KEY']
       }
     end
-
-    def human_value(answer)
-      answer.is_a?(Array) ? answer.join("\n\n") : answer
-    end
   end
 end

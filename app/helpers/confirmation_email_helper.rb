@@ -53,7 +53,7 @@ module ConfirmationEmailHelper
       previous_page_was_multiquestion = false
       pages.collect { |page|
         concat(heading_row(page[:heading])) if page[:heading].present?
-        page[:answers].each_with_index.collect { |answer, index|
+        page[:answers].each.collect { |answer|
           if multiquestion_page?(page[:answers])
             concat answer_row(question: answer[:field_name], answer: answer[:answer])
             previous_page_was_multiquestion = true
