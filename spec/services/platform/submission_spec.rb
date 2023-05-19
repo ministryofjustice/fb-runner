@@ -61,12 +61,14 @@ RSpec.describe Platform::Submission do
 
   describe '#valid?' do
     let(:submitter_url) { 'http://fb-awesome-submitter' }
+    let(:json_endpoint_url) { 'http://superb-api' }
 
     before do
       allow(ENV).to receive(:[])
       allow(ENV).to receive(:[]).with('SUBMITTER_URL').and_return(submitter_url)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT')
         .and_return(service_email_output)
+      allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(json_endpoint_url)
     end
 
     context 'when required env vars are present' do
@@ -78,6 +80,7 @@ RSpec.describe Platform::Submission do
     end
 
     context 'when service email output is blank' do
+      let(:json_endpoint_url) { nil }
       let(:service_email_output) { nil }
 
       it 'returns invalid' do
