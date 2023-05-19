@@ -117,5 +117,24 @@ RSpec.describe ApplicationController do
         end
       end
     end
+
+    describe '#service_slug_config' do
+      context 'when service slug is present' do
+        before do
+          allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
+        end
+        let(:service_slug) { 'i-am-a-slug' }
+
+        it 'returns the service slug' do
+          expect(controller.service_slug_config).to eq(service_slug)
+        end
+      end
+
+      context 'when service slug is not present' do
+        it 'returns nil' do
+          expect(controller.service_slug_config).to be_nil
+        end
+      end
+    end
   end
 end
