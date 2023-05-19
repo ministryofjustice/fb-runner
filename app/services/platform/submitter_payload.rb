@@ -230,6 +230,8 @@ module Platform
     def json_action
       return if ENV['SERVICE_OUTPUT_JSON_ENDPOINT'].blank? || ENV['SERVICE_OUTPUT_JSON_KEY'].blank?
 
+      Rails.logger.debug '*********** Adding JSON config'
+
       {
         kind: 'json',
         url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
