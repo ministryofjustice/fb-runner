@@ -85,6 +85,7 @@ class ApplicationController < ActionController::Base
   end
 
   def create_submission
+    Rails.logger.debug '***************** Create submission'
     user_data = update_session_with_reference_number_if_enabled(session)
     # rubocop: disable Rails/SaveBang
     Platform::Submission.new(

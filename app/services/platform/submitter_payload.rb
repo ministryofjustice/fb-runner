@@ -46,6 +46,7 @@ module Platform
     end
 
     def actions
+      Rails.logger.debug '*********** Listing actions'
       [email_action, csv_action, confirmation_email_action, json_action].compact
     end
 

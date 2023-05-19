@@ -21,6 +21,7 @@ module Platform
     end
 
     def adapter
+      Rails.logger.debug '*********** New submitter adapter'
       Platform::SubmitterAdapter.new(
         session:,
         service_slug: service.service_slug,
@@ -29,6 +30,7 @@ module Platform
     end
 
     def submitter_payload
+      Rails.logger.debug '*************** New submitter payload'
       Platform::SubmitterPayload.new(
         service:,
         user_data:,
