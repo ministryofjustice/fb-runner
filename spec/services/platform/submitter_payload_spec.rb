@@ -670,7 +670,8 @@ RSpec.describe Platform::SubmitterPayload do
           {
             kind: 'json',
             url: api_endpoint_url,
-            key: api_endpoint_key
+            key: api_endpoint_key,
+            include_attachments: true
           }
         ]
       end

@@ -236,7 +236,8 @@ module Platform
       {
         kind: 'json',
         url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
-        key: ENV['SERVICE_OUTPUT_JSON_KEY']
+        key: ENV['SERVICE_OUTPUT_JSON_KEY'],
+        include_attachments: true
       }
     end
   end
