@@ -17,6 +17,7 @@ module Platform
     def save
       raise MissingSubmitterUrlError if ENV['SUBMITTER_URL'].blank? && Rails.env.production?
 
+      Rails.logger.debug '*********** No submitter error'
       invalid? || adapter.save
     end
 

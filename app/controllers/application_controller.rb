@@ -94,6 +94,7 @@ class ApplicationController < ActionController::Base
       session:
     ).save
     # rubocop: enable Rails/SaveBang
+    Rails.logger.debug '***************** Submission saved'
 
     delete_session
   end
