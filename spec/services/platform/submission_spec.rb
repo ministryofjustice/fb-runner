@@ -79,12 +79,20 @@ RSpec.describe Platform::Submission do
       end
     end
 
-    context 'when service email output is blank' do
+    context 'when service email output and api-endpoint are blank' do
       let(:json_endpoint_url) { nil }
       let(:service_email_output) { nil }
 
       it 'returns invalid' do
         expect(submission).to_not be_valid
+      end
+    end
+
+    context 'when service email output is blank but api-endpoint is set' do
+      let(:service_email_output) { nil }
+
+      it 'returns valid' do
+        expect(submission).to be_valid
       end
     end
 

@@ -37,6 +37,8 @@ module Platform
     end
 
     def meta
+      return if ENV['SERVICE_EMAIL_OUTPUT'].blank?
+
       {
         pdf_heading: concatenation_with_reference_number(ENV['SERVICE_EMAIL_PDF_HEADING']),
         pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s,
