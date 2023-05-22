@@ -54,7 +54,6 @@ module Platform
     end
 
     def actions
-      Rails.logger.debug '*********** Listing actions'
       [email_action, csv_action, confirmation_email_action, json_action].compact
     end
 
@@ -238,8 +237,6 @@ module Platform
 
     def json_action
       return if ENV['SERVICE_OUTPUT_JSON_ENDPOINT'].blank? || ENV['SERVICE_OUTPUT_JSON_KEY'].blank?
-
-      Rails.logger.debug '*********** Adding JSON config'
 
       {
         kind: 'json',

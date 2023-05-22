@@ -21,10 +21,6 @@ module Platform
     end
 
     def save
-      Rails.logger.debug '*********** Request'
-      if request_body.key?('json')
-        Rails.logger.debug '**************   there is JSON action'
-      end
       request(:post, V2_URL, request_body)
     end
 
