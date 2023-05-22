@@ -32,7 +32,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'simplecov-console'
-  gem 'site_prism', '4.0'
+  gem 'site_prism', '4.0.1'
   gem 'timecop'
   gem 'webmock'
 end
