@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   skip_before_action VerifySession, :require_basic_auth, only: :get_saved_progress
 
-  add_flash_types :confirmation, :expired_session
+  add_flash_types :confirmation, :expired_session, :submission_completed
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
   SESSION_DURATION = 30.minutes
