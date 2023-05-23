@@ -6,9 +6,13 @@ module Platform
     include ActiveModel::Model
     attr_accessor :service, :user_data, :session
 
-    REQUIRED_ENV_VARS = %w[SERVICE_EMAIL_OUTPUT SUBMITTER_URL].freeze
+    REQUIRED_ENV_VARS = %w[SUBMITTER_URL].freeze
 
     validate do
+      if ENV['SERVICE_EMAIL_OUTPUT'].blank? && ENV['SERVICE_OUTPUT_JSON_ENDPOINT'].blank?
+        errors.add(:base, 'SERVICE_EMAIL_OUTPUT env vars are blank.')
+      end
+
       if REQUIRED_ENV_VARS.any? { |env_var| ENV[env_var].blank? }
         errors.add(:base, "#{REQUIRED_ENV_VARS} env vars are blank.")
       end
