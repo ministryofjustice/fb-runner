@@ -10,10 +10,10 @@ gem 'faraday_middleware'
 gem 'jwt'
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
+gem 'fb-jwt-auth', '0.10.0'
 gem 'metadata_presenter',
     github: 'ministryofjustice/fb-metadata-presenter',
     branch: 'rails-7-upgrade'
-gem 'fb-jwt-auth', '0.10.0'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 # gem 'metadata_presenter', '2.19.5'
 gem 'prometheus-client', '~> 2.1.0'
