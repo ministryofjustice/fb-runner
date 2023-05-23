@@ -1,5 +1,7 @@
-PATH
-  remote: ../fb-metadata-presenter
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: 76f4c264909dd382f087de5e83f37e5357998ff0
+  branch: rails-7-upgrade
   specs:
     metadata_presenter (2.20.0)
       govuk_design_system_formbuilder (>= 2.1.5)
