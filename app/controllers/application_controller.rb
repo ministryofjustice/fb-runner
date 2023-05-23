@@ -198,6 +198,10 @@ class ApplicationController < ActionController::Base
   end
   helper_method :save_and_return_enabled?
 
+  def service_slug_config
+    ENV['SERVICE_SLUG']
+  end
+
   def editor_preview?
     false
   end
