@@ -18,6 +18,7 @@ RSpec.describe 'verify session', type: :request do
 
     context 'when other page' do
       before do
+        allow(dummy_session).to receive(:enabled?).and_return(false)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(dummy_session)
         get '/name'
       end
