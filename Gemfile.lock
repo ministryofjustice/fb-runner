@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 76f4c264909dd382f087de5e83f37e5357998ff0
+  revision: d393a40fb1df17f607529d9daf92cf681280d039
   branch: rails-7-upgrade
   specs:
-    metadata_presenter (2.20.0)
+    metadata_presenter (2.20.1)
       govuk_design_system_formbuilder (>= 2.1.5)
       json-schema (= 2.8.1)
       kramdown (>= 2.3.0)
@@ -189,7 +189,6 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
-
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.2)
@@ -206,7 +205,6 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-
     nokogiri (1.15.1)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
