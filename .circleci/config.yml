@@ -236,7 +236,7 @@ workflows:
             branches:
               only:
                 - main
-                # - fix-api-submission-not-sent
+                - fix-api-submission-not-sent
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
