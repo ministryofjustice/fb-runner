@@ -10,15 +10,16 @@ gem 'faraday_middleware'
 gem 'jwt'
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
+gem 'fb-jwt-auth', '0.10.0'
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'suffix-duplicate-file-upload'
+#     branch: 'rails-7-upgrade'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'fb-jwt-auth', '0.10.0'
-gem 'metadata_presenter', '2.20.1'
+gem 'metadata_presenter', '3.0'
+
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
-gem 'rails', '6.1.7.1'
+gem 'rails', '7.0.4.3'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 5.8.0'
 gem 'sentry-ruby', '~> 5.8.0'
@@ -42,7 +43,7 @@ group :development do
   gem 'listen', '~> 3.8'
   gem 'rubocop', '~> 1.35.0'
   gem 'rubocop-govuk'
-  gem 'spring'
+  gem 'spring', '~> 4.1.1'
   gem 'spring-watcher-listen', '~> 2.1.0'
   gem 'web-console', '>= 3.3.0'
 end
