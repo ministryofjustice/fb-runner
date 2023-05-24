@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 0442fa9ddb3010bb3b8e902d91ce2b9c9f522607
+  revision: f1d9d611cf983760adfab81acaa68ecd5d6efb7d
   branch: rails-7-upgrade
   specs:
     metadata_presenter (2.20.1)
@@ -85,7 +85,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.767.0)
+    aws-partitions (1.768.0)
     aws-sdk-core (3.173.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
