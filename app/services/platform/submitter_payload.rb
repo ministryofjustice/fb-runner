@@ -37,12 +37,20 @@ module Platform
     end
 
     def meta
-      {
-        pdf_heading: concatenation_with_reference_number(ENV['SERVICE_EMAIL_PDF_HEADING']),
-        pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s,
-        submission_at: Time.zone.now.iso8601,
-        reference_number: user_data['moj_forms_reference_number']
-      }.compact
+      if ENV['SERVICE_EMAIL_OUTPUT'].blank?
+        {
+          pdf_heading: "JSON Submission for #{service.service_name}",
+          pdf_subheading: '',
+          submission_at: Time.zone.now.iso8601
+        }.compact
+      else
+        {
+          pdf_heading: concatenation_with_reference_number(ENV['SERVICE_EMAIL_PDF_HEADING']),
+          pdf_subheading: ENV['SERVICE_EMAIL_PDF_SUBHEADING'].to_s,
+          submission_at: Time.zone.now.iso8601,
+          reference_number: user_data['moj_forms_reference_number']
+        }.compact
+      end
     end
 
     def actions
@@ -233,7 +241,8 @@ module Platform
       {
         kind: 'json',
         url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
-        key: ENV['SERVICE_OUTPUT_JSON_KEY']
+        key: ENV['SERVICE_OUTPUT_JSON_KEY'],
+        include_attachments: true
       }
     end
   end
