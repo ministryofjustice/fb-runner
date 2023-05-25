@@ -13,9 +13,9 @@ gem 'jwt'
 gem 'fb-jwt-auth', '0.10.0'
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'rails-7-upgrade'
+#     branch: 'add-submission-complete-page'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.0'
+gem 'metadata_presenter', '3.0.1'
 
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
