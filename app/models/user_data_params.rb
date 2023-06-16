@@ -16,8 +16,13 @@ class UserDataParams
   def set_uploaded_file_details
     if @page_answers.uploaded_files.present?
       @page_answers.uploaded_files.map do |uploaded_file|
-        @answer_params[uploaded_file.component.id] =
-          @page_answers.send(uploaded_file.component.id).merge(uploaded_file.file)
+        # if uploaded_file.component.multiupload?
+          # byebug
+        #   @page_answers.send(uploaded_file.component.id).push(uploaded_file.file)
+        # else
+          @answer_params[uploaded_file.component.id] =
+            @page_answers.send(uploaded_file.component.id).merge(uploaded_file.file)
+        # end
       end
     end
   end
