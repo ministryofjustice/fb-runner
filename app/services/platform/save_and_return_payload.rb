@@ -29,7 +29,7 @@ module Platform
     def service_info
       {
         id: service.service_id,
-        slug: service.service_slug,
+        slug: ENV['SERVICE_SLUG'],
         name: service.service_name
       }
     end
@@ -102,19 +102,23 @@ module Platform
     end
 
     def editor_live_production_url
-      "https://#{service.service_slug}.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+      "https://#{service_slug}.form.service.justice.gov.uk/return/#{record_uuid}".freeze
     end
 
     def editor_live_dev_url
-      "https://#{service.service_slug}.dev.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+      "https://#{service_slug}.dev.form.service.justice.gov.uk/return/#{record_uuid}".freeze
     end
 
     def editor_test_production_url
-      "https://#{service.service_slug}.test.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+      "https://#{service_slug}.test.form.service.justice.gov.uk/return/#{record_uuid}".freeze
     end
 
     def editor_test_dev_url
-      "https://#{service.service_slug}.dev.test.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+      "https://#{service_slug}.dev.test.form.service.justice.gov.uk/return/#{record_uuid}".freeze
+    end
+
+    def service_slug
+      ENV['SERVICE_SLUG']
     end
   end
 end

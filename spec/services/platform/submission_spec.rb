@@ -4,9 +4,12 @@ RSpec.describe Platform::Submission do
   end
   let(:user_data) { {} }
   let(:session) { {} }
+  let(:service_slug) { 'version-fixture' }
 
   describe '#save' do
     before do
+      allow(ENV).to receive(:[])
+      allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
       allow(submission).to receive(:invalid?).and_return(invalid)
     end
 
@@ -24,7 +27,7 @@ RSpec.describe Platform::Submission do
 
       it 'sends the submission' do
         expect(Platform::SubmitterAdapter).to receive(:new)
-          .with(session:, payload:, service_slug: service.service_slug)
+          .with(session:, payload:, service_slug: ENV['SERVICE_SLUG'])
           .and_return(adapter)
         expect(adapter).to receive(:save)
         submission.save
@@ -65,6 +68,7 @@ RSpec.describe Platform::Submission do
 
     before do
       allow(ENV).to receive(:[])
+      allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
       allow(ENV).to receive(:[]).with('SUBMITTER_URL').and_return(submitter_url)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT')
         .and_return(service_email_output)
