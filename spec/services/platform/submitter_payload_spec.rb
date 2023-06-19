@@ -223,8 +223,12 @@ RSpec.describe Platform::SubmitterPayload do
     let(:confirmation_email_body) do
       "Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl#{answers_html}"
     end
+    let(:service_slug) do
+      'version-fixture'
+    end
 
     before do
+      allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM').and_return(email_from)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
@@ -239,7 +243,7 @@ RSpec.describe Platform::SubmitterPayload do
       let(:service_payload) do
         {
           id: service.service_id,
-          slug: service.service_slug,
+          slug: ENV['SERVICE_SLUG'],
           name: service.service_name
         }
       end

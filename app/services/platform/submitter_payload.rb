@@ -27,7 +27,7 @@ module Platform
     def service_info
       {
         id: service.service_id,
-        slug: service.service_slug,
+        slug: ENV['SERVICE_SLUG'],
         name: service.service_name
       }
     end

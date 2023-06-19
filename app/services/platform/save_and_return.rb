@@ -23,7 +23,7 @@ module Platform
     def adapter
       Platform::SubmitterAdapter.new(
         session:,
-        service_slug: service.service_slug,
+        service_slug: ENV['SERVICE_SLUG'],
         payload: save_and_return_payload
       )
     end
