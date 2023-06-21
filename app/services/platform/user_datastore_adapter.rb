@@ -93,6 +93,12 @@ module Platform
       end
     end
 
+    def delete_file(component_id, file_id)
+      save({}) do |all_answers|
+        all_answers.find(component_id).reject { |f| f['uuid'] == file_id }
+      end
+    end
+
     private
 
     def url

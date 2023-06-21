@@ -65,6 +65,10 @@ class ApplicationController < ActionController::Base
     UserData.new(session).delete(component_id)
   end
 
+  def remove_file_from_data(component_id, file_id)
+    UserData.new(session).delete_file(component_id, file_id)
+  end
+
   def upload_adapter
     if ENV['USER_FILESTORE_URL'].blank?
       raise Platform::MissingFilestoreUrlError if Rails.env.production?
