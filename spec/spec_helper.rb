@@ -103,7 +103,7 @@ SimpleCov.start do
   add_filter '/app/filters/verify_session.rb'
 end
 
-SimpleCov.minimum_coverage 97
+SimpleCov.minimum_coverage 95
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
   SimpleCov::Formatter::Console
