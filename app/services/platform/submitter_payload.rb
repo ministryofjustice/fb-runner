@@ -193,6 +193,10 @@ module Platform
       answer['original_filename'] || ''
     end
 
+    def multiupload(answer)
+      answer[component.id].map { |i| i['original_filename'] }.join(', ')
+    end
+
     def autocomplete(answer)
       return '' if answer.blank?
 
