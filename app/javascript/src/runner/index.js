@@ -13,6 +13,28 @@ function environment() {
   return location.pathname.search(/^\/services\/.*?\/preview\/$/) >= 0 ? ENVIRONMENT_PREVIEW : ENVIRONMENT_RUNNER;
 }
 
+function initializeCookieBanner() {
+  const banner  = document.querySelector('[data-module="cookie-banner"]');
+  if(!banner) return;
+
+  banner.addEventListener('click', function(event) {
+    if(event.target.matches('[data-cookie-banner-element="accept-button"]')) {
+      window.analytics.accept(event.target.dataset.cookieName);
+      return;
+    }
+
+    if(event.target.matches('[data-cookie-banner-element="reject-button"]')) {
+      window.analytics.reject(event.target.dataset.cookieName);
+      return;
+    }
+
+    if(event.target.matches('[data-cookie-banner-element="hide-button"]')) {
+      window.analytics.hideCookieBanner();
+      return;
+    }
+  })
+}
+
 /*
  * If the user has just accepted or rejected cookies show the confirmation
  * message in the cookie banner
@@ -66,5 +88,6 @@ contentLoaded(window, () => {
   preventCookieBannerInPreview();
   initializeTimeoutWarning();
   supportGovUkContent();
+  initializeCookieBanner();
   showAnalyticsConfirmationMessage();
 });
