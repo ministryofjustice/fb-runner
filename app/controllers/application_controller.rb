@@ -29,7 +29,6 @@ class ApplicationController < ActionController::Base
   helper_method :service
 
   def save_user_data
-    # byebug
     UserData.new(session).save(user_data_params)
   end
 

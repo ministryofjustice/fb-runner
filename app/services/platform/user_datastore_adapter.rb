@@ -14,7 +14,6 @@ module Platform
 
     def save(params)
       existing_answers = load_data
-      # byebug
       all_answers = existing_answers.merge(params)
 
       yield(all_answers) if block_given?

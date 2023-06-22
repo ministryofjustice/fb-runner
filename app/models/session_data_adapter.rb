@@ -26,7 +26,7 @@ class SessionDataAdapter
 
   def delete_file(component_id, file_id)
     files = session[:user_data][component_id]
-    session[:user_data][component_id] = files.reject { |f| f['uuid'] == file_id}
+    session[:user_data][component_id] = files.reject { |f| f['uuid'] == file_id }
   end
 
   def save_progress
