@@ -21,21 +21,21 @@ function hideCookieMessage() {
   const message = document.querySelector('[data-cookie-banner-element="message"]')
   if(!message) return;
 
-  message.style.display = 'none'
+  message.setAttribute('hidden', '')
 }
 
 function showMessage (messageType) {
   const message = document.querySelector(`[data-cookie-banner-element="message-${messageType}"]`);
   if(!message) return;
 
-  message.style.display = 'block';
+  message.removeAttribute('hidden');
 }
 
 function hideCookieBanner () {
   const banner = document.querySelector('[data-module="cookie-banner"]')
   if(!banner) return;
   
-  banner.style.display = 'none'
+  banner.setAttribute('hidden', '')
 }
 
 function removeAnalyticsCookies () {

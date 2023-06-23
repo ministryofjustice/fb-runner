@@ -56,7 +56,7 @@ function showAnalyticsConfirmationMessage() {
 function preventCookieBannerInPreview() {
   var cookieBanner = document.getElementById("govuk-cookie-banner");
   if(cookieBanner && environment() ==  ENVIRONMENT_PREVIEW) {
-    cookieBanner.style.display = "none";
+    cookieBanner.setAttibute('hidden');
   }
 }
 

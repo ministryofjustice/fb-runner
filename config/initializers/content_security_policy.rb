@@ -17,7 +17,7 @@ Rails.application.configure do
     policy.style_src   :self, :https
 
     # Specify URI for violation reports
-    # policy.report_uri "/csp-violation-report-endpoint"
+      policy.report_uri "report-uri #{ENV['SERVICE_SENTRY_CSP_URL']}"
   end
 #
 #   # Generate session nonces for permitted importmap and inline scripts
@@ -25,5 +25,5 @@ Rails.application.configure do
   # config.content_security_policy_nonce_directives = %w(script-src)
 #
 #   # Report violations without enforcing the policy.
-#   # config.content_security_policy_report_only = true
+    config.content_security_policy_report_only = true
 end
