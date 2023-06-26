@@ -95,13 +95,25 @@ module Platform
     end
 
     def attachments
-      answered_upload_components.map do |component|
+      multiupload_attachments = answered_multiupload_components.map do |component|
+        component.values.first.map do | file |
+          {
+            url: file_download_url(file['fingerprint']),
+            filename: file['original_filename'],
+            mimetype: file['type'] || file['content_type']
+          }
+        end
+      end
+
+      single_upload_attachments = answered_upload_components.map do |component|
         {
           url: file_download_url(component['fingerprint']),
           filename: component['original_filename'],
           mimetype: component['type'] || component['content_type']
         }
       end
+
+      multiupload_attachments + single_upload_attachments
     end
 
     private
@@ -162,9 +174,20 @@ module Platform
       upload_components.map { |component| user_data[component.id] }.compact.reject(&:blank?)
     end
 
+    def answered_multiupload_components
+      multiupload_components.map { |component| user_data[component.id] }.compact.reject { |c| c[component.id].all?(&:blank?) }
+    end
+
     def upload_components
       components = service.pages.map do |page|
         page.components&.select(&:upload?)
+      end
+      components.flatten.compact
+    end
+
+    def multiupload_components
+      components = service.pages.map do |page|
+        page.components&.select(&:multiupload?)
       end
       components.flatten.compact
     end
