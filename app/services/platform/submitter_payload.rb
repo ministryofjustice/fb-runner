@@ -113,7 +113,7 @@ module Platform
         }
       end
 
-      multiupload_attachments.flatten.concat(single_upload_attachments).flatten
+      multiupload_attachments.flatten.reject { |f| f[:filename].blank? }.concat(single_upload_attachments).flatten
     end
 
     private
