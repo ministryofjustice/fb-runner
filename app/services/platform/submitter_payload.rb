@@ -194,7 +194,7 @@ module Platform
     end
 
     def multiupload(answer)
-      answer[component.id].map { |i| i['original_filename'] }.join(', ')
+      answer.values.first.map { |i| i['original_filename'] }.join(', ')
     end
 
     def autocomplete(answer)
