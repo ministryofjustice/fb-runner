@@ -96,7 +96,7 @@ module Platform
 
     def attachments
       multiupload_attachments = answered_multiupload_components.map do |component|
-        component.values.first.map do | file |
+        component.values.first.map do |file|
           {
             url: file_download_url(file['fingerprint']),
             filename: file['original_filename'],
