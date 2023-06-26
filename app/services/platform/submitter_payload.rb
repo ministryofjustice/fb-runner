@@ -175,7 +175,7 @@ module Platform
     end
 
     def answered_multiupload_components
-      multiupload_components.map { |component| user_data[component.id] }.compact.reject { |c| c[component.id].all?(&:blank?) }
+      multiupload_components.map { |component| user_data[component.id] }.compact.reject { |c| c.values.first.all?(&:blank?) }
     end
 
     def upload_components
