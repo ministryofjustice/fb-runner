@@ -113,7 +113,7 @@ module Platform
         }
       end
 
-      multiupload_attachments + single_upload_attachments
+      multiupload_attachments.flatten.concat(single_upload_attachments).flatten
     end
 
     private
