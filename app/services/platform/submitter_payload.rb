@@ -100,6 +100,7 @@ module Platform
         component.map do |file|
           Rails.logger.info(file)
           return nil if file['original_filename'].blank?
+
           {
             url: file_download_url(file['fingerprint']),
             filename: file['original_filename'],
