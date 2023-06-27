@@ -96,7 +96,10 @@ module Platform
 
     def attachments
       multiupload_attachments = answered_multiupload_components.map do |component|
+        Rails.logger.info(component)
         component.map do |file|
+          Rails.logger.info(file)
+          return nil if file['original_filename'].blank?
           {
             url: file_download_url(file['fingerprint']),
             filename: file['original_filename'],
@@ -106,6 +109,7 @@ module Platform
       end
 
       single_upload_attachments = answered_upload_components.map do |component|
+        Rails.logger.info(component)
         {
           url: file_download_url(component['fingerprint']),
           filename: component['original_filename'],
