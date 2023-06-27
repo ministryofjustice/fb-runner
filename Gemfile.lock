@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: fed9b6d2970336bdf778ec4c7812853858eeb789
+  revision: fa0cd0ab67d3d9d3a066362d6f233b109c90826a
   branch: multi-file-upload
   specs:
     metadata_presenter (3.0.2)
@@ -276,7 +276,7 @@ GEM
       rspec-expectations (~> 3.12)
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
-    rspec-support (3.12.0)
+    rspec-support (3.12.1)
     rubocop (1.35.0)
       json (~> 2.3)
       parallel (~> 1.10)
