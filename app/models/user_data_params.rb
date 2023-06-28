@@ -20,7 +20,7 @@ class UserDataParams
         if uploaded_file.component.type == 'multiupload'
           # byebug
           # merge the uploaded file into the last file in the component
-          @answer_params[uploaded_file.component.id][-1] = 
+          @answer_params[uploaded_file.component.id][-1] =
             @page_answers.send(uploaded_file.component.id)[uploaded_file.component.id].last.merge(uploaded_file.file)
         else
           @answer_params[uploaded_file.component.id] =
