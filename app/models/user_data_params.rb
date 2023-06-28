@@ -15,9 +15,17 @@ class UserDataParams
 
   def set_uploaded_file_details
     if @page_answers.uploaded_files.present?
+      # byebug
       @page_answers.uploaded_files.map do |uploaded_file|
-        @answer_params[uploaded_file.component.id] =
-          @page_answers.send(uploaded_file.component.id).merge(uploaded_file.file)
+        if uploaded_file.component.type == 'multiupload'
+          # byebug
+          # merge the uploaded file into the last file in the component
+          @answer_params[uploaded_file.component.id][-1] = 
+            @page_answers.send(uploaded_file.component.id)[uploaded_file.component.id].last.merge(uploaded_file.file)
+        else
+          @answer_params[uploaded_file.component.id] =
+            @page_answers.send(uploaded_file.component.id).merge(uploaded_file.file)
+        end
       end
     end
   end
