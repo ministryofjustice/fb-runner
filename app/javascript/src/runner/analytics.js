@@ -1,32 +1,41 @@
-function accept (cookieName) {
+function accept(cookieName) {
   setAnalyticsCookie(cookieName, 'accepted')
   hideCookieMessage()
   window.location.replace(window.location.pathname+'?analytics=accepted')
 }
 
-function reject (cookieName) {
+function reject(cookieName) {
   setAnalyticsCookie(cookieName, 'rejected')
   removeAnalyticsCookies()
   hideCookieMessage()
   window.location.replace(window.location.pathname+'?analytics=rejected')
 }
 
-function setAnalyticsCookie (cookieName, cookieValue) {
+function setAnalyticsCookie(cookieName, cookieValue) {
   document.cookie = `${cookieName}=${cookieValue}; expires=${new Date(
     new Date().getTime() + 1000 * 60 * 60 * 24 * 365
   ).toUTCString()}; path=/`
 }
 
-function hideCookieMessage () {
-  document.getElementById('govuk-cookie-banner-message').style.display = 'none'
+function hideCookieMessage() {
+  const message = document.querySelector('[data-cookie-banner-element="message"]')
+  if(!message) return;
+
+  message.setAttribute('hidden', '')
 }
 
 function showMessage (messageType) {
-  document.getElementById(`govuk-cookie-banner-message-${messageType}`).style.display = 'block'
+  const message = document.querySelector(`[data-cookie-banner-element="message-${messageType}"]`);
+  if(!message) return;
+
+  message.removeAttribute('hidden');
 }
 
 function hideCookieBanner () {
-  document.getElementById('govuk-cookie-banner').style.display = 'none'
+  const banner = document.querySelector('[data-module="cookie-banner"]')
+  if(!banner) return;
+  
+  banner.setAttribute('hidden', '')
 }
 
 function removeAnalyticsCookies () {
