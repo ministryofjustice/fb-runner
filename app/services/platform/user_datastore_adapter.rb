@@ -94,7 +94,7 @@ module Platform
 
     def delete_file(component_id, file_id)
       save({}) do |all_answers|
-        answer = all_answers.[component_id]
+        answer = all_answers[component_id]
         if answer.is_a?(Hash)
           answer = {}
         else
