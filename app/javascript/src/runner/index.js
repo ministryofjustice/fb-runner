@@ -35,6 +35,22 @@ function initializeCookieBanner() {
   })
 }
 
+function initializeMultifileUploadPage() {
+  const addAnotherButton  = document.querySelector('[data-multiupload-element="add-another-file"]');
+  // const uploadFile  = document.querySelector('[data-multiupload-element="upload-another-file"]');
+
+  if(!addAnotherButton) return;
+  // if(!uploadFile) return;
+
+  addAnotherButton.addEventListener('click', function() {
+    window.multiupload.showFileUpload();
+  })
+
+  // uploadFile.addEventListener('click', function() {
+  //   window.multiupload.upload();
+  // })
+}
+
 /*
  * If the user has just accepted or rejected cookies show the confirmation
  * message in the cookie banner
@@ -90,4 +106,5 @@ contentLoaded(window, () => {
   supportGovUkContent();
   initializeCookieBanner();
   showAnalyticsConfirmationMessage();
+  initializeMultifileUploadPage();
 });
