@@ -94,6 +94,8 @@ module Platform
 
     def delete_file(component_id, file_id)
       save({}) do |all_answers|
+        answer = all_answers[component_id]
+
         if answer.is_a?(Hash)
           all_answers[component_id] = {} if answer['uuid'] == file_id
         else
