@@ -94,8 +94,12 @@ module Platform
 
     def delete_file(component_id, file_id)
       save({}) do |all_answers|
-        Rails.logger.info(all_answers)
-        all_answers.find(component_id).first.last.reject { |f| f['uuid'] == file_id }
+        answer = all_answers.[component_id]
+        if answer.is_a?(Hash)
+          answer = {}
+        else
+          answer.reject { |file| file['uuid'] == file_id }
+        end
       end
     end
 
