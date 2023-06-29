@@ -96,9 +96,9 @@ module Platform
       save({}) do |all_answers|
         answer = all_answers[component_id]
         if answer.is_a?(Hash)
-          answer = {}
+          all_answers[component_id] = {}
         else
-          answer.reject { |file| file['uuid'] == file_id }
+          all_answers[component_id].reject { |file| file['uuid'] == file_id }
         end
       end
     end
