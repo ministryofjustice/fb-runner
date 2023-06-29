@@ -15,11 +15,11 @@ gem 'metadata_presenter',
     github: 'ministryofjustice/fb-metadata-presenter',
     branch: 'multi-file-upload'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-# gem 'metadata_presenter', '3.0.1'
+# gem 'metadata_presenter', '3.0.8'
 
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
-gem 'rails', '7.0.4.3'
+gem 'rails', '7.0.5'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 5.8.0'
 gem 'sentry-ruby', '~> 5.8.0'

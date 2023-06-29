@@ -44,6 +44,11 @@ EXPOSE $APP_PORT
 
 USER ${UID}
 
+# Govuk Publishing Components gem requires these env vars to be set, however we
+# do not actually need to use them.
+ENV GOVUK_APP_DOMAIN ''
+ENV GOVUK_WEBSITE_ROOT ''
+
 ARG RAILS_ENV=production
 
 RUN gem install bundler

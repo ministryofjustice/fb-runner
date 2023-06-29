@@ -55,19 +55,23 @@ RSpec.describe Platform::SaveAndReturnPayload do
     ]
   end
   let(:expected_email_body) { 'Magic link: https://version-fixture.dev.test.form.service.justice.gov.uk/return/some-id' }
+  let(:service_slug) do
+    'version-fixture'
+  end
 
   before do
     allow(ENV).to receive(:[])
     allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL').and_return(email_body)
     allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
     allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
+    allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
   end
 
   describe '#to_h' do
     let(:service_payload) do
       {
         id: service.service_id,
-        slug: service.service_slug,
+        slug: ENV['SERVICE_SLUG'],
         name: service.service_name
       }
     end
