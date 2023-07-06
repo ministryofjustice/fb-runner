@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 12491cfb368979198d870a710b0732d63fc046a0
+  revision: 9ebfcfec992f6f710dbb48aa4c0af0a3e599c5dd
   branch: multi-file-upload
   specs:
     metadata_presenter (3.0.9)
@@ -92,7 +92,7 @@ GEM
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.68.0)
+    aws-sdk-kms (1.69.0)
       aws-sdk-core (~> 3, >= 3.176.0)
       aws-sigv4 (~> 1.1)
     aws-sdk-s3 (1.127.0)
@@ -173,7 +173,7 @@ GEM
       nokogiri (~> 1.12)
       rinku (~> 2.0)
       sanitize (~> 6)
-    govuk_app_config (8.1.1)
+    govuk_app_config (9.0.1)
       logstasher (~> 2.1)
       opentelemetry-exporter-otlp (~> 0.25.0)
       opentelemetry-instrumentation-all (~> 0.39.1)
@@ -193,7 +193,7 @@ GEM
     govuk_personalisation (0.13.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (35.9.0)
+    govuk_publishing_components (35.10.0)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -246,7 +246,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.2)
+    nokogiri (1.15.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     opentelemetry-api (1.1.0)

@@ -15,7 +15,7 @@ gem 'metadata_presenter',
     github: 'ministryofjustice/fb-metadata-presenter',
     branch: 'multi-file-upload'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-# gem 'metadata_presenter', '3.0.8'
+# gem 'metadata_presenter', '3.0.12'
 
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
