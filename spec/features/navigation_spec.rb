@@ -93,8 +93,6 @@ RSpec.feature 'Navigation' do
     and_I_upload_a_dog_picture
     then_I_should_be_on_the_next_file_input_page
     and_I_upload_more_dog_pictures
-    and_I_remove_an_upload
-    and_I_upload_more_dog_pictures
     and_I_continue_from_multifile_upload
     and_I_choose_a_country
     and_I_change_the_answer_for_dog_picture
@@ -254,8 +252,8 @@ RSpec.feature 'Navigation' do
     and_I_go_to_next_page
   end
 
-  def and_I_remove_an_upload
-    form.delete_file_link.click
+  def and_I_click_add_another_file
+    form.add_another_file.click
   end
 
   def and_I_continue_from_multifile_upload

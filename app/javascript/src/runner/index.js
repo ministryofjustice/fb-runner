@@ -42,7 +42,8 @@ function initializeMultifileUploadPage() {
   if(!addAnotherButton) return;
   // if(!uploadFile) return;
 
-  addAnotherButton.addEventListener('click', function() {
+  addAnotherButton.addEventListener('click', function(e) {
+    e.preventDefault();
     window.multiupload.showFileUpload();
   })
 

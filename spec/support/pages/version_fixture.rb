@@ -22,6 +22,7 @@ class VersionFixture < SitePrism::Page
   element :mando_name, :radio_button, 'Din Jarrin'
   element :country_field, :field, 'Countries'
   element :back_link, :link, 'Back'
+  element :add_another_file, :button, 'Add another file'
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
   elements :summary_list, '.govuk-summary-list__row'
@@ -53,10 +54,6 @@ class VersionFixture < SitePrism::Page
 
   def full_name_change_answer_link
     full_name_checkanswers.find('a')
-  end
-
-  def delete_file_link
-    page.find(:css, 'a', text: 'Delete')
   end
 
   def email_checkanswers
