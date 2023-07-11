@@ -222,6 +222,8 @@ module Platform
     end
 
     def multiupload(answer)
+      return '' if answer.nil?
+
       answer.values.first.map { |i| i['original_filename'] }.join(', ')
     end
 

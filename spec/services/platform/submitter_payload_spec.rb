@@ -39,6 +39,24 @@ RSpec.describe Platform::SubmitterPayload do
         'type' => 'image/jpg',
         'date' => 1_624_540_833
       },
+      'dog-picture_upload_2' => [{
+        'original_filename' => 'basset-hound.jpg',
+        'content_type' => 'image/jpg',
+        'tempfile' => upload_file.path,
+        'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+        'size' => 1_392_565,
+        'type' => 'image/jpg',
+        'date' => 1_624_540_833
+      },
+                                 {
+                                   'original_filename' => 'basset-hound.jpg',
+                                   'content_type' => 'image/jpg',
+                                   'tempfile' => upload_file.path,
+                                   'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+                                   'size' => 1_392_565,
+                                   'type' => 'image/jpg',
+                                   'date' => 1_624_540_833
+                                 }],
       'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}'
     }
   end
@@ -161,6 +179,16 @@ RSpec.describe Platform::SubmitterPayload do
             answer: 'basset-hound.jpeg',
             field_id: 'dog-picture_upload_1',
             field_name: 'Upload your best dog photo'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            answer: 'basset-hound.jpg, basset-hound.jpg',
+            field_id: 'dog-picture_upload_2',
+            field_name: 'Upload your best dog photos'
           }
         ]
       },
@@ -504,6 +532,16 @@ RSpec.describe Platform::SubmitterPayload do
           it 'sends the correct attachments object in the payload' do
             expect(submitter_payload.to_h[:attachments]).to eq(
               [
+                {
+                  url: 'https://www.yeah-baby.com/service/groovy/user/user-id-5b10c947cf32bd0558318e77eebc0995/28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+                  filename: 'basset-hound.jpg',
+                  mimetype: 'image/jpg'
+                },
+                {
+                  url: 'https://www.yeah-baby.com/service/groovy/user/user-id-5b10c947cf32bd0558318e77eebc0995/28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+                  filename: 'basset-hound.jpg',
+                  mimetype: 'image/jpg'
+                },
                 {
                   url: 'https://www.yeah-baby.com/service/groovy/user/user-id-5b10c947cf32bd0558318e77eebc0995/28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
                   filename: 'basset-hound.jpg',

@@ -55,6 +55,10 @@ class VersionFixture < SitePrism::Page
     full_name_checkanswers.find('a')
   end
 
+  def delete_file_link
+    page.find(:css, 'a', text: 'Delete')
+  end
+
   def email_checkanswers
     summary_list[1]
   end
