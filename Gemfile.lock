@@ -1,5 +1,7 @@
-PATH
-  remote: ../fb-metadata-presenter
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: 38a1014b173195deea70514264232cec5bfd0dd2
+  branch: multi-file-upload
   specs:
     metadata_presenter (3.0.12)
       govspeak (~> 7.1)
@@ -188,7 +190,7 @@ GEM
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       html-attributes-utils (~> 1)
-    govuk_personalisation (0.13.0)
+    govuk_personalisation (0.14.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
     govuk_publishing_components (35.10.0)
