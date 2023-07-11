@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 58135179977ddb7d8bb6d5619230de83702d0b5f
+  revision: 59e2be6564ba0b0aa09b92b1bb6300498c276d07
   branch: multi-file-upload
   specs:
     metadata_presenter (3.0.12)
@@ -173,7 +173,7 @@ GEM
       nokogiri (~> 1.12)
       rinku (~> 2.0)
       sanitize (~> 6)
-    govuk_app_config (9.0.1)
+    govuk_app_config (9.0.2)
       logstasher (~> 2.1)
       opentelemetry-exporter-otlp (~> 0.25.0)
       opentelemetry-instrumentation-all (~> 0.39.1)
@@ -447,7 +447,7 @@ GEM
     prometheus-client (2.1.0)
     prometheus_exporter (2.0.8)
       webrick
-    public_suffix (5.0.1)
+    public_suffix (5.0.3)
     puma (6.3.0)
       nio4r (~> 2.0)
     racc (1.7.1)
