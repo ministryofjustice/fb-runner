@@ -224,7 +224,7 @@ module Platform
     def multiupload(answer)
       return '' if answer.nil?
 
-      answer.values.first.map { |i| i['original_filename'] }.join('<br />')
+      answer.values.first.map { |i| i['original_filename'] }.join('\\n')
     end
 
     def autocomplete(answer)
