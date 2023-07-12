@@ -186,7 +186,7 @@ RSpec.describe Platform::SubmitterPayload do
         heading: '',
         answers: [
           {
-            answer: 'basset-hound.jpg\\nbasset-hound.jpg',
+            answer: 'basset-hound.jpg<br>basset-hound.jpg',
             field_id: 'dog-picture_upload_2',
             field_name: 'Upload your best dog photos'
           }
