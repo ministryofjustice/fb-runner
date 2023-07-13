@@ -37,19 +37,13 @@ function initializeCookieBanner() {
 
 function initializeMultifileUploadPage() {
   const addAnotherButton  = document.querySelector('[data-multiupload-element="add-another-file"]');
-  // const uploadFile  = document.querySelector('[data-multiupload-element="upload-another-file"]');
 
   if(!addAnotherButton) return;
-  // if(!uploadFile) return;
 
   addAnotherButton.addEventListener('click', function(e) {
     e.preventDefault();
     window.multiupload.showFileUpload();
   })
-
-  // uploadFile.addEventListener('click', function() {
-  //   window.multiupload.upload();
-  // })
 }
 
 /*
