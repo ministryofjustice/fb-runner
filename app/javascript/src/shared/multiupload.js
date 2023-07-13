@@ -10,9 +10,6 @@ function showFileUpload() {
   uploadFile.removeAttribute('hidden');
 }
 
-// function upload() {
-
-// }
 
 // So we can just access required functions from the window object
 window.multiupload = {

@@ -2,6 +2,7 @@ import TimeoutWarning from './timeout-warning.js'
 const {
   htmlAdjustment
 } = require('../shared/content');
+require('../shared/multiupload.js');
 
 const ENVIRONMENT_PREVIEW = "preview";
 const ENVIRONMENT_RUNNER = "runner";

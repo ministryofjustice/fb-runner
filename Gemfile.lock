@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: c94797fc9954f06d99ea8bed5f93722a06ba3a76
+  revision: b8b8166f9a93165f5c9ebe605abe2b2ce7eaa5ae
   branch: multi-file-upload
   specs:
     metadata_presenter (3.0.12)
@@ -185,7 +185,7 @@ GEM
       sentry-rails (~> 5.3)
       sentry-ruby (~> 5.3)
       statsd-ruby (~> 1.5)
-    govuk_design_system_formbuilder (4.0.0)
+    govuk_design_system_formbuilder (4.1.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)

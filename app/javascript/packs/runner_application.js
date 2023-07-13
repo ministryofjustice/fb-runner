@@ -10,7 +10,6 @@ import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
 require("@rails/ujs").start()
 require("../src/runner/contentloaded.js")
 require("../src/runner/analytics")
-require("../src/runner/multiupload")
 require("../src/runner/index")
 
 // Entry point for fb-editor stylesheets
