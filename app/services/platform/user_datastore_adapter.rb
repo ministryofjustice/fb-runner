@@ -96,6 +96,8 @@ module Platform
       save({}) do |all_answers|
         answer = all_answers[component_id]
 
+        return if answer.nil?
+
         if answer.is_a?(Hash)
           all_answers[component_id] = {} if answer['uuid'] == file_id
         else
