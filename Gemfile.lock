@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: b1a365581dd89dfc608efdd0dcd178edc37ca839
+  revision: 24b1afaf659ed82f008b1611fefc9476ac8b596d
   branch: multi-file-upload
   specs:
     metadata_presenter (3.0.15)
@@ -161,7 +161,7 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     google-protobuf (3.23.4)
-    googleapis-common-protos-types (1.6.0)
+    googleapis-common-protos-types (1.7.0)
       google-protobuf (~> 3.14)
     govspeak (7.1.1)
       actionview (>= 6)
@@ -426,7 +426,7 @@ GEM
       opentelemetry-common (~> 0.19.3)
       opentelemetry-instrumentation-base (~> 0.22.1)
       opentelemetry-instrumentation-rack (~> 0.21)
-    opentelemetry-instrumentation-trilogy (0.56.1)
+    opentelemetry-instrumentation-trilogy (0.56.2)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
       opentelemetry-semantic_conventions (>= 1.8.0)
