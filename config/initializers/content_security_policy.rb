@@ -11,10 +11,14 @@ Rails.application.configure do
     policy.img_src     :self, :https, :data
     policy.object_src  :none
     policy.script_src  :self,
-                       "https://www.googletagmanager.com/",
+                       "https://*.googletagmanager.com",
+                       "https://*.google-analytics.com",
                        "'sha256-/00WcN7mhsXVmNcOlHH44RbwXUP6oVtwcewj3ZTEcxY='",
                        "'sha256-6vsluniIV9AVB77S6y438x5foeFJFuwLLypiwVzYNbw='"
     policy.style_src   :self, :https
+    policy.connect_src "https://*.google-analytics.com",
+                       "https://*.analytics.google.com",
+                       "https://*.googletagmanager.com"
 
     # Specify URI for violation reports
       policy.report_uri "report-uri #{ENV['SENTRY_CSP_URL']}"
