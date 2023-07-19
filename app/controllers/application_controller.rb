@@ -210,4 +210,9 @@ class ApplicationController < ActionController::Base
     false
   end
   helper_method :editor_preview?
+
+  def confirmation_email_enabled?
+    ENV['CONFIRMATION_EMAIL_COMPONENT_ID'].present?
+  end
+  helper_method :confirmation_email_enabled?
 end
