@@ -16,9 +16,6 @@ Rails.application.configure do
                        "'sha256-/00WcN7mhsXVmNcOlHH44RbwXUP6oVtwcewj3ZTEcxY='",
                        "'sha256-6vsluniIV9AVB77S6y438x5foeFJFuwLLypiwVzYNbw='"
     policy.style_src   :self, :https
-    policy.connect_src "https://*.google-analytics.com",
-                       "https://*.analytics.google.com",
-                       "https://*.googletagmanager.com"
 
     # Specify URI for violation reports
       policy.report_uri "report-uri #{ENV['SENTRY_CSP_URL']}"
