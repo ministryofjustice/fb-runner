@@ -11,7 +11,8 @@ Rails.application.configure do
     policy.img_src     :self, :https, :data
     policy.object_src  :none
     policy.script_src  :self,
-                       "https://www.googletagmanager.com/",
+                       "https://*.googletagmanager.com",
+                       "https://*.google-analytics.com",
                        "'sha256-/00WcN7mhsXVmNcOlHH44RbwXUP6oVtwcewj3ZTEcxY='",
                        "'sha256-6vsluniIV9AVB77S6y438x5foeFJFuwLLypiwVzYNbw='"
     policy.style_src   :self, :https
@@ -21,8 +22,8 @@ Rails.application.configure do
   end
 #
 #   # Generate session nonces for permitted importmap and inline scripts
-  # config.content_security_policy_nonce_generator = ->(request) { request.session[:session_id] }
-  # config.content_security_policy_nonce_directives = %w(script-src)
+  config.content_security_policy_nonce_generator = ->(request) { request.session[:session_id] }
+  config.content_security_policy_nonce_directives = %w(script-src)
 #
 #   # Report violations without enforcing the policy.
     config.content_security_policy_report_only = true
