@@ -1,16 +1,16 @@
 function showFileUpload() {
   const addAnotherButton  = document.querySelector('[data-multiupload-element="add-another-file"]');
   const uploadFile  = document.querySelector('[data-multiupload-element="upload-another-file"]');
-  const fileInput = document.querySelector('input[type="file"]')
+  // const fileInput = document.querySelector('input[type="file"]')
 
   if(!addAnotherButton) return;
   if(!uploadFile) return;
 
   addAnotherButton.style.display = 'none'
   uploadFile.removeAttribute('hidden');
-  if(fileInput) {
-    setTimeout(fileInput.focus(), 0);
-  }
+  // if(fileInput) {
+  //   setTimeout(fileInput.focus(), 0);
+  // }
 }
 
 // So we can just access required functions from the window object
