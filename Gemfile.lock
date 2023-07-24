@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 4708bf95522aad59a4ab1eb54a3a58d22f83c648
+  revision: bb85b80dbe8efe2b89d4a1aa528da773e3ad352d
   branch: multi-file-upload
   specs:
     metadata_presenter (3.0.15)
@@ -86,7 +86,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.790.0)
+    aws-partitions (1.791.0)
     aws-sdk-core (3.178.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)

@@ -8,6 +8,7 @@ function showFileUpload() {
   // addAnotherButton.setAttribute('hidden', '');
   addAnotherButton.style.display = 'none'
   uploadFile.removeAttribute('hidden');
+  uploadFile.focus();
 }
 
 
