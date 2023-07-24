@@ -22,7 +22,7 @@ class VersionFixture < SitePrism::Page
   element :mando_name, :radio_button, 'Din Jarrin'
   element :country_field, :field, 'Countries'
   element :back_link, :link, 'Back'
-  element :add_another_file, :button, 'Add another file'
+  element :remove_multi_file, :link, 'thats-still-not-a-knife.txt', visible: false
   elements :error_summary_list, '.govuk-error-summary__list'
   elements :inline_error_messages, '.govuk-error-message'
   elements :summary_list, '.govuk-summary-list__row'
