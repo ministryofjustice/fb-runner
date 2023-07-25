@@ -95,13 +95,30 @@ module Platform
     end
 
     def attachments
-      answered_upload_components.map do |component|
+      multiupload_attachments = answered_multiupload_components.map do |component|
+        Rails.logger.info(component)
+        component.map do |file|
+          Rails.logger.info(file)
+          return nil if file['original_filename'].blank?
+
+          {
+            url: file_download_url(file['fingerprint']),
+            filename: file['original_filename'],
+            mimetype: file['type'] || file['content_type']
+          }
+        end
+      end
+
+      single_upload_attachments = answered_upload_components.map do |component|
+        Rails.logger.info(component)
         {
           url: file_download_url(component['fingerprint']),
           filename: component['original_filename'],
           mimetype: component['type'] || component['content_type']
         }
       end
+
+      multiupload_attachments.flatten.reject { |f| f[:filename].blank? }.concat(single_upload_attachments).flatten
     end
 
     private
@@ -162,9 +179,20 @@ module Platform
       upload_components.map { |component| user_data[component.id] }.compact.reject(&:blank?)
     end
 
+    def answered_multiupload_components
+      multiupload_components.map { |component| user_data[component.id] }.compact.reject { |c| c.all?(&:blank?) }
+    end
+
     def upload_components
       components = service.pages.map do |page|
         page.components&.select(&:upload?)
+      end
+      components.flatten.compact
+    end
+
+    def multiupload_components
+      components = service.pages.map do |page|
+        page.components&.select(&:multiupload?)
       end
       components.flatten.compact
     end
@@ -191,6 +219,12 @@ module Platform
 
     def upload(answer)
       answer['original_filename'] || ''
+    end
+
+    def multiupload(answer)
+      return '' if answer.nil?
+
+      answer.values.first.map { |i| i['original_filename'] }.join('; ')
     end
 
     def autocomplete(answer)

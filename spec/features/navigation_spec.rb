@@ -30,6 +30,14 @@ RSpec.feature 'Navigation' do
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
     and_I_upload_a_dog_picture
+    and_I_upload_more_dog_pictures
+    and_I_upload_even_more_dog_pictures
+    and_I_should_see_both_my_files
+    and_I_should_see_one_upload_remains
+    and_I_remove_excess_dog_pictures
+    and_I_should_see_only_one_file
+    and_I_should_see_two_uploads_remain
+    and_I_continue_from_multifile_upload
     and_I_choose_a_country
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
@@ -54,6 +62,9 @@ RSpec.feature 'Navigation' do
     and_I_add_my_star_wars_knowledge
     and_I_visit_the_how_many_lights_page
     and_I_upload_a_dog_picture
+    then_I_should_be_on_the_next_file_input_page
+    and_I_upload_more_dog_pictures
+    and_I_continue_from_multifile_upload
     then_I_should_be_on_the_countries_page
     and_I_choose_a_country
     and_I_check_that_my_answers_are_correct
@@ -86,6 +97,9 @@ RSpec.feature 'Navigation' do
   scenario 'when I change an answer on upload component' do
     and_I_go_to_dog_picture_page
     and_I_upload_a_dog_picture
+    then_I_should_be_on_the_next_file_input_page
+    and_I_upload_more_dog_pictures
+    and_I_continue_from_multifile_upload
     and_I_choose_a_country
     and_I_change_the_answer_for_dog_picture
     then_I_should_see_the_dog_picture_filename
@@ -184,6 +198,11 @@ RSpec.feature 'Navigation' do
     expect(page.current_url).to include('countries')
   end
 
+  def then_I_should_be_on_the_next_file_input_page
+    expect(page.current_url).to include('dog-picture-2')
+  end
+
+
   def then_I_should_be_on_the_check_your_answers_page
     expect(page.current_url).to include('check-answers')
   end
@@ -229,6 +248,51 @@ RSpec.feature 'Navigation' do
       'spec/fixtures/thats-not-a-knife.txt'
     )
     and_I_go_to_next_page
+  end
+
+  def and_I_upload_more_dog_pictures
+    attach_file(
+      'answers[dog-picture_upload_2]',
+      'spec/fixtures/thats-not-a-knife.txt'
+    )
+    and_I_go_to_next_page
+  end
+
+  def and_I_upload_even_more_dog_pictures
+    # leave it invisible so we don't need to load javascript
+    attach_file(
+      'answers[dog-picture_upload_2]',
+      'spec/fixtures/thats-still-not-a-knife.txt',
+      visible: false
+    )
+    and_I_go_to_next_page
+  end
+
+  def and_I_remove_excess_dog_pictures
+    form.remove_multi_file.click
+  end
+
+  def and_I_continue_from_multifile_upload
+    expect(form.heading.text).to eq('Upload your best dog photos')
+
+    and_I_go_to_next_page
+  end
+
+  def and_I_should_see_both_my_files
+    expect(page.text).to include('thats-not-a-knife-(1).txt')
+    expect(page.text).to include('thats-still-not-a-knife.txt')
+  end
+
+  def and_I_should_see_one_upload_remains
+    expect(page.text).to include('You can add 1 more file')
+  end
+
+  def and_I_should_see_only_one_file
+    expect(page.text).to include('thats-not-a-knife-(1).txt')
+  end
+
+  def and_I_should_see_two_uploads_remain
+    expect(page.text).to include('You can add 2 more files')
   end
 
   def and_I_choose_a_country

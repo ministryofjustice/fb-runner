@@ -2,6 +2,7 @@ import TimeoutWarning from './timeout-warning.js'
 const {
   htmlAdjustment
 } = require('../shared/content');
+require('../shared/multiupload.js');
 
 const ENVIRONMENT_PREVIEW = "preview";
 const ENVIRONMENT_RUNNER = "runner";
@@ -32,6 +33,17 @@ function initializeCookieBanner() {
       window.analytics.hideCookieBanner();
       return;
     }
+  })
+}
+
+function initializeMultifileUploadPage() {
+  const addAnotherButton  = document.querySelector('[data-multiupload-element="add-another-file"]');
+
+  if(!addAnotherButton) return;
+
+  addAnotherButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.multiupload.showFileUpload();
   })
 }
 
@@ -90,4 +102,5 @@ contentLoaded(window, () => {
   supportGovUkContent();
   initializeCookieBanner();
   showAnalyticsConfirmationMessage();
+  initializeMultifileUploadPage();
 });

@@ -4,7 +4,7 @@ end
 class UserData
   attr_reader :session
 
-  delegate :save, :load_data, :delete, to: :adapter
+  delegate :save, :load_data, :delete, :delete_file, to: :adapter
 
   def initialize(session, adapter: nil)
     @session = session

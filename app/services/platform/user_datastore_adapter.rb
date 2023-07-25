@@ -92,6 +92,20 @@ module Platform
       end
     end
 
+    def delete_file(component_id, file_id)
+      save({}) do |all_answers|
+        answer = all_answers[component_id]
+
+        return if answer.nil?
+
+        if answer.is_a?(Hash)
+          all_answers[component_id] = {} if answer['uuid'] == file_id
+        else
+          all_answers[component_id] = all_answers[component_id].reject { |file| file['uuid'] == file_id }
+        end
+      end
+    end
+
     private
 
     def url
