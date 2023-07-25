@@ -1,18 +1,3 @@
-GIT
-  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 7fb9a700da47c058fc1fa6c912b7345df0b7e507
-  branch: multi-file-upload
-  specs:
-    metadata_presenter (3.1.0)
-      govspeak (~> 7.1)
-      govuk_design_system_formbuilder (>= 2.1.5)
-      json-schema (= 2.8.1)
-      kramdown (>= 2.4.0)
-      rails (>= 7.0.0)
-      sassc-rails (= 2.1.2)
-      sprockets
-      sprockets-rails
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -86,8 +71,8 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.791.0)
-    aws-sdk-core (3.178.0)
+    aws-partitions (1.792.0)
+    aws-sdk-core (3.179.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
@@ -95,8 +80,8 @@ GEM
     aws-sdk-kms (1.71.0)
       aws-sdk-core (~> 3, >= 3.177.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.131.0)
-      aws-sdk-core (~> 3, >= 3.177.0)
+    aws-sdk-s3 (1.132.0)
+      aws-sdk-core (~> 3, >= 3.179.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.6)
     aws-sigv4 (1.6.0)
@@ -230,6 +215,15 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
+    metadata_presenter (3.1.0)
+      govspeak (~> 7.1)
+      govuk_design_system_formbuilder (>= 2.1.5)
+      json-schema (= 2.8.1)
+      kramdown (>= 2.4.0)
+      rails (>= 7.0.0)
+      sassc-rails (= 2.1.2)
+      sprockets
+      sprockets-rails
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.4)
@@ -636,7 +630,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter!
+  metadata_presenter (= 3.1.0)
   prometheus-client (~> 2.1.0)
   puma (~> 6.1)
   rails (= 7.0.5)
