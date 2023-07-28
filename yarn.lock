@@ -825,9 +825,9 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@rails/ujs@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.npmjs.org/@rails/ujs/-/ujs-7.0.4.tgz"
+"@rails/ujs@^7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.6.tgz#fd8937c92335f3da9495e07292511ad5f7547a6a"
 
 "@rails/webpacker@^5.4.3":
   version "5.4.4"
