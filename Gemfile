@@ -41,7 +41,7 @@ end
 group :development do
   gem 'dotenv-rails'
   gem 'listen', '~> 3.8'
-  gem 'rubocop', '~> 1.35.0'
+  gem 'rubocop', '~> 1.55.0'
   gem 'rubocop-govuk'
   gem 'spring', '~> 4.1.1'
   gem 'spring-watcher-listen', '~> 2.1.0'
