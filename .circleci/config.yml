@@ -236,7 +236,7 @@ workflows:
             branches:
               only:
                 - main
-                -rails-7-cleanup
+                - rails-7-cleanup
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
