@@ -215,4 +215,9 @@ class ApplicationController < ActionController::Base
     ENV['CONFIRMATION_EMAIL_COMPONENT_ID'].present?
   end
   helper_method :confirmation_email_enabled?
+
+  def confirmation_email
+    user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']] if confirmation_email_enabled?
+  end
+  helper_method :confirmation_email
 end
