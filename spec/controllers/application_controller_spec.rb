@@ -137,4 +137,41 @@ RSpec.describe ApplicationController do
       end
     end
   end
+
+  describe '#confirmation_email' do
+    before do
+      allow(ENV).to receive(:[])
+    end
+
+    context 'when confirmation email is not enabled' do
+      before do
+        allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(nil)
+      end
+
+      it 'confirmation_email_enabled? will return false' do
+        expect(controller.confirmation_email_enabled?).to be_falsey
+      end
+
+      it 'confirmation email is nil' do
+        expect(controller.confirmation_email).to be_nil
+      end
+    end
+
+    context 'when confirmation email is enabled' do
+      let(:session) { { 'user_data' => { 'email_email_1' => 'e@mail.com' } } }
+
+      before do
+        allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return('email_email_1')
+        allow(controller).to receive(:load_user_data).and_return(session)
+      end
+
+      it 'confirmation_email_enabled? will return true' do
+        expect(controller.confirmation_email_enabled?).to be_truthy
+      end
+
+      it 'confirmation email is being retrieved from the user data' do
+        expect(controller.confirmation_email).to eq('e@mail.com')
+      end
+    end
+  end
 end
