@@ -277,8 +277,6 @@ TimeoutWarning.prototype.disableBackButtonWhenOpen = function () {
   window.addEventListener('popstate', function () {
     if (module.isDialogOpen()) {
       module.modalDialog.close()
-    } else {
-      window.history.go(-1)
     }
   })
 }
