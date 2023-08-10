@@ -13,6 +13,8 @@ RSpec.feature 'Navigation' do
     and_I_add_my_email
     and_I_go_back
     then_I_should_see_my_email
+    and_I_use_the_skip_link
+    then_I_should_see_my_email
     and_I_go_back
     then_I_should_see_my_full_name
   end
@@ -137,6 +139,10 @@ RSpec.feature 'Navigation' do
 
   def and_I_remove_the_file
     click_link 'Remove file'
+  end
+
+  def and_I_use_the_skip_link
+    click_link 'Skip to main content', visible: false
   end
 
   def and_I_change_the_answer_for_dog_picture
