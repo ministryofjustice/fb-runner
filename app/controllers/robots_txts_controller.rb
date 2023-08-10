@@ -1,5 +1,5 @@
 class RobotsTxtsController < ApplicationController
-  skip_before_action :require_basic_auth, VerifySession
+  # skip_before_action :require_basic_auth, VerifySession
 
   def show
     if deny_all_crawlers?
