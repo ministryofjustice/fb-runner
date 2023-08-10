@@ -89,6 +89,8 @@ class ApplicationController < ActionController::Base
   end
 
   def create_submission
+    remove_user_data(ENV['CONFIRMATION_EMAIL_COMPONENT_ID']) if params['confirmation_email_optin'].blank?
+
     user_data = update_session_with_reference_number_if_enabled(session)
     # rubocop: disable Rails/SaveBang
     Platform::Submission.new(
