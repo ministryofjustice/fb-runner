@@ -162,7 +162,7 @@ RSpec.describe ApplicationController do
 
       before do
         allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return('email_email_1')
-        allow(controller).to receive(:load_user_data).and_return(session)
+        allow(controller).to receive(:load_user_data).and_return(session['user_data'])
       end
 
       it 'confirmation_email_enabled? will return true' do
