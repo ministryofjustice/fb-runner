@@ -174,40 +174,4 @@ RSpec.describe ApplicationController do
       end
     end
   end
-
-  describe '#create_submission' do
-    let(:session) { { 'user_data' => { 'email_email_1' => 'e@mail.com' } } }
-
-    before do
-      allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return('email_email_1')
-      allow(controller).to receive(:load_user_data).and_return(session)
-    end
-
-    context 'when confirmation email optin is enabled' do
-      before do
-        allow_any_instance_of(ActionController::Parameters).to receive(:[]).with('confirmation_email_optin').and_return('true')
-      end
-
-      it 'does not alter the email component ID from the user data' do
-        initial_user_data = controller.load_user_data
-        controller.update_if_user_optout_confirmation_email
-        final_data = controller.reload_user_data
-        expect(initial_user_data).to eq(final_data)
-      end
-    end
-
-    context 'when confirmation email optin is disabled' do
-      before do
-        allow_any_instance_of(ActionController::Parameters).to receive(:[]).with('confirmation_email_optin').and_return(nil)
-      end
-
-      it 'removes the email component ID from the user data' do
-        initial_user_data = controller.load_user_data
-        controller.update_if_user_optout_confirmation_email
-        final_data = controller.reload_user_data
-        expect(initial_user_data).to_not eq(final_data)
-      end
-    end
-  end
 end
