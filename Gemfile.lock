@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: c82fa3ef6bbabe49c9a46e07a3b5782eaa0db4ac
+  revision: 75a436870db7c03e086c192826fe1808169c4196
   branch: confirmation-email-data-risk
   specs:
-    metadata_presenter (3.2.3)
+    metadata_presenter (3.2.6)
       govspeak (~> 7.1)
       govuk_design_system_formbuilder (>= 2.1.5)
       json-schema (= 2.8.1)
