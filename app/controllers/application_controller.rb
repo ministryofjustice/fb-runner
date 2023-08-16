@@ -221,4 +221,9 @@ class ApplicationController < ActionController::Base
     load_user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']] if confirmation_email_enabled?
   end
   helper_method :confirmation_email
+
+  def is_confirmation_email_question?
+    ENV['CONFIRMATION_EMAIL_COMPONENT_ID'] == @page.metadata.components[0]['_id'] if confirmation_email_enabled?
+  end
+  helper_method :is_confirmation_email_question?
 end
