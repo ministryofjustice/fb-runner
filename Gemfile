@@ -15,7 +15,7 @@ gem 'fb-jwt-auth', '0.10.0'
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 's-and-r-date-fix'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.2.7'
+gem 'metadata_presenter', '3.2.8'
 
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
