@@ -90,6 +90,7 @@ class ApplicationController < ActionController::Base
 
   def create_submission
     user_data = update_session_with_reference_number_if_enabled(session)
+
     # rubocop: disable Rails/SaveBang
     Platform::Submission.new(
       service:,
@@ -210,4 +211,19 @@ class ApplicationController < ActionController::Base
     false
   end
   helper_method :editor_preview?
+
+  def confirmation_email_enabled?
+    ENV['CONFIRMATION_EMAIL_COMPONENT_ID'].present?
+  end
+  helper_method :confirmation_email_enabled?
+
+  def confirmation_email
+    load_user_data[ENV['CONFIRMATION_EMAIL_COMPONENT_ID']] if confirmation_email_enabled?
+  end
+  helper_method :confirmation_email
+
+  def is_confirmation_email_question?
+    ENV['CONFIRMATION_EMAIL_COMPONENT_ID'] == @page.metadata.components[0]['_id'] if confirmation_email_enabled?
+  end
+  helper_method :is_confirmation_email_question?
 end
