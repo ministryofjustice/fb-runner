@@ -222,8 +222,10 @@ TimeoutWarning.prototype.startUiCountdown = function () {
       }
 
       if (!timerRunOnce) {
-        $accessibleCountdown.innerText = atText + $module.timerExtraText
-        timerRunOnce = true
+        setTimeout(() => { // Ensures text is read out just after modal opens
+          $accessibleCountdown.innerText = atText + ' ' + $module.timerExtraText
+          timerRunOnce = true
+        }, 1000)
       } else if (secondsLeft % 15 === 0) {
         // Update screen reader friendly content every 15 secs
         $accessibleCountdown.innerText = atText
