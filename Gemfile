@@ -15,7 +15,7 @@ gem 'fb-jwt-auth', '0.10.0'
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 'disclaimer-multiple-email'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.2.9'
+gem 'metadata_presenter', '3.2.10'
 
 gem 'prometheus-client', '~> 2.1.0'
 gem 'puma', '~> 6.1'
