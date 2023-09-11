@@ -13,8 +13,4 @@ class AwsS3Client
   def s3
     @s3 ||= Aws::S3::Client.new(region: REGION)
   end
-
-  def credentials
-    Aws::Credentials.new(ENV['ACCESS_KEY_ID'], ENV['SECRET_ACCESS_KEY'])
-  end
 end
