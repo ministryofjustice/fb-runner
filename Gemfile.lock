@@ -228,7 +228,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.4)
-    minitest (5.19.0)
+    minitest (5.20.0)
     msgpack (1.7.2)
     multipart-post (2.3.0)
     net-imap (0.3.7)
@@ -560,10 +560,10 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
-    sentry-rails (5.10.0)
+    sentry-rails (5.11.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.10.0)
-    sentry-ruby (5.10.0)
+      sentry-ruby (~> 5.11.0)
+    sentry-ruby (5.11.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -647,8 +647,8 @@ DEPENDENCIES
   rubocop (~> 1.55.0)
   rubocop-govuk
   sass-rails (>= 6)
-  sentry-rails (~> 5.10.0)
-  sentry-ruby (~> 5.10.0)
+  sentry-rails (~> 5.11.0)
+  sentry-ruby (~> 5.11.0)
   simplecov
   simplecov-console
   site_prism (= 4.0)
