@@ -18,7 +18,7 @@ gem 'fb-jwt-auth', '0.10.0'
 gem 'metadata_presenter', '3.2.10'
 
 gem 'prometheus-client', '~> 2.1.0'
-gem 'puma', '~> 6.1'
+gem 'puma', '~> 6.4'
 gem 'rails', '7.0.5'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 5.11.0'
