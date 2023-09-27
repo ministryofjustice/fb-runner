@@ -18,7 +18,8 @@ Rails.application.configure do
     policy.style_src   :self, :https
 
     # Specify URI for violation reports
-      policy.report_uri "report-uri #{ENV['SENTRY_CSP_URL']}"
+    #  Currently disabled to prevent sentry overload
+      # policy.report_uri "report-uri #{ENV['SENTRY_CSP_URL']}"
   end
 #
 #   # Generate session nonces for permitted importmap and inline scripts
