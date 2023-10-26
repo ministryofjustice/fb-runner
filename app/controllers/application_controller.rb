@@ -207,6 +207,13 @@ class ApplicationController < ActionController::Base
     ENV['SERVICE_SLUG']
   end
 
+  def infinite_session_form?
+    if ENV['BYPASS_SESSION_RESET'].present?
+      ENV['BYPASS_SESSION_RESET'] == 'true'
+    end
+    false
+  end
+
   def editor_preview?
     false
   end

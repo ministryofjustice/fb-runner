@@ -1,5 +1,11 @@
 class VerifySession
   def self.before(controller)
+    # as a custom measure we have a configurable list of forms where exit pages do no reset sessions
+    if controller.infinite_session_form?
+      controller.session[:expire_after] = controller.class::SESSION_DURATION
+      controller.session[:expires_at] = Time.zone.now + controller.class::SESSION_DURATION
+      return
+    end
     # if the user has just submitted their form we reset the session
     # if they try to visit any page other than the homepage, redirect them to submission complete page
     if controller.flash[:submission_completed].present?
