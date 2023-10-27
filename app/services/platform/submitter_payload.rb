@@ -131,14 +131,11 @@ module Platform
         to: ENV['SERVICE_EMAIL_OUTPUT'],
         from: default_email_from,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
-        email_body: submission_email_body,
+        email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
+        user_answers: answers_html(pages),
         include_attachments: true,
         include_pdf: true
       }
-    end
-
-    def submission_email_body
-      concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']) + answers_html(pages)
     end
 
     def csv_action
