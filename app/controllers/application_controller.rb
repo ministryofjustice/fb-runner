@@ -210,8 +210,9 @@ class ApplicationController < ActionController::Base
   def infinite_session_form?
     if ENV['BYPASS_SESSION_RESET'].present?
       ENV['BYPASS_SESSION_RESET'] == 'true'
+    else
+      false
     end
-    false
   end
 
   def editor_preview?
