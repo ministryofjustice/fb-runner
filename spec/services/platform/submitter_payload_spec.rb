@@ -242,12 +242,8 @@ RSpec.describe Platform::SubmitterPayload do
     let(:email_subject) do
       'All info about middle earth characters'
     end
-    let(:env_email_body) do
-      'Please find attached Elfs info!'
-    end
-    let(:email_body) do
-      "Please find attached Elfs info!#{answers_html}"
-    end
+    let(:email_body) { 'Please find attached Elfs info!' }
+    let(:user_answers) { answers_html }
     let(:env_confirmation_email_body) do
       'Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl'
     end
@@ -262,7 +258,7 @@ RSpec.describe Platform::SubmitterPayload do
       allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_FROM').and_return(email_from)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
-      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(env_email_body)
+      allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
       allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT').and_return(confirmation_email_subject)
       allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(env_confirmation_email_body)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_HEADING').and_return(pdf_heading)
@@ -286,6 +282,7 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_default_email_from,
             subject: email_subject,
             email_body:,
+            user_answers:,
             include_pdf: true,
             include_attachments: true
           },
@@ -575,6 +572,7 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_default_email_from,
               subject: email_subject,
               email_body:,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             },
@@ -619,6 +617,7 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_default_email_from,
               subject: email_subject,
               email_body:,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             }
@@ -694,6 +693,7 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_default_email_from,
               subject: email_subject,
               email_body:,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             },
@@ -818,6 +818,7 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_default_email_from,
             subject: email_subject,
             email_body:,
+            user_answers: answers_html,
             include_pdf: true,
             include_attachments: true
           },
