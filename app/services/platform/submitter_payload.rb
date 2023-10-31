@@ -160,14 +160,11 @@ module Platform
         to: confirmation_email_answer,
         from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
-        email_body: confirmation_email_body,
+        email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
+        user_answers: answers_html(pages),
         include_attachments: true,
         include_pdf: true
       }
-    end
-
-    def confirmation_email_body
-      inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']) + answers_html(pages)
     end
 
     def strip_content_components(components)

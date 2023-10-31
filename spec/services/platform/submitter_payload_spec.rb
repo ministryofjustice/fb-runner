@@ -239,20 +239,11 @@ RSpec.describe Platform::SubmitterPayload do
       'Version Fixture <reply_to@digital.justice.gov.uk>'
     end
     let(:default_email_address) { Platform::SubmitterPayload::DEFAULT_EMAIL_ADDRESS }
-    let(:email_subject) do
-      'All info about middle earth characters'
-    end
+    let(:email_subject) { 'All info about middle earth characters' }
     let(:email_body) { 'Please find attached Elfs info!' }
     let(:user_answers) { answers_html }
-    let(:env_confirmation_email_body) do
-      'Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl'
-    end
-    let(:confirmation_email_body) do
-      "Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl#{answers_html}"
-    end
-    let(:service_slug) do
-      'version-fixture'
-    end
+    let(:confirmation_email_body) { 'Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl' }
+    let(:service_slug) { 'version-fixture' }
 
     before do
       allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
@@ -260,7 +251,7 @@ RSpec.describe Platform::SubmitterPayload do
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
       allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT').and_return(confirmation_email_subject)
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(env_confirmation_email_body)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(confirmation_email_body)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_HEADING').and_return(pdf_heading)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_SUBHEADING').and_return(pdf_subheading)
       allow(subject).to receive(:answers_html).and_return(answers_html)
@@ -301,6 +292,7 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_email_from,
             subject: confirmation_email_subject,
             email_body: confirmation_email_body,
+            user_answers:,
             include_pdf: true,
             include_attachments: true
           },
@@ -591,6 +583,7 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_email_from,
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             }
@@ -641,6 +634,7 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_email_from,
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             }
@@ -703,6 +697,7 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_email_from,
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             }
@@ -773,11 +768,11 @@ RSpec.describe Platform::SubmitterPayload do
     context 'payment links' do
       let(:payment_link) { 'http://www.mustafa.com/vader-tax?reference=' }
       let(:dummy_reference) { '1234-ABC-567' }
-      let(:env_confirmation_email_body) do
+      let(:confirmation_email_body) do
         'some email body {{payment_link}}'
       end
       let(:expected_confirmation_email_body) do
-        "some email body #{payment_link}#{dummy_reference}#{answers_html}"
+        "some email body #{payment_link}#{dummy_reference}"
       end
       let(:expected_actions) do
         [
@@ -787,6 +782,7 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_email_from,
             subject: confirmation_email_subject,
             email_body: expected_confirmation_email_body,
+            user_answers: answers_html,
             include_pdf: true,
             include_attachments: true
           }
@@ -837,6 +833,7 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_email,
             subject: confirmation_email_subject,
             email_body: confirmation_email_body,
+            user_answers: answers_html,
             include_pdf: true,
             include_attachments: true
           }
