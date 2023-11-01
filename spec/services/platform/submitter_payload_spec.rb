@@ -283,6 +283,7 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
             email_body: '',
+            user_answers:,
             include_pdf: false,
             include_attachments: true
           },
@@ -574,6 +575,7 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_default_email_from,
               subject: "CSV - #{email_subject}",
               email_body: '',
+              user_answers: answers_html,
               include_pdf: false,
               include_attachments: true
             },
@@ -824,6 +826,7 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
             email_body: '',
+            user_answers: answers_html,
             include_pdf: false,
             include_attachments: true
           },
