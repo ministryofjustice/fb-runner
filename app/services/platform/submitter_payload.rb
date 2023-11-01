@@ -147,7 +147,7 @@ module Platform
         from: default_email_from,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
         email_body: '',
-        user_answers: answers_html(pages),
+        user_answers: '',
         include_attachments: true,
         include_pdf: false
       }
