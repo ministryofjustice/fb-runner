@@ -1,3 +1,18 @@
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: 78afe26f100885ad82ac994843c32e7a3a312991
+  branch: bump-json-schema
+  specs:
+    metadata_presenter (3.3.0)
+      govspeak (~> 7.1)
+      govuk_design_system_formbuilder (>= 2.1.5)
+      json-schema (~> 4.1.1)
+      kramdown (>= 2.4.0)
+      rails (>= 7.0.0)
+      sassc-rails (= 2.1.2)
+      sprockets
+      sprockets-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -145,7 +160,7 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    google-protobuf (3.24.4)
+    google-protobuf (3.25.0)
     googleapis-common-protos-types (1.9.0)
       google-protobuf (~> 3.18)
     govspeak (7.1.1)
@@ -178,7 +193,7 @@ GEM
     govuk_personalisation (0.15.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (35.21.0)
+    govuk_publishing_components (35.21.2)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -194,8 +209,8 @@ GEM
       concurrent-ruby (~> 1.0)
     jmespath (1.6.2)
     json (2.6.3)
-    json-schema (2.8.1)
-      addressable (>= 2.4)
+    json-schema (4.1.1)
+      addressable (>= 2.8)
     jwt (2.7.1)
     kramdown (2.4.0)
       rexml
@@ -216,15 +231,6 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
-    metadata_presenter (3.2.11)
-      govspeak (~> 7.1)
-      govuk_design_system_formbuilder (>= 2.1.5)
-      json-schema (= 2.8.1)
-      kramdown (>= 2.4.0)
-      rails (>= 7.0.0)
-      sassc-rails (= 2.1.2)
-      sprockets
-      sprockets-rails
     method_source (1.0.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
@@ -272,7 +278,7 @@ GEM
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
       ruby2_keywords
-    opentelemetry-instrumentation-active_support (0.4.3)
+    opentelemetry-instrumentation-active_support (0.4.4)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-all (0.50.1)
@@ -340,7 +346,7 @@ GEM
       opentelemetry-api (~> 1.0)
       opentelemetry-common (~> 0.20.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-grape (0.1.4)
+    opentelemetry-instrumentation-grape (0.1.5)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
       opentelemetry-instrumentation-rack (~> 0.21)
@@ -642,7 +648,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter (= 3.2.11)
+  metadata_presenter!
   prometheus-client (~> 2.1.0)
   puma (~> 6.4)
   rails (= 7.0.5)
