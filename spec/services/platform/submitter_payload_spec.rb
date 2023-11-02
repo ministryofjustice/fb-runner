@@ -295,7 +295,7 @@ RSpec.describe Platform::SubmitterPayload do
             email_body: confirmation_email_body,
             user_answers:,
             include_pdf: true,
-            include_attachments: true
+            include_attachments: false
           },
           {
             kind: 'json',
@@ -587,7 +587,7 @@ RSpec.describe Platform::SubmitterPayload do
               email_body: confirmation_email_body,
               user_answers: answers_html,
               include_pdf: true,
-              include_attachments: true
+              include_attachments: false
             }
           ]
         end
@@ -638,7 +638,7 @@ RSpec.describe Platform::SubmitterPayload do
               email_body: confirmation_email_body,
               user_answers: answers_html,
               include_pdf: true,
-              include_attachments: true
+              include_attachments: false
             }
           ]
         end
@@ -701,7 +701,7 @@ RSpec.describe Platform::SubmitterPayload do
               email_body: confirmation_email_body,
               user_answers: answers_html,
               include_pdf: true,
-              include_attachments: true
+              include_attachments: false
             }
           ]
         end
@@ -786,7 +786,7 @@ RSpec.describe Platform::SubmitterPayload do
             email_body: expected_confirmation_email_body,
             user_answers: answers_html,
             include_pdf: true,
-            include_attachments: true
+            include_attachments: false
           }
         ]
       end
@@ -838,7 +838,7 @@ RSpec.describe Platform::SubmitterPayload do
             email_body: confirmation_email_body,
             user_answers: answers_html,
             include_pdf: true,
-            include_attachments: true
+            include_attachments: false
           }
         ]
       end
