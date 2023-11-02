@@ -163,7 +163,7 @@ module Platform
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
         email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
         user_answers: answers_html(pages),
-        include_attachments: true,
+        include_attachments: false,
         include_pdf: true
       }
     end
