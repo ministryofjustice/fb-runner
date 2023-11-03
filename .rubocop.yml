@@ -32,7 +32,7 @@ Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: no_comma
 
 Metrics/BlockLength:
-  IgnoredMethods: ['describe', 'context', 'let']
+  AllowedMethods: ['describe', 'context', 'let']
 
 Rails/FilePath:
   EnforcedStyle: arguments

@@ -132,6 +132,7 @@ module Platform
         from: default_email_from,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
         email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
+        user_answers: answers_html(pages),
         include_attachments: true,
         include_pdf: true
       }
@@ -146,6 +147,7 @@ module Platform
         from: default_email_from,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
         email_body: '',
+        user_answers: '',
         include_attachments: true,
         include_pdf: false
       }
@@ -159,14 +161,11 @@ module Platform
         to: confirmation_email_answer,
         from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
-        email_body: confirmation_email_body,
-        include_attachments: true,
+        email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
+        user_answers: answers_html(pages),
+        include_attachments: false,
         include_pdf: true
       }
-    end
-
-    def confirmation_email_body
-      inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']) + answers_html(pages)
     end
 
     def strip_content_components(components)
