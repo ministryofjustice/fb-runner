@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 29a5f1394e6df5ae17e6d97b6655e9db895e9adc
+  revision: 01eb4d88b2acdb2e8ed4d7eba917ef7677b3dbeb
   branch: bump-json-schema
   specs:
     metadata_presenter (3.3.0)
