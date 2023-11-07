@@ -3,21 +3,21 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.3'
 
+# Metadata presenter - if you need to be on development you can uncomment
+# one of these lines:
+# gem 'metadata_presenter',
+#     github: 'ministryofjustice/fb-metadata-presenter',
+#     branch: 'bump-json-schema'
+# gem 'metadata_presenter', path: '../fb-metadata-presenter'
+gem 'metadata_presenter', '3.3.0'
+
+gem 'prometheus-client', '~> 4.1.0'
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
 gem 'faraday_middleware'
-gem 'jwt'
-# Metadata presenter - if you need to be on development you can uncomment
-# one of these lines:
 gem 'fb-jwt-auth', '0.10.0'
-# gem 'metadata_presenter',
-#     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'conditional-content-fixture'
-# gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.2.11'
-
-gem 'prometheus-client', '~> 4.1.0'
+gem 'jwt'
 gem 'puma', '~> 6.4'
 gem 'rails', '7.0.5'
 gem 'sass-rails', '>= 6'
