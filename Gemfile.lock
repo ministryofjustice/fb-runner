@@ -641,8 +641,8 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  prometheus-client (~> 4.1.0)
   metadata_presenter (= 3.3.0)
+  prometheus-client (~> 4.1.0)
   puma (~> 6.4)
   rails (= 7.0.5)
   rails-controller-testing
