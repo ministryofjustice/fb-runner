@@ -553,6 +553,46 @@ RSpec.describe Platform::SubmitterPayload do
           end
         end
       end
+
+      context 'when an answer generates an unhandled exception' do
+        subject(:submitter_payload) do
+          described_class.new(
+            service:,
+            user_data: user_data.merge(
+              {
+                'holiday_date_1(3i)' => '29', # non-leap year
+                'holiday_date_1(2i)' => '02',
+                'holiday_date_1(1i)' => '2023'
+              }
+            ),
+            session:
+          )
+        end
+
+        let(:answers) { submitter_payload.to_h }
+        let(:sentry_scope) { instance_double(Sentry::Scope) }
+
+        before do
+          allow(Sentry).to receive(:configure_scope).and_yield(sentry_scope)
+        end
+
+        it 'adds additional context for Sentry' do
+          expect(
+            sentry_scope
+          ).to receive(:set_context).with(
+            'answer_for',
+            {
+              component_type: 'date',
+              component_id: 'holiday_date_1',
+              answer: instance_of(MetadataPresenter::DateField)
+            }
+          )
+
+          expect {
+            answers
+          }.to raise_error(Date::Error, 'invalid date')
+        end
+      end
     end
 
     describe '#actions' do
