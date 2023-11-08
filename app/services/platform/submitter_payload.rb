@@ -95,7 +95,7 @@ module Platform
         send(component_type, answer)
       rescue StandardError
         Sentry.configure_scope do |scope|
-          scope.set_context('answer_for', { component_type:, component_id:, answer: })
+          scope.set_context('answer_for', { component_type:, component_id:, answer: answer.inspect })
         end
 
         raise # re-raise the exception

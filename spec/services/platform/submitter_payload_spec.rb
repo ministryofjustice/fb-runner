@@ -584,7 +584,7 @@ RSpec.describe Platform::SubmitterPayload do
             {
               component_type: 'date',
               component_id: 'holiday_date_1',
-              answer: instance_of(MetadataPresenter::DateField)
+              answer: /@day="29", @month="02", @year="2023"/
             }
           )
 
