@@ -81,12 +81,24 @@ module Platform
 
     def answer_for(page, component)
       page_answers = MetadataPresenter::PageAnswers.new(page, user_data)
-      answer = page_answers.send(component.id)
 
-      if self.class.private_method_defined?(component.type.to_sym)
-        send(component.type.to_sym, answer)
-      else
-        answer&.strip
+      component_type = component.type
+      component_id = component.id
+
+      answer = page_answers.send(component_id)
+
+      return answer&.strip unless self.class.private_method_defined?(component_type)
+
+      begin
+        # For component types like `date`, `checkboxes`, etc.
+        # we call private methods having the same name as the type
+        send(component_type, answer)
+      rescue StandardError
+        Sentry.configure_scope do |scope|
+          scope.set_context('answer_for', { component_type:, component_id:, answer: answer.inspect })
+        end
+
+        raise # re-raise the exception
       end
     end
 
