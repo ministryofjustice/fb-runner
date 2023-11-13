@@ -14,6 +14,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     {
       'Authorization' => 'Bearer some-token',
       'x-access-token-v2' => 'some-token',
+      'X-Request-Id' => '12345',
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
       'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -44,6 +45,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       }
     }
   end
+  let(:request_double) { double(request_id: '12345') }
   let(:empty_payload) do
     JSON.generate({ payload: data_encryption.encrypt('{}') })
   end
@@ -53,6 +55,8 @@ RSpec.describe Platform::UserDatastoreAdapter do
   let(:saved_form_data_encryption) { DataEncryption.new(key: saved_forms_encryption_key) }
 
   before do
+    session.instance_variable_set(:@req, request_double)
+
     allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)
       .and_return(service_access_token)
 

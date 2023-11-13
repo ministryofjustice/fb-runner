@@ -72,7 +72,7 @@ module Platform
     end
 
     def request_id
-      session.instance_variable_get(:@req).request_id
+      session.instance_variable_get(:@req).try(:request_id)
     end
 
     def error_message(exception)

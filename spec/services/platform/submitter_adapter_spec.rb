@@ -18,6 +18,7 @@ RSpec.describe Platform::SubmitterAdapter do
       user_token: '648f6ae5d954373e85769165acf23a9a'
     }
   end
+  let(:request_double) { double(request_id: '12345') }
   let(:service_secret) { '499bed391d8d3c937421c4254a0d2b0e' }
 
   describe '#save' do
@@ -31,6 +32,7 @@ RSpec.describe Platform::SubmitterAdapter do
       {
         'Authorization' => 'Bearer some-token',
         'x-access-token-v2' => 'some-token',
+        'X-Request-Id' => '12345',
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
         'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -56,6 +58,8 @@ RSpec.describe Platform::SubmitterAdapter do
 
     shared_context 'request to submitter' do
       before do
+        session.instance_variable_set(:@req, request_double)
+
         expect(Fb::Jwt::Auth::ServiceAccessToken).to receive(:new)
           .with(issuer: 'lotr', subject: jwt_subject)
           .and_return(service_access_token)
