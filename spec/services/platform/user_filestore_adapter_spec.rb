@@ -33,10 +33,12 @@ RSpec.describe Platform::UserFilestoreAdapter do
       'Authorization' => 'Bearer',
       'Content-Type' => 'application/json',
       'User-Agent' => 'Runner',
+      'X-Request-Id' => '12345',
       'X-Access-Token-V2' => ''
     }
   end
   let(:session) { { user_id: 'bassetthegodfather' } }
+  let(:request_double) { double(request_id: '12345') }
   let(:expected_url) do
     "#{root_url}/service/#{service_slug}/user/#{session[:user_id]}"
   end
@@ -44,6 +46,8 @@ RSpec.describe Platform::UserFilestoreAdapter do
   let(:response_status) { 201 }
 
   before do
+    session.instance_variable_set(:@req, request_double)
+
     allow(Platform::UserFilestorePayload).to receive(:new).with(
       session:,
       file_details:,

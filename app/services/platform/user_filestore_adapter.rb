@@ -46,8 +46,8 @@ module Platform
       SUBSCRIPTION
     end
 
-    def timeout
-      30
+    def read_timeout
+      45
     end
 
     def payload
