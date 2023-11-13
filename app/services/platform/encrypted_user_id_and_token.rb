@@ -5,7 +5,7 @@ module Platform
 
       DataEncryption.new(
         key: service_secret
-      ).encrypt("#{user_id}#{session[:user_token]}")
+      ).encrypt("#{session[:user_id]}#{session[:user_token]}")
     end
   end
 end

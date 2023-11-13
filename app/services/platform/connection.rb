@@ -1,10 +1,16 @@
 module Platform
   module Connection
+    DEFAULT_OPEN_TIMEOUT = 10
+    DEFAULT_READ_TIMEOUT = 30
+
+    private
+
     def headers
       {
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
         'User-Agent' => 'Runner',
+        'X-Request-Id' => request_id,
         # Datastore still uses the v2 access token from service token cache
         'x-access-token-v2' => service_access_token
       }
@@ -16,9 +22,12 @@ module Platform
         conn.response :json
         conn.response :raise_error
         conn.use :instrumentation, name: subscription
-        conn.options[:open_timeout] = timeout
-        conn.options[:timeout] = timeout
-        conn.options[:read_timeout] = timeout
+
+        # Number of seconds to wait for the connection to open
+        conn.options.open_timeout = open_timeout
+
+        # Number of seconds to wait for one block to be read
+        conn.options.read_timeout = read_timeout
 
         # Submitter uses the v3 access token from service token cache
         conn.request :authorization, 'Bearer', service_access_token
@@ -44,6 +53,14 @@ module Platform
     end
     alias_method :user_id, :subject
 
+    def open_timeout
+      DEFAULT_OPEN_TIMEOUT
+    end
+
+    def read_timeout
+      DEFAULT_READ_TIMEOUT
+    end
+
     def request(verb, url, body)
       connection.send(verb, url, body, headers)
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
@@ -52,6 +69,10 @@ module Platform
       raise Platform::ResourceNotFound, error_message(e)
     rescue StandardError => e
       raise Platform::ClientError, e
+    end
+
+    def request_id
+      session.instance_variable_get(:@req).request_id
     end
 
     def error_message(exception)
