@@ -145,8 +145,8 @@ GEM
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (3.25.0)
-    googleapis-common-protos-types (1.9.0)
+    google-protobuf (3.25.1)
+    googleapis-common-protos-types (1.10.0)
       google-protobuf (~> 3.18)
     govspeak (7.1.1)
       actionview (>= 6)
@@ -178,7 +178,7 @@ GEM
     govuk_personalisation (0.15.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (35.21.2)
+    govuk_publishing_components (35.21.4)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -216,7 +216,7 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
-    metadata_presenter (3.3.0)
+    metadata_presenter (3.3.2)
       govspeak (~> 7.1)
       govuk_design_system_formbuilder (>= 2.1.5)
       json-schema (~> 4.1.1)
@@ -641,7 +641,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter (= 3.3.0)
+  metadata_presenter (= 3.3.2)
   prometheus-client (~> 4.1.0)
   puma (~> 6.4)
   rails (= 7.0.5)
