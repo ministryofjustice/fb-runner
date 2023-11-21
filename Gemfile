@@ -5,11 +5,11 @@ ruby '3.1.3'
 
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-# gem 'metadata_presenter',
-#     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'bump-json-schema'
+gem 'metadata_presenter',
+    github: 'ministryofjustice/fb-metadata-presenter',
+    branch: 'missing-upload-validators'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.3.2'
+# gem 'metadata_presenter', '3.3.2'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
