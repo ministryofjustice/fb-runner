@@ -13,6 +13,7 @@ module Platform
     attr_reader :session, :root_url, :service_slug
 
     SUBSCRIPTION = 'filestore.upload'.freeze
+    READ_TIMEOUT = 90 # seconds
 
     def initialize(
       session:,
@@ -47,7 +48,7 @@ module Platform
     end
 
     def read_timeout
-      45
+      READ_TIMEOUT
     end
 
     def payload

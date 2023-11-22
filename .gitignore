@@ -47,3 +47,4 @@ package-lock.json
 coverage/
 
 results.bin
+.env.local

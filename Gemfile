@@ -7,9 +7,9 @@ ruby '3.1.3'
 # one of these lines:
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'bump-json-schema'
+#     branch: 'missing-upload-validators'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.3.2'
+gem 'metadata_presenter', '3.3.3'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
