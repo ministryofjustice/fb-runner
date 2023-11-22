@@ -271,7 +271,6 @@ workflows:
             branches:
               only:
                 - main
-                - bump-metadata-presenter
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
