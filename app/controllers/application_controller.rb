@@ -50,17 +50,6 @@ class ApplicationController < ActionController::Base
 
   def user_data_params
     UserDataParams.new(@page_answers).answers
-  rescue ActionController::UnfilteredParameters
-    # rubocop:disable Style/RescueModifier
-    Sentry.set_context(
-      'debug', {
-        answers_keys: (@page_answers.answers.keys rescue nil),
-        uploaded_files: (@page_answers.uploaded_files.size rescue nil)
-      }
-    )
-    # rubocop:enable Style/RescueModifier
-
-    raise # re-raise
   end
 
   def load_user_data
