@@ -35,7 +35,7 @@ class UserDataParams
       rescue ActionController::UnfilteredParameters => e
         Sentry.set_context(
           'debug', {
-            file: ActiveSupport::ParameterFilter.new([:tempfile, :filename]).filter(file).inspect
+            file: ActiveSupport::ParameterFilter.new(%i[tempfile filename]).filter(file).inspect
           }
         )
         Sentry.capture_exception(e)
