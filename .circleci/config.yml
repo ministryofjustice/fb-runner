@@ -271,6 +271,7 @@ workflows:
             branches:
               only:
                 - main
+                - unfiltered-params
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
