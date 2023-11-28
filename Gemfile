@@ -43,7 +43,7 @@ group :development do
   gem 'listen', '~> 3.8'
   gem 'rubocop', '~> 1.55.0'
   gem 'rubocop-govuk'
-  gem 'spring', '~> 4.1.1'
+  gem 'spring', '~> 4.1.3'
   gem 'spring-watcher-listen', '~> 2.1.0'
   gem 'web-console', '>= 3.3.0'
 end
