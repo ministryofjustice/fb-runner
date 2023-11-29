@@ -5,11 +5,11 @@ ruby '3.1.3'
 
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-gem 'metadata_presenter',
-    github: 'ministryofjustice/fb-metadata-presenter',
-    branch: 'unfiltered-params'
+# gem 'metadata_presenter',
+#     github: 'ministryofjustice/fb-metadata-presenter',
+#     branch: 'unfiltered-params'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-# gem 'metadata_presenter', '3.3.3'
+gem 'metadata_presenter', '3.3.4'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -17,12 +17,12 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
-gem 'prometheus-client', '~> 4.1.0'
+gem 'prometheus-client', '~> 4.2.0'
 gem 'puma', '~> 6.4'
 gem 'rails', '7.0.5'
 gem 'sass-rails', '>= 6'
-gem 'sentry-rails', '~> 5.12.0'
-gem 'sentry-ruby', '~> 5.12.0'
+gem 'sentry-rails', '~> 5.14'
+gem 'sentry-ruby', '~> 5.14'
 gem 'webpacker', '~> 5.4'
 
 group :development, :test do
@@ -33,7 +33,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'simplecov-console'
-  gem 'site_prism', '4.0'
+  gem 'site_prism', '< 5.0'
   gem 'timecop'
   gem 'webmock'
 end
