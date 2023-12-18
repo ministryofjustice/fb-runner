@@ -15,6 +15,27 @@ RSpec.describe LoadServiceMetadata do
       }
     end
 
+    context 'when there is an aws client error' do
+      let(:asset_precompile) { true }
+      let(:service_id) { SecureRandom.uuid }
+      let(:file_body) do
+        File.read(
+          MetadataPresenter::Engine.root.join('fixtures', 'service.json')
+        )
+      end
+
+      before do
+        allow_any_instance_of(AwsS3Client).to receive(:get_object)
+          .with(load_service_metadata.object_key)
+          .and_raise(Aws::S3::Errors::ServiceError.new(nil, ''))
+      end
+
+      it 'sends a sentry error' do
+        expect(Sentry).to receive(:capture_exception)
+        load_service_metadata.to_h
+      end
+    end
+
     context 'when there is no service id present' do
       context 'when service metadata is present' do
         let(:service_metadata) do
