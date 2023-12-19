@@ -402,4 +402,44 @@ RSpec.describe Platform::UserDatastoreAdapter do
       end
     end
   end
+
+  describe '#delete_file' do
+    let(:existing_answers) { { 'component_id' => { 'uuid' => file_to_delete_id } } }
+    let(:file_to_delete_id) { SecureRandom.uuid }
+    let(:params) { {} }
+    let(:expected_body) do
+      JSON.generate(
+        {
+          payload: data_encryption.encrypt({'component_id' => {}}.merge(params).to_json)
+        }
+      )
+    end
+
+    before do
+      expect(adapter).to receive(:load_data).and_return(existing_answers)
+      stub_request(:post, expected_url)
+        .with(body: expected_body, headers: expected_headers)
+        .to_return(status: 200, body: expected_body, headers: {})
+    end
+
+    context 'single file upload' do
+      it 'removes the file' do
+        expect(adapter.delete_file('component_id', file_to_delete_id).body).to eq(JSON.parse(expected_body))
+      end
+    end
+
+    context 'multi file upload' do
+      let(:existing_answers) { { 'component_id' => [{ 'uuid' => file_to_delete_id }, { 'uuid' => '123' }] } }
+      let(:expected_body) do
+        JSON.generate(
+          {
+            payload: data_encryption.encrypt({'component_id' => [{ 'uuid' => '123'}]}.merge(params).to_json)
+          }
+        )
+      end
+      it 'removes the file and preserves others' do
+        expect(adapter.delete_file('component_id', file_to_delete_id).body).to eq(JSON.parse(expected_body))
+      end
+    end
+  end
 end

@@ -188,3 +188,9 @@ RSpec.describe ConfirmationEmailHelper do
     end
   end
 end
+
+describe 'coverage test' do
+  it 'returns styles not mocked' do
+    expect(helper.styles).to be_truthy
+  end
+end
