@@ -118,6 +118,49 @@ RSpec.describe ApplicationController do
       end
     end
 
+    describe '#save_form_progress' do
+      let(:save_progress) { double }
+
+      it 'calls save progress' do
+        expect(SavedProgress).to receive(:new).and_return(save_progress)
+        expect(save_progress).to receive(:save_progress)
+        controller.save_form_progress
+      end
+    end
+
+    describe '#get_saved_progress' do
+      let(:save_progress) { double }
+      let(:uuid) { SecureRandom.uuid }
+
+      it 'calls get_saved_progress' do
+        expect(SavedProgress).to receive(:new).and_return(save_progress)
+        expect(save_progress).to receive(:get_saved_progress).with(uuid)
+        controller.get_saved_progress(uuid)
+      end
+    end
+
+    describe '#increment_record_counter' do
+      let(:save_progress) { double }
+      let(:uuid) { SecureRandom.uuid }
+
+      it 'calls increment_record_counter' do
+        expect(SavedProgress).to receive(:new).and_return(save_progress)
+        expect(save_progress).to receive(:increment_record_counter).with(uuid)
+        controller.increment_record_counter(uuid)
+      end
+    end
+
+    describe '#invalidate_record' do
+      let(:save_progress) { double }
+      let(:uuid) { SecureRandom.uuid }
+
+      it 'calls invalidate_record' do
+        expect(SavedProgress).to receive(:new).and_return(save_progress)
+        expect(save_progress).to receive(:invalidate).with(uuid)
+        controller.invalidate_record(uuid)
+      end
+    end
+
     describe '#service_slug_config' do
       context 'when service slug is present' do
         before do
@@ -135,6 +178,34 @@ RSpec.describe ApplicationController do
           expect(controller.service_slug_config).to be_nil
         end
       end
+    end
+  end
+
+  describe 'helpers' do
+    let(:session) { { 'user_data' => { 'moj_forms_reference_number' => '123' } } }
+    let(:payment_link) { 'hello.payment.com' }
+
+    before do
+      allow(ENV).to receive(:[])
+      allow(controller).to receive(:load_user_data).and_return(session['user_data'])
+      allow(controller).to receive(:allowed_page?).and_return(true)
+    end
+
+    it 'should show_reference_number' do
+      expect(controller.show_reference_number).to eq('123')
+    end
+
+    it 'should return payment_link_url' do
+      allow(ENV).to receive(:[]).with('PAYMENT_LINK').and_return(payment_link)
+      expect(controller.payment_link_url).to eq("#{payment_link}123")
+    end
+
+    it 'responds to in_progress?' do
+      expect(controller.in_progress?).to eq(true)
+    end
+
+    it 'is not in preview mode' do
+      expect(controller.editor_preview?).to eq(false)
     end
   end
 
