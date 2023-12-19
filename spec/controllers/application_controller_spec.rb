@@ -139,27 +139,27 @@ RSpec.describe ApplicationController do
       end
     end
 
-  describe '#increment_record_counter' do
-    let(:save_progress) { double }
-    let(:uuid) { SecureRandom.uuid }
+    describe '#increment_record_counter' do
+      let(:save_progress) { double }
+      let(:uuid) { SecureRandom.uuid }
 
-    it 'calls increment_record_counter' do
-      expect(SavedProgress).to receive(:new).and_return(save_progress)
-      expect(save_progress).to receive(:increment_record_counter).with(uuid)
-      controller.increment_record_counter(uuid)
+      it 'calls increment_record_counter' do
+        expect(SavedProgress).to receive(:new).and_return(save_progress)
+        expect(save_progress).to receive(:increment_record_counter).with(uuid)
+        controller.increment_record_counter(uuid)
+      end
     end
-  end
 
-  describe '#invalidate_record' do
-    let(:save_progress) { double }
-    let(:uuid) { SecureRandom.uuid }
+    describe '#invalidate_record' do
+      let(:save_progress) { double }
+      let(:uuid) { SecureRandom.uuid }
 
-    it 'calls invalidate_record' do
-      expect(SavedProgress).to receive(:new).and_return(save_progress)
-      expect(save_progress).to receive(:invalidate).with(uuid)
-      controller.invalidate_record(uuid)
+      it 'calls invalidate_record' do
+        expect(SavedProgress).to receive(:new).and_return(save_progress)
+        expect(save_progress).to receive(:invalidate).with(uuid)
+        controller.invalidate_record(uuid)
+      end
     end
-  end
 
     describe '#service_slug_config' do
       context 'when service slug is present' do
@@ -197,7 +197,7 @@ RSpec.describe ApplicationController do
 
     it 'should return payment_link_url' do
       allow(ENV).to receive(:[]).with('PAYMENT_LINK').and_return(payment_link)
-      expect(controller.payment_link_url).to eq(payment_link + '123')
+      expect(controller.payment_link_url).to eq("#{payment_link}123")
     end
 
     it 'responds to in_progress?' do

@@ -1,6 +1,7 @@
 RSpec.describe SavedProgress do
   subject(:user_data) { described_class.new(session, adapter:) }
   let(:session) { {} }
+  # rubocop:disable Lint/ConstantDefinitionInBlock
   let(:adapter) do
     class MyCustomAdapter
       def initialize(session); end
@@ -20,6 +21,7 @@ RSpec.describe SavedProgress do
 
     MyCustomAdapter
   end
+  # rubocop:enable Lint/ConstantDefinitionInBlock
   let(:params) { { some_question: 'some_answer' } }
 
   describe '#adapter' do

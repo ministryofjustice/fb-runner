@@ -410,7 +410,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     let(:expected_body) do
       JSON.generate(
         {
-          payload: data_encryption.encrypt({'component_id' => {}}.merge(params).to_json)
+          payload: data_encryption.encrypt({ 'component_id' => {} }.merge(params).to_json)
         }
       )
     end
@@ -433,7 +433,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       let(:expected_body) do
         JSON.generate(
           {
-            payload: data_encryption.encrypt({'component_id' => [{ 'uuid' => '123'}]}.merge(params).to_json)
+            payload: data_encryption.encrypt({ 'component_id' => [{ 'uuid' => '123' }] }.merge(params).to_json)
           }
         )
       end
