@@ -90,7 +90,7 @@ module Platform
       return answer&.strip unless self.class.private_method_defined?(component_type)
 
       begin
-        # For component types like `date`, `checkboxes`, etc.
+        # For component types like `date`, `checkboxes`, `address`, etc.
         # we call private methods having the same name as the type
         send(component_type, answer)
       rescue StandardError
@@ -222,6 +222,10 @@ module Platform
         Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),
         format: '%d %B %Y'
       )
+    end
+
+    def address(answer)
+      answer.to_a.join(', ')
     end
 
     def checkboxes(answer)
