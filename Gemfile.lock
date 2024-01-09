@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: d4f77254a6d9d48a411808236f916d827c92ac36
+  revision: bbf79755a28926328fd3bcd1aeb43debed23ff2c
   branch: address-component
   specs:
     metadata_presenter (3.3.8)
@@ -160,7 +160,7 @@ GEM
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (3.25.1)
+    google-protobuf (3.25.2)
     googleapis-common-protos-types (1.11.0)
       google-protobuf (~> 3.18)
     govspeak (7.1.1)
@@ -193,7 +193,7 @@ GEM
     govuk_personalisation (0.15.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (37.1.1)
+    govuk_publishing_components (37.2.1)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -451,7 +451,7 @@ GEM
       racc
     plek (5.0.0)
     prometheus-client (4.2.2)
-    prometheus_exporter (2.0.8)
+    prometheus_exporter (2.1.0)
       webrick
     public_suffix (5.0.4)
     puma (6.4.0)
