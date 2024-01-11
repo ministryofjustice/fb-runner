@@ -201,6 +201,16 @@ RSpec.describe Platform::SubmitterPayload do
             field_name: 'Countries'
           }
         ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            answer: 'United Kingdom',
+            field_id: 'postal-address_address_1',
+            field_name: 'Address question'
+          }
+        ]
       }
     ]
   end

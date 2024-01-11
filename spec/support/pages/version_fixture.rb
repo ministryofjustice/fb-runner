@@ -30,6 +30,9 @@ class VersionFixture < SitePrism::Page
   element :confirmation_heading, '.govuk-panel__title'
   data_content_id :confirmation_lede, 'page[lede]'
   data_content_id :confirmation_body, 'page[body]'
+  element :address_line_one_field, :field, 'Address line 1'
+  element :city_field, :field, 'Town or city'
+  element :postcode_field, :field, 'Postcode'
 
   def error_summary
     error_summary_list.map(&:text)

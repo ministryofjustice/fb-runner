@@ -41,6 +41,7 @@ RSpec.feature 'Navigation' do
     and_I_should_see_two_uploads_remain
     and_I_continue_from_multifile_upload
     and_I_choose_a_country
+    and_I_choose_an_address
     and_I_check_that_my_answers_are_correct
     and_I_change_my_full_name_answer
     then_I_should_see_my_changed_full_name_on_check_your_answers
@@ -69,6 +70,8 @@ RSpec.feature 'Navigation' do
     and_I_continue_from_multifile_upload
     then_I_should_be_on_the_countries_page
     and_I_choose_a_country
+    then_I_should_be_on_the_address_page
+    and_I_choose_an_address
     and_I_check_that_my_answers_are_correct
     and_I_send_my_application
     then_I_should_see_the_confirmation_message
@@ -103,6 +106,7 @@ RSpec.feature 'Navigation' do
     and_I_upload_more_dog_pictures
     and_I_continue_from_multifile_upload
     and_I_choose_a_country
+    and_I_choose_an_address
     and_I_change_the_answer_for_dog_picture
     then_I_should_see_the_dog_picture_filename
     and_I_go_to_next_page
@@ -348,6 +352,18 @@ RSpec.feature 'Navigation' do
 
   def then_I_should_see_the_dog_picture_filename
     expect(form.text).to include('thats-not-a-knife.txt')
+  end
+
+  def then_I_should_be_on_the_address_page
+    expect(page.current_url).to include('postal-address')
+  end
+
+  def and_I_choose_an_address
+    expect(form.heading.text).to eq('Address question')
+    form.address_line_one_field.set('99 road')
+    form.city_field.set('Wondercity')
+    form.postcode_field.set('999')
+    and_I_go_to_next_page
   end
 end
 
