@@ -224,6 +224,10 @@ module Platform
       )
     end
 
+    def address(answer)
+      answer.to_a.join('; ')
+    end
+
     def checkboxes(answer)
       answer.to_a.join('; ')
     end

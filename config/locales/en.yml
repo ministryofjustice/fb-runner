@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activemodel:
+    errors:
+      messages:
+        blank: "Your answer for ‘%{attribute}’ cannot be blank."

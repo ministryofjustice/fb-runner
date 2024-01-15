@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 48a92fa6706ced261e93d355e509cf58f2a39663
+  revision: 1dd1896303db76ce8811657ad1856938dd093163
   branch: address-component
   specs:
     metadata_presenter (3.3.8)
@@ -81,7 +81,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.5)
+    addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     ansi (1.5.0)
     ast (2.4.2)
@@ -193,7 +193,7 @@ GEM
     govuk_personalisation (0.15.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (37.2.1)
+    govuk_publishing_components (37.2.2)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -235,20 +235,20 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
-    minitest (5.20.0)
+    minitest (5.21.1)
     msgpack (1.7.2)
     multipart-post (2.3.0)
-    net-imap (0.4.7)
+    net-imap (0.4.9.1)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0)
+    net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
-    nokogiri (1.15.5)
+    nokogiri (1.16.0)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     opentelemetry-api (1.2.3)
@@ -454,7 +454,7 @@ GEM
     prometheus_exporter (2.1.0)
       webrick
     public_suffix (5.0.4)
-    puma (6.4.0)
+    puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (2.2.8)
@@ -571,10 +571,10 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
-    sentry-rails (5.14.0)
+    sentry-rails (5.16.1)
       railties (>= 5.0)
-      sentry-ruby (~> 5.14.0)
-    sentry-ruby (5.14.0)
+      sentry-ruby (~> 5.16.1)
+    sentry-ruby (5.16.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     simplecov (0.22.0)
       docile (~> 1.1)
