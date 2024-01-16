@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 1dd1896303db76ce8811657ad1856938dd093163
+  revision: 9e475efab40e4d54f4d111a8702ac6acc172b37a
   branch: address-component
   specs:
     metadata_presenter (3.3.8)
@@ -116,7 +116,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.2.3)
     crack (0.4.5)
       rexml
     crass (1.0.6)
