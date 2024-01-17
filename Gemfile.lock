@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 9e475efab40e4d54f4d111a8702ac6acc172b37a
-  branch: address-component
+  revision: 844023ae3808bbb35284c7a5586ff08bda84c02e
+  branch: address-postcode-validation
   specs:
     metadata_presenter (3.3.8)
       govspeak (~> 7.1)
@@ -12,6 +12,7 @@ GIT
       sassc-rails (= 2.1.2)
       sprockets
       sprockets-rails
+      uk_postcode
 
 GEM
   remote: https://rubygems.org/
@@ -611,6 +612,7 @@ GEM
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uk_postcode (2.1.8)
     unicode-display_width (2.5.0)
     web-console (4.2.1)
       actionview (>= 6.0.0)

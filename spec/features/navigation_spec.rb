@@ -308,7 +308,7 @@ RSpec.feature 'Navigation' do
   def and_I_choose_a_country
     expect(form.heading.text).to eq('Countries')
     # Picks the first one in the list by default
-    form.country_field.select('Afghanistan')
+    form.countries.select('Afghanistan')
     # form.find('Afghanistan', visible: true).first.click
     and_I_go_to_next_page
   end
@@ -359,10 +359,11 @@ RSpec.feature 'Navigation' do
   end
 
   def and_I_choose_an_address
-    expect(form.heading.text).to eq('Address question')
+    expect(form.heading.text).to eq('Confirm your postal address')
     form.address_line_one_field.set('99 road')
     form.city_field.set('Wondercity')
-    form.postcode_field.set('999')
+    form.postcode_field.set('SW1H 9EA')
+    form.country_field.set('England')
     and_I_go_to_next_page
   end
 end

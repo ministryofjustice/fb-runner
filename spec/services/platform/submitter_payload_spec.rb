@@ -208,7 +208,7 @@ RSpec.describe Platform::SubmitterPayload do
           {
             answer: 'United Kingdom',
             field_id: 'postal-address_address_1',
-            field_name: 'Address question'
+            field_name: 'Confirm your postal address'
           }
         ]
       }
