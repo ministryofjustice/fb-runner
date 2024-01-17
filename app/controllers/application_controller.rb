@@ -226,4 +226,28 @@ class ApplicationController < ActionController::Base
     ENV['CONFIRMATION_EMAIL_COMPONENT_ID'] == component_id if confirmation_email_enabled?
   end
   helper_method :is_confirmation_email_question?
+
+  def first_page?
+    @page.url == service.pages[1].url
+  end
+  helper_method :first_page?
+
+  def use_external_start_page?
+    ENV['EXTERNAL_START_PAGE_URL'].present?
+  end
+  helper_method :use_external_start_page?
+
+  def external_start_page_url
+    if ENV['EXTERNAL_START_PAGE_URL'].blank?
+      ''
+    else
+      # ensure url is absolute - we limit to only gov.uk urls which will be https
+      unless ENV['EXTERNAL_START_PAGE_URL'][/\Ahttps:\/\//]
+        return "https://#{ENV['EXTERNAL_START_PAGE_URL']}"
+      end
+
+      ENV['EXTERNAL_START_PAGE_URL']
+    end
+  end
+  helper_method :external_start_page_url
 end
