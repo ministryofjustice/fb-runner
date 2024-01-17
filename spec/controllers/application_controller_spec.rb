@@ -269,7 +269,7 @@ RSpec.describe ApplicationController do
         before do
           controller.instance_eval { @page = OpenStruct.new(url: 'name') }
         end
-  
+
         it 'is page 1' do
           expect(controller.first_page?).to eq(true)
         end
