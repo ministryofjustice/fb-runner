@@ -360,10 +360,7 @@ RSpec.feature 'Navigation' do
 
   def and_I_choose_an_address
     expect(form.heading.text).to eq('Confirm your postal address')
-    form.address_line_one_field.set('99 road')
-    form.city_field.set('Wondercity')
-    form.postcode_field.set('SW1H 9EA')
-    form.country_field.set('England')
+    and_I_fill_in_address
     and_I_go_to_next_page
   end
 end

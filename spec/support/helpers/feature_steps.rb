@@ -37,6 +37,10 @@ module FeatureSteps
     visit '/dog-picture'
   end
 
+  def and_I_go_to_postal_address_page
+    visit '/postal-address'
+  end
+
   def when_I_visit_the_service
     form.load
     form.start_button.click
@@ -64,5 +68,12 @@ module FeatureSteps
       form.confirmation_body.text.gsub('’', "'") # shrug
     ).to eq('Some day I will be the most powerful Jedi ever!')
     expect(form.text).not_to include('Optional lede')
+  end
+
+  def and_I_fill_in_address
+    form.address_line_one_field.set('99 road')
+    form.city_field.set('Wondercity')
+    form.postcode_field.set('SW1H 9EA')
+    form.country_field.set('England')
   end
 end
