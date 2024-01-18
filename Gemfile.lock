@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 844023ae3808bbb35284c7a5586ff08bda84c02e
+  revision: 1ce2a36a6958377e394ceb016b190fa07182b01a
   branch: address-postcode-validation
   specs:
     metadata_presenter (3.3.8)
@@ -194,7 +194,7 @@ GEM
     govuk_personalisation (0.15.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (37.2.2)
+    govuk_publishing_components (37.2.3)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
