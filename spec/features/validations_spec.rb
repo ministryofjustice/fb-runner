@@ -206,14 +206,14 @@ RSpec.feature 'Navigation' do
 
   def then_I_should_see_that_I_should_add_my_postcode
     then_I_should_see_the_error_message(
-      'Enter an answer for "Postcode" of "Confirm your postal address"'
+      'Enter postcode for "Confirm your postal address"'
     )
   end
 
 
   def then_I_should_see_that_I_should_add_a_valid_postcode
     then_I_should_see_the_error_message(
-      'Enter a full UK postcode for "Confirm your postal address"'
+      'Enter a valid UK postcode for "Confirm your postal address"'
     )
   end
 end
