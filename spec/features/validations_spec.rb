@@ -78,6 +78,22 @@ RSpec.feature 'Navigation' do
     then_I_should_see_that_I_should_add_a_dog_picture
   end
 
+  scenario 'when mandatory fields are empty and the address is required' do
+    and_I_go_to_postal_address_page
+    and_I_fill_in_address
+    form.postcode_field.set('')
+    and_I_go_to_next_page
+    then_I_should_see_that_I_should_add_my_postcode
+  end
+
+  scenario 'when postcode format is invalid' do
+    and_I_go_to_postal_address_page
+    and_I_fill_in_address
+    form.postcode_field.set('SW1H')
+    and_I_go_to_next_page
+    then_I_should_see_that_I_should_add_a_valid_postcode
+  end
+
   def and_I_left_my_name_blank
     form.full_name_field.set('')
     and_I_go_to_next_page
@@ -185,6 +201,19 @@ RSpec.feature 'Navigation' do
   def then_I_should_see_choose_a_checkbox
     then_I_should_see_the_error_message(
       'Enter an answer for "What would you like on your burger?"'
+    )
+  end
+
+  def then_I_should_see_that_I_should_add_my_postcode
+    then_I_should_see_the_error_message(
+      'Enter postcode for "Confirm your postal address"'
+    )
+  end
+
+
+  def then_I_should_see_that_I_should_add_a_valid_postcode
+    then_I_should_see_the_error_message(
+      'Enter a valid UK postcode for "Confirm your postal address"'
     )
   end
 end
