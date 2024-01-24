@@ -652,11 +652,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-<<<<<<< HEAD
   metadata_presenter!
-=======
-  metadata_presenter (= 3.3.9)
->>>>>>> 5d038047f78a7009dacd490a0f3c42defcf6485a
   prometheus-client (~> 4.2.0)
   puma (~> 6.4)
   rails (= 7.0.5)
