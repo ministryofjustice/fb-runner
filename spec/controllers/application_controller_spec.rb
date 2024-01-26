@@ -254,6 +254,21 @@ RSpec.describe ApplicationController do
 
         expect(controller.external_start_page_url).to eq('https://my-example.com')
       end
+
+      context 'start page url'do
+        # it 'is root path if external url not set' do
+        #   allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('')
+
+        #   expect(controller.start_page_url).to eq('/')
+        # end
+
+        it 'is url if external url set' do
+          allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('gov.uk')
+
+          expect(controller.start_page_url).to eq('https://gov.uk')
+        end
+
+      end
     end
 
     context 'first page?' do
