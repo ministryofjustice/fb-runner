@@ -37,7 +37,7 @@ class LoadAutocompleteItems
   def valid_metadata?(metadata)
     return if metadata.blank?
 
-    metadata.each do |_, items|
+    metadata.each_value do |items|
       MetadataPresenter::ValidateSchema.validate(items, 'definition.select')
     end
   end

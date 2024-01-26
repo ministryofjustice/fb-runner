@@ -207,6 +207,88 @@ RSpec.describe ApplicationController do
     it 'is not in preview mode' do
       expect(controller.editor_preview?).to eq(false)
     end
+
+    context 'external start page' do
+      context 'is not using external start page' do
+        before do
+          allow(ENV).to receive(:[])
+          allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('')
+        end
+
+        it 'returns false' do
+          expect(controller.use_external_start_page?).to eq(false)
+        end
+      end
+
+      context 'is using external start page' do
+        before do
+          allow(ENV).to receive(:[])
+          allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('external_url.com')
+        end
+
+        it 'returns true' do
+          expect(controller.use_external_start_page?).to eq(true)
+        end
+      end
+    end
+
+    context 'external start page url' do
+      before do
+        allow(ENV).to receive(:[])
+      end
+
+      it 'is blank if not set' do
+        allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('')
+
+        expect(controller.external_start_page_url).to eq('')
+      end
+
+      it 'is prepended https if not set' do
+        allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('example.com')
+
+        expect(controller.external_start_page_url).to eq('https://example.com')
+      end
+
+      it 'is returned set' do
+        allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('https://my-example.com')
+
+        expect(controller.external_start_page_url).to eq('https://my-example.com')
+      end
+
+      context 'start page url' do
+        # it 'is root path if external url not set' do
+        #   allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('')
+
+        #   expect(controller.start_page_url).to eq('/')
+        # end
+
+        it 'is url if external url set' do
+          allow(ENV).to receive(:[]).with('EXTERNAL_START_PAGE_URL').and_return('gov.uk')
+
+          expect(controller.start_page_url).to eq('https://gov.uk')
+        end
+      end
+    end
+
+    context 'first page?' do
+      before do
+        controller.instance_eval { @page = OpenStruct.new(url: '/page1') }
+      end
+
+      it 'is not page 1' do
+        expect(controller.first_page?).to eq(false)
+      end
+
+      context 'it is page 1' do
+        before do
+          controller.instance_eval { @page = OpenStruct.new(url: 'name') }
+        end
+
+        it 'is page 1' do
+          expect(controller.first_page?).to eq(true)
+        end
+      end
+    end
   end
 
   describe '#confirmation_email' do
