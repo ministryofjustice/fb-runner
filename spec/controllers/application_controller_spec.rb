@@ -288,6 +288,16 @@ RSpec.describe ApplicationController do
           expect(controller.first_page?).to eq(true)
         end
       end
+
+      context 'page is nil' do
+        before do
+          controller.instance_eval { @page = nil }
+        end
+
+        it 'handles gracefully' do
+          expect(controller.first_page?).to eq(false)
+        end
+      end
     end
   end
 
