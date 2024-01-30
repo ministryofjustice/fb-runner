@@ -228,7 +228,11 @@ class ApplicationController < ActionController::Base
   helper_method :is_confirmation_email_question?
 
   def first_page?
-    @page.url == service.pages[1].url
+    if @page.present?
+      @page.url == service.pages[1].url
+    else
+      false
+    end
   end
   helper_method :first_page?
 
