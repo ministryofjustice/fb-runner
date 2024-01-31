@@ -226,19 +226,19 @@ RSpec.feature 'Navigation' do
     expect(form.parent_checkanswers.text).to include("Parent name Unknown")
     expect(form.age_checkanswers.text).to include("Your age 31")
     expect(form.family_hobbies_checkanswers.text).to include(
-      "Family Hobbies Play with the dogs Surfing! Change your answer for Family Hobbies"
+      "Family Hobbies Play with the dogs Surfing! Change Your answer for Family Hobbies"
     )
     expect(form.do_you_like_star_wars_checkanswers.text).to include("Hell no!")
     expect(form.burger_checkanswers.text).to include("Mozzarella, cheddar, feta")
     expect(form.holiday_checkanswers.text).to eq(
-      'What is the day that you like to take holidays? 01 June 2021 Change your answer for What is the day that you like to take holidays?'
+      'What is the day that you like to take holidays? 01 June 2021 Change Your answer for What is the day that you like to take holidays?'
     )
     expect(form.multiple_questions_heading.text).to include('How well do you know Star Wars?')
     expect(form.star_wars_knowledge_1_checkanswers.text).to include(
-      "What was the name of the band playing in Jabba's palace? Max Rebo Band Change your answer for What was the name of the band playing in Jabba's palace?"
+      "What was the name of the band playing in Jabba's palace? Max Rebo Band Change Your answer for What was the name of the band playing in Jabba's palace?"
     )
     expect(form.star_wars_knowledge_2_checkanswers.text).to include(
-      "What is The Mandalorian's real name? Din Jarrin Change your answer for What is The Mandalorian's real name?"
+      "What is The Mandalorian's real name? Din Jarrin Change Your answer for What is The Mandalorian's real name?"
     )
     expect(form.dog_picture_checkanswers.text).to include(
       'Upload your best dog photo thats-not-a-knife.txt'
@@ -329,7 +329,7 @@ RSpec.feature 'Navigation' do
 
   def then_I_should_see_my_changed_full_name_on_check_your_answers
     expect(form.full_name_checkanswers.text).to eq(
-      "Full name Jabba Change your answer for Full name"
+      "Full name Jabba Change Your answer for Full name"
     )
   end
 
