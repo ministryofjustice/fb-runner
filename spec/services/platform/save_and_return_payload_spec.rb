@@ -62,6 +62,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
   before do
     allow(ENV).to receive(:[])
     allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL').and_return(email_body)
+    allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL_SUBJECT').and_return(email_subject)
     allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
     allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
     allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
@@ -133,6 +134,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
 
       before do
         allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL').and_return(email_body)
+        allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL_SUBJECT').and_return(email_subject)
         allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
         allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
       end
