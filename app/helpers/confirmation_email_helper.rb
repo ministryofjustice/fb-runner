@@ -36,8 +36,13 @@ module ConfirmationEmailHelper
     table_heading + answers_table(pages)
   end
 
+  # NOTE: using a default in case the runner is not using the
+  # latest metadata presenter code that includes this new locale
+  # Default can be removed once no longer needed
   def table_heading
-    tag.h2('Your answers')
+    tag.h2(
+      I18n.t('presenter.confirmation_email.table_heading', default: 'Your answers')
+    )
   end
 
   def heading_row(content)
