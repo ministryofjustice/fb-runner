@@ -30,7 +30,7 @@ module Platform
       {
         id: service.service_id,
         slug: ENV['SERVICE_SLUG'],
-        name: service.service_name
+        name: service_name
       }
     end
 
@@ -39,6 +39,10 @@ module Platform
     end
 
     private
+
+    def service_name
+      service.service_name
+    end
 
     def email_action
       return if email.blank?
@@ -55,7 +59,7 @@ module Platform
     end
 
     def default_email_from
-      @default_email_from ||= "#{service.service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
+      @default_email_from ||= "#{service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
     end
 
     def default_email_body
@@ -63,7 +67,17 @@ module Platform
     end
 
     def default_subject
-      @default_subject ||= ENV['SAVE_AND_RETURN_EMAIL_SUBJECT'].presence || "Your saved form - '#{service.service_name}'"
+      @default_subject ||= ENV['SAVE_AND_RETURN_EMAIL_SUBJECT'].presence || fallback_subject
+    end
+
+    # NOTE: using a default in case the runner is not using the
+    # latest metadata presenter code that includes this new locale
+    # Default can be removed once no longer needed
+    def fallback_subject
+      I18n.t(
+        'presenter.save_and_return.confirmation_email.subject',
+        service_name:, default: "Your saved form - '#{service_name}'"
+      )
     end
 
     def magic_link
