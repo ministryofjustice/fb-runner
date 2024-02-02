@@ -63,17 +63,13 @@ module Platform
     end
 
     def default_email_body
-      @default_email_body ||= ENV['SAVE_AND_RETURN_EMAIL'].gsub('{{save_and_return_link}}', magic_link)
+      I18n.t(
+        'presenter.save_and_return.confirmation_email.body',
+        service_name:, magic_link:, default: "Magic link: #{magic_link}"
+      )
     end
 
     def default_subject
-      @default_subject ||= ENV['SAVE_AND_RETURN_EMAIL_SUBJECT'].presence || fallback_subject
-    end
-
-    # NOTE: using a default in case the runner is not using the
-    # latest metadata presenter code that includes this new locale
-    # Default can be removed once no longer needed
-    def fallback_subject
       I18n.t(
         'presenter.save_and_return.confirmation_email.subject',
         service_name:, default: "Your saved form - '#{service_name}'"
