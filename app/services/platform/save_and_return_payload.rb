@@ -64,15 +64,13 @@ module Platform
 
     def default_email_body
       I18n.t(
-        'presenter.save_and_return.confirmation_email.body',
-        service_name:, magic_link:, default: "Magic link: #{magic_link}"
+        'presenter.save_and_return.confirmation_email.body', service_name:, magic_link:
       )
     end
 
     def default_subject
       I18n.t(
-        'presenter.save_and_return.confirmation_email.subject',
-        service_name:, default: "Your saved form - '#{service_name}'"
+        'presenter.save_and_return.confirmation_email.subject', service_name:
       )
     end
 
