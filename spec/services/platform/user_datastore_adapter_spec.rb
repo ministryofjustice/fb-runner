@@ -131,6 +131,26 @@ RSpec.describe Platform::UserDatastoreAdapter do
     end
 
     context 'when there is timeout' do
+      context 'when retry succeeds' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_timeout.then.to_return(status: 200, body: empty_payload, headers: {})
+
+          stub_request(:post, expected_url)
+          .with(body: expected_body, headers: expected_headers)
+          .to_return(status: 201, body: expected_body, headers: {})
+        end
+
+        it 'returns the response' do
+          expect(adapter.save(params).status).to eq(201)
+
+          expect(WebMock).to have_requested(
+            :get, expected_url
+          ).twice
+        end
+      end
+
       context 'when there is connection timeout' do
         before do
           stub_request(:get, expected_url)
