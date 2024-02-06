@@ -63,8 +63,13 @@ module Platform
 
     def request(verb, url, body)
       connection.send(verb, url, body, headers)
-    rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
-      raise Platform::TimeoutError, error_message(e)
+    rescue Faraday::ConnectionFailed, Faraday::TimeoutError
+      # one simple retry
+      begin
+        connection.send(verb, url, body, headers)
+      rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
+        raise Platform::TimeoutError, error_message(e)
+      end
     rescue Faraday::ResourceNotFound => e
       raise Platform::ResourceNotFound, error_message(e)
     rescue StandardError => e
