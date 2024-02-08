@@ -235,10 +235,10 @@ RSpec.feature 'Navigation' do
     )
     expect(form.multiple_questions_heading.text).to include('How well do you know Star Wars?')
     expect(form.star_wars_knowledge_1_checkanswers.text).to include(
-      "What was the name of the band playing in Jabba's palace? Max Rebo Band Change Your answer for What was the name of the band playing in Jabba's palace?"
+      "What is The Mandalorian's real name? Din Jarrin Change Your answer for What is The Mandalorian's real name?"
     )
     expect(form.star_wars_knowledge_2_checkanswers.text).to include(
-      "What is The Mandalorian's real name? Din Jarrin Change Your answer for What is The Mandalorian's real name?"
+      "What was the name of the band playing in Jabba's palace? Max Rebo Band Change Your answer for What was the name of the band playing in Jabba's palace?"
     )
     expect(form.dog_picture_checkanswers.text).to include(
       'Upload your best dog photo thats-not-a-knife.txt'
