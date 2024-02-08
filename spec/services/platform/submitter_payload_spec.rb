@@ -161,14 +161,14 @@ RSpec.describe Platform::SubmitterPayload do
         heading: 'How well do you know Star Wars?',
         answers: [
           {
-            field_id: 'star-wars-knowledge_text_1',
-            field_name: "What was the name of the band playing in Jabba's palace?",
-            answer: 'Max Rebo Band'
-          },
-          {
             field_id: 'star-wars-knowledge_radios_1',
             field_name: "What is The Mandalorian's real name?",
             answer: 'Din Jarrin'
+          },
+          {
+            field_id: 'star-wars-knowledge_text_1',
+            field_name: "What was the name of the band playing in Jabba's palace?",
+            answer: 'Max Rebo Band'
           }
         ]
       },
