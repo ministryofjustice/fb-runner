@@ -120,10 +120,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_basic_auth
-    if ENV['BASIC_AUTH_USER'].present? && ENV['BASIC_AUTH_PASS'].present?
-      authenticate_or_request_with_http_basic do |username, password|
-        username == ENV['BASIC_AUTH_USER'] && password == ENV['BASIC_AUTH_PASS']
-      end
+    unless session_authorised? || is_a?(MetadataPresenter::AuthController)
+      redirect_to auth_path
     end
   end
 
