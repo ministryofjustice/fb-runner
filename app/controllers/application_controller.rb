@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   include ReferenceNumberHelper
   protect_from_forgery with: :exception
 
-  before_action :require_basic_auth
   before_action VerifySession
 
   add_flash_types :confirmation, :expired_session, :submission_completed
@@ -115,15 +114,6 @@ class ApplicationController < ActionController::Base
 
   def answer_params
     params.permit(answers: {})[:answers] || {}
-  end
-
-  def require_basic_auth
-    return if session_authorised?
-
-    return if is_a?(MetadataPresenter::AuthController)
-    return if is_a?(MetadataPresenter::ResumeController)
-
-    redirect_to auth_path
   end
 
   def autocomplete_items(components)

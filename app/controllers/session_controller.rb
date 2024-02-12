@@ -1,5 +1,4 @@
 class SessionController < ApplicationController
-  skip_before_action :require_basic_auth
   skip_before_action VerifySession
 
   def extend
