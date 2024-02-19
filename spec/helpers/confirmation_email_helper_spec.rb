@@ -102,12 +102,6 @@ RSpec.describe ConfirmationEmailHelper do
     end
   end
 
-  describe '#table_heading' do
-    it 'should build the h2' do
-      expect(helper.table_heading).to eql '<h2>Your answers</h2>'
-    end
-  end
-
   describe '#answer_cell' do
     before do
       allow(helper).to receive(:answer_cell_styles).and_return('color: red; width: 50%;')
@@ -195,11 +189,7 @@ RSpec.describe ConfirmationEmailHelper do
     let(:table_html)  { "<table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
 
     it 'generates the table html' do
-      expect(helper.answers_table(pages)).to eql table_html
-    end
-
-    it 'generates the table html' do
-      expect(helper.answers_html(pages)).to eql "<h2>Your answers</h2>#{table_html}"
+      expect(helper.answers_html(pages)).to eq(table_html)
     end
   end
 end

@@ -33,11 +33,7 @@ module ConfirmationEmailHelper
   end
 
   def answers_html(pages)
-    table_heading + answers_table(pages)
-  end
-
-  def table_heading
-    tag.h2(I18n.t('presenter.confirmation_email.table_heading'))
+    answers_table(pages)
   end
 
   def heading_row(content)
