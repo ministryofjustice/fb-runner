@@ -45,7 +45,7 @@ module ConfirmationEmailHelper
   end
 
   def answers_table(pages)
-    tag.table do
+    tag.table(style: 'margin-top: 40px') do
       previous_page_was_multiquestion = false
       pages.collect { |page|
         concat(heading_row(page[:heading])) if page[:heading].present?

@@ -186,7 +186,7 @@ RSpec.describe ConfirmationEmailHelper do
     let(:q5) { '<td style="color: red; width: 50%; padding-top: 20px;">Question 5</td>' }
     let(:a5) { '<td style="color: red; font-size: 100px; padding-top: 20px;">Answer 5</td>' }
 
-    let(:table_html)  { "<table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
+    let(:table_html)  { "<table style=\"margin-top: 40px\"><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
 
     it 'generates the table html' do
       expect(helper.answers_html(pages)).to eq(table_html)
