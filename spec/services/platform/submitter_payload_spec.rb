@@ -321,7 +321,7 @@ RSpec.describe Platform::SubmitterPayload do
             subject: confirmation_email_subject,
             email_body: confirmation_email_body,
             user_answers:,
-            include_pdf: true,
+            include_pdf: false,
             include_attachments: false
           },
           {
@@ -653,7 +653,7 @@ RSpec.describe Platform::SubmitterPayload do
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
               user_answers: answers_html,
-              include_pdf: true,
+              include_pdf: false,
               include_attachments: false
             }
           ]
@@ -704,7 +704,7 @@ RSpec.describe Platform::SubmitterPayload do
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
               user_answers: answers_html,
-              include_pdf: true,
+              include_pdf: false,
               include_attachments: false
             }
           ]
@@ -767,7 +767,7 @@ RSpec.describe Platform::SubmitterPayload do
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
               user_answers: answers_html,
-              include_pdf: true,
+              include_pdf: false,
               include_attachments: false
             }
           ]
@@ -852,7 +852,7 @@ RSpec.describe Platform::SubmitterPayload do
             subject: confirmation_email_subject,
             email_body: expected_confirmation_email_body,
             user_answers: answers_html,
-            include_pdf: true,
+            include_pdf: false,
             include_attachments: false
           }
         ]
@@ -904,7 +904,7 @@ RSpec.describe Platform::SubmitterPayload do
             subject: confirmation_email_subject,
             email_body: confirmation_email_body,
             user_answers: answers_html,
-            include_pdf: true,
+            include_pdf: false,
             include_attachments: false
           }
         ]

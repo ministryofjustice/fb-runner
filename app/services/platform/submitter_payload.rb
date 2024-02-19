@@ -176,7 +176,7 @@ module Platform
         email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
         user_answers: answers_html(pages),
         include_attachments: false,
-        include_pdf: true
+        include_pdf: false
       }
     end
 
