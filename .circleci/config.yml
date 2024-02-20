@@ -271,6 +271,7 @@ workflows:
             branches:
               only:
                 - main
+                - bugfix/content-area
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
