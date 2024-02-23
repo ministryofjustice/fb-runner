@@ -3,7 +3,7 @@ orbs:
   ruby: circleci/ruby@1.4.0
   node: circleci/node@5.1.0
   slack: circleci/slack@3.4.2
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@1.4.7
   aws-cli: circleci/aws-cli@4.0.0
 
 jobs:
@@ -148,9 +148,7 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - browser-tools/install-chrome:
-          # TODO remove following line when fixed https://github.com/CircleCI-Public/browser-tools-orb/issues/90
-          chrome-version: 116.0.5845.96
+      - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
           name: Check browser tools install

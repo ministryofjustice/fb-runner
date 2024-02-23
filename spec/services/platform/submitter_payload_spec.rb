@@ -39,25 +39,35 @@ RSpec.describe Platform::SubmitterPayload do
         'type' => 'image/jpg',
         'date' => 1_624_540_833
       },
-      'dog-picture_upload_2' => [{
-        'original_filename' => 'basset-hound.jpg',
-        'content_type' => 'image/jpg',
-        'tempfile' => upload_file.path,
-        'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
-        'size' => 1_392_565,
-        'type' => 'image/jpg',
-        'date' => 1_624_540_833
-      },
-                                 {
-                                   'original_filename' => 'basset-hound.jpg',
-                                   'content_type' => 'image/jpg',
-                                   'tempfile' => upload_file.path,
-                                   'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
-                                   'size' => 1_392_565,
-                                   'type' => 'image/jpg',
-                                   'date' => 1_624_540_833
-                                 }],
-      'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}'
+      'dog-picture_upload_2' => [
+        {
+          'original_filename' => 'basset-hound.jpg',
+          'content_type' => 'image/jpg',
+          'tempfile' => upload_file.path,
+          'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+          'size' => 1_392_565,
+          'type' => 'image/jpg',
+          'date' => 1_624_540_833
+        },
+        {
+          'original_filename' => 'basset-hound.jpg',
+          'content_type' => 'image/jpg',
+          'tempfile' => upload_file.path,
+          'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+          'size' => 1_392_565,
+          'type' => 'image/jpg',
+          'date' => 1_624_540_833
+        }
+      ],
+      'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}',
+      'postal-address_address_1' => {
+        'address_line_one' => '1 road',
+        'address_line_two' => '',
+        'city' => 'ruby town',
+        'county' => '',
+        'postcode' => '99 999',
+        'country' => 'ruby land'
+      }
     }
   end
   let(:textarea_answer) do
@@ -206,7 +216,14 @@ RSpec.describe Platform::SubmitterPayload do
         heading: '',
         answers: [
           {
-            answer: 'United Kingdom',
+            answer: {
+              'address_line_one' => '1 road',
+              'address_line_two' => '',
+              'city' => 'ruby town',
+              'county' => '',
+              'postcode' => '99 999',
+              'country' => 'ruby land'
+            },
             field_id: 'postal-address_address_1',
             field_name: 'Confirm your postal address'
           }

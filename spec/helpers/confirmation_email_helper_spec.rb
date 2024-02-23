@@ -109,9 +109,24 @@ RSpec.describe ConfirmationEmailHelper do
   end
 
   describe '#answer_cell' do
-    it 'generates the table cell html with merged styles' do
+    before do
       allow(helper).to receive(:answer_cell_styles).and_return('color: red; width: 50%;')
+    end
+
+    it 'generates the table cell html with merged styles' do
       expect(helper.answer_cell(content: 'answer')).to eql '<td style="color: red; width: 50%;">answer</td>'
+    end
+
+    context 'for an answer of type hash' do
+      let(:content) do
+        { address_line_one: 'Street 123', city: 'Wondercity' }
+      end
+
+      it 'generates the table cell with the values concatenated woth commas' do
+        expect(
+          helper.answer_cell(content:)
+        ).to eq('<td style="color: red; width: 50%;">Street 123, Wondercity</td>')
+      end
     end
   end
 
