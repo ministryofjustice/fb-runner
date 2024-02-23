@@ -75,7 +75,8 @@ module ConfirmationEmailHelper
   end
 
   def answer_cell(content:, first_row: false)
-    tag.td(content, style: answer_cell_styles(first_row:))
+    answer = content.is_a?(Hash) ? content.values.compact_blank.join(', ') : content
+    tag.td(answer, style: answer_cell_styles(first_row:))
   end
 
   def heading_row_styles
