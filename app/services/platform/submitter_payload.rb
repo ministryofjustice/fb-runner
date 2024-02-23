@@ -225,7 +225,7 @@ module Platform
     end
 
     def address(answer)
-      answer.to_a.join(', ')
+      answer.as_json
     end
 
     def checkboxes(answer)

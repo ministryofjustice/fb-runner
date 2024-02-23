@@ -3,7 +3,7 @@ orbs:
   ruby: circleci/ruby@1.4.0
   node: circleci/node@5.1.0
   slack: circleci/slack@3.4.2
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@1.4.7
   aws-cli: circleci/aws-cli@4.0.0
 
 jobs:
@@ -148,9 +148,7 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - browser-tools/install-chrome:
-          # TODO remove following line when fixed https://github.com/CircleCI-Public/browser-tools-orb/issues/90
-          chrome-version: 116.0.5845.96
+      - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
           name: Check browser tools install
@@ -162,7 +160,7 @@ jobs:
           environment:
             CI_MODE: 'true'
           command: |
-            git clone https://github.com/ministryofjustice/fb-acceptance-tests
+            git clone --branch address-json https://github.com/ministryofjustice/fb-acceptance-tests
 
             cd fb-acceptance-tests/integration
             cp tests.env.ci tests.env
@@ -271,6 +269,7 @@ workflows:
             branches:
               only:
                 - main
+                - address-json
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
@@ -284,31 +283,31 @@ workflows:
           requires:
             - deploy_to_test_dev
             - deploy_to_test_production
-      - build_and_push_image_live:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-          filters:
-            branches:
-              only: main
-      - deploy_to_live_dev:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-          filters:
-            branches:
-              only: main
-      - deploy_to_live_production:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-          filters:
-            branches:
-              only: main
-      - smoke_tests:
-          context: *moj-forms-context
-          requires:
-            - deploy_to_live_dev
-            - deploy_to_live_production
+#      - build_and_push_image_live:
+#          context: *moj-forms-context
+#          requires:
+#            - acceptance_tests
+#          filters:
+#            branches:
+#              only: main
+#      - deploy_to_live_dev:
+#          context: *moj-forms-context
+#          requires:
+#            - acceptance_tests
+#            - build_and_push_image_live
+#          filters:
+#            branches:
+#              only: main
+#      - deploy_to_live_production:
+#          context: *moj-forms-context
+#          requires:
+#            - acceptance_tests
+#            - build_and_push_image_live
+#          filters:
+#            branches:
+#              only: main
+#      - smoke_tests:
+#          context: *moj-forms-context
+#          requires:
+#            - deploy_to_live_dev
+#            - deploy_to_live_production
