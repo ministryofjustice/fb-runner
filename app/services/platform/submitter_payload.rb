@@ -6,6 +6,8 @@ module Platform
 
     CSV = 'csv'.freeze
     EMAIL = 'email'.freeze
+    SUBMISSION_EMAIL = 'submission'.freeze
+    CONFIRMATION_EMAIL = 'confirmation'.freeze
     DEFAULT_EMAIL_ADDRESS = 'no-reply-moj-forms@digital.justice.gov.uk'.freeze
 
     def initialize(service:, user_data:, session:)
@@ -140,6 +142,7 @@ module Platform
 
       {
         kind: EMAIL,
+        variant: SUBMISSION_EMAIL,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
         from: default_email_from,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
@@ -155,6 +158,7 @@ module Platform
 
       {
         kind: CSV,
+        variant: nil,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
         from: default_email_from,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
@@ -170,6 +174,7 @@ module Platform
 
       {
         kind: EMAIL,
+        variant: CONFIRMATION_EMAIL,
         to: confirmation_email_answer,
         from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
@@ -289,6 +294,7 @@ module Platform
 
       {
         kind: 'json',
+        variant: nil,
         url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
         key: ENV['SERVICE_OUTPUT_JSON_KEY'],
         include_attachments: true

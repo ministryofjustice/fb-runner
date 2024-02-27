@@ -90,6 +90,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
       [
         {
           kind: 'email',
+          variant: 'save_and_return',
           to: email_to,
           from: expected_email_from,
           subject: expected_email_subject,
@@ -132,6 +133,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
         [
           {
             kind: 'email',
+            variant: 'save_and_return',
             to: email_to,
             from: expected_email_from,
             subject: expected_email_subject,

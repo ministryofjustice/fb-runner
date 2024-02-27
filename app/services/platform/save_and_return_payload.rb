@@ -4,6 +4,7 @@ module Platform
     attr_reader :service, :user_data, :session
 
     EMAIL = 'email'.freeze
+    EMAIL_VARIANT = 'save_and_return'.freeze
     DEFAULT_EMAIL_ADDRESS = 'no-reply-moj-forms@digital.justice.gov.uk'.freeze
 
     def initialize(service:, user_data:, session:)
@@ -49,6 +50,7 @@ module Platform
 
       {
         kind: EMAIL,
+        variant: EMAIL_VARIANT,
         to: email,
         from: default_email_from,
         subject: default_subject,

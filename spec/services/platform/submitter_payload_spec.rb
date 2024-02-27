@@ -296,6 +296,7 @@ RSpec.describe Platform::SubmitterPayload do
         [
           {
             kind: 'email',
+            variant: 'submission',
             to: email_to,
             from: expected_default_email_from,
             subject: email_subject,
@@ -306,6 +307,7 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'csv',
+            variant: nil,
             to: email_to,
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
@@ -316,6 +318,7 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'email',
+            variant: 'confirmation',
             to: user_data[email_component_id],
             from: expected_email_from,
             subject: confirmation_email_subject,
@@ -326,6 +329,7 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'json',
+            variant: nil,
             url: api_submission_url,
             key: api_submission_key,
             include_attachments: true
@@ -628,6 +632,7 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'submission',
               to: email_to,
               from: expected_default_email_from,
               subject: email_subject,
@@ -638,6 +643,7 @@ RSpec.describe Platform::SubmitterPayload do
             },
             {
               kind: 'csv',
+              variant: nil,
               to: email_to,
               from: expected_default_email_from,
               subject: "CSV - #{email_subject}",
@@ -648,6 +654,7 @@ RSpec.describe Platform::SubmitterPayload do
             },
             {
               kind: 'email',
+              variant: 'confirmation',
               to: user_data[email_component_id],
               from: expected_email_from,
               subject: confirmation_email_subject,
@@ -675,6 +682,7 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'submission',
               to: email_to,
               from: expected_default_email_from,
               subject: email_subject,
@@ -699,6 +707,7 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'confirmation',
               to: user_data[email_component_id],
               from: expected_email_from,
               subject: confirmation_email_subject,
@@ -752,6 +761,7 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'submission',
               to: email_to,
               from: expected_default_email_from,
               subject: email_subject,
@@ -762,6 +772,7 @@ RSpec.describe Platform::SubmitterPayload do
             },
             {
               kind: 'email',
+              variant: 'confirmation',
               to: confirmation_to,
               from: expected_email_from,
               subject: confirmation_email_subject,
@@ -788,6 +799,7 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'json',
+              variant: nil,
               url: api_submission_url,
               key: api_submission_key,
               include_attachments: true
@@ -847,6 +859,7 @@ RSpec.describe Platform::SubmitterPayload do
         [
           {
             kind: 'email',
+            variant: 'confirmation',
             to: user_data[email_component_id],
             from: expected_email_from,
             subject: confirmation_email_subject,
@@ -879,6 +892,7 @@ RSpec.describe Platform::SubmitterPayload do
         [
           {
             kind: 'email',
+            variant: 'submission',
             to: email_to,
             from: expected_default_email_from,
             subject: email_subject,
@@ -889,6 +903,7 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'csv',
+            variant: nil,
             to: email_to,
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
@@ -899,6 +914,7 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'email',
+            variant: 'confirmation',
             to: user_data[email_component_id],
             from: expected_email,
             subject: confirmation_email_subject,
@@ -968,6 +984,7 @@ RSpec.describe Platform::SubmitterPayload do
         [
           {
             kind: 'json',
+            variant: nil,
             url: api_submission_url,
             key: api_submission_key,
             include_attachments: true
