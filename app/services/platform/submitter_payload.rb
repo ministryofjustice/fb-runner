@@ -147,7 +147,7 @@ module Platform
         from: default_email_from,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
         email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
-        user_answers: answers_html(pages),
+        user_answers: answers_html(pages, heading: false),
         include_attachments: true,
         include_pdf: true
       }
@@ -179,7 +179,7 @@ module Platform
         from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
         email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
-        user_answers: answers_html(pages),
+        user_answers: answers_html(pages, heading: true),
         include_attachments: false,
         include_pdf: false
       }

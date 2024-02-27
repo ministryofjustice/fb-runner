@@ -102,6 +102,12 @@ RSpec.describe ConfirmationEmailHelper do
     end
   end
 
+  describe '#table_heading' do
+    it 'should build the h2' do
+      expect(helper.table_heading).to eql '<h2>Your answers</h2>'
+    end
+  end
+
   describe '#answer_cell' do
     before do
       allow(helper).to receive(:answer_cell_styles).and_return('color: red; width: 50%;')
@@ -186,10 +192,22 @@ RSpec.describe ConfirmationEmailHelper do
     let(:q5) { '<td style="color: red; width: 50%; padding-top: 20px;">Question 5</td>' }
     let(:a5) { '<td style="color: red; font-size: 100px; padding-top: 20px;">Answer 5</td>' }
 
-    let(:table_html)  { "<table style=\"margin-top: 40px\"><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
+    context 'for a table with heading' do
+      let(:table_html) { "<table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
+      let(:output) { helper.answers_html(pages, heading: true) }
 
-    it 'generates the table html' do
-      expect(helper.answers_html(pages)).to eq(table_html)
+      it 'generates the table html' do
+        expect(output).to eq("<h2>Your answers</h2>#{table_html}")
+      end
+    end
+
+    context 'for a table without heading' do
+      let(:table_html) { "<table style=\"margin-top: 40px\"><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
+      let(:output) { helper.answers_html(pages, heading: false) }
+
+      it 'generates the table html' do
+        expect(output).to eq(table_html)
+      end
     end
   end
 end
