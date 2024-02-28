@@ -158,7 +158,6 @@ module Platform
 
       {
         kind: CSV,
-        variant: nil,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
         from: default_email_from,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
@@ -294,7 +293,6 @@ module Platform
 
       {
         kind: 'json',
-        variant: nil,
         url: ENV['SERVICE_OUTPUT_JSON_ENDPOINT'],
         key: ENV['SERVICE_OUTPUT_JSON_KEY'],
         include_attachments: true

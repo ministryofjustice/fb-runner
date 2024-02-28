@@ -307,7 +307,6 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'csv',
-            variant: nil,
             to: email_to,
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
@@ -329,7 +328,6 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'json',
-            variant: nil,
             url: api_submission_url,
             key: api_submission_key,
             include_attachments: true
@@ -643,7 +641,6 @@ RSpec.describe Platform::SubmitterPayload do
             },
             {
               kind: 'csv',
-              variant: nil,
               to: email_to,
               from: expected_default_email_from,
               subject: "CSV - #{email_subject}",
@@ -799,7 +796,6 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'json',
-              variant: nil,
               url: api_submission_url,
               key: api_submission_key,
               include_attachments: true
@@ -903,7 +899,6 @@ RSpec.describe Platform::SubmitterPayload do
           },
           {
             kind: 'csv',
-            variant: nil,
             to: email_to,
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
@@ -984,7 +979,6 @@ RSpec.describe Platform::SubmitterPayload do
         [
           {
             kind: 'json',
-            variant: nil,
             url: api_submission_url,
             key: api_submission_key,
             include_attachments: true
