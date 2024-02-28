@@ -32,8 +32,12 @@ module ConfirmationEmailHelper
     }.freeze
   end
 
-  def answers_html(pages)
-    table_heading + answers_table(pages)
+  def answers_html(pages, heading:)
+    if heading
+      table_heading + answers_table(pages)
+    else
+      answers_table(pages, style: 'margin-top: 40px')
+    end
   end
 
   def table_heading
@@ -48,8 +52,8 @@ module ConfirmationEmailHelper
     end
   end
 
-  def answers_table(pages)
-    tag.table do
+  def answers_table(pages, style: nil)
+    tag.table(style:) do
       previous_page_was_multiquestion = false
       pages.collect { |page|
         concat(heading_row(page[:heading])) if page[:heading].present?
