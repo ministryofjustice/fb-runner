@@ -9,7 +9,7 @@ ruby '3.1.3'
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 'address-json'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.3.19'
+gem 'metadata_presenter', '3.3.21'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
