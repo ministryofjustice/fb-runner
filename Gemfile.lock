@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 6204fdf88a300e25fda1152d3b214e858d2992be
+  revision: a4a8918a091d8254d6ebcb76d5ffbf6b22fb558d
   branch: bug-fixes
   specs:
     metadata_presenter (3.3.23)
@@ -198,7 +198,7 @@ GEM
     govuk_personalisation (0.15.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (37.5.1)
+    govuk_publishing_components (37.6.0)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
