@@ -160,7 +160,7 @@ jobs:
           environment:
             CI_MODE: 'true'
           command: |
-            git clone https://github.com/ministryofjustice/fb-acceptance-tests
+            git clone --branch new-credentials https://github.com/ministryofjustice/fb-acceptance-tests
 
             cd fb-acceptance-tests/integration
             cp tests.env.ci tests.env
