@@ -76,4 +76,12 @@ module FeatureSteps
     form.postcode_field.set('SW1H 9EA')
     form.country_field.set('England')
   end
+
+  def given_the_app_is_using_the_fixture(fixture)
+    allow(Rails.configuration).to receive(:service).and_return(
+      MetadataPresenter::Service.new(
+        JSON.parse(File.read(fixtures_directory.join(fixture)))
+      )
+    )
+  end
 end

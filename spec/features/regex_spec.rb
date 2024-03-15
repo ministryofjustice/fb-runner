@@ -1,8 +1,9 @@
-RSpec.feature 'Navigation' do
+RSpec.feature 'Validation' do
   let(:form) { RegexFixture.new }
 
   before do
     allow(VerifySession).to receive(:before).and_return(false)
+    given_the_app_is_using_the_fixture('regex.json')
   end
 
   background do
