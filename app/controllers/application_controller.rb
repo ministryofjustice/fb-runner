@@ -2,10 +2,7 @@ class ApplicationController < ActionController::Base
   include ReferenceNumberHelper
   protect_from_forgery with: :exception
 
-  before_action :require_basic_auth
   before_action VerifySession
-
-  skip_before_action VerifySession, :require_basic_auth, only: :get_saved_progress
 
   add_flash_types :confirmation, :expired_session, :submission_completed
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
@@ -117,14 +114,6 @@ class ApplicationController < ActionController::Base
 
   def answer_params
     params.permit(answers: {})[:answers] || {}
-  end
-
-  def require_basic_auth
-    if ENV['BASIC_AUTH_USER'].present? && ENV['BASIC_AUTH_PASS'].present?
-      authenticate_or_request_with_http_basic do |username, password|
-        username == ENV['BASIC_AUTH_USER'] && password == ENV['BASIC_AUTH_PASS']
-      end
-    end
   end
 
   def autocomplete_items(components)
