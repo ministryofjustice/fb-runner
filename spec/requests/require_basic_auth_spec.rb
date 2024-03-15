@@ -26,8 +26,8 @@ RSpec.describe 'require basic auth', type: :request do
         let(:platform_env) { 'test' }
         let(:deployment_env) { 'production' }
 
-        it 'shows the warning' do
-          assert_select 'div.govuk-warning-text', /#{warning_text}/
+        it 'does not show the warning' do
+          assert_select 'div.govuk-warning-text', count: 0, text: /#{warning_text}/
         end
       end
 
@@ -37,6 +37,24 @@ RSpec.describe 'require basic auth', type: :request do
 
         it 'does not show the warning' do
           assert_select 'div.govuk-warning-text', count: 0, text: /#{warning_text}/
+        end
+      end
+
+      context 'test-dev' do
+        let(:platform_env) { 'test' }
+        let(:deployment_env) { 'dev' }
+
+        it 'shows the warning' do
+          assert_select 'div.govuk-warning-text', /#{warning_text}/
+        end
+      end
+
+      context 'live-dev' do
+        let(:platform_env) { 'live' }
+        let(:deployment_env) { 'dev' }
+
+        it 'shows the warning' do
+          assert_select 'div.govuk-warning-text', /#{warning_text}/
         end
       end
     end
