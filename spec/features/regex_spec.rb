@@ -32,6 +32,6 @@ RSpec.feature 'Validation' do
     visit '/regex'
     form.regex_field.set('123')
     form.continue_button.click
-    expect(form.error_summary.to_s).to include('much match the required format')
+    expect(form.error_summary.to_s).to include('must match the required format')
   end
 end
