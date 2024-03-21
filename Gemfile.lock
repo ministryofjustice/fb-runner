@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 19cd33999a7915dd3afa71f2fb1ce8c238200a9b
+  revision: 2a3512a156e1b527c3712d454c5073decbd8d486
   branch: autocomplete-special-character-support
   specs:
     metadata_presenter (3.3.26)
