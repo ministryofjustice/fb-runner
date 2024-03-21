@@ -45,14 +45,6 @@ RSpec.feature 'Exit pages' do
     and_I_should_not_see_a_continue_button
   end
 
-  def given_the_app_is_using_the_fixture(fixture)
-    allow(Rails.configuration).to receive(:service).and_return(
-      MetadataPresenter::Service.new(
-        JSON.parse(File.read(fixtures_directory.join(fixture)))
-      )
-    )
-  end
-
   def given_I_start_the_form
     form.load
     form.start_button.click
