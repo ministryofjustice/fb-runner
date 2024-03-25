@@ -54,7 +54,7 @@ if(autocompleteComponent) {
     console.log('the field entry value')
     console.log(autocompleteField.value)
     console.log('the field entry value after sub')
-    autocompleteField.value.replace('&', '\u0026')
+    console.log(autocompleteField.value.replace('&', '\u0026'))
     console.log('the select')
     console.log(autocompleteSelect)
     // if the select is not empty and the values do not match or if the
