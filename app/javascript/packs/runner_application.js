@@ -49,7 +49,10 @@ if(autocompleteComponent) {
     const form = event.target;
     const autocompleteField = form.querySelector('input.autocomplete__input');
     const autocompleteSelect = form.querySelector('.fb-autocomplete');
-
+    console.log('the field entry')
+    console.log(autocompleteField)
+    console.log('the select')
+    console.log(autocompleteSelect)
     // if the select is not empty and the values do not match or if the
     // autocomplete is empty trigger validation
     if(autocompleteSelect.value != '' && !autocompleteSelect.value.includes(autocompleteField.value) || autocompleteField.value == '') {
