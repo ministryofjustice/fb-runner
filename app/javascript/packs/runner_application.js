@@ -51,6 +51,8 @@ if(autocompleteComponent) {
     const autocompleteSelect = form.querySelector('.fb-autocomplete');
     console.log('the field entry')
     console.log(autocompleteField)
+    console.log('the field entry value')
+    console.log(autocompleteField.value)
     console.log('the select')
     console.log(autocompleteSelect)
     // if the select is not empty and the values do not match or if the
