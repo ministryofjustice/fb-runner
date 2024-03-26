@@ -49,17 +49,10 @@ if(autocompleteComponent) {
     const form = event.target;
     const autocompleteField = form.querySelector('input.autocomplete__input');
     const autocompleteSelect = form.querySelector('.fb-autocomplete');
-    console.log('the field entry')
-    console.log(autocompleteField)
-    console.log('the field entry value')
-    console.log(autocompleteField.value)
-    console.log('the field entry value after sub')
-    console.log(autocompleteField.value.replace('&', "\\u0026"))
-    console.log('the select')
-    console.log(autocompleteSelect)
+
     // if the select is not empty and the values do not match or if the
     // autocomplete is empty trigger validation
-    if(autocompleteSelect.value != '' && !autocompleteSelect.value.includes(autocompleteField.value.replace('&', "\\u0026")) || autocompleteField.value == '') {
+    if(autocompleteSelect.value != '' && !autocompleteSelect.value.includes(autocompleteField.value.replaceAll('&', "\\u0026")) || autocompleteField.value == '') {
       autocompleteSelect.value = '';
     }
   });
