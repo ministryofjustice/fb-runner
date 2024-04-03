@@ -5,6 +5,7 @@ RSpec.feature 'Navigation' do
   before do
     allow(VerifySession).to receive(:before).and_return(false)
     allow(Rails.configuration).to receive(:autocomplete_items).and_return(autocomplete_items)
+    allow(@page).to receive(:url).and_return('some_previous_url')
   end
 
   scenario 'when I navigate forward and back through the form' do
