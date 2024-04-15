@@ -182,7 +182,7 @@ GEM
     govuk_personalisation (0.16.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (37.10.0)
+    govuk_publishing_components (38.0.1)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -222,7 +222,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    metadata_presenter (3.3.31)
+    metadata_presenter (3.3.32)
       govspeak (~> 7.1)
       govuk_design_system_formbuilder (~> 4.1.1)
       json-schema (~> 4.1.1)
@@ -275,10 +275,9 @@ GEM
     opentelemetry-instrumentation-active_model_serializers (0.20.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-active_record (0.7.0)
+    opentelemetry-instrumentation-active_record (0.7.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-      ruby2_keywords
     opentelemetry-instrumentation-active_support (0.5.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
@@ -387,10 +386,10 @@ GEM
     opentelemetry-instrumentation-que (0.7.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-racecar (0.3.0)
+    opentelemetry-instrumentation-racecar (0.3.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-rack (0.24.0)
+    opentelemetry-instrumentation-rack (0.24.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-common (~> 0.20.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
@@ -405,7 +404,7 @@ GEM
     opentelemetry-instrumentation-rake (0.2.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-rdkafka (0.4.2)
+    opentelemetry-instrumentation-rdkafka (0.4.3)
       opentelemetry-api (~> 1.0)
       opentelemetry-common (~> 0.20.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
@@ -449,7 +448,7 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
-    plek (5.0.0)
+    plek (5.1.0)
     prometheus-client (4.2.2)
     prometheus_exporter (2.1.0)
       webrick
@@ -651,7 +650,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter (= 3.3.31)
+  metadata_presenter (= 3.3.32)
   prometheus-client (~> 4.2.0)
   puma (~> 6.4)
   rails (~> 7.0.5)
