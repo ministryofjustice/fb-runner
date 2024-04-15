@@ -8,6 +8,7 @@ module Platform
     ALLOWED_TYPES = %w[
       text/csv
       text/plain
+      text/rtf
       application/vnd.openxmlformats-officedocument.wordprocessingml.document
       application/msword
       application/vnd.oasis.opendocument.spreadsheet
