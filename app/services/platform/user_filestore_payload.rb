@@ -9,6 +9,7 @@ module Platform
       text/csv
       text/plain
       text/rtf
+      rtf
       application/vnd.openxmlformats-officedocument.wordprocessingml.document
       application/msword
       application/vnd.oasis.opendocument.spreadsheet
