@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 8230018abd2ceed252a036ebecf418df83b5437b
-  branch: cleanup-rails-frameworks
+  revision: 5d6e62345ab1080170197d7ee3ae94e166b485c5
+  branch: cy-locales
   specs:
-    metadata_presenter (3.3.33)
+    metadata_presenter (3.3.34)
       govspeak (~> 7.1)
       govuk_design_system_formbuilder (~> 4.1.1)
       json-schema (~> 4.1.1)

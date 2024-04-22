@@ -7,7 +7,7 @@ ruby '3.1.3'
 # one of these lines:
 gem 'metadata_presenter',
     github: 'ministryofjustice/fb-metadata-presenter',
-    branch: 'cleanup-rails-frameworks'
+    branch: 'cy-locales'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 # gem 'metadata_presenter', '3.3.32'
 
