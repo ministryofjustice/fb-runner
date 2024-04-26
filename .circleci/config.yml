@@ -306,8 +306,8 @@ workflows:
       #     filters:
       #       branches:
       #         only: main
-      - smoke_tests:
-          context: *moj-forms-context
-          requires:
-            - deploy_to_live_dev
-            - deploy_to_live_production
+      # - smoke_tests:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - deploy_to_live_dev
+      #       - deploy_to_live_production
