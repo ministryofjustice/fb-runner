@@ -31,6 +31,8 @@ class ApplicationController < ActionController::Base
 
   def save_form_progress
     SavedProgress.new(session).save_progress
+
+    delete_session
   end
 
   def get_saved_progress(uuid)
