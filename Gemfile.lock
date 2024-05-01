@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
-  revision: 92913cbb9654e229adfc57fca654a78995a138c3
+  revision: e8f23ca32402d2f96750e7dd9e697de0892b0fb7
   branch: s-and-r-delete-session
   specs:
     metadata_presenter (3.3.36)
