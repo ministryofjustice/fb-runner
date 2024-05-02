@@ -269,7 +269,6 @@ workflows:
             branches:
               only:
                 - main
-                - resume-multi-questions
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
