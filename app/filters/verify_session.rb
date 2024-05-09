@@ -9,6 +9,12 @@ class VerifySession
       controller.redirect_to '/session/complete' unless controller.request.path == controller.root_path
     end
 
+    # after saving form progress
+    if controller.flash[:session_destroyed].present?
+      controller.reset_session
+      controller.redirect_to '/session/destroyed' unless controller.request.path == controller.root_path
+    end
+
     # if we are on a page that requires a session and it has been marked as expired
     if !controller.allowed_page? && controller.flash[:expired_session].present?
       controller.reset_session
