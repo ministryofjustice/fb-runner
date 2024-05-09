@@ -7,9 +7,9 @@ ruby '3.1.3'
 # one of these lines:
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'save-and-return-back-link'
+#     branch: 's-and-r-delete-session'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.3.38'
+gem 'metadata_presenter', '3.4.0'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
