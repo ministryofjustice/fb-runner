@@ -1,6 +1,6 @@
 module Platform
   class MicrosoftGraphAdapter
-    attr_accessor :site_id
+    attr_accessor :site_id, :root_graph_url, :service
 
     def initialize(root_graph_url: ENV['MS_GRAPH_URL'], site_id: ENV['MS_SITE_ID'])
       @root_graph_url = root_graph_url
@@ -13,11 +13,6 @@ module Platform
       @connection ||= Faraday.new(uri) do |conn|
       end
 
-      headers = {
-        'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{get_auth_token}"
-      }
-
       body = {
         'displayName' => service.service_name,
         'columns' => column_headings,
@@ -26,13 +21,16 @@ module Platform
         }
       }
 
-      @connection.post('/', body, headers)
+      response = @connection.post do |req|
+        req.headers['Content-Type'] = 'application/json'
+        req.headers['Authorization'] = "Bearer #{get_auth_token}"
+        req.body = body.to_json
+      end
     end
 
     def get_auth_token
       headers = {}
 
-      # response_body = JSON.parse(auth_connection.post('/', {}).body)
       response = auth_connection.post do |req|
         req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         req.body = URI.encode_www_form(form_data)
@@ -61,8 +59,8 @@ module Platform
       }
     end
 
-    private
-
+    # private
+ 
     def admin_app
       ENV['MS_ADMIN_APP_ID']
     end
@@ -93,6 +91,8 @@ module Platform
           }
         end
       end
+
+      components
     end
 
     def display_name_for(component, page_label)
