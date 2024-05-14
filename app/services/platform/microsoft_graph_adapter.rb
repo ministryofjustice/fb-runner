@@ -21,7 +21,7 @@ module Platform
         }
       }
 
-      response = @connection.post do |req|
+      @connection.post do |req|
         req.headers['Content-Type'] = 'application/json'
         req.headers['Authorization'] = "Bearer #{get_auth_token}"
         req.body = body.to_json
@@ -29,8 +29,6 @@ module Platform
     end
 
     def get_auth_token
-      headers = {}
-
       response = auth_connection.post do |req|
         req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         req.body = URI.encode_www_form(form_data)
@@ -60,7 +58,7 @@ module Platform
     end
 
     # private
- 
+
     def admin_app
       ENV['MS_ADMIN_APP_ID']
     end
@@ -99,7 +97,7 @@ module Platform
       if component['_type'] == 'radios' || 'checkboxes'
         page_label # use the page label or legend if it's a checkbox component
       else
-        component['label'] || component['legend'] || ''  # autocomplete has a legend not a label 
+        component['label'] || component['legend'] || '' # autocomplete has a legend not a label
       end
     end
   end
