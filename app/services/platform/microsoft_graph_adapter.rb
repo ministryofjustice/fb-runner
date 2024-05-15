@@ -21,11 +21,13 @@ module Platform
         }
       }
 
-      @connection.post do |req|
+      response = @connection.post do |req|
         req.headers['Content-Type'] = 'application/json'
         req.headers['Authorization'] = "Bearer #{get_auth_token}"
         req.body = body.to_json
       end
+
+      JSON.parse(response.body)
     end
 
     def get_auth_token
