@@ -303,8 +303,8 @@ module Platform
       return if ENV['MS_SITE_ID'].blank? || ENV['MS_LIST_ID'].blank? || ENV['MS_GRAPH_ROOT_URL'].blank?
 
       {
-        kind: 'mslist'
-        graph_url: ENV['MS_GRAPH_ROOT_URL']
+        kind: 'mslist',
+        graph_url: ENV['MS_GRAPH_ROOT_URL'],
         site_id: ENV['MS_SITE_ID'],
         list_id: ENV['MS_LIST_ID'],
         drive_id: ENV['MS_DRIVE_ID'],
