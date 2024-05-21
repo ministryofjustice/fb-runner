@@ -308,8 +308,12 @@ module Platform
         site_id: ENV['MS_SITE_ID'],
         list_id: ENV['MS_LIST_ID'],
         drive_id: ENV['MS_DRIVE_ID'],
-        include_attachments: ENV['MS_DRIVE_ID'].present?
+        include_attachments: send_attachments_to_ms_list?
       }
+    end
+
+    def send_attachments_to_ms_list?
+      ENV['MS_DRIVE_ID'].present? && attachments.count > 0
     end
   end
 end
