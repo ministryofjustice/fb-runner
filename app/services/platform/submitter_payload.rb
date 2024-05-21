@@ -313,7 +313,7 @@ module Platform
     end
 
     def send_attachments_to_ms_list?
-      ENV['MS_DRIVE_ID'].present? && attachments.count > 0
+      ENV['MS_DRIVE_ID'].present? && attachments.count.positive?
     end
   end
 end
