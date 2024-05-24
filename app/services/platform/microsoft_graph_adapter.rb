@@ -84,7 +84,7 @@ module Platform
         page.components.each do |component|
           next if component['_type'] == 'content'
 
-          column_name = display_name_for(component, page_label)
+          display_name_for(component, page_label)
 
           components << {
             'name' => Digest::MD5.hexdigest(component['name']).tr('0-9', ''),
