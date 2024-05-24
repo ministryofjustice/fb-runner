@@ -84,6 +84,8 @@ module Platform
         page.components.each do |component|
           next if component['_type'] == 'content'
 
+          column_name = display_name_for(component, page_label)
+
           components << {
             'name' => Digest::MD5.hexdigest(component['name']).tr('0-9', ''),
             'displayName' => display_name_for(component, page_label),
@@ -99,7 +101,7 @@ module Platform
       if component['_type'] == 'radios' || component['_type'] == 'checkboxes'
         page_label # use the page label or legend if it's a checkbox component
       else
-        component['label'] || component['legend'] || '' # autocomplete has a legend not a label
+        component['label'] || component['legend'] || component['lede'] || '' # autocomplete has a legend not a label
       end
     end
   end
