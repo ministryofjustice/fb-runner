@@ -2,7 +2,7 @@ module Platform
   class MicrosoftGraphAdapter
     attr_accessor :site_id, :root_graph_url, :service
 
-    def initialize(root_graph_url: ENV['MS_GRAPH_ROOT_URL'], site_id: ENV['MS_SITE_ID'])
+    def initialize(root_graph_url: 'https://graph.microsoft.com/v1.0/', site_id: ENV['MS_SITE_ID'])
       @root_graph_url = root_graph_url
       @site_id = site_id
     end
