@@ -99,9 +99,11 @@ module Platform
 
     def display_name_for(component, page_label)
       if component['_type'] == 'radios' || component['_type'] == 'checkboxes'
-        component['legend'] || page_label # use the page label or legend if it's a checkbox component
+        "#{page_label} - #{component['legend']}" || page_label # use the page label or legend if it's a checkbox component
       else
-        component['label'] || component['legend'] || component['lede'] || '' # autocomplete has a legend not a label
+        heading_text = component['label'] || component['legend'] || component['lede'] || '' # autocomplete has a legend not a label
+
+        "#{page_label} - #{heading_text}"
       end
     end
   end
