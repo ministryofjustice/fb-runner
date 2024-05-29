@@ -1,5 +1,5 @@
 Rails.application.reloader.to_prepare do
-  if ENV['MS_SITE_ID'].present?
+  if ENV['MS_SITE_ID'] == 'test'
     puts('Initialising ms list')
     adapter = Platform::MicrosoftGraphAdapter.new
     adapter.service = Rails.configuration.service
