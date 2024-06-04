@@ -300,11 +300,11 @@ module Platform
     end
 
     def ms_list_action
-      return if ENV['MS_SITE_ID'].blank? || ENV['MS_LIST_ID'].blank? || ENV['MS_GRAPH_ROOT_URL'].blank?
+      return if ENV['MS_SITE_ID'].blank? || ENV['MS_LIST_ID'].blank?
 
       {
         kind: 'mslist',
-        graph_url: ENV['MS_GRAPH_ROOT_URL'],
+        graph_url: ENV['MS_GRAPH_ROOT_URL'] || 'https://graph.microsoft.com/v1.0/',
         site_id: ENV['MS_SITE_ID'],
         list_id: ENV['MS_LIST_ID'],
         drive_id: ENV['MS_DRIVE_ID'],
