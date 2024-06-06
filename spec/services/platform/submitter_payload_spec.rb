@@ -991,4 +991,98 @@ RSpec.describe Platform::SubmitterPayload do
       end
     end
   end
+
+  describe 'ms list action' do
+    context 'when there is no email submission at all, only to send to list' do
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return('a-list-id')
+        allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return('a-site-id')
+        allow(ENV).to receive(:[]).with('MS_GRAPH_ROOT_URL').and_return('a-configured-url')
+      end
+
+      let(:expected_actions) do
+        [
+          {
+            kind: 'mslist',
+            graph_url: 'a-configured-url',
+            site_id: 'a-site-id',
+            list_id: 'a-list-id',
+            drive_id: nil,
+            include_attachments: false
+          }
+        ]
+      end
+
+      it 'should return just the ms list action' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
+
+    context 'when including attachments' do
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return('a-list-id')
+        allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return('a-site-id')
+        allow(ENV).to receive(:[]).with('MS_DRIVE_ID').and_return('a-drive-id')
+        # will default to the 1.0 graph api if not configured
+        allow(ENV).to receive(:[]).with('MS_GRAPH_ROOT_URL').and_return(nil)
+      end
+
+      let(:expected_actions) do
+        [
+          {
+            kind: 'mslist',
+            graph_url: 'https://graph.microsoft.com/v1.0/',
+            site_id: 'a-site-id',
+            list_id: 'a-list-id',
+            drive_id: 'a-drive-id',
+            include_attachments: true
+          }
+        ]
+      end
+
+      it 'should return the action with the drive id and attachments flag' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
+
+    context 'when missing some configuration' do
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return(nil)
+      end
+
+      context 'missing site id' do
+        let(:expected_actions) { [] }
+
+        before do
+          allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return('a-list-id')
+        end
+
+        it 'does not include the action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+
+      context 'missing list id' do
+        let(:expected_actions) { [] }
+
+        before do
+          allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return('a-site-id')
+        end
+
+        it 'does not include the action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+    end
+  end
 end
