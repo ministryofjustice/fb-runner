@@ -1,3 +1,19 @@
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: a0d395c19b9702efe71572ba44fd91fc91890410
+  branch: rescue-huge-file-error
+  specs:
+    metadata_presenter (3.4.4)
+      govspeak (~> 7.1)
+      govuk_design_system_formbuilder (~> 4.1.1)
+      json-schema (~> 4.1.1)
+      kramdown (~> 2.4.0)
+      rails (~> 7.0.0)
+      sassc-rails (= 2.1.2)
+      sprockets
+      sprockets-rails
+      uk_postcode
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -182,7 +198,7 @@ GEM
     govuk_personalisation (0.16.0)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (39.1.0)
+    govuk_publishing_components (39.2.1)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -222,16 +238,6 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    metadata_presenter (3.4.3)
-      govspeak (~> 7.1)
-      govuk_design_system_formbuilder (~> 4.1.1)
-      json-schema (~> 4.1.1)
-      kramdown (~> 2.4.0)
-      rails (~> 7.0.0)
-      sassc-rails (= 2.1.2)
-      sprockets
-      sprockets-rails
-      uk_postcode
     method_source (1.0.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
@@ -273,7 +279,7 @@ GEM
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-active_support (~> 0.1)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-active_job (0.7.1)
+    opentelemetry-instrumentation-active_job (0.7.2)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-active_model_serializers (0.20.1)
@@ -319,13 +325,13 @@ GEM
       opentelemetry-instrumentation-sidekiq (~> 0.25.0)
       opentelemetry-instrumentation-sinatra (~> 0.23.1)
       opentelemetry-instrumentation-trilogy (~> 0.58.0)
-    opentelemetry-instrumentation-aws_sdk (0.5.2)
+    opentelemetry-instrumentation-aws_sdk (0.5.3)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-base (0.22.3)
       opentelemetry-api (~> 1.0)
       opentelemetry-registry (~> 0.1)
-    opentelemetry-instrumentation-bunny (0.21.3)
+    opentelemetry-instrumentation-bunny (0.21.4)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-concurrent_ruby (0.21.3)
@@ -334,7 +340,7 @@ GEM
     opentelemetry-instrumentation-dalli (0.25.3)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-delayed_job (0.22.2)
+    opentelemetry-instrumentation-delayed_job (0.22.3)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-ethon (0.21.7)
@@ -384,7 +390,7 @@ GEM
     opentelemetry-instrumentation-que (0.7.1)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-racecar (0.3.2)
+    opentelemetry-instrumentation-racecar (0.3.3)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-rack (0.24.5)
@@ -402,7 +408,7 @@ GEM
     opentelemetry-instrumentation-rake (0.2.2)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-rdkafka (0.4.6)
+    opentelemetry-instrumentation-rdkafka (0.4.7)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-redis (0.25.6)
@@ -414,10 +420,10 @@ GEM
     opentelemetry-instrumentation-restclient (0.22.6)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-ruby_kafka (0.21.1)
+    opentelemetry-instrumentation-ruby_kafka (0.21.2)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
-    opentelemetry-instrumentation-sidekiq (0.25.5)
+    opentelemetry-instrumentation-sidekiq (0.25.6)
       opentelemetry-api (~> 1.0)
       opentelemetry-instrumentation-base (~> 0.22.1)
     opentelemetry-instrumentation-sinatra (0.23.5)
@@ -643,7 +649,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter (= 3.4.3)
+  metadata_presenter!
   prometheus-client (~> 4.2.0)
   puma (~> 6.4)
   rails (~> 7.0.5)
