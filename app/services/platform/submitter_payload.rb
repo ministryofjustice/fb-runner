@@ -308,6 +308,7 @@ module Platform
         site_id: ENV['MS_SITE_ID'],
         list_id: ENV['MS_LIST_ID'],
         drive_id: ENV['MS_DRIVE_ID'],
+        reference_number: user_data['moj_forms_reference_number'] || '',
         include_attachments: send_attachments_to_ms_list?
       }
     end
