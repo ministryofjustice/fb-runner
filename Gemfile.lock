@@ -149,7 +149,7 @@ GEM
     ffi (1.17.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (3.25.4)
+    google-protobuf (3.25.5)
     googleapis-common-protos-types (1.15.0)
       google-protobuf (>= 3.18, < 5.a)
     govspeak (7.1.1)
