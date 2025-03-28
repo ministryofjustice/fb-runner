@@ -165,10 +165,10 @@ GEM
     ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (4.30.1)
+    google-protobuf (4.30.2)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.30.1-x86_64-linux)
+    google-protobuf (4.30.2-x86_64-linux)
       bigdecimal
       rake (>= 13)
     googleapis-common-protos-types (1.19.0)
@@ -183,7 +183,7 @@ GEM
       nokogiri (~> 1.12)
       rinku (~> 2.0)
       sanitize (~> 6)
-    govuk_app_config (9.16.7)
+    govuk_app_config (9.16.8)
       logstasher (~> 2.1)
       opentelemetry-exporter-otlp (>= 0.25, < 0.31)
       opentelemetry-instrumentation-all (>= 0.39.1, < 0.75.0)
@@ -250,7 +250,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    metadata_presenter (3.4.5)
+    metadata_presenter (3.4.6)
       govspeak (~> 7.1)
       govuk_design_system_formbuilder (~> 4.1.1)
       json-schema (~> 4.1.1)
@@ -716,7 +716,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter (= 3.4.5)
+  metadata_presenter (= 3.4.6)
   prometheus-client (~> 4.2.0)
   puma (~> 6.4)
   rack (= 2.2.12)
