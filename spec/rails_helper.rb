@@ -11,6 +11,7 @@ require 'webmock/rspec'
 require 'capybara'
 require 'capybara/dsl'
 require 'capybara/rspec'
+require 'ostruct'
 
 Bundler.require(:development, :test)
 Dir.glob("#{Rails.root}/spec/support/*/**/*.rb").sort.each { |f| require f }
