@@ -4,8 +4,8 @@
 // that code so it'll be compiled.
 import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
+// import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
+// import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
 
 require("@rails/ujs").start()
 require("../src/runner/contentloaded.js")
