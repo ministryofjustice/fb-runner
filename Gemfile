@@ -7,7 +7,7 @@ ruby '3.2.0'
 # one of these lines:
 gem 'metadata_presenter',
     github: 'ministryofjustice/fb-metadata-presenter',
-    branch: 'cdpt-2632-update-footer-crest'
+    branch: 'cdpt-2632-moj-forms-update-crest'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 # gem 'metadata_presenter', '3.4.6'
 
