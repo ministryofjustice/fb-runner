@@ -8,7 +8,6 @@ FROM base AS dependencies
 RUN apk add --update build-base
 
 COPY Gemfile* .ruby-version ./
-RUN bundle lock --add-platform x86_64-linux
 RUN bundle config set without 'development test' && bundle install --jobs=3 --retry=3
 
 COPY package.json yarn.lock ./
