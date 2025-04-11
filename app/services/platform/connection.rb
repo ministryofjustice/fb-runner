@@ -19,9 +19,9 @@ module Platform
     def connection
       @connection ||= Faraday.new(root_url) do |conn|
         conn.request :json
-        conn.response :json
         conn.response :raise_error
-        conn.use :instrumentation, name: subscription
+        conn.response :json
+        conn.request :instrumentation, name: subscription
 
         # Number of seconds to wait for the connection to open
         conn.options.open_timeout = open_timeout

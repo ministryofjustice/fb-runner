@@ -83,7 +83,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
           stub_request(:post, expected_url)
             .with(body: expected_body, headers: expected_headers)
-            .to_return(status: 200, body: expected_body, headers: {})
+            .to_return(status: 200, body: expected_body, headers: { 'Content-Type': 'application/json' })
         end
 
         it 'merges the whole payload and send to datastore' do
@@ -99,11 +99,11 @@ RSpec.describe Platform::UserDatastoreAdapter do
         before do
           stub_request(:get, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_return(status: 404, body: empty_payload, headers: {})
+            .to_return(status: 404, body: empty_payload, headers: { 'Content-Type': 'application/json' })
 
           stub_request(:post, expected_url)
             .with(body: expected_body, headers: expected_headers)
-            .to_return(status: 201, body: expected_body, headers: {})
+            .to_return(status: 201, body: expected_body, headers: { 'Content-Type': 'application/json' })
         end
 
         it 'sends request to datastore' do
@@ -120,7 +120,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       before do
         stub_request(:get, expected_url)
           .with(body: {}, headers: expected_headers)
-          .to_return(status: 500, body: JSON.generate({}), headers: {})
+          .to_return(status: 500, body: JSON.generate({}), headers: { 'Content-Type': 'application/json' })
       end
 
       it 'raises datastore error' do
@@ -135,11 +135,11 @@ RSpec.describe Platform::UserDatastoreAdapter do
         before do
           stub_request(:get, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_timeout.then.to_return(status: 200, body: empty_payload, headers: {})
+            .to_timeout.then.to_return(status: 200, body: empty_payload, headers: { 'Content-Type': 'application/json' })
 
           stub_request(:post, expected_url)
           .with(body: expected_body, headers: expected_headers)
-          .to_return(status: 201, body: expected_body, headers: {})
+          .to_return(status: 201, body: expected_body, headers: { 'Content-Type': 'application/json' })
         end
 
         it 'returns the response' do
@@ -186,7 +186,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       before do
         stub_request(:get, expected_url)
           .with(body: {}, headers: expected_headers)
-          .to_return(status: 200, body: expected_body, headers: {})
+          .to_return(status: 200, body: expected_body, headers: { 'Content-Type': 'application/json' })
       end
 
       it 'returns decrypted payload' do
@@ -198,7 +198,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       before do
         stub_request(:get, expected_url)
           .with(body: {}, headers: expected_headers)
-          .to_return(status: 200, body: empty_payload, headers: {})
+          .to_return(status: 200, body: empty_payload, headers: { 'Content-Type': 'application/json' })
       end
 
       it 'returns empty hash' do
@@ -223,7 +223,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
 
       stub_request(:post, expected_url)
         .with(body: expected_body, headers: expected_headers)
-        .to_return(status: 200, body: expected_body, headers: {})
+        .to_return(status: 200, body: expected_body, headers: { 'Content-Type': 'application/json' })
     end
 
     it 'removes the user data' do
@@ -253,7 +253,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     before do
       stub_request(:post, expected_url)
         .with(body: expected_body, headers: expected_headers)
-        .to_return(status: 200, body: expected_response_body, headers: {})
+        .to_return(status: 200, body: expected_response_body, headers: { 'Content-Type': 'application/json' })
     end
 
     it 'saves the object' do
@@ -289,7 +289,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     before do
       stub_request(:get, expected_url)
         .with(body: {}, headers: expected_headers)
-        .to_return(status: 200, body: encrypted_response_body, headers: {})
+        .to_return(status: 200, body: encrypted_response_body, headers: { 'Content-Type': 'application/json' })
     end
 
     it 'gets the saved form by uuid' do
@@ -345,7 +345,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     before do
       stub_request(:post, expected_url)
         .with(body: {}, headers: expected_headers)
-        .to_return(status: 200, body: {}.to_json, headers: {})
+        .to_return(status: 200, body: {}.to_json, headers: { 'Content-Type': 'application/json' })
     end
 
     it 'increments the record counter' do
@@ -357,7 +357,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
         before do
           stub_request(:post, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_return(status: 404, body: {}.to_json, headers: {})
+            .to_return(status: 404, body: {}.to_json, headers: { 'Content-Type': 'application/json' })
         end
 
         it 'captures the error and returns a usable status' do
@@ -369,7 +369,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
         before do
           stub_request(:post, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_return(status: 422, body: {}.to_json, headers: {})
+            .to_return(status: 422, body: {}.to_json, headers: { 'Content-Type': 'application/json' })
         end
 
         it 'captures the error and returns a usable status' do
@@ -389,7 +389,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     before do
       stub_request(:post, expected_url)
         .with(body: {}, headers: expected_headers)
-        .to_return(status: 202, body: {}.to_json, headers: {})
+        .to_return(status: 202, body: {}.to_json, headers: { 'Content-Type': 'application/json' })
     end
 
     it 'invalidates the record' do
@@ -401,7 +401,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
         before do
           stub_request(:post, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_return(status: 404, body: {}.to_json, headers: {})
+            .to_return(status: 404, body: {}.to_json, headers: { 'Content-Type': 'application/json' })
         end
 
         it 'captures the error and returns a usable status' do
@@ -413,7 +413,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
         before do
           stub_request(:post, expected_url)
             .with(body: {}, headers: expected_headers)
-            .to_return(status: 422, body: {}.to_json, headers: {})
+            .to_return(status: 422, body: {}.to_json, headers: { 'Content-Type': 'application/json' })
         end
 
         it 'captures the error and returns a usable status' do
@@ -439,7 +439,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       expect(adapter).to receive(:load_data).and_return(existing_answers)
       stub_request(:post, expected_url)
         .with(body: expected_body, headers: expected_headers)
-        .to_return(status: 200, body: expected_body, headers: {})
+        .to_return(status: 200, body: expected_body, headers: { 'Content-Type': 'application/json' })
     end
 
     context 'single file upload' do
