@@ -52,7 +52,6 @@ ENV GOVUK_WEBSITE_ROOT ''
 ARG RAILS_ENV=production
 
 RUN gem install bundler
-RUN bundle install
 RUN ./bin/webpack
 RUN ASSET_PRECOMPILE=true RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rails secret) bundle exec rake assets:precompile --trace
 
