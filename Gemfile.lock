@@ -161,9 +161,13 @@ GEM
       json
       jwt
     ffi (1.17.1-arm64-darwin)
+    ffi (1.17.1-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (4.30.2-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.30.2-x86_64-linux)
       bigdecimal
       rake (>= 13)
     googleapis-common-protos-types (1.19.0)
@@ -262,6 +266,8 @@ GEM
       net-protocol
     nio4r (2.7.4)
     nokogiri (1.18.7-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.7-x86_64-linux-gnu)
       racc (~> 1.4)
     opentelemetry-api (1.5.0)
     opentelemetry-common (0.22.0)
@@ -684,6 +690,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  x86_64-linux
 
 DEPENDENCIES
   aws-sdk-s3
