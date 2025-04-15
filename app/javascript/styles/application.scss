@@ -14,15 +14,15 @@
  *= require_self
  */
 
-$govuk-assets-path: "~govuk-frontend/govuk/assets/";
+$govuk-assets-path: "~govuk-frontend/dist/govuk/assets/";
 
 // Including all of the settings tools and helpers for potential future use.
 // These don't generate any CSS output so there is no harm in importing them all.
-@import "govuk-frontend/govuk/settings/all";
-@import "govuk-frontend/govuk/tools/all";
-@import "govuk-frontend/govuk/helpers/all";
+@import "govuk-frontend/dist/govuk/settings/index";
+@import "govuk-frontend/dist/govuk/tools/index";
+@import "govuk-frontend/dist/govuk/helpers/index";
 
-@import "govuk-frontend/govuk/core/links";
+@import "govuk-frontend/dist/govuk/core/links";
 @import "./components/modal-dialog";
 @import "./components/timeout-warning";
 @import "./utilities/scroll-disabled";

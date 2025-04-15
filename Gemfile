@@ -5,16 +5,15 @@ ruby '3.2.0'
 
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
-# gem 'metadata_presenter',
-#     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'unique-page-titles'
+gem 'metadata_presenter',
+    github: 'ministryofjustice/fb-metadata-presenter',
+    branch: 'cdpt-2632-moj-forms-update-crest'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.4.6'
+# gem 'metadata_presenter', '3.4.6'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
-gem 'faraday'
-gem 'faraday_middleware'
+gem 'faraday', '~> 2.0'
 gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
 gem 'prometheus-client', '~> 4.2.0'

@@ -121,9 +121,9 @@
     background-color: govuk-colour("black");
     box-shadow: none !important;
     font-size: $font-size;
-    @if $govuk-typography-use-rem {
-      font-size: govuk-px-to-rem($font-size);
-    }
+    // @if $govuk-typography-use-rem {
+    //   font-size: govuk-px-to-rem($font-size);
+    // }
     @include govuk-typography-weight-bold;
     line-height: $line-height;
 

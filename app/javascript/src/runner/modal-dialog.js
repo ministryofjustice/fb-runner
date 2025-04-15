@@ -47,10 +47,10 @@
 
 */
 
-import { nodeListForEach } from 'govuk-frontend/govuk/common.js'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Event'
+// import { nodeListForEach } from 'govuk-frontend/dist/govuk/common/index'
+// import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
+// import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
+// import 'govuk-frontend/govuk-esm/vendor/polyfills/Event'
 
 function ModalDialog ($module) {
   this.$module = $module
@@ -267,6 +267,15 @@ ModalDialog.prototype.handleKeyDown = function (event) {
     case KEY_ESCAPE:
       this.close()
       break
+  }
+}
+
+function nodeListForEach (nodes, callback) {
+  if (window.NodeList.prototype.forEach) {
+    return nodes.forEach(callback)
+  }
+  for (var i = 0; i < nodes.length; i++) {
+    callback.call(window, nodes[i], i, nodes);
   }
 }
 
