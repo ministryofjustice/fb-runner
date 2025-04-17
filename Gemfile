@@ -7,9 +7,9 @@ ruby '3.2.0'
 # one of these lines:
 # gem 'metadata_presenter',
 #     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'unique-page-titles'
+#     branch: 'update-govuk-crest'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.4.6'
+gem 'metadata_presenter', '3.4.7'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
