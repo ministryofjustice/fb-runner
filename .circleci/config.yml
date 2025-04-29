@@ -148,7 +148,9 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - browser-tools/install-chrome
+      - browser-tools/install-chrome:
+          # pin to version 132 due to race condition in latest release: https://github.com/teamcapybara/capybara/issues/2800
+          chrome-version: "132.0.6834.83"
       - browser-tools/install-chromedriver
       - run:
           name: Check browser tools install
