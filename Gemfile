@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.0'
+ruby '3.1.3'
 
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
@@ -19,7 +19,6 @@ gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
 gem 'prometheus-client', '~> 4.2.0'
 gem 'puma', '~> 6.4'
-gem 'rack', '2.2.12'
 gem 'rails', '~> 7.1.0'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 5.14'

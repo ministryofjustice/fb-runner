@@ -1,4 +1,4 @@
-FROM ruby:3.2.0-alpine3.16 AS base
+FROM ruby:3.1.3-alpine3.16 AS base
 
 RUN apk add --update yarn build-base bash libcurl git tzdata && rm -rf /var/cache/apk/*
 RUN apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/v3.16/main/ nodejs
@@ -53,6 +53,6 @@ ARG RAILS_ENV=production
 
 RUN gem install bundler
 RUN ./bin/webpack
-RUN ASSET_PRECOMPILE=true RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rails secret) bundle exec rake assets:precompile --trace
+RUN ASSET_PRECOMPILE=true RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rake secret) bundle exec rake assets:precompile --trace
 
 CMD bundle exec rails s -e ${RAILS_ENV} -p ${APP_PORT} --binding=0.0.0.0
