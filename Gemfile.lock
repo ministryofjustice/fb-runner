@@ -513,7 +513,7 @@ GEM
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (2.2.12)
+    rack (2.2.14)
     rack-proxy (0.7.7)
       rack
     rack-session (1.0.2)
@@ -724,7 +724,7 @@ DEPENDENCIES
   metadata_presenter (= 3.4.7)
   prometheus-client (~> 4.2.0)
   puma (~> 6.4)
-  rack (= 2.2.12)
+  rack (= 2.2.14)
   rails (~> 7.1.0)
   rails-controller-testing
   rspec-rails
