@@ -1,6 +1,5 @@
 module Platform
   class UserFilestorePayload
-    include Platform::Connection
     include Platform::EncryptedUserIdAndToken
 
     attr_reader :session, :file_details, :service_secret, :allowed_file_types
@@ -9,6 +8,7 @@ module Platform
     ALLOWED_TYPES = %w[
       text/csv
       text/plain
+      text/rtf
       application/vnd.openxmlformats-officedocument.wordprocessingml.document
       application/msword
       application/vnd.oasis.opendocument.spreadsheet

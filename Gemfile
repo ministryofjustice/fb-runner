@@ -1,28 +1,29 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.3'
+ruby '3.2.0'
+
+# Metadata presenter - if you need to be on development you can uncomment
+# one of these lines:
+# gem 'metadata_presenter',
+#     github: 'ministryofjustice/fb-metadata-presenter',
+#     branch: 'update-govuk-crest'
+# gem 'metadata_presenter', path: '../fb-metadata-presenter'
+gem 'metadata_presenter', '3.4.7'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
 gem 'faraday_middleware'
-gem 'jwt'
-# Metadata presenter - if you need to be on development you can uncomment
-# one of these lines:
 gem 'fb-jwt-auth', '0.10.0'
-# gem 'metadata_presenter',
-#     github: 'ministryofjustice/fb-metadata-presenter',
-#     branch: 'conditional-content-fixture'
-# gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.2.11'
-
-gem 'prometheus-client', '~> 2.1.0'
+gem 'jwt'
+gem 'prometheus-client', '~> 4.2.0'
 gem 'puma', '~> 6.4'
-gem 'rails', '7.0.5'
+gem 'rack', '2.2.14'
+gem 'rails', '~> 7.1.0'
 gem 'sass-rails', '>= 6'
-gem 'sentry-rails', '~> 5.11.0'
-gem 'sentry-ruby', '~> 5.11.0'
+gem 'sentry-rails', '~> 5.14'
+gem 'sentry-ruby', '~> 5.14'
 gem 'webpacker', '~> 5.4'
 
 group :development, :test do
@@ -33,7 +34,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'simplecov-console'
-  gem 'site_prism', '4.0'
+  gem 'site_prism', '< 5.0'
   gem 'timecop'
   gem 'webmock'
 end

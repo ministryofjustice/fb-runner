@@ -20,12 +20,6 @@ RSpec.describe Platform::SaveAndReturnPayload do
     "Version Fixture <#{default_email_address}>"
   end
   let(:default_email_address) { Platform::SaveAndReturnPayload::DEFAULT_EMAIL_ADDRESS }
-  let(:email_subject) do
-    "Your saved form - '#{service.service_name}'"
-  end
-  let(:email_body) do
-    'Magic link: {{save_and_return_link}}'
-  end
   let(:pages) do
     [
       {
@@ -54,17 +48,34 @@ RSpec.describe Platform::SaveAndReturnPayload do
       }
     ]
   end
-  let(:expected_email_body) { 'Magic link: https://version-fixture.dev.test.form.service.justice.gov.uk/return/some-id' }
-  let(:service_slug) do
-    'version-fixture'
+  let(:expected_email_body) { 'Body - Version Fixture - https://version-fixture.dev.test.form.service.justice.gov.uk/return/some-id' }
+  let(:expected_email_subject) { 'Subject - Version Fixture' }
+  let(:service_slug) { 'version-fixture' }
+
+  let(:localisations) do
+    {
+      presenter: {
+        save_and_return: {
+          confirmation_email: {
+            subject: 'Subject - %{service_name}',
+            body: 'Body - %{service_name} - %{magic_link}'
+          }
+        }
+      }
+    }
   end
 
   before do
     allow(ENV).to receive(:[])
-    allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL').and_return(email_body)
     allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
     allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
     allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
+  end
+
+  # Predictable locales
+  around(:each) do |example|
+    I18n.backend.store_translations(:en, localisations)
+    I18n.with_locale(:en) { example.run }
   end
 
   describe '#to_h' do
@@ -79,9 +90,10 @@ RSpec.describe Platform::SaveAndReturnPayload do
       [
         {
           kind: 'email',
+          variant: 'save_and_return',
           to: email_to,
           from: expected_email_from,
-          subject: email_subject,
+          subject: expected_email_subject,
           email_body: expected_email_body,
           include_pdf: false,
           include_attachments: false
@@ -121,9 +133,10 @@ RSpec.describe Platform::SaveAndReturnPayload do
         [
           {
             kind: 'email',
+            variant: 'save_and_return',
             to: email_to,
             from: expected_email_from,
-            subject: email_subject,
+            subject: expected_email_subject,
             email_body: expected_email_body,
             include_pdf: false,
             include_attachments: false
@@ -132,7 +145,6 @@ RSpec.describe Platform::SaveAndReturnPayload do
       end
 
       before do
-        allow(ENV).to receive(:[]).with('SAVE_AND_RETURN_EMAIL').and_return(email_body)
         allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
         allow(ENV).to receive(:[]).with('DEPLOYMENT_ENV').and_return('dev')
       end
@@ -144,7 +156,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
       end
 
       context 'when deployment environment is test-production' do
-        let(:expected_email_body) { 'Magic link: https://version-fixture.test.form.service.justice.gov.uk/return/some-id' }
+        let(:expected_email_body) { 'Body - Version Fixture - https://version-fixture.test.form.service.justice.gov.uk/return/some-id' }
 
         before do
           allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('test')
@@ -157,7 +169,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
       end
 
       context 'when deployment environment is live-dev' do
-        let(:expected_email_body) { 'Magic link: https://version-fixture.dev.form.service.justice.gov.uk/return/some-id' }
+        let(:expected_email_body) { 'Body - Version Fixture - https://version-fixture.dev.form.service.justice.gov.uk/return/some-id' }
 
         before do
           allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('live')
@@ -170,7 +182,7 @@ RSpec.describe Platform::SaveAndReturnPayload do
       end
 
       context 'when deployment environment is live-production' do
-        let(:expected_email_body) { 'Magic link: https://version-fixture.form.service.justice.gov.uk/return/some-id' }
+        let(:expected_email_body) { 'Body - Version Fixture - https://version-fixture.form.service.justice.gov.uk/return/some-id' }
 
         before do
           allow(ENV).to receive(:[]).with('PLATFORM_ENV').and_return('live')

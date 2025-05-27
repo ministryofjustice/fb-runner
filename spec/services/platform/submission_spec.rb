@@ -65,6 +65,7 @@ RSpec.describe Platform::Submission do
   describe '#valid?' do
     let(:submitter_url) { 'http://fb-awesome-submitter' }
     let(:json_endpoint_url) { 'http://superb-api' }
+    let(:confirmation_email_id) { 'an-email-component' }
 
     before do
       allow(ENV).to receive(:[])
@@ -73,6 +74,7 @@ RSpec.describe Platform::Submission do
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT')
         .and_return(service_email_output)
       allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(json_endpoint_url)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_COMPONENT_ID').and_return(confirmation_email_id)
     end
 
     context 'when required env vars are present' do
@@ -86,6 +88,7 @@ RSpec.describe Platform::Submission do
     context 'when service email output and api-endpoint are blank' do
       let(:json_endpoint_url) { nil }
       let(:service_email_output) { nil }
+      let(:confirmation_email_id) { nil }
 
       it 'returns invalid' do
         expect(submission).to_not be_valid
@@ -93,6 +96,15 @@ RSpec.describe Platform::Submission do
     end
 
     context 'when service email output is blank but api-endpoint is set' do
+      let(:service_email_output) { nil }
+      let(:json_endpoint_url) { nil }
+
+      it 'returns valid' do
+        expect(submission).to be_valid
+      end
+    end
+
+    context 'when service email output and api-endpoint is blank but confirmation email is set' do
       let(:service_email_output) { nil }
 
       it 'returns valid' do

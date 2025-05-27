@@ -39,25 +39,35 @@ RSpec.describe Platform::SubmitterPayload do
         'type' => 'image/jpg',
         'date' => 1_624_540_833
       },
-      'dog-picture_upload_2' => [{
-        'original_filename' => 'basset-hound.jpg',
-        'content_type' => 'image/jpg',
-        'tempfile' => upload_file.path,
-        'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
-        'size' => 1_392_565,
-        'type' => 'image/jpg',
-        'date' => 1_624_540_833
-      },
-                                 {
-                                   'original_filename' => 'basset-hound.jpg',
-                                   'content_type' => 'image/jpg',
-                                   'tempfile' => upload_file.path,
-                                   'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
-                                   'size' => 1_392_565,
-                                   'type' => 'image/jpg',
-                                   'date' => 1_624_540_833
-                                 }],
-      'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}'
+      'dog-picture_upload_2' => [
+        {
+          'original_filename' => 'basset-hound.jpg',
+          'content_type' => 'image/jpg',
+          'tempfile' => upload_file.path,
+          'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+          'size' => 1_392_565,
+          'type' => 'image/jpg',
+          'date' => 1_624_540_833
+        },
+        {
+          'original_filename' => 'basset-hound.jpg',
+          'content_type' => 'image/jpg',
+          'tempfile' => upload_file.path,
+          'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+          'size' => 1_392_565,
+          'type' => 'image/jpg',
+          'date' => 1_624_540_833
+        }
+      ],
+      'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}',
+      'postal-address_address_1' => {
+        'address_line_one' => '1 road',
+        'address_line_two' => '',
+        'city' => 'ruby town',
+        'county' => '',
+        'postcode' => '99 999',
+        'country' => 'ruby land'
+      }
     }
   end
   let(:textarea_answer) do
@@ -161,14 +171,14 @@ RSpec.describe Platform::SubmitterPayload do
         heading: 'How well do you know Star Wars?',
         answers: [
           {
-            field_id: 'star-wars-knowledge_text_1',
-            field_name: "What was the name of the band playing in Jabba's palace?",
-            answer: 'Max Rebo Band'
-          },
-          {
             field_id: 'star-wars-knowledge_radios_1',
             field_name: "What is The Mandalorian's real name?",
             answer: 'Din Jarrin'
+          },
+          {
+            field_id: 'star-wars-knowledge_text_1',
+            field_name: "What was the name of the band playing in Jabba's palace?",
+            answer: 'Max Rebo Band'
           }
         ]
       },
@@ -199,6 +209,23 @@ RSpec.describe Platform::SubmitterPayload do
             answer: 'MW',
             field_id: 'countries_autocomplete_1',
             field_name: 'Countries'
+          }
+        ]
+      },
+      {
+        heading: '',
+        answers: [
+          {
+            answer: {
+              'address_line_one' => '1 road',
+              'address_line_two' => '',
+              'city' => 'ruby town',
+              'county' => '',
+              'postcode' => '99 999',
+              'country' => 'ruby land'
+            },
+            field_id: 'postal-address_address_1',
+            field_name: 'Confirm your postal address'
           }
         ]
       }
@@ -239,21 +266,11 @@ RSpec.describe Platform::SubmitterPayload do
       'Version Fixture <reply_to@digital.justice.gov.uk>'
     end
     let(:default_email_address) { Platform::SubmitterPayload::DEFAULT_EMAIL_ADDRESS }
-    let(:email_subject) do
-      'All info about middle earth characters'
-    end
-    let(:email_body) do
-      'Please find attached Elfs info!'
-    end
-    let(:env_confirmation_email_body) do
-      'Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl'
-    end
-    let(:confirmation_email_body) do
-      "Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl#{answers_html}"
-    end
-    let(:service_slug) do
-      'version-fixture'
-    end
+    let(:email_subject) { 'All info about middle earth characters' }
+    let(:email_body) { 'Please find attached Elfs info!' }
+    let(:user_answers) { answers_html }
+    let(:confirmation_email_body) { 'Triceramisu, Falafel-raptor, Diplodonuts, Berry-dactyl' }
+    let(:service_slug) { 'version-fixture' }
 
     before do
       allow(ENV).to receive(:[]).with('SERVICE_SLUG').and_return(service_slug)
@@ -261,7 +278,7 @@ RSpec.describe Platform::SubmitterPayload do
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_SUBJECT').and_return(email_subject)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_BODY').and_return(email_body)
       allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_SUBJECT').and_return(confirmation_email_subject)
-      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(env_confirmation_email_body)
+      allow(ENV).to receive(:[]).with('CONFIRMATION_EMAIL_BODY').and_return(confirmation_email_body)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_HEADING').and_return(pdf_heading)
       allow(ENV).to receive(:[]).with('SERVICE_EMAIL_PDF_SUBHEADING').and_return(pdf_subheading)
       allow(subject).to receive(:answers_html).and_return(answers_html)
@@ -279,10 +296,12 @@ RSpec.describe Platform::SubmitterPayload do
         [
           {
             kind: 'email',
+            variant: 'submission',
             to: email_to,
             from: expected_default_email_from,
             subject: email_subject,
             email_body:,
+            user_answers:,
             include_pdf: true,
             include_attachments: true
           },
@@ -292,17 +311,20 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
             email_body: '',
+            user_answers: '',
             include_pdf: false,
             include_attachments: true
           },
           {
             kind: 'email',
+            variant: 'confirmation',
             to: user_data[email_component_id],
             from: expected_email_from,
             subject: confirmation_email_subject,
             email_body: confirmation_email_body,
-            include_pdf: true,
-            include_attachments: true
+            user_answers:,
+            include_pdf: false,
+            include_attachments: false
           },
           {
             kind: 'json',
@@ -560,6 +582,46 @@ RSpec.describe Platform::SubmitterPayload do
           end
         end
       end
+
+      context 'when an answer generates an unhandled exception' do
+        subject(:submitter_payload) do
+          described_class.new(
+            service:,
+            user_data: user_data.merge(
+              {
+                'holiday_date_1(3i)' => '29', # non-leap year
+                'holiday_date_1(2i)' => '02',
+                'holiday_date_1(1i)' => '2023'
+              }
+            ),
+            session:
+          )
+        end
+
+        let(:answers) { submitter_payload.to_h }
+        let(:sentry_scope) { instance_double(Sentry::Scope) }
+
+        before do
+          allow(Sentry).to receive(:configure_scope).and_yield(sentry_scope)
+        end
+
+        it 'adds additional context for Sentry' do
+          expect(
+            sentry_scope
+          ).to receive(:set_context).with(
+            'answer_for',
+            {
+              component_type: 'date',
+              component_id: 'holiday_date_1',
+              answer: /@day="29", @month="02", @year="2023"/
+            }
+          )
+
+          expect {
+            answers
+          }.to raise_error(Date::Error, 'invalid date')
+        end
+      end
     end
 
     describe '#actions' do
@@ -568,10 +630,12 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'submission',
               to: email_to,
               from: expected_default_email_from,
               subject: email_subject,
               email_body:,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             },
@@ -581,17 +645,20 @@ RSpec.describe Platform::SubmitterPayload do
               from: expected_default_email_from,
               subject: "CSV - #{email_subject}",
               email_body: '',
+              user_answers: '',
               include_pdf: false,
               include_attachments: true
             },
             {
               kind: 'email',
+              variant: 'confirmation',
               to: user_data[email_component_id],
               from: expected_email_from,
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
-              include_pdf: true,
-              include_attachments: true
+              user_answers: answers_html,
+              include_pdf: false,
+              include_attachments: false
             }
           ]
         end
@@ -612,10 +679,12 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'submission',
               to: email_to,
               from: expected_default_email_from,
               subject: email_subject,
               email_body:,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             }
@@ -635,12 +704,14 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'confirmation',
               to: user_data[email_component_id],
               from: expected_email_from,
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
-              include_pdf: true,
-              include_attachments: true
+              user_answers: answers_html,
+              include_pdf: false,
+              include_attachments: false
             }
           ]
         end
@@ -687,21 +758,25 @@ RSpec.describe Platform::SubmitterPayload do
           [
             {
               kind: 'email',
+              variant: 'submission',
               to: email_to,
               from: expected_default_email_from,
               subject: email_subject,
               email_body:,
+              user_answers: answers_html,
               include_pdf: true,
               include_attachments: true
             },
             {
               kind: 'email',
+              variant: 'confirmation',
               to: confirmation_to,
               from: expected_email_from,
               subject: confirmation_email_subject,
               email_body: confirmation_email_body,
-              include_pdf: true,
-              include_attachments: true
+              user_answers: answers_html,
+              include_pdf: false,
+              include_attachments: false
             }
           ]
         end
@@ -770,22 +845,24 @@ RSpec.describe Platform::SubmitterPayload do
     context 'payment links' do
       let(:payment_link) { 'http://www.mustafa.com/vader-tax?reference=' }
       let(:dummy_reference) { '1234-ABC-567' }
-      let(:env_confirmation_email_body) do
+      let(:confirmation_email_body) do
         'some email body {{payment_link}}'
       end
       let(:expected_confirmation_email_body) do
-        "some email body #{payment_link}#{dummy_reference}#{answers_html}"
+        "some email body #{payment_link}#{dummy_reference}"
       end
       let(:expected_actions) do
         [
           {
             kind: 'email',
+            variant: 'confirmation',
             to: user_data[email_component_id],
             from: expected_email_from,
             subject: confirmation_email_subject,
             email_body: expected_confirmation_email_body,
-            include_pdf: true,
-            include_attachments: true
+            user_answers: answers_html,
+            include_pdf: false,
+            include_attachments: false
           }
         ]
       end
@@ -811,10 +888,12 @@ RSpec.describe Platform::SubmitterPayload do
         [
           {
             kind: 'email',
+            variant: 'submission',
             to: email_to,
             from: expected_default_email_from,
             subject: email_subject,
             email_body:,
+            user_answers: answers_html,
             include_pdf: true,
             include_attachments: true
           },
@@ -824,17 +903,20 @@ RSpec.describe Platform::SubmitterPayload do
             from: expected_default_email_from,
             subject: "CSV - #{email_subject}",
             email_body: '',
+            user_answers: '',
             include_pdf: false,
             include_attachments: true
           },
           {
             kind: 'email',
+            variant: 'confirmation',
             to: user_data[email_component_id],
             from: expected_email,
             subject: confirmation_email_subject,
             email_body: confirmation_email_body,
-            include_pdf: true,
-            include_attachments: true
+            user_answers: answers_html,
+            include_pdf: false,
+            include_attachments: false
           }
         ]
       end
@@ -906,6 +988,191 @@ RSpec.describe Platform::SubmitterPayload do
 
       it 'should return just the json action' do
         expect(subject.actions).to eq(expected_actions)
+      end
+    end
+  end
+
+  describe 'ms list action' do
+    let(:user_data) do
+      {
+        'moj_forms_reference_number' => 'ref-123-xyz',
+        'name_text_1' => 'Legolas',
+        'email-address_email_1' => 'legolas@middle.earth.com',
+        'parent-name_text_1' => 'Thranduil',
+        'your-age_number_1' => '2931',
+        'family-hobbies_textarea_1' => textarea_answer,
+        'do-you-like-star-wars_radios_1' => 'Only on weekends',
+        'holiday_date_1(3i)' => '30',
+        'holiday_date_1(2i)' => '12',
+        'holiday_date_1(1i)' => '2020',
+        'burgers_checkboxes_1' => ['Beef, cheese, tomato', 'Chicken, cheese, tomato'],
+        'star-wars-knowledge_text_1' => 'Max Rebo Band',
+        'star-wars-knowledge_radios_1' => 'Din Jarrin',
+        'dog-picture_upload_1' => {
+          'original_filename' => 'basset-hound.jpg',
+          'content_type' => 'image/jpg',
+          'tempfile' => upload_file.path,
+          'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+          'size' => 1_392_565,
+          'type' => 'image/jpg',
+          'date' => 1_624_540_833
+        },
+        'dog-picture_upload_2' => [
+          {
+            'original_filename' => 'basset-hound.jpg',
+            'content_type' => 'image/jpg',
+            'tempfile' => upload_file.path,
+            'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+            'size' => 1_392_565,
+            'type' => 'image/jpg',
+            'date' => 1_624_540_833
+          },
+          {
+            'original_filename' => 'basset-hound.jpg',
+            'content_type' => 'image/jpg',
+            'tempfile' => upload_file.path,
+            'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+            'size' => 1_392_565,
+            'type' => 'image/jpg',
+            'date' => 1_624_540_833
+          }
+        ],
+        'countries_autocomplete_1' => '{"text":"Malawi","value":"MW"}',
+        'postal-address_address_1' => {
+          'address_line_one' => '1 road',
+          'address_line_two' => '',
+          'city' => 'ruby town',
+          'county' => '',
+          'postcode' => '99 999',
+          'country' => 'ruby land'
+        }
+      }
+    end
+
+    context 'when there is no email submission at all, only to send to list' do
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return('a-list-id')
+        allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return('a-site-id')
+        allow(ENV).to receive(:[]).with('MS_GRAPH_ROOT_URL').and_return('a-configured-url')
+      end
+
+      let(:expected_actions) do
+        [
+          {
+            kind: 'mslist',
+            graph_url: 'a-configured-url',
+            site_id: 'a-site-id',
+            list_id: 'a-list-id',
+            drive_id: nil,
+            reference_number: 'ref-123-xyz',
+            include_attachments: false
+          }
+        ]
+      end
+
+      it 'should return just the ms list action' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
+
+    context 'when including attachments' do
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return('a-list-id')
+        allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return('a-site-id')
+        allow(ENV).to receive(:[]).with('MS_DRIVE_ID').and_return('a-drive-id')
+        # will default to the 1.0 graph api if not configured
+        allow(ENV).to receive(:[]).with('MS_GRAPH_ROOT_URL').and_return(nil)
+      end
+
+      let(:expected_actions) do
+        [
+          {
+            kind: 'mslist',
+            graph_url: 'https://graph.microsoft.com/v1.0/',
+            site_id: 'a-site-id',
+            list_id: 'a-list-id',
+            drive_id: 'a-drive-id',
+            reference_number: 'ref-123-xyz',
+            include_attachments: true
+          }
+        ]
+      end
+
+      it 'should return the action with the drive id and attachments flag' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
+
+    context 'when reference number is not configured' do
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return('a-list-id')
+        allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return('a-site-id')
+        allow(ENV).to receive(:[]).with('MS_DRIVE_ID').and_return('a-drive-id')
+        user_data['moj_forms_reference_number'] = nil
+        # will default to the 1.0 graph api if not configured
+        allow(ENV).to receive(:[]).with('MS_GRAPH_ROOT_URL').and_return(nil)
+      end
+
+      let(:expected_actions) do
+        [
+          {
+            kind: 'mslist',
+            graph_url: 'https://graph.microsoft.com/v1.0/',
+            site_id: 'a-site-id',
+            list_id: 'a-list-id',
+            drive_id: 'a-drive-id',
+            reference_number: '',
+            include_attachments: true
+          }
+        ]
+      end
+
+      it 'should return the action with a blank reference' do
+        expect(subject.actions).to eq(expected_actions)
+      end
+    end
+
+    context 'when missing some configuration' do
+      before do
+        allow(ENV).to receive(:[]).with('SERVICE_EMAIL_OUTPUT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_ENDPOINT').and_return(nil)
+        allow(ENV).to receive(:[]).with('SERVICE_OUTPUT_JSON_KEY').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return(nil)
+        allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return(nil)
+        user_data['moj_forms_reference_number'] = nil
+      end
+
+      context 'missing site id' do
+        let(:expected_actions) { [] }
+
+        before do
+          allow(ENV).to receive(:[]).with('MS_LIST_ID').and_return('a-list-id')
+        end
+
+        it 'does not include the action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
+      end
+
+      context 'missing list id' do
+        let(:expected_actions) { [] }
+
+        before do
+          allow(ENV).to receive(:[]).with('MS_SITE_ID').and_return('a-site-id')
+        end
+
+        it 'does not include the action' do
+          expect(subject.actions).to eq(expected_actions)
+        end
       end
     end
   end

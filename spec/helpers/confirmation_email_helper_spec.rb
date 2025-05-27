@@ -109,9 +109,24 @@ RSpec.describe ConfirmationEmailHelper do
   end
 
   describe '#answer_cell' do
-    it 'generates the table cell html with merged styles' do
+    before do
       allow(helper).to receive(:answer_cell_styles).and_return('color: red; width: 50%;')
+    end
+
+    it 'generates the table cell html with merged styles' do
       expect(helper.answer_cell(content: 'answer')).to eql '<td style="color: red; width: 50%;">answer</td>'
+    end
+
+    context 'for an answer of type hash' do
+      let(:content) do
+        { address_line_one: 'Street 123', city: 'Wondercity' }
+      end
+
+      it 'generates the table cell with the values concatenated woth commas' do
+        expect(
+          helper.answer_cell(content:)
+        ).to eq('<td style="color: red; width: 50%;">Street 123, Wondercity</td>')
+      end
     end
   end
 
@@ -177,14 +192,28 @@ RSpec.describe ConfirmationEmailHelper do
     let(:q5) { '<td style="color: red; width: 50%; padding-top: 20px;">Question 5</td>' }
     let(:a5) { '<td style="color: red; font-size: 100px; padding-top: 20px;">Answer 5</td>' }
 
-    let(:table_html)  { "<table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
+    context 'for a table with heading' do
+      let(:table_html) { "<table><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
+      let(:output) { helper.answers_html(pages, heading: true) }
 
-    it 'generates the table html' do
-      expect(helper.answers_table(pages)).to eql table_html
+      it 'generates the table html' do
+        expect(output).to eq("<h2>Your answers</h2>#{table_html}")
+      end
     end
 
-    it 'generates the table html' do
-      expect(helper.answers_html(pages)).to eql "<h2>Your answers</h2>#{table_html}"
+    context 'for a table without heading' do
+      let(:table_html) { "<table style=\"margin-top: 40px\"><tr>#{q1}#{a1}</tr><tr>#{q2}#{a2}</tr><tr>#{heading}</tr><tr>#{q3}#{a3}</tr><tr>#{q4}#{a4}</tr><tr>#{q5}#{a5}</tr></table>" }
+      let(:output) { helper.answers_html(pages, heading: false) }
+
+      it 'generates the table html' do
+        expect(output).to eq(table_html)
+      end
     end
+  end
+end
+
+describe 'coverage test' do
+  it 'returns styles not mocked' do
+    expect(helper.styles).to be_truthy
   end
 end

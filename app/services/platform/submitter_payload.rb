@@ -6,6 +6,8 @@ module Platform
 
     CSV = 'csv'.freeze
     EMAIL = 'email'.freeze
+    SUBMISSION_EMAIL = 'submission'.freeze
+    CONFIRMATION_EMAIL = 'confirmation'.freeze
     DEFAULT_EMAIL_ADDRESS = 'no-reply-moj-forms@digital.justice.gov.uk'.freeze
 
     def initialize(service:, user_data:, session:)
@@ -54,7 +56,7 @@ module Platform
     end
 
     def actions
-      [email_action, csv_action, confirmation_email_action, json_action].compact
+      [email_action, csv_action, confirmation_email_action, json_action, ms_list_action].compact
     end
 
     def pages
@@ -81,12 +83,24 @@ module Platform
 
     def answer_for(page, component)
       page_answers = MetadataPresenter::PageAnswers.new(page, user_data)
-      answer = page_answers.send(component.id)
 
-      if self.class.private_method_defined?(component.type.to_sym)
-        send(component.type.to_sym, answer)
-      else
-        answer&.strip
+      component_type = component.type
+      component_id = component.id
+
+      answer = page_answers.send(component_id)
+
+      return answer&.strip unless self.class.private_method_defined?(component_type)
+
+      begin
+        # For component types like `date`, `checkboxes`, etc.
+        # we call private methods having the same name as the type
+        send(component_type, answer)
+      rescue StandardError
+        Sentry.configure_scope do |scope|
+          scope.set_context('answer_for', { component_type:, component_id:, answer: answer.inspect })
+        end
+
+        raise # re-raise the exception
       end
     end
 
@@ -128,10 +142,12 @@ module Platform
 
       {
         kind: EMAIL,
+        variant: SUBMISSION_EMAIL,
         to: ENV['SERVICE_EMAIL_OUTPUT'],
         from: default_email_from,
         subject: concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT']),
         email_body: concatenation_with_reference_number(ENV['SERVICE_EMAIL_BODY']),
+        user_answers: answers_html(pages, heading: false),
         include_attachments: true,
         include_pdf: true
       }
@@ -146,6 +162,7 @@ module Platform
         from: default_email_from,
         subject: "CSV - #{concatenation_with_reference_number(ENV['SERVICE_EMAIL_SUBJECT'])}",
         email_body: '',
+        user_answers: '',
         include_attachments: true,
         include_pdf: false
       }
@@ -156,17 +173,15 @@ module Platform
 
       {
         kind: EMAIL,
+        variant: CONFIRMATION_EMAIL,
         to: confirmation_email_answer,
         from: confirmation_email_reply_to,
         subject: concatenation_with_reference_number(ENV['CONFIRMATION_EMAIL_SUBJECT']),
-        email_body: confirmation_email_body,
-        include_attachments: true,
-        include_pdf: true
+        email_body: inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']),
+        user_answers: answers_html(pages, heading: true),
+        include_attachments: false,
+        include_pdf: false
       }
-    end
-
-    def confirmation_email_body
-      inject_reference_payment_content(ENV['CONFIRMATION_EMAIL_BODY']) + answers_html(pages)
     end
 
     def strip_content_components(components)
@@ -211,6 +226,10 @@ module Platform
         Date.civil(answer.year.to_i, answer.month.to_i, answer.day.to_i),
         format: '%d %B %Y'
       )
+    end
+
+    def address(answer)
+      answer.as_json
     end
 
     def checkboxes(answer)
@@ -278,6 +297,24 @@ module Platform
         key: ENV['SERVICE_OUTPUT_JSON_KEY'],
         include_attachments: true
       }
+    end
+
+    def ms_list_action
+      return if ENV['MS_SITE_ID'].blank? || ENV['MS_LIST_ID'].blank?
+
+      {
+        kind: 'mslist',
+        graph_url: ENV['MS_GRAPH_ROOT_URL'] || 'https://graph.microsoft.com/v1.0/',
+        site_id: ENV['MS_SITE_ID'],
+        list_id: ENV['MS_LIST_ID'],
+        drive_id: ENV['MS_DRIVE_ID'],
+        reference_number: user_data['moj_forms_reference_number'] || '',
+        include_attachments: send_attachments_to_ms_list?
+      }
+    end
+
+    def send_attachments_to_ms_list?
+      ENV['MS_DRIVE_ID'].present? && attachments.count.positive?
     end
   end
 end

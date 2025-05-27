@@ -1,10 +1,18 @@
 class VerifySession
   def self.before(controller)
+    return if controller.is_a?(MetadataPresenter::AuthController)
+
     # if the user has just submitted their form we reset the session
     # if they try to visit any page other than the homepage, redirect them to submission complete page
     if controller.flash[:submission_completed].present?
       controller.reset_session
       controller.redirect_to '/session/complete' unless controller.request.path == controller.root_path
+    end
+
+    # after saving form progress
+    if controller.flash[:session_destroyed].present?
+      controller.reset_session
+      controller.redirect_to '/session/destroyed' unless controller.request.path == controller.root_path
     end
 
     # if we are on a page that requires a session and it has been marked as expired

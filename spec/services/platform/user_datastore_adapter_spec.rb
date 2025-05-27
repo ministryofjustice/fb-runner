@@ -14,6 +14,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
     {
       'Authorization' => 'Bearer some-token',
       'x-access-token-v2' => 'some-token',
+      'X-Request-Id' => '12345',
       'Accept' => 'application/json',
       'Content-Type' => 'application/json',
       'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -44,6 +45,7 @@ RSpec.describe Platform::UserDatastoreAdapter do
       }
     }
   end
+  let(:request_double) { double(request_id: '12345') }
   let(:empty_payload) do
     JSON.generate({ payload: data_encryption.encrypt('{}') })
   end
@@ -53,6 +55,8 @@ RSpec.describe Platform::UserDatastoreAdapter do
   let(:saved_form_data_encryption) { DataEncryption.new(key: saved_forms_encryption_key) }
 
   before do
+    session.instance_variable_set(:@req, request_double)
+
     allow_any_instance_of(Fb::Jwt::Auth::ServiceAccessToken).to receive(:generate)
       .and_return(service_access_token)
 
@@ -127,6 +131,26 @@ RSpec.describe Platform::UserDatastoreAdapter do
     end
 
     context 'when there is timeout' do
+      context 'when retry succeeds' do
+        before do
+          stub_request(:get, expected_url)
+            .with(body: {}, headers: expected_headers)
+            .to_timeout.then.to_return(status: 200, body: empty_payload, headers: {})
+
+          stub_request(:post, expected_url)
+          .with(body: expected_body, headers: expected_headers)
+          .to_return(status: 201, body: expected_body, headers: {})
+        end
+
+        it 'returns the response' do
+          expect(adapter.save(params).status).to eq(201)
+
+          expect(WebMock).to have_requested(
+            :get, expected_url
+          ).twice
+        end
+      end
+
       context 'when there is connection timeout' do
         before do
           stub_request(:get, expected_url)
@@ -395,6 +419,46 @@ RSpec.describe Platform::UserDatastoreAdapter do
         it 'captures the error and returns a usable status' do
           expect(adapter.invalidate(uuid).status).to eq(422)
         end
+      end
+    end
+  end
+
+  describe '#delete_file' do
+    let(:existing_answers) { { 'component_id' => { 'uuid' => file_to_delete_id } } }
+    let(:file_to_delete_id) { SecureRandom.uuid }
+    let(:params) { {} }
+    let(:expected_body) do
+      JSON.generate(
+        {
+          payload: data_encryption.encrypt({ 'component_id' => {} }.merge(params).to_json)
+        }
+      )
+    end
+
+    before do
+      expect(adapter).to receive(:load_data).and_return(existing_answers)
+      stub_request(:post, expected_url)
+        .with(body: expected_body, headers: expected_headers)
+        .to_return(status: 200, body: expected_body, headers: {})
+    end
+
+    context 'single file upload' do
+      it 'removes the file' do
+        expect(adapter.delete_file('component_id', file_to_delete_id).body).to eq(JSON.parse(expected_body))
+      end
+    end
+
+    context 'multi file upload' do
+      let(:existing_answers) { { 'component_id' => [{ 'uuid' => file_to_delete_id }, { 'uuid' => '123' }] } }
+      let(:expected_body) do
+        JSON.generate(
+          {
+            payload: data_encryption.encrypt({ 'component_id' => [{ 'uuid' => '123' }] }.merge(params).to_json)
+          }
+        )
+      end
+      it 'removes the file and preserves others' do
+        expect(adapter.delete_file('component_id', file_to_delete_id).body).to eq(JSON.parse(expected_body))
       end
     end
   end

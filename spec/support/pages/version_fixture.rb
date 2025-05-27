@@ -20,7 +20,7 @@ class VersionFixture < SitePrism::Page
   element :chicken_burger, :checkbox, 'Chicken, cheese, tomato'
   element :palace_band, :field, "What was the name of the band playing in Jabba's palace?"
   element :mando_name, :radio_button, 'Din Jarrin'
-  element :country_field, :field, 'Countries'
+  element :countries, :field, 'Countries'
   element :back_link, :link, 'Back'
   element :remove_multi_file, :link, 'thats-still-not-a-knife.txt', visible: false
   elements :error_summary_list, '.govuk-error-summary__list'
@@ -30,6 +30,10 @@ class VersionFixture < SitePrism::Page
   element :confirmation_heading, '.govuk-panel__title'
   data_content_id :confirmation_lede, 'page[lede]'
   data_content_id :confirmation_body, 'page[body]'
+  element :address_line_one_field, :field, 'Address line 1'
+  element :city_field, :field, 'Town or city'
+  element :postcode_field, :field, 'Postcode'
+  element :country_field, :field, 'Country'
 
   def error_summary
     error_summary_list.map(&:text)

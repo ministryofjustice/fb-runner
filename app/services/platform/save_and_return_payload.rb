@@ -4,6 +4,7 @@ module Platform
     attr_reader :service, :user_data, :session
 
     EMAIL = 'email'.freeze
+    EMAIL_VARIANT = 'save_and_return'.freeze
     DEFAULT_EMAIL_ADDRESS = 'no-reply-moj-forms@digital.justice.gov.uk'.freeze
 
     def initialize(service:, user_data:, session:)
@@ -30,7 +31,7 @@ module Platform
       {
         id: service.service_id,
         slug: ENV['SERVICE_SLUG'],
-        name: service.service_name
+        name: service_name
       }
     end
 
@@ -40,11 +41,16 @@ module Platform
 
     private
 
+    def service_name
+      service.service_name
+    end
+
     def email_action
       return if email.blank?
 
       {
         kind: EMAIL,
+        variant: EMAIL_VARIANT,
         to: email,
         from: default_email_from,
         subject: default_subject,
@@ -55,15 +61,19 @@ module Platform
     end
 
     def default_email_from
-      @default_email_from ||= "#{service.service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
+      @default_email_from ||= "#{service_name} <#{DEFAULT_EMAIL_ADDRESS}>"
     end
 
     def default_email_body
-      @default_email_body ||= ENV['SAVE_AND_RETURN_EMAIL'].gsub('{{save_and_return_link}}', magic_link)
+      I18n.t(
+        'presenter.save_and_return.confirmation_email.body', service_name:, magic_link:
+      )
     end
 
     def default_subject
-      @default_subject ||= "Your saved form - '#{service.service_name}'"
+      I18n.t(
+        'presenter.save_and_return.confirmation_email.subject', service_name:
+      )
     end
 
     def magic_link

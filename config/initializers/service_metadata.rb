@@ -1,3 +1,5 @@
+require 'ostruct'
+
 Rails.application.reloader.to_prepare do
   begin
     Rails.configuration.service_metadata = LoadServiceMetadata.new(

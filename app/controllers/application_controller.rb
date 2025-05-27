@@ -2,12 +2,9 @@ class ApplicationController < ActionController::Base
   include ReferenceNumberHelper
   protect_from_forgery with: :exception
 
-  before_action :require_basic_auth
   before_action VerifySession
 
-  skip_before_action VerifySession, :require_basic_auth, only: :get_saved_progress
-
-  add_flash_types :confirmation, :expired_session, :submission_completed
+  add_flash_types :confirmation, :expired_session, :submission_completed, :session_destroyed
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
   SESSION_DURATION = 30.minutes
@@ -119,14 +116,6 @@ class ApplicationController < ActionController::Base
     params.permit(answers: {})[:answers] || {}
   end
 
-  def require_basic_auth
-    if ENV['BASIC_AUTH_USER'].present? && ENV['BASIC_AUTH_PASS'].present?
-      authenticate_or_request_with_http_basic do |username, password|
-        username == ENV['BASIC_AUTH_USER'] && password == ENV['BASIC_AUTH_PASS']
-      end
-    end
-  end
-
   def autocomplete_items(components)
     return {} if Rails.configuration.autocomplete_items.nil?
 
@@ -163,6 +152,10 @@ class ApplicationController < ActionController::Base
 
   def delete_session
     flash[:confirmation] = 'Session will expired'
+  end
+
+  def destroy_session
+    flash[:session_destroyed] = 'Session removed'
   end
 
   def redirect_to_expired_page
@@ -226,4 +219,37 @@ class ApplicationController < ActionController::Base
     ENV['CONFIRMATION_EMAIL_COMPONENT_ID'] == component_id if confirmation_email_enabled?
   end
   helper_method :is_confirmation_email_question?
+
+  def first_page?
+    if @page.present?
+      @page.url == service.pages[1].url
+    else
+      false
+    end
+  end
+  helper_method :first_page?
+
+  def use_external_start_page?
+    ENV['EXTERNAL_START_PAGE_URL'].present?
+  end
+  helper_method :use_external_start_page?
+
+  def external_start_page_url
+    if ENV['EXTERNAL_START_PAGE_URL'].blank?
+      ''
+    else
+      # ensure url is absolute - we limit to only gov.uk urls which will be https
+      unless ENV['EXTERNAL_START_PAGE_URL'][/\Ahttps:\/\//]
+        return "https://#{ENV['EXTERNAL_START_PAGE_URL']}"
+      end
+
+      ENV['EXTERNAL_START_PAGE_URL']
+    end
+  end
+  helper_method :external_start_page_url
+
+  def start_page_url
+    external_start_page_url.empty? ? root_path : external_start_page_url
+  end
+  helper_method :start_page_url
 end

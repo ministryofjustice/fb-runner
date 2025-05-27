@@ -9,7 +9,7 @@ module Platform
     REQUIRED_ENV_VARS = %w[SUBMITTER_URL].freeze
 
     validate do
-      if ENV['SERVICE_EMAIL_OUTPUT'].blank? && ENV['SERVICE_OUTPUT_JSON_ENDPOINT'].blank?
+      if ENV['SERVICE_EMAIL_OUTPUT'].blank? && ENV['SERVICE_OUTPUT_JSON_ENDPOINT'].blank? && ENV['CONFIRMATION_EMAIL_COMPONENT_ID'].blank?
         errors.add(:base, 'SERVICE_EMAIL_OUTPUT env vars are blank.')
       end
 
