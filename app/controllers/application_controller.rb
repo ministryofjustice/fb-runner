@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action VerifySession
 
-  add_flash_types :confirmation, :expired_session, :submission_completed
+  add_flash_types :confirmation, :expired_session, :submission_completed, :session_destroyed
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
   SESSION_DURATION = 30.minutes
@@ -152,6 +152,10 @@ class ApplicationController < ActionController::Base
 
   def delete_session
     flash[:confirmation] = 'Session will expired'
+  end
+
+  def destroy_session
+    flash[:session_destroyed] = 'Session removed'
   end
 
   def redirect_to_expired_page

@@ -56,7 +56,7 @@ module Platform
     end
 
     def actions
-      [email_action, csv_action, confirmation_email_action, json_action].compact
+      [email_action, csv_action, confirmation_email_action, json_action, ms_list_action].compact
     end
 
     def pages
@@ -297,6 +297,24 @@ module Platform
         key: ENV['SERVICE_OUTPUT_JSON_KEY'],
         include_attachments: true
       }
+    end
+
+    def ms_list_action
+      return if ENV['MS_SITE_ID'].blank? || ENV['MS_LIST_ID'].blank?
+
+      {
+        kind: 'mslist',
+        graph_url: ENV['MS_GRAPH_ROOT_URL'] || 'https://graph.microsoft.com/v1.0/',
+        site_id: ENV['MS_SITE_ID'],
+        list_id: ENV['MS_LIST_ID'],
+        drive_id: ENV['MS_DRIVE_ID'],
+        reference_number: user_data['moj_forms_reference_number'] || '',
+        include_attachments: send_attachments_to_ms_list?
+      }
+    end
+
+    def send_attachments_to_ms_list?
+      ENV['MS_DRIVE_ID'].present? && attachments.count.positive?
     end
   end
 end
