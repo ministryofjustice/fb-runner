@@ -17,6 +17,6 @@
     "webpack-dev-server": "^4.11.1"
   },
   "resolutions": {
-    "loader-utils": "^2.0.4"
+    "loader-utils": "2.0.4"
   }
 }
