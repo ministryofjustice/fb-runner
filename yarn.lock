@@ -3068,8 +3068,9 @@ http-parser-js@>=0.5.1:
   resolved "https://registry.npmjs.org/http-parser-js/-/http-parser-js-0.5.5.tgz"
 
 http-proxy-middleware@^2.0.3:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-2.0.6.tgz"
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-2.0.9.tgz#e9e63d68afaa4eee3d147f39149ab84c0c2815ef"
+  integrity sha512-c1IyJYLYppU574+YI7R4QyX2ystMtVXZwIdzazUIPIJsHuWNd+mho2j+bKoHftndicGj9yh+xjd+l0yj7VeT1Q==
   dependencies:
     "@types/http-proxy" "^1.17.8"
     http-proxy "^1.18.1"
@@ -3550,7 +3551,7 @@ loader-runner@^2.4.0:
   version "2.4.0"
   resolved "https://registry.npmjs.org/loader-runner/-/loader-runner-2.4.0.tgz"
 
-loader-utils@^1.1.0, loader-utils@^1.2.3, loader-utils@^1.4.0, loader-utils@^2.0.0, loader-utils@^2.0.4:
+loader-utils@2.0.4, loader-utils@^1.1.0, loader-utils@^1.2.3, loader-utils@^1.4.0, loader-utils@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.4.tgz#8b5cb38b5c34a9a018ee1fc0e6a066d1dfcc528c"
   integrity sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==
