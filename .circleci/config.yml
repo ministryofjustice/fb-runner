@@ -9,7 +9,7 @@ orbs:
 jobs:
   login-to-aws:
     docker: &docker_image
-      - image: 'cimg/ruby:3.2.0-node'
+      - image: 'cimg/ruby:3.2.8-node'
     steps:
       - checkout
       - aws-cli/setup:
@@ -28,7 +28,7 @@ jobs:
             - bash.env
   build:
     docker: &ruby_image
-      - image: 'cimg/ruby:3.2.0-node'
+      - image: 'cimg/ruby:3.2.8-node'
     steps:
       - checkout
       - ruby/install-deps
@@ -270,7 +270,8 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                # - main
+                - update-ruby-patch-version
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
@@ -284,31 +285,31 @@ workflows:
           requires:
             - deploy_to_test_dev
             - deploy_to_test_production
-      - build_and_push_image_live:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-          filters:
-            branches:
-              only: main
-      - deploy_to_live_dev:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-          filters:
-            branches:
-              only: main
-      - deploy_to_live_production:
-          context: *moj-forms-context
-          requires:
-            - acceptance_tests
-            - build_and_push_image_live
-          filters:
-            branches:
-              only: main
-      - smoke_tests:
-          context: *moj-forms-context
-          requires:
-            - deploy_to_live_dev
-            - deploy_to_live_production
+      # - build_and_push_image_live:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - acceptance_tests
+      #     filters:
+      #       branches:
+      #         only: main
+      # - deploy_to_live_dev:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - acceptance_tests
+      #       - build_and_push_image_live
+      #     filters:
+      #       branches:
+      #         only: main
+      # - deploy_to_live_production:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - acceptance_tests
+      #       - build_and_push_image_live
+      #     filters:
+      #       branches:
+      #         only: main
+      # - smoke_tests:
+      #     context: *moj-forms-context
+      #     requires:
+      #       - deploy_to_live_dev
+      #       - deploy_to_live_production
