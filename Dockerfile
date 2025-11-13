@@ -8,7 +8,9 @@ FROM base AS dependencies
 RUN apk add --update build-base
 
 COPY Gemfile* .ruby-version ./
-RUN bundle config set without 'development test' && bundle install --jobs=3 --retry=3
+RUN bundle config set force_ruby_platform true
+ARG BUNDLE_ARGS='--jobs=3 --retry=3 --without test development'
+RUN bundle install --no-cache ${BUNDLE_ARGS}
 
 COPY package.json yarn.lock ./
 RUN yarn install --production --check-files --frozen-lockfile

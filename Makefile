@@ -4,14 +4,19 @@ DOCKER_COMPOSE = env UID=$(UID) docker-compose -f docker-compose.yml
 .PHONY: setup
 setup: build seed_public_key
 
+.PHONY: create_network
+create_network:
+	docker network create -d bridge formbuilder-bridge-network
+
 .PHONY: seed_public_key
 seed_public_key:
-	$(DOCKER_COMPOSE) up -d --build runner-app-service-token-cache-redis
+	$(DOCKER_COMPOSE) up -d --build runner-service-token-cache-redis
 	./bin/seed_test_public_key
 
 .PHONY: build
 build:
 	$(DOCKER_COMPOSE) build --parallel
+	$(DOCKER_COMPOSE) up -d
 
 .PHONY: setup-integration
 setup-integration: build seed_public_key
@@ -29,7 +34,7 @@ lint:
 	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rubocop
 
 .PHONY: spec
-spec:
+spec: setup-ci
 	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rspec
 
 .PHONY: assets

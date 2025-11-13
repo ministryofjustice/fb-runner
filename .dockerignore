@@ -5,14 +5,12 @@
 .github
 .gitignore
 .npmrc
-.rspec
 .rubocop*
 
 acceptance/
 deploy-scripts/
 docs/
 node_modules/
-spec/
 vendor/
 
 Dockerfile

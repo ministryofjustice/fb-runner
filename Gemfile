@@ -37,10 +37,10 @@ group :development, :test do
   gem 'site_prism', '< 5.0'
   gem 'timecop'
   gem 'webmock'
+  gem 'dotenv-rails'
 end
 
 group :development do
-  gem 'dotenv-rails'
   gem 'listen', '~> 3.8'
   gem 'rubocop', '~> 1.55.0'
   gem 'rubocop-govuk'
