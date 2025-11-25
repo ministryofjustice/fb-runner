@@ -4,10 +4,6 @@ DOCKER_COMPOSE = env UID=$(UID) docker-compose -f docker-compose.yml
 .PHONY: setup
 setup: build seed_public_key
 
-.PHONY: create_network
-create_network:
-	docker network create -d bridge formbuilder-bridge-network
-
 .PHONY: seed_public_key
 seed_public_key:
 	$(DOCKER_COMPOSE) up -d --build runner-service-token-cache-redis
