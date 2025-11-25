@@ -5,9 +5,7 @@
 .github
 .gitignore
 .npmrc
-.rubocop*
 
-acceptance/
 deploy-scripts/
 docs/
 node_modules/

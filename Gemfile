@@ -30,6 +30,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'byebug'
   gem 'capybara'
+  gem 'dotenv-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'simplecov'
@@ -37,7 +38,6 @@ group :development, :test do
   gem 'site_prism', '< 5.0'
   gem 'timecop'
   gem 'webmock'
-  gem 'dotenv-rails'
 end
 
 group :development do

@@ -27,7 +27,7 @@ security-check:
 
 .PHONY: lint
 lint:
-	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rubocop
+	docker-compose -f docker-compose.yml run --rm runner-app bundle exec rubocop
 
 .PHONY: spec
 spec: setup-ci
