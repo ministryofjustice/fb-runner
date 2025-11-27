@@ -79,6 +79,8 @@ services:
       ENCRYPTION_IV: 1234567890123451
       ENCRYPTION_KEY: a9c12000de36def805e4c2107bd8e910
       RAILS_DEVELOPMENT_HOSTS: user-filestore-api
+    depends_on:
+      - localstack
     networks:
       - app-net
 
