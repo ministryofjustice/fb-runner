@@ -6,12 +6,13 @@ setup: build seed_public_key
 
 .PHONY: seed_public_key
 seed_public_key:
-	$(DOCKER_COMPOSE) up -d --build runner-app-service-token-cache-redis
+	$(DOCKER_COMPOSE) up -d --build runner-service-token-cache-redis
 	./bin/seed_test_public_key
 
 .PHONY: build
 build:
 	$(DOCKER_COMPOSE) build --parallel
+	$(DOCKER_COMPOSE) up -d
 
 .PHONY: setup-integration
 setup-integration: build seed_public_key
@@ -26,10 +27,10 @@ security-check:
 
 .PHONY: lint
 lint:
-	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rubocop
+	docker-compose -f docker-compose.yml run --rm runner-app bundle exec rubocop
 
 .PHONY: spec
-spec:
+spec: setup-ci
 	docker-compose -f docker-compose.ci.yml run --rm runner-app-ci bundle exec rspec
 
 .PHONY: assets
