@@ -11,7 +11,7 @@ ruby '3.2.0'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
 gem 'metadata_presenter', '3.4.11'
 
-gem 'aws-sdk-s3'
+gem 'aws-sdk-s3', '>= 1.208.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faraday'
 gem 'faraday_middleware'
