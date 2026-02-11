@@ -13,7 +13,7 @@ gem 'metadata_presenter', '3.4.12'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
-gem 'faraday'
+gem 'faraday', '>= 2.14.1'
 gem 'faraday_middleware'
 gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
