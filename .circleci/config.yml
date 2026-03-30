@@ -145,6 +145,7 @@ jobs:
       - slack/status: *slack_status
   acceptance_tests:
     docker: *ruby_image
+    parallelism: 5
     steps:
       - checkout
       - run: sudo apt-get update
@@ -161,13 +162,18 @@ jobs:
           environment:
             CI_MODE: 'true'
           command: |
+            mkdir test-results
             git clone https://github.com/ministryofjustice/fb-acceptance-tests
 
             cd fb-acceptance-tests/integration
             cp tests.env.ci tests.env
             bundle install
+            
+            TEST_FILES=$(circleci tests glob "spec/features/v2/**/*_spec.rb")            
 
-            bundle exec rspec spec/features/v2
+            echo "$TEST_FILES" | circleci tests run --command="xargs bundle exec rspec --format progress --format RspecJunitFormatter -o ~/test-results/test-results.xml" --verbose --split-by=timings --timings-type=filename
+      - store_test_results:
+          path: ~/test-results
       - slack/status: *slack_status
   build_and_push_image_live:
     docker: *ecr_image
