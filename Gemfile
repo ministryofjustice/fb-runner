@@ -33,6 +33,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'rspec_junit_formatter'
   gem 'simplecov'
   gem 'simplecov-console'
   gem 'site_prism', '< 5.0'
