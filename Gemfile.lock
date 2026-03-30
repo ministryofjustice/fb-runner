@@ -547,6 +547,8 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
+    rspec_junit_formatter (0.6.0)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (1.55.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -689,6 +691,7 @@ DEPENDENCIES
   rails (~> 7.2)
   rails-controller-testing
   rspec-rails
+  rspec_junit_formatter
   rubocop (~> 1.55.0)
   rubocop-govuk
   sass-rails (>= 6)
