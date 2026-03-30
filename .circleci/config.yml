@@ -163,7 +163,7 @@ jobs:
             CI_MODE: 'true'
           command: |
             mkdir test-results
-            git clone https://github.com/ministryofjustice/fb-acceptance-tests
+            git clone -b rerun-failed-tests git@github.com:ministryofjustice/fb-acceptance-tests.git
 
             cd fb-acceptance-tests/integration
             cp tests.env.ci tests.env
@@ -287,8 +287,7 @@ workflows:
       - acceptance_tests:
           context: *moj-forms-context
           requires:
-            - deploy_to_test_dev
-            - deploy_to_test_production
+            - login-to-aws
       - build_and_push_image_live:
           context: *moj-forms-context
           requires:
