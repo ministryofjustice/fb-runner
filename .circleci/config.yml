@@ -157,6 +157,7 @@ jobs:
           command: |
             google-chrome --version
             chromedriver --version
+      - run: mkdir ~/rspec
       - run:
           name: Run acceptance tests
           environment:
@@ -168,7 +169,9 @@ jobs:
             cp tests.env.ci tests.env
             bundle install
 
-            bundle exec rspec spec/features/v2
+            circleci tests glob "spec/features/v2/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec spec/features/v2 --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
+      - store_test_results:
+          path: ~/rspec
       - slack/status: *slack_status
   build_and_push_image_live:
     docker: *ecr_image
