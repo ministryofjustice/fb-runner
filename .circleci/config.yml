@@ -169,7 +169,7 @@ jobs:
             cp tests.env.ci tests.env
             bundle install
 
-            circleci tests glob "spec/features/v2/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec spec/features/v2 --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
+            circleci tests glob "spec/features/v2/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
       - store_test_results:
           path: ~/rspec
       - slack/status: *slack_status
