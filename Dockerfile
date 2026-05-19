@@ -1,60 +1,59 @@
-FROM ruby:3.2.0-alpine3.16 AS base
+# --- Stage 1: Base ---
+FROM ruby:3.3.11-alpine AS base
 
-RUN apk add --update yarn build-base bash libcurl git tzdata && rm -rf /var/cache/apk/*
-RUN apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/v3.16/main/ nodejs
+RUN apk add --update build-base bash libcurl git tzdata libffi-dev yaml-dev && rm -rf /var/cache/apk/*
 
-FROM base AS dependencies
+# Install Node 16 and Yarn by copying from official image
+COPY --from=node:16.20.1-alpine /usr/local/bin/node /usr/local/bin/
+COPY --from=node:16.20.1-alpine /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node:16.20.1-alpine /opt/yarn-v1.22.19 /opt/yarn
+RUN ln -s /usr/local/bin/node /usr/local/bin/nodejs && \
+    ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn && \
+    ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 
-RUN apk add --update build-base
+# --- Stage 2: Builder (Install Dependencies) ---
+FROM base AS builder
 
-COPY Gemfile* .ruby-version ./
+# Set a workdir so we know exactly where files are
+WORKDIR /app
+
+COPY Gemfile* .ruby-version package.json yarn.lock ./
 RUN bundle config set force_ruby_platform true
-ARG BUNDLE_ARGS='--jobs=3 --retry=3 --without test development'
-RUN bundle install --no-cache ${BUNDLE_ARGS}
+RUN bundle install --no-cache --jobs=3 --retry=3 --without test development
 
-COPY package.json yarn.lock ./
+# This creates /app/node_modules
 RUN yarn install --production --check-files --frozen-lockfile
 
-FROM base
+# --- Stage 3: Runner (Final Image) ---
+FROM base AS runner
 
 ARG UID=1001
-
-# Uncomment for load testing
-# Copy Go and install Vegeta
-# COPY --from=golang:1.16-alpine /usr/local/go/ /usr/local/go/
-# ENV PATH="/usr/local/go/bin:${PATH}"
-# RUN go get -u github.com/tsenart/vegeta
-
 RUN addgroup -g ${UID} -S appgroup && adduser -u ${UID} -S appuser -G appgroup
 
 WORKDIR /app
-
 RUN chown appuser:appgroup /app
 
-ADD --chown=appuser:appgroup https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem ./rds-ca-2019-root.pem
-ADD --chown=appuser:appgroup https://s3.amazonaws.com/rds-downloads/rds-ca-2015-root.pem ./rds-ca-2015-root.pem
-RUN cat ./rds-ca-2019-root.pem > ./rds-ca-bundle-root.crt
-RUN cat ./rds-ca-2015-root.pem >> ./rds-ca-bundle-root.crt
-RUN chown appuser:appgroup ./rds-ca-bundle-root.crt
+# Setup RDS Certs
+ADD --chown=appuser:appgroup https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem ./
+ADD --chown=appuser:appgroup https://s3.amazonaws.com/rds-downloads/rds-ca-2015-root.pem ./
+RUN cat rds-ca-2019-root.pem rds-ca-2015-root.pem > rds-ca-bundle-root.crt && \
+    chown appuser:appgroup rds-ca-bundle-root.crt
 
-COPY --chown=appuser:appgroup --from=dependencies /usr/local/bundle/ /usr/local/bundle/
-COPY --chown=appuser:appgroup --from=dependencies /node_modules/ node_modules/
+# FIX: Copy from the 'builder' stage using absolute paths
+COPY --chown=appuser:appgroup --from=builder /usr/local/bundle/ /usr/local/bundle/
+COPY --chown=appuser:appgroup --from=builder /app/node_modules/ ./node_modules/
+
+# Copy the rest of the app
 COPY --chown=appuser:appgroup . .
 
-ENV APP_PORT 3000
-EXPOSE $APP_PORT
+ENV APP_PORT=3000 \
+    GOVUK_APP_DOMAIN='' \
+    GOVUK_WEBSITE_ROOT='' \
+    RAILS_ENV=production
 
 USER ${UID}
 
-# Govuk Publishing Components gem requires these env vars to be set, however we
-# do not actually need to use them.
-ENV GOVUK_APP_DOMAIN ''
-ENV GOVUK_WEBSITE_ROOT ''
-
-ARG RAILS_ENV=production
-
-RUN gem install bundler
 RUN ./bin/webpack
-RUN ASSET_PRECOMPILE=true RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=$(bin/rails secret) bundle exec rake assets:precompile --trace
+RUN ASSET_PRECOMPILE=true SECRET_KEY_BASE=$(bin/rails secret) bundle exec rake assets:precompile --trace
 
-CMD bundle exec rails s -e ${RAILS_ENV} -p ${APP_PORT} --binding=0.0.0.0
+CMD ["bundle", "exec", "rails", "s", "-e", "production", "-p", "3000", "--binding=0.0.0.0"]
