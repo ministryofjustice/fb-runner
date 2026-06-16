@@ -292,14 +292,21 @@ workflows:
       - build_and_push_image_live:
           context: *moj-forms-context
           requires:
-            - acceptance_tests
+            - production_deploy_approval
           filters:
             branches:
               only: main
+      - production_deploy_approval:
+          type: approval
+          requires:
+            - acceptance_tests
+          filters:
+            branches:
+              only:
+                - main
       - deploy_to_live_dev:
           context: *moj-forms-context
           requires:
-            - acceptance_tests
             - build_and_push_image_live
           filters:
             branches:
@@ -307,7 +314,6 @@ workflows:
       - deploy_to_live_production:
           context: *moj-forms-context
           requires:
-            - acceptance_tests
             - build_and_push_image_live
           filters:
             branches:
