@@ -152,7 +152,7 @@ jobs:
       - checkout
       - run: sudo apt-get update
       - browser-tools/install-chrome:
-          chrome-version: 138.0.7204.100
+          chrome-version: 138.0.7204.183
       - browser-tools/install-chromedriver
       - run:
           name: Check browser tools install
