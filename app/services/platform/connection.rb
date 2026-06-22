@@ -64,7 +64,7 @@ module Platform
     def request(verb, url, body)
       connection.send(verb, url, body, headers)
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError
-      # one simple retry
+      @connection = nil # reset before one simple retry
       begin
         connection.send(verb, url, body, headers)
       rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
