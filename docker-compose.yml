@@ -11,6 +11,7 @@ services:
       context: .
       args:
         BUNDLE_ARGS: ''
+        BUNDLE_WITHOUT: 'development'
         SERVICE_FIXTURE: 'version'
     tty: true
     stdin_open: true
