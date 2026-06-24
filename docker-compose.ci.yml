@@ -4,6 +4,7 @@ services:
       context: .
       args:
         BUNDLE_ARGS: ''
+        BUNDLE_WITHOUT: 'development'
     tty: true
     stdin_open: true
     environment:

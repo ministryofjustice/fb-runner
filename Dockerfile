@@ -19,7 +19,11 @@ WORKDIR /app
 
 COPY Gemfile* .ruby-version package.json yarn.lock ./
 RUN bundle config set force_ruby_platform true
-RUN bundle install --no-cache --jobs=3 --retry=3 --without test development
+
+ARG BUNDLE_WITHOUT='test development'
+RUN bundle config set without ${BUNDLE_WITHOUT}
+ARG BUNDLE_ARGS='--no-cache --jobs=3 --retry=3'
+RUN bundle install ${BUNDLE_ARGS}
 
 # This creates /app/node_modules
 RUN yarn install --production --check-files --frozen-lockfile
