@@ -9,7 +9,7 @@ orbs:
 jobs:
   login-to-aws:
     docker: &docker_image
-      - image: 'cimg/ruby:3.3-node'
+      - image: 'cimg/ruby:3.4.9-node'
     steps:
       - checkout
       - aws-cli/setup:
@@ -28,7 +28,7 @@ jobs:
             - bash.env
   build:
     docker: &ruby_image
-      - image: 'cimg/ruby:3.3-node'
+      - image: 'cimg/ruby:3.4.9-node'
     resource_class: medium+ # Increased
     steps:
       - checkout

@@ -1,5 +1,5 @@
 # --- Stage 1: Base ---
-FROM ruby:3.3.11-alpine AS base
+FROM ruby:3.4.9-alpine AS base
 
 RUN apk add --update build-base bash libcurl git tzdata libffi-dev yaml-dev && rm -rf /var/cache/apk/*
 
