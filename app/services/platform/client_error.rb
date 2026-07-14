@@ -6,8 +6,6 @@ module Platform
       super(exception)
     end
 
-    def response
-      @exception.response
-    end
+    delegate :response, to: :@exception
   end
 end
