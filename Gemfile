@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.11'
+ruby '3.4.9'
 
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
@@ -43,7 +43,7 @@ end
 group :development do
   gem 'listen', '~> 3.8'
   gem 'rubocop', '~> 1.59'
-  gem 'rubocop-govuk', '~> 4.13.0'
+  gem 'rubocop-govuk', '~> 5.2.1'
   gem 'spring', '~> 4.1.1'
   gem 'spring-watcher-listen', '~> 2.1.0'
   gem 'web-console', '>= 3.3.0'
