@@ -125,9 +125,9 @@ ModalDialog.prototype.initEvents = function (options) {
   }
 
   // Close dialogue on close button click
-  this.$closeButtons.forEach(function(element) {
-    element.addEventListener('click', this.close.bind(this));
-  }.bind(this));
+  this.$closeButtons.forEach(function (element) {
+    element.addEventListener('click', this.close)
+  }.bind(this))
 }
 
 // Open modal
