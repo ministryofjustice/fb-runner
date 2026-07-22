@@ -1,4 +1,2 @@
-require("govuk-frontend/govuk/all").initAll()
-require.context('govuk-frontend/govuk/assets/images', true)
-
-import "../styles/govuk.scss"
+require("govuk-frontend/dist/govuk/all").initAll()
+require.context('govuk-frontend/dist/govuk/assets/images', true)

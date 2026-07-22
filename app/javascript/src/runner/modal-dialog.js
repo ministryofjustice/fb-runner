@@ -47,11 +47,6 @@
 
 */
 
-import { nodeListForEach } from 'govuk-frontend/govuk/common.js'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Event'
-
 function ModalDialog ($module) {
   this.$module = $module
   this.$dialogBox = $module.querySelector('dialog')
@@ -130,9 +125,9 @@ ModalDialog.prototype.initEvents = function (options) {
   }
 
   // Close dialogue on close button click
-  nodeListForEach(this.$closeButtons, function(element) {
-    element.addEventListener('click', this.close.bind(this));
-  }.bind(this));
+  this.$closeButtons.forEach(function (element) {
+    element.addEventListener('click', this.close)
+  }.bind(this))
 }
 
 // Open modal
@@ -225,7 +220,7 @@ ModalDialog.prototype.handleFocusTrap = function (event) {
 
   // Loop inner focussable elements
   if (hasFocusEscaped) {
-    nodeListForEach(this.$focussable, function (element) {
+    this.$focussable.forEach(function (element) {
       // Actually, focus is on an inner focussable element
       if (hasFocusEscaped && document.activeElement === element) {
         hasFocusEscaped = false
