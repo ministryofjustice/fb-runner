@@ -275,7 +275,7 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - CDPTKAN-512-investigate-runner-acceptance-test-brittleness
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
