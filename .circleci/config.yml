@@ -275,7 +275,7 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - CDPTKAN-1254-password-field-length-is-too-long
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
