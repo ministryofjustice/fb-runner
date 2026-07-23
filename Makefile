@@ -2,7 +2,7 @@ UID ?= $(shell id -u)
 DOCKER_COMPOSE = env UID=$(UID) docker-compose -f docker-compose.yml
 
 .PHONY: setup
-setup: build seed_public_key
+setup: build seed_public_key assets
 
 .PHONY: seed_public_key
 seed_public_key:
@@ -35,6 +35,4 @@ spec: setup-ci
 
 .PHONY: assets
 assets:
-	yarn install
-	bundle exec rails assets:precompile
-	./bin/webpack
+    docker-compose exec editor-app sh -c "yarn install && bundle exec rails assets:precompile && ./bin/webpack"
