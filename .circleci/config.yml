@@ -275,7 +275,7 @@ workflows:
           filters:
             branches:
               only:
-                - CDPTKAN-460-pw-field-has-show-that-doesnt-work
+                - CDPTKAN-460-revert-icon-changes
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
