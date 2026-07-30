@@ -9,7 +9,7 @@ gem 'metadata_presenter',
     github: 'ministryofjustice/fb-metadata-presenter',
     branch: 'CDPTKAN-460-revert-icon-changes'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-#gem 'metadata_presenter', '3.4.18'
+# gem 'metadata_presenter', '3.4.18'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
