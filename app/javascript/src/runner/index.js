@@ -93,6 +93,9 @@ function supportGovUkContent() {
   }
 }
 
+/* Hide the show password.
+ * There doesn't appear to be a configuration option to use the password field without a show/hide button attached to it.
+ **/
 function removePasswordInputToggleButton() {
   document.querySelectorAll("button.govuk-button--secondary.govuk-password-input__toggle").forEach((button) => {
     button.style.display = "none";
