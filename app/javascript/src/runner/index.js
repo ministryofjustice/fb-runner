@@ -93,6 +93,11 @@ function supportGovUkContent() {
   }
 }
 
+function removePasswordInputToggleButton() {
+  document.querySelectorAll("button.govuk-button--secondary.govuk-password-input__toggle").forEach((button) => {
+    button.style.display = "none";
+  });
+}
 
 /* Page initialiser section
  **/
@@ -103,4 +108,5 @@ contentLoaded(window, () => {
   initializeCookieBanner();
   showAnalyticsConfirmationMessage();
   initializeMultifileUploadPage();
+  removePasswordInputToggleButton();
 });
