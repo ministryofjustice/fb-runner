@@ -7,7 +7,7 @@ Ensure you are running Node version 22.18.0 LTS. Easiest is to install [NVM](htt
 
 To run the project locally, execute the following steps:
 - Install Ruby dependencies: `bundle install`
-- Compile all assets and run webpack: `make assets`
+- Compile all assets and run shakapacker: `make assets`
 
 ## Start the Rails server
 

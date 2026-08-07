@@ -57,7 +57,7 @@ ENV APP_PORT=3000 \
 
 USER ${UID}
 
-RUN ./bin/webpack
+RUN ./bin/shakapacker
 RUN ASSET_PRECOMPILE=true SECRET_KEY_BASE=$(bin/rails secret) bundle exec rake assets:precompile --trace
 
 CMD ["bundle", "exec", "rails", "s", "-e", "production", "-p", "3000", "--binding=0.0.0.0"]
