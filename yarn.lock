@@ -1168,12 +1168,12 @@
     "@rspack/binding-win32-ia32-msvc" "2.1.8"
     "@rspack/binding-win32-x64-msvc" "2.1.8"
 
-"@rspack/cli@^2.0.0":
+"@rspack/cli@^2.1.8":
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/@rspack/cli/-/cli-2.1.8.tgz#8a219e980bbb16b5e0b1d2def5f50f3d783668fa"
   integrity sha512-ewcLmPtmjudUVsPsz7LtuJFJObyFf6ShIC4aAvXra1RAnmzsEigSW+xCNSjXP6gXBZVr2Hsg3vWJJlacdDFacg==
 
-"@rspack/core@^2.0.0":
+"@rspack/core@^2.1.8":
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/@rspack/core/-/core-2.1.8.tgz#6fbd2417bca8b41663ada0ce76dc8d704730fd86"
   integrity sha512-na1kyA6Mj8/LWw9O3A8NsrG9rNKN3Iq2WiXrEuIwsU5r/Nl/evm3hO7bWKHxgsRyydI6W7okwx3MXgf8rzel6g==
@@ -6142,7 +6142,7 @@ shakapacker-rspack@^10.3.1:
   dependencies:
     shakapacker "~10.3.1"
 
-shakapacker@10.3.1, shakapacker@~10.3.1:
+shakapacker@^10.3.1, shakapacker@~10.3.1:
   version "10.3.1"
   resolved "https://registry.yarnpkg.com/shakapacker/-/shakapacker-10.3.1.tgz#f92047ac89534cbedd8ac01864facc122e128b22"
   integrity sha512-yYSbA+JaFisZQL9ImB9IMmPNKUzm0Ycw/wUnwf88f7BeHX9k/M4FIa/4syq/0xx18JqgEL3MIJmsM0RaXQ5zuA==
