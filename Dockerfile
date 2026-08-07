@@ -4,9 +4,9 @@ FROM ruby:3.4.9-alpine AS base
 RUN apk add --update build-base bash libcurl git tzdata libffi-dev yaml-dev && rm -rf /var/cache/apk/*
 
 # Install Node 16 and Yarn by copying from official image
-COPY --from=node:16.20.1-alpine /usr/local/bin/node /usr/local/bin/
-COPY --from=node:16.20.1-alpine /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node:16.20.1-alpine /opt/yarn-v1.22.19 /opt/yarn
+COPY --from=node:22.18.0-alpine /usr/local/bin/node /usr/local/bin/
+COPY --from=node:22.18.0-alpine /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node:22.18.0-alpine /opt/yarn-v1.22.22 /opt/yarn
 RUN ln -s /usr/local/bin/node /usr/local/bin/nodejs && \
     ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn && \
     ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg

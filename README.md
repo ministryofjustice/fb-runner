@@ -1,9 +1,9 @@
 # README
 
 ## Setup
-Ensure you are running Node version 16.20.1 LTS. Easiest is to install [NVM](https://github.com/nvm-sh/nvm#installing-and-updating) and then:
-`nvm install 16.20.1`
-`nvm use 16.20.1`
+Ensure you are running Node version 22.18.0 LTS. Easiest is to install [NVM](https://github.com/nvm-sh/nvm#installing-and-updating) and then:
+`nvm install 22.18.0`
+`nvm use 22.18.0`
 
 To run the project locally, execute the following steps:
 - Install Ruby dependencies: `bundle install`
