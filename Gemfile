@@ -9,7 +9,7 @@ ruby '3.4.9'
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 'update-govuk-crest'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.4.17'
+gem 'metadata_presenter', '3.4.21'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -24,7 +24,7 @@ gem 'rails', '~> 8.1.3.1'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 5.20'
 gem 'sentry-ruby', '~> 5.20'
-gem 'webpacker', '~> 5.4'
+gem 'shakapacker', '~> 10.3'
 
 group :development, :test do
   gem 'brakeman'
