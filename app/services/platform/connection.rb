@@ -12,7 +12,12 @@ module Platform
         'User-Agent' => 'Runner',
         'X-Request-Id' => request_id,
         # Datastore still uses the v2 access token from service token cache
-        'x-access-token-v2' => service_access_token
+        'x-access-token-v2' => service_access_token,
+        # stop browser cache after session ends
+        'Cache-Control' => 'no-store, no-cache, must-revalidate',
+        'Pragma' => 'no-cache',
+        'Expires' => '0'
+      
       }
     end
 
