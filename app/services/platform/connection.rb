@@ -17,7 +17,6 @@ module Platform
         'Cache-Control' => 'no-store, no-cache, must-revalidate',
         'Pragma' => 'no-cache',
         'Expires' => '0'
-      
       }
     end
 
