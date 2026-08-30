@@ -24,7 +24,7 @@ gem 'rails', '~> 8.1.3.1'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 5.20'
 gem 'sentry-ruby', '~> 5.20'
-gem 'shakapacker', '~> 10.3'
+gem 'shakapacker', '~> 10.3', '>= 10.3.2'
 
 group :development, :test do
   gem 'brakeman'
