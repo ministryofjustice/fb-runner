@@ -9,7 +9,7 @@ ruby '3.4.9'
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 'update-govuk-crest'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.4.21'
+gem 'metadata_presenter', '3.4.22'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
