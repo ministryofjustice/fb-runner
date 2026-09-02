@@ -275,7 +275,8 @@ workflows:
           filters:
             branches:
               only:
-                - update-metadata-presenter-3.4.25
+                # - main
+                - CDPTKAN-1342-govuk-frontend-to-latest-6.X
       - deploy_to_test_dev:
           context: *moj-forms-context
           requires:
