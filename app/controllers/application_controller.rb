@@ -243,15 +243,15 @@ class ApplicationController < ActionController::Base
   helper_method :use_external_start_page?
 
   def external_start_page_url
-    if ENV['EXTERNAL_START_PAGE_URL'].blank?
+    url = ENV['EXTERNAL_START_PAGE_URL']
+
+    if url.blank?
       ''
+    elsif url.match?(/\Ahttps:\/\//)
+      url
     else
       # ensure url is absolute - we limit to only gov.uk urls which will be https
-      unless ENV['EXTERNAL_START_PAGE_URL'][/\Ahttps:\/\//]
-        return "https://#{ENV['EXTERNAL_START_PAGE_URL']}"
-      end
-
-      ENV['EXTERNAL_START_PAGE_URL']
+      "https://#{url}"
     end
   end
   helper_method :external_start_page_url
