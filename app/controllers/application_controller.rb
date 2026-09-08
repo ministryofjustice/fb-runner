@@ -26,11 +26,11 @@ class ApplicationController < ActionController::Base
   helper_method :service
 
   def user_data_session_store
-    @user_data_session_store ||= UserData.new(session)
+    UserData.new(session)
   end
 
   def saved_progress_session_store
-    @saved_progress_session_store ||= SavedProgress.new(session)
+    SavedProgress.new(session)
   end
 
   def save_user_data
