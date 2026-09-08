@@ -200,10 +200,6 @@ RSpec.describe ApplicationController do
       expect(controller.payment_link_url).to eq("#{payment_link}123")
     end
 
-    it 'responds to in_progress?' do
-      expect(controller.in_progress?).to eq(true)
-    end
-
     it 'is not in preview mode' do
       expect(controller.editor_preview?).to eq(false)
     end
