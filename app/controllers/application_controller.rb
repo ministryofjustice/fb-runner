@@ -134,10 +134,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def reference_number_session_data
-    @reference_number_session_data ||= { 'moj_forms_reference_number' => generate_reference_number }
-  end
-
   def reference_number_enabled?
     ENV['REFERENCE_NUMBER'].present?
   end
@@ -187,10 +183,6 @@ class ApplicationController < ActionController::Base
       strip_url(page.url)
     end
     urls << 'session/expired'
-  end
-
-  def strip_url(url)
-    url.to_s.delete_prefix('/').delete_suffix('/')
   end
 
   def save_and_return_enabled?
@@ -254,4 +246,14 @@ class ApplicationController < ActionController::Base
     external_start_page_url.empty? ? root_path : external_start_page_url
   end
   helper_method :start_page_url
+
+  private
+
+  def reference_number_session_data
+    @reference_number_session_data ||= { 'moj_forms_reference_number' => generate_reference_number }
+  end
+
+  def strip_url(url)
+    url.to_s.delete_prefix('/').delete_suffix('/')
+  end
 end
