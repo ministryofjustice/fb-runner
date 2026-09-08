@@ -25,24 +25,32 @@ class ApplicationController < ActionController::Base
   end
   helper_method :service
 
+  def user_data_session_store
+    @user_data_session_store ||= UserData.new(session)
+  end
+
+  def saved_progress_session_store
+    @saved_progress_session_store ||= SavedProgress.new(session)
+  end
+
   def save_user_data
-    UserData.new(session).save(user_data_params)
+    user_data_session_store.save(user_data_params)
   end
 
   def save_form_progress
-    SavedProgress.new(session).save_progress
+    saved_progress_session_store.save_progress
   end
 
   def get_saved_progress(uuid)
-    SavedProgress.new(session).get_saved_progress(uuid)
+    saved_progress_session_store.get_saved_progress(uuid)
   end
 
   def increment_record_counter(uuid)
-    SavedProgress.new(session).increment_record_counter(uuid)
+    saved_progress_session_store.increment_record_counter(uuid)
   end
 
   def invalidate_record(uuid)
-    SavedProgress.new(session).invalidate(uuid)
+    saved_progress_session_store.invalidate(uuid)
   end
 
   def user_data_params
@@ -54,15 +62,15 @@ class ApplicationController < ActionController::Base
   end
 
   def reload_user_data
-    UserData.new(session).load_data
+    user_data_session_store.load_data
   end
 
   def remove_user_data(component_id)
-    UserData.new(session).delete(component_id)
+    user_data_session_store.delete(component_id)
   end
 
   def remove_file_from_data(component_id, file_id)
-    UserData.new(session).delete_file(component_id, file_id)
+    user_data_session_store.delete_file(component_id, file_id)
   end
 
   def upload_adapter
@@ -75,18 +83,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def update_session_with_reference_number_if_enabled(session)
+  def update_session_with_reference_number_if_enabled
     return load_user_data unless reference_number_enabled?
 
     user_data = load_user_data.merge(reference_number_session_data)
     # rubocop: disable Rails/SaveBang
-    UserData.new(session).save(user_data)
+    user_data_session_store.save(user_data)
     # rubocop: enable Rails/SaveBang
     user_data
   end
 
   def create_submission
-    user_data = update_session_with_reference_number_if_enabled(session)
+    user_data = update_session_with_reference_number_if_enabled
 
     # rubocop: disable Rails/SaveBang
     Platform::Submission.new(

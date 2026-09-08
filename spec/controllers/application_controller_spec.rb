@@ -84,7 +84,7 @@ RSpec.describe ApplicationController do
       end
 
       it 'doesn\'t create or update a session key user_data' do
-        user_data = controller.update_session_with_reference_number_if_enabled(session)
+        user_data = controller.update_session_with_reference_number_if_enabled
         expect(user_data.key?('moj_forms_reference_number')).to be_falsey
       end
     end
@@ -95,7 +95,7 @@ RSpec.describe ApplicationController do
       end
 
       it 'create or update a session key user_data' do
-        user_data = controller.update_session_with_reference_number_if_enabled(session)
+        user_data = controller.update_session_with_reference_number_if_enabled
         expect(user_data.key?('moj_forms_reference_number')).to be_truthy
       end
     end
