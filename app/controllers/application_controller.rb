@@ -196,7 +196,7 @@ class ApplicationController < ActionController::Base
   end
 
   def strip_url(url)
-    url.to_s.chomp('/').reverse.chomp('/').reverse
+    url.to_s.delete_prefix('/').delete_suffix('/')
   end
 
   def save_and_return_enabled?
