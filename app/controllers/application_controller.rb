@@ -45,10 +45,6 @@ class ApplicationController < ActionController::Base
     saved_progress_session_store.invalidate(uuid)
   end
 
-  def user_data_params
-    UserDataParams.new(@page_answers).answers
-  end
-
   def load_user_data
     @load_user_data ||= reload_user_data
   end
@@ -112,10 +108,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :editable?
 
-  def answer_params
-    params.permit(answers: {})[:answers] || {}
-  end
-
   def autocomplete_items(components)
     return {} if Rails.configuration.autocomplete_items.nil?
 
@@ -146,16 +138,8 @@ class ApplicationController < ActionController::Base
   end
   helper_method :payment_link_url
 
-  def delete_session
-    flash[:confirmation] = 'Session will expired'
-  end
-
   def destroy_session
     flash[:session_destroyed] = 'Session removed'
-  end
-
-  def redirect_to_expired_page
-    redirect_to '/session/expired'
   end
 
   def session_expiry_time
@@ -169,13 +153,6 @@ class ApplicationController < ActionController::Base
       allowed_pages.include?(strip_url(request.path))
   end
   helper_method :allowed_page?
-
-  def allowed_pages
-    urls = service.standalone_pages.map do |page|
-      strip_url(page.url)
-    end
-    urls << 'session/expired'
-  end
 
   def save_and_return_enabled?
     ENV['SAVE_AND_RETURN'].present?
@@ -240,6 +217,25 @@ class ApplicationController < ActionController::Base
   helper_method :start_page_url
 
   private
+
+  def user_data_params
+    UserDataParams.new(@page_answers).answers
+  end
+
+  def allowed_pages
+    urls = service.standalone_pages.map do |page|
+      strip_url(page.url)
+    end
+    urls << 'session/expired'
+  end
+
+  def delete_session
+    flash[:confirmation] = 'Session will expired'
+  end
+
+  def redirect_to_expired_page
+    redirect_to '/session/expired'
+  end
 
   def user_data_session_store
     UserData.new(session)
