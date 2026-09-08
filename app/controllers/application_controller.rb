@@ -25,14 +25,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :service
 
-  def user_data_session_store
-    UserData.new(session)
-  end
-
-  def saved_progress_session_store
-    SavedProgress.new(session)
-  end
-
   def save_user_data
     user_data_session_store.save(user_data_params)
   end
@@ -248,6 +240,14 @@ class ApplicationController < ActionController::Base
   helper_method :start_page_url
 
   private
+
+  def user_data_session_store
+    UserData.new(session)
+  end
+
+  def saved_progress_session_store
+    SavedProgress.new(session)
+  end
 
   def reference_number_session_data
     @reference_number_session_data ||= { 'moj_forms_reference_number' => generate_reference_number }
