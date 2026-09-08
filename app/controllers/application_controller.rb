@@ -216,7 +216,7 @@ class ApplicationController < ActionController::Base
 
   def first_page?
     if @page.present?
-      @page.url == service.pages[1].url
+      @page.url == service.pages.second.url
     else
       false
     end
