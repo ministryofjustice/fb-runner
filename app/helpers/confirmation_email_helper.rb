@@ -55,18 +55,22 @@ module ConfirmationEmailHelper
   def answers_table(pages, style: nil)
     tag.table(style:) do
       previous_page_was_multiquestion = false
-      pages.collect { |page|
-        concat(heading_row(page[:heading])) if page[:heading].present?
-        page[:answers].each.collect { |answer|
-          if multiquestion_page?(page[:answers])
-            concat answer_row(question: answer[:field_name], answer: answer[:answer])
-            previous_page_was_multiquestion = true
-          else
-            concat answer_row(question: answer[:field_name], answer: answer[:answer], first_row: previous_page_was_multiquestion)
-            previous_page_was_multiquestion = false
-          end
-        }.join.html_safe
-      }.join.html_safe
+      pages.each do |page|
+        multiquestion = multiquestion_page?(page[:answers])
+        write_page_answers(page, multiquestion, previous_page_was_multiquestion)
+        previous_page_was_multiquestion = multiquestion
+      end
+    end
+  end
+
+  def write_page_answers(page, multiquestion, previous_page_was_multiquestion)
+    concat(heading_row(page[:heading])) if page[:heading].present?
+    page[:answers].each do |answer|
+      if multiquestion
+        concat answer_row(question: answer[:field_name], answer: answer[:answer])
+      else
+        concat answer_row(question: answer[:field_name], answer: answer[:answer], first_row: previous_page_was_multiquestion)
+      end
     end
   end
 
