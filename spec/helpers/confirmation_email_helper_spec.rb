@@ -68,14 +68,13 @@ RSpec.describe ConfirmationEmailHelper do
 
   describe '#cell_styles' do
     context 'when question cell' do
-    let(:test_styles) do
-      {
-        cell: { width: '50%', padding_bottom: '10px' },
-        question_cell: { font_size: '100px' },
-        first_row_cell: { padding_bottom: '20px' }
-      }
-
-    end
+      let(:test_styles) do
+        {
+          cell: { width: '50%', padding_bottom: '10px' },
+          question_cell: { font_size: '100px' },
+          first_row_cell: { padding_bottom: '20px' }
+        }
+      end
       it 'merges the cell and question cell styles' do
         expect(helper.cell_styles(:question_cell)).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
       end
@@ -86,14 +85,13 @@ RSpec.describe ConfirmationEmailHelper do
     end
 
     context 'when answer cell' do
-    let(:test_styles) do
-      {
-        cell: { width: '50%', padding_bottom: '10px' },
-        answer_cell: { font_size: '100px' },
-        first_row_cell: { padding_bottom: '20px' }
-      }
-
-    end
+      let(:test_styles) do
+        {
+          cell: { width: '50%', padding_bottom: '10px' },
+          answer_cell: { font_size: '100px' },
+          first_row_cell: { padding_bottom: '20px' }
+        }
+      end
       it 'merges the cell and answer cell styles' do
         expect(helper.cell_styles(:answer_cell)).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
       end
