@@ -17,6 +17,8 @@ Or you can bypass any metadata and start the server:
 
 ```
   SERVICE_METADATA="{ #... json service metadata }" bundle exec rails s
+  OR
+  SERVICE_METADATA=$(cat service_metadata.json) bundle exec rails s
 ```
 
 Alternatively you can pass a service fixture that will load any fixture from
