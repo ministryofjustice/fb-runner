@@ -79,7 +79,7 @@ RSpec.describe ConfirmationEmailHelper do
         expect(helper.cell_styles(:question_cell)).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
       end
 
-      it 'inlcudes the last row cell styles when first_row=true' do
+      it 'includes the last row cell styles when first_row=true' do
         expect(helper.cell_styles(:question_cell, first_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
       end
     end
@@ -96,7 +96,7 @@ RSpec.describe ConfirmationEmailHelper do
         expect(helper.cell_styles(:answer_cell)).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
       end
 
-      it 'inlcudes the last row cell styles when first_row=true' do
+      it 'includes the last row cell styles when first_row=true' do
         expect(helper.cell_styles(:answer_cell, first_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
       end
     end
