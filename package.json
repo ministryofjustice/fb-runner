@@ -28,7 +28,7 @@
     "webpack-cli": "^6.0.0",
     "webpack-merge": "^6.0.0",
     "webpack-subresource-integrity": "^5.1.0",
-    "whatwg-fetch": "^3.6.2"
+    "whatwg-fetch": "^3.6.20"
   },
   "version": "0.1.0",
   "devDependencies": {
