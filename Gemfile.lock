@@ -258,7 +258,7 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
-    metadata_presenter (3.4.21)
+    metadata_presenter (3.4.25)
       govspeak (~> 7.1)
       govuk_design_system_formbuilder (~> 5.11.0)
       json-schema (~> 4.1.1)
@@ -707,7 +707,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.8)
-  metadata_presenter (= 3.4.21)
+  metadata_presenter (= 3.4.25)
   prometheus-client (~> 4.2.0)
   puma (~> 6.4)
   rack (~> 3.2.3)

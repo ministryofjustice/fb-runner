@@ -17,6 +17,12 @@ Or you can bypass any metadata and start the server:
 
 ```
   SERVICE_METADATA="{ #... json service metadata }" bundle exec rails s
+  
+  If the JSON is stored in a file, say service_metadata.json, you can read it into the environment variable with command substitution:
+  SERVICE_METADATA=$(cat service_metadata.json) bundle exec rails s
+  
+  If you're using jq, this is often safer if you want to ensure it's valid/compact JSON:
+  SERVICE_METADATA="$(jq -c . service_metadata.json)" bundle exec rails s
 ```
 
 Alternatively you can pass a service fixture that will load any fixture from
