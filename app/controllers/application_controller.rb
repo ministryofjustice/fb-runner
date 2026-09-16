@@ -26,27 +26,23 @@ class ApplicationController < ActionController::Base
   helper_method :service
 
   def save_user_data
-    UserData.new(session).save(user_data_params)
+    user_data_session_store.save(user_data_params)
   end
 
   def save_form_progress
-    SavedProgress.new(session).save_progress
+    saved_progress_session_store.save_progress
   end
 
   def get_saved_progress(uuid)
-    SavedProgress.new(session).get_saved_progress(uuid)
+    saved_progress_session_store.get_saved_progress(uuid)
   end
 
   def increment_record_counter(uuid)
-    SavedProgress.new(session).increment_record_counter(uuid)
+    saved_progress_session_store.increment_record_counter(uuid)
   end
 
   def invalidate_record(uuid)
-    SavedProgress.new(session).invalidate(uuid)
-  end
-
-  def user_data_params
-    UserDataParams.new(@page_answers).answers
+    saved_progress_session_store.invalidate(uuid)
   end
 
   def load_user_data
@@ -54,15 +50,15 @@ class ApplicationController < ActionController::Base
   end
 
   def reload_user_data
-    UserData.new(session).load_data
+    user_data_session_store.load_data
   end
 
   def remove_user_data(component_id)
-    UserData.new(session).delete(component_id)
+    user_data_session_store.delete(component_id)
   end
 
   def remove_file_from_data(component_id, file_id)
-    UserData.new(session).delete_file(component_id, file_id)
+    user_data_session_store.delete_file(component_id, file_id)
   end
 
   def upload_adapter
@@ -75,18 +71,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def update_session_with_reference_number_if_enabled(session)
+  def update_session_with_reference_number_if_enabled
     return load_user_data unless reference_number_enabled?
 
     user_data = load_user_data.merge(reference_number_session_data)
     # rubocop: disable Rails/SaveBang
-    UserData.new(session).save(user_data)
+    user_data_session_store.save(user_data)
     # rubocop: enable Rails/SaveBang
     user_data
   end
 
   def create_submission
-    user_data = update_session_with_reference_number_if_enabled(session)
+    user_data = update_session_with_reference_number_if_enabled
 
     # rubocop: disable Rails/SaveBang
     Platform::Submission.new(
@@ -112,10 +108,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :editable?
 
-  def answer_params
-    params.permit(answers: {})[:answers] || {}
-  end
-
   def autocomplete_items(components)
     return {} if Rails.configuration.autocomplete_items.nil?
 
@@ -124,10 +116,6 @@ class ApplicationController < ActionController::Base
 
       hash[component.uuid] = Rails.configuration.autocomplete_items[component.uuid]
     end
-  end
-
-  def reference_number_session_data
-    @reference_number_session_data ||= { 'moj_forms_reference_number' => generate_reference_number }
   end
 
   def reference_number_enabled?
@@ -150,16 +138,8 @@ class ApplicationController < ActionController::Base
   end
   helper_method :payment_link_url
 
-  def delete_session
-    flash[:confirmation] = 'Session will expired'
-  end
-
   def destroy_session
     flash[:session_destroyed] = 'Session removed'
-  end
-
-  def redirect_to_expired_page
-    redirect_to '/session/expired'
   end
 
   def session_expiry_time
@@ -167,29 +147,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :session_expiry_time
 
-  # DEPRECATED - remove once all references to in_progress? changed to allowed_page?
-  def in_progress?
-    allowed_page?
-  end
-  helper_method :in_progress?
-
   def allowed_page?
     request.path == root_path ||
       request.path.include?('return') ||
       allowed_pages.include?(strip_url(request.path))
   end
   helper_method :allowed_page?
-
-  def allowed_pages
-    urls = service.standalone_pages.map do |page|
-      strip_url(page.url)
-    end
-    urls << 'session/expired'
-  end
-
-  def strip_url(url)
-    url.to_s.chomp('/').reverse.chomp('/').reverse
-  end
 
   def save_and_return_enabled?
     ENV['SAVE_AND_RETURN'].present?
@@ -222,7 +185,7 @@ class ApplicationController < ActionController::Base
 
   def first_page?
     if @page.present?
-      @page.url == service.pages[1].url
+      @page.url == service.pages.second.url
     else
       false
     end
@@ -235,15 +198,15 @@ class ApplicationController < ActionController::Base
   helper_method :use_external_start_page?
 
   def external_start_page_url
-    if ENV['EXTERNAL_START_PAGE_URL'].blank?
+    url = ENV['EXTERNAL_START_PAGE_URL']
+
+    if url.blank?
       ''
+    elsif url.match?(/\Ahttps:\/\//)
+      url
     else
       # ensure url is absolute - we limit to only gov.uk urls which will be https
-      unless ENV['EXTERNAL_START_PAGE_URL'][/\Ahttps:\/\//]
-        return "https://#{ENV['EXTERNAL_START_PAGE_URL']}"
-      end
-
-      ENV['EXTERNAL_START_PAGE_URL']
+      "https://#{url}"
     end
   end
   helper_method :external_start_page_url
@@ -252,4 +215,41 @@ class ApplicationController < ActionController::Base
     external_start_page_url.empty? ? root_path : external_start_page_url
   end
   helper_method :start_page_url
+
+  private
+
+  def user_data_params
+    UserDataParams.new(@page_answers).answers
+  end
+
+  def allowed_pages
+    urls = service.standalone_pages.map do |page|
+      strip_url(page.url)
+    end
+    urls << 'session/expired'
+  end
+
+  def delete_session
+    flash[:confirmation] = 'Session will expired'
+  end
+
+  def redirect_to_expired_page
+    redirect_to '/session/expired'
+  end
+
+  def user_data_session_store
+    UserData.new(session)
+  end
+
+  def saved_progress_session_store
+    SavedProgress.new(session)
+  end
+
+  def reference_number_session_data
+    @reference_number_session_data ||= { 'moj_forms_reference_number' => generate_reference_number }
+  end
+
+  def strip_url(url)
+    url.to_s.delete_prefix('/').delete_suffix('/')
+  end
 end
