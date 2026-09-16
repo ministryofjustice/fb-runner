@@ -7,27 +7,27 @@ RSpec.describe UserDataParams do
   end
 
   describe '#answers' do
+    let(:page) { service.find_page_by_url('dog-picture') }
+    let(:file_details) do
+      Rack::Test::UploadedFile.new(
+        './spec/fixtures/thats-not-a-knife.txt',
+        'plain/txt'
+      )
+    end
+    let(:answers) do
+      {
+        'dog-picture_upload_1' => file_details
+      }
+    end
+    let(:file) do
+      {
+        'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
+        'size' => 1_392_565,
+        'type' => 'plain/txt',
+        'date' => 1_624_540_833
+      }
+    end
     context 'when page has uploaded files' do
-      let(:page) { service.find_page_by_url('dog-picture') }
-      let(:file_details) do
-        Rack::Test::UploadedFile.new(
-          './spec/fixtures/thats-not-a-knife.txt',
-          'plain/txt'
-        )
-      end
-      let(:answers) do
-        {
-          'dog-picture_upload_1' => file_details
-        }
-      end
-      let(:file) do
-        {
-          'fingerprint' => '28d-6dbfe5a3fff4a67260e7057e49b13ae0794598a949907a',
-          'size' => 1_392_565,
-          'type' => 'plain/txt',
-          'date' => 1_624_540_833
-        }
-      end
       let(:uploaded_files) do
         [
           MetadataPresenter::UploadedFile.new(
@@ -73,6 +73,41 @@ RSpec.describe UserDataParams do
 
       it 'returns the answers' do
         expect(user_data_params.answers).to eq(answers)
+      end
+    end
+
+    context 'when page has a multiupload component with multiple files' do
+      let(:page) { service.find_page_by_url('dog-picture-2') }
+      let(:multiupload_component_id) { 'dog-picture_upload_2' }
+      let(:existing_file) do
+        { 'original_filename' => 'already-uploaded.txt' }
+      end
+      let(:new_file) do
+        { 'original_filename' => 'thats-not-a-knife.txt' }
+      end
+      let(:answers) do
+        { multiupload_component_id => [existing_file, new_file] }
+      end
+      let(:uploaded_files) do
+        [
+          MetadataPresenter::UploadedFile.new(
+            file:,
+            component: page.components.first
+          )
+        ]
+      end
+
+      before do
+        allow(page_answers).to receive(:uploaded_files).and_return(uploaded_files)
+      end
+
+      it 'merges the storage metadata into the newly uploaded (last) file only' do
+        expect(user_data_params.answers).to eq(
+          multiupload_component_id => [
+            existing_file,
+            new_file.merge(file)
+          ]
+        )
       end
     end
   end
