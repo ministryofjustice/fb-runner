@@ -4,8 +4,9 @@
 // that code so it'll be compiled.
 import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch'
+import Rails from '@rails/ujs'
 
-require("@rails/ujs").start()
+Rails.start()
 require("../src/runner/contentloaded.js")
 require("../src/runner/analytics")
 require("../src/runner/index")
