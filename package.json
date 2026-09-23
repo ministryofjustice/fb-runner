@@ -42,10 +42,7 @@
     "webpack-dev-server": "^6.0.0"
   },
   "resolutions": {
-    "loader-utils": "2.0.4",
-    "ajv": "8.20.0",
-    "fast-uri": "3.1.7",
-    "js-yaml": "4.3.2"
+    "loader-utils": "2.0.4"
   },
   "browserslist": [
     "defaults"
