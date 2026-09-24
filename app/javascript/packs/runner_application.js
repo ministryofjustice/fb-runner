@@ -4,9 +4,10 @@
 // that code so it'll be compiled.
 import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch'
-import Rails from '@rails/ujs'
+import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
+import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
 
-Rails.start()
+require("@rails/ujs").start()
 require("../src/runner/contentloaded.js")
 require("../src/runner/analytics")
 require("../src/runner/index")
