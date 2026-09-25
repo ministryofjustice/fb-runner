@@ -9,7 +9,7 @@ ruby '3.4.9'
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 'update-govuk-crest'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.4.25'
+gem 'metadata_presenter', '3.4.21'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -18,7 +18,7 @@ gem 'faraday_middleware'
 gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
 gem 'prometheus-client', '~> 4.2.0'
-gem 'puma', '~> 6.4'
+gem 'puma', '~> 7.2'
 gem 'rack', '~> 3.2.3'
 gem 'rails', '~> 8.1.3.1'
 gem 'sass-rails', '>= 6'
