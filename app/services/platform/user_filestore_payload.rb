@@ -34,12 +34,22 @@ module Platform
       {
         'encrypted_user_id_and_token': encrypted_user_id_and_token,
         'file': encoded_file,
+        'original_filename': original_filename,
+        'original_file_content_type': original_file_content_type,
         'policy': {
           'allowed_types': allowed_types,
           'max_size': MAX_FILE_SIZE,
           'expires': expires
         }
       }
+    end
+
+    def original_filename
+      file_details['original_filename']
+    end
+
+    def original_file_content_type
+      file_details['content_type']
     end
 
     def expires

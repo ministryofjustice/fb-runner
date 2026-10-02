@@ -23,6 +23,8 @@ RSpec.describe Platform::UserFilestorePayload do
         {
           'encrypted_user_id_and_token': '/7danQNZrt06+SZlQUOjsxcRvy9wiuW6Y9lxQg9EF4s8TaXc/Ez/UK2LZkKQ/NR0T8WJJTJB3HKlLj3V2F5iWQ==',
           'file': Base64.strict_encode64("THIS IS A KNIFE!\n"),
+          'original_file_content_type': 'plain/txt',
+          'original_filename': 'thats-not-a-knife.txt',
           'policy': {
             'max_size': Platform::UserFilestorePayload::MAX_FILE_SIZE,
             'allowed_types': expected_allowed_types,
