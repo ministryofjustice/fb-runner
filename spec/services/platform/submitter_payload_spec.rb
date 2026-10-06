@@ -344,7 +344,6 @@ RSpec.describe Platform::SubmitterPayload do
       end
 
       context 'when branching' do
-        let(:service_metadata) { metadata_fixture(:branching) }
         let(:user_data) do
           {
             'name_text_1' => 'Thor',

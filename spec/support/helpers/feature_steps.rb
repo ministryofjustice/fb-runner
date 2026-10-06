@@ -46,10 +46,6 @@ module FeatureSteps
     form.start_button.click
   end
 
-  def complain_about_tribunal_metadata
-    JSON.parse(File.read(fixtures_directory.join('version.json')))
-  end
-
   def then_I_should_see_that_I_should_add_a_dog_picture
     then_I_should_see_the_error_message(
       'Choose a file to upload'
