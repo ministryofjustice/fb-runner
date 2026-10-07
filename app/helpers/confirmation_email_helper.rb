@@ -52,55 +52,23 @@ module ConfirmationEmailHelper
     end
   end
 
-  def answers_table(pages, style: nil)
-    tag.table(style:) do
-      previous_page_was_multiquestion = false
-      pages.collect { |page|
-        concat(heading_row(page[:heading])) if page[:heading].present?
-        page[:answers].each.collect { |answer|
-          if multiquestion_page?(page[:answers])
-            concat answer_row(question: answer[:field_name], answer: answer[:answer])
-            previous_page_was_multiquestion = true
-          else
-            concat answer_row(question: answer[:field_name], answer: answer[:answer], first_row: previous_page_was_multiquestion)
-            previous_page_was_multiquestion = false
-          end
-        }.join.html_safe
-      }.join.html_safe
-    end
-  end
-
   def answer_row(question:, answer:, first_row: false)
     tag.tr(question_cell(content: question, first_row:) + answer_cell(content: answer, first_row:))
   end
 
   def question_cell(content:, first_row: false)
-    tag.td(content, style: question_cell_styles(first_row:))
+    tag.td(content, style: cell_styles(:question_cell, first_row:))
   end
 
   def answer_cell(content:, first_row: false)
     answer = content.is_a?(Hash) ? content.values.compact_blank.join(', ') : content
-    tag.td(answer, style: answer_cell_styles(first_row:))
+    tag.td(answer, style: cell_styles(:answer_cell, first_row:))
   end
 
-  def heading_row_styles
-    inline_style_string(styles[:heading_row])
-  end
-
-  def h3_styles
-    inline_style_string(styles[:h3])
-  end
-
-  def question_cell_styles(first_row: false)
-    question_styles = styles[:cell].merge(styles[:question_cell])
-    question_styles.merge!(styles[:first_row_cell]) if first_row
-    inline_style_string(question_styles)
-  end
-
-  def answer_cell_styles(first_row: false)
-    answer_styles = styles[:cell].merge(styles[:answer_cell])
-    answer_styles.merge!(styles[:first_row_cell]) if first_row
-    inline_style_string(answer_styles)
+  def cell_styles(cell_type, first_row: false)
+    combined_styles = styles[:cell].merge(styles[cell_type])
+    combined_styles.merge!(styles[:first_row_cell]) if first_row
+    inline_style_string(combined_styles)
   end
 
   def inline_style_string(attributes)
@@ -111,5 +79,34 @@ module ConfirmationEmailHelper
 
   def multiquestion_page?(answers)
     answers.size > 1
+  end
+
+  private
+
+  def heading_row_styles
+    inline_style_string(styles[:heading_row])
+  end
+
+  def h3_styles
+    inline_style_string(styles[:h3])
+  end
+
+  def answers_table(pages, style: nil)
+    tag.table(style:) do
+      previous_page_was_multiquestion = false
+      pages.each do |page|
+        multiquestion = multiquestion_page?(page[:answers])
+        write_page_answers(page, multiquestion, previous_page_was_multiquestion)
+        previous_page_was_multiquestion = multiquestion
+      end
+    end
+  end
+
+  def write_page_answers(page, multiquestion, previous_page_was_multiquestion)
+    concat(heading_row(page[:heading])) if page[:heading].present?
+    first_row = !multiquestion && previous_page_was_multiquestion
+    page[:answers].each do |answer|
+      concat answer_row(question: answer[:field_name], answer: answer[:answer], first_row:)
+    end
   end
 end

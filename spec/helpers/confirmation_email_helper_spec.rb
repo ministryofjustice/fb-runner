@@ -66,39 +66,39 @@ RSpec.describe ConfirmationEmailHelper do
     end
   end
 
-  describe '#answer_cell_styles' do
-    let(:test_styles) do
-      {
-        cell: { width: '50%', padding_bottom: '10px' },
-        answer_cell: { font_size: '100px' },
-        first_row_cell: { padding_bottom: '20px' }
-      }
+  describe '#cell_styles' do
+    context 'when question cell' do
+      let(:test_styles) do
+        {
+          cell: { width: '50%', padding_bottom: '10px' },
+          question_cell: { font_size: '100px' },
+          first_row_cell: { padding_bottom: '20px' }
+        }
+      end
+      it 'merges the cell and question cell styles' do
+        expect(helper.cell_styles(:question_cell)).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
+      end
+
+      it 'includes the last row cell styles when first_row=true' do
+        expect(helper.cell_styles(:question_cell, first_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
+      end
     end
 
-    it 'merges the cell and answer cell styles' do
-      expect(helper.answer_cell_styles).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
-    end
+    context 'when answer cell' do
+      let(:test_styles) do
+        {
+          cell: { width: '50%', padding_bottom: '10px' },
+          answer_cell: { font_size: '100px' },
+          first_row_cell: { padding_bottom: '20px' }
+        }
+      end
+      it 'merges the cell and answer cell styles' do
+        expect(helper.cell_styles(:answer_cell)).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
+      end
 
-    it 'inlcudes the last row cell styles when first_row=true' do
-      expect(helper.answer_cell_styles(first_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
-    end
-  end
-
-  describe '#question_cell_styles' do
-    let(:test_styles) do
-      {
-        cell: { width: '50%', padding_bottom: '10px' },
-        question_cell: { font_size: '100px' },
-        first_row_cell: { padding_bottom: '20px' }
-      }
-    end
-
-    it 'merges the cell and question cell styles' do
-      expect(helper.question_cell_styles).to eql 'width: 50%; padding-bottom: 10px; font-size: 100px;'
-    end
-
-    it 'inlcudes the last row cell styles when first_row=true' do
-      expect(helper.question_cell_styles(first_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
+      it 'includes the last row cell styles when first_row=true' do
+        expect(helper.cell_styles(:answer_cell, first_row: true)).to eql 'width: 50%; padding-bottom: 20px; font-size: 100px;'
+      end
     end
   end
 
@@ -110,7 +110,7 @@ RSpec.describe ConfirmationEmailHelper do
 
   describe '#answer_cell' do
     before do
-      allow(helper).to receive(:answer_cell_styles).and_return('color: red; width: 50%;')
+      allow(helper).to receive(:cell_styles).and_return('color: red; width: 50%;')
     end
 
     it 'generates the table cell html with merged styles' do
@@ -132,7 +132,7 @@ RSpec.describe ConfirmationEmailHelper do
 
   describe '#question_cell' do
     it 'generates the table cell html with merged styles' do
-      allow(helper).to receive(:question_cell_styles).and_return('color: red; width: 50%;')
+      allow(helper).to receive(:cell_styles).and_return('color: red; width: 50%;')
 
       expect(helper.question_cell(content: 'question')).to eql '<td style="color: red; width: 50%;">question</td>'
     end
