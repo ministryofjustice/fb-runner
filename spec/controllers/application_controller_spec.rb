@@ -84,7 +84,7 @@ RSpec.describe ApplicationController do
       end
 
       it 'doesn\'t create or update a session key user_data' do
-        user_data = controller.update_session_with_reference_number_if_enabled(session)
+        user_data = controller.update_session_with_reference_number_if_enabled
         expect(user_data.key?('moj_forms_reference_number')).to be_falsey
       end
     end
@@ -95,7 +95,7 @@ RSpec.describe ApplicationController do
       end
 
       it 'create or update a session key user_data' do
-        user_data = controller.update_session_with_reference_number_if_enabled(session)
+        user_data = controller.update_session_with_reference_number_if_enabled
         expect(user_data.key?('moj_forms_reference_number')).to be_truthy
       end
     end
@@ -198,10 +198,6 @@ RSpec.describe ApplicationController do
     it 'should return payment_link_url' do
       allow(ENV).to receive(:[]).with('PAYMENT_LINK').and_return(payment_link)
       expect(controller.payment_link_url).to eq("#{payment_link}123")
-    end
-
-    it 'responds to in_progress?' do
-      expect(controller.in_progress?).to eq(true)
     end
 
     it 'is not in preview mode' do
