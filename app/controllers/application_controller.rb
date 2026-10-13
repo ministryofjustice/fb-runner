@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :confirmation, :expired_session, :submission_completed, :session_destroyed
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_to_expired_page
 
-  SESSION_DURATION = 30.minutes
+  SESSION_DURATION = Rails.application.config.session_duration
 
   EXCEPTIONS = [
     Platform::TimeoutError,
