@@ -30,7 +30,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'byebug'
   gem 'capybara'
-  gem 'dotenv-rails', '~> 3.1.3'
+  gem 'dotenv-rails', '~> 3.2.0'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 7.0.2'
   gem 'simplecov'
