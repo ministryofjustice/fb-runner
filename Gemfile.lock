@@ -233,7 +233,7 @@ GEM
     json (2.19.9)
     json-schema (4.1.1)
       addressable (>= 2.8)
-    jwt (3.2.0)
+    jwt (3.3.0)
       base64
     kramdown (2.4.0)
       rexml
