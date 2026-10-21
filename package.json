@@ -37,7 +37,7 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^16.1.1",
     "postcss-loader": "^8.2.1",
-    "postcss-preset-env": "^11.3.2",
+    "postcss-preset-env": "^11.6.1",
     "shakapacker-rspack": "^10.3.1",
     "webpack-dev-server": "^6.0.0"
   },
