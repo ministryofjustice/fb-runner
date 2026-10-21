@@ -41,7 +41,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.8'
+  gem 'listen', '~> 3.10'
   gem 'rubocop', '~> 1.59'
   gem 'rubocop-govuk', '~> 5.2.1'
   gem 'spring', '~> 4.1.1'
