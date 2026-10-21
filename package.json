@@ -17,7 +17,7 @@
     "mini-css-extract-plugin": "^2.0.0",
     "promise-polyfill": "^8.3.0",
     "rspack-manifest-plugin": "^5.2.2",
-    "sass": "^1.50.0",
+    "sass": "^1.105.1",
     "sass-loader": "^16.0.0",
     "shakapacker": "10.3.1",
     "style-loader": "^4.0.0",
