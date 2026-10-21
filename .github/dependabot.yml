@@ -1,24 +1,107 @@
+# Follows the MoJ Developer Portal "Dependabot guidelines":
+#   - daily checks, version updates switched on, cooldown on every entry
+#   - reviewers come from CODEOWNERS (the old `reviewers:` option was removed by GitHub)
+#   - production libraries and major upgrades are NOT grouped; they get their own PRs
+#   - the old `allow: dependency-type: "all"` was removed: it matched the default
+#
+# Not covered by Dependabot (CircleCI): orbs and images in .circleci/config.yml.
+# See the team note on how those are kept up to date.
+
 version: 2
+
 updates:
-- package-ecosystem: bundler
-  directory: "/"
-  schedule:
-    interval: daily
-  # Disable version updates, but leave security updates
-  open-pull-requests-limit: 0
+  # ---------------------------------------------------------------------------
+  # Ruby gems (Gemfile / Gemfile.lock)
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 3
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
+      # Our own MoJ gems: we know when they are released, so no need to wait
+      exclude:
+        - "metadata_presenter"
+        - "fb-jwt-auth"
+    labels:
+      - "dependencies"
+      - "ruby"
+    groups:
+      # The Sentry gems are released together and should stay on matching versions
+      sentry-ruby:
+        patterns:
+          - "sentry-*"
+        update-types:
+          - "minor"
+          - "patch"
+      ruby-linting:
+        dependency-type: "development"
+        patterns:
+          - "rubocop*"
+        update-types:
+          - "minor"
+          - "patch"
+      ruby-testing:
+        dependency-type: "development"
+        patterns:
+          - "rspec*"
+          - "capybara*"
+          - "rails-controller-testing"
+          - "simplecov*"
+          - "site_prism"
+          - "webmock"
+          - "timecop"
+        update-types:
+          - "minor"
+          - "patch"
+      # Everything else that is development/test only: patch releases only
+      ruby-dev-other:
+        dependency-type: "development"
+        update-types:
+          - "patch"
 
-- package-ecosystem: docker
-  directory: "/"
-  schedule:
-    interval: daily
-  # Disable version updates, but leave security updates
-  open-pull-requests-limit: 0
+  # ---------------------------------------------------------------------------
+  # JavaScript packages (package.json / yarn.lock)
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 3
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
+    labels:
+      - "dependencies"
+      - "javascript"
+    groups:
+      # Rspack packages must stay on the same version as each other
+      rspack:
+        patterns:
+          - "@rspack/*"
+        update-types:
+          - "minor"
+          - "patch"
 
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: daily
-  # Disable version updates, but leave security updates
-  open-pull-requests-limit: 0
-  allow:
-    - dependency-type: "all"
+  # ---------------------------------------------------------------------------
+  # Docker base images
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 3
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
+    labels:
+      - "dependencies"
+      - "docker"
