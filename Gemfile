@@ -35,7 +35,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 7.0.2'
   gem 'simplecov'
   gem 'simplecov-console'
-  gem 'site_prism', '~> 5.0'
+  gem 'site_prism', '~> 6.0'
   gem 'timecop'
   gem 'webmock'
 end
