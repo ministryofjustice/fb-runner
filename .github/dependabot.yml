@@ -1,8 +1,6 @@
 # Follows the MoJ Developer Portal "Dependabot guidelines":
-#   - daily checks, version updates switched on, cooldown on every entry
-#   - reviewers come from CODEOWNERS (the old `reviewers:` option was removed by GitHub)
-#   - production libraries and major upgrades are NOT grouped; they get their own PRs
-#   - the old `allow: dependency-type: "all"` was removed: it matched the default
+#   - minor and patch upgrades are each grouped into a single PR per ecosystem
+#   - major upgrades are NOT grouped; they continue to get their own individual PRs
 #
 # Not covered by Dependabot (CircleCI): orbs and images in .circleci/config.yml.
 # See the team note on how those are kept up to date.
@@ -31,36 +29,12 @@ updates:
       - "dependencies"
       - "ruby"
     groups:
-      # The Sentry gems are released together and should stay on matching versions
-      sentry-ruby:
-        patterns:
-          - "sentry-*"
+      # All minor upgrades in one PR
+      minor-updates:
         update-types:
           - "minor"
-          - "patch"
-      ruby-linting:
-        dependency-type: "development"
-        patterns:
-          - "rubocop*"
-        update-types:
-          - "minor"
-          - "patch"
-      ruby-testing:
-        dependency-type: "development"
-        patterns:
-          - "rspec*"
-          - "capybara*"
-          - "rails-controller-testing"
-          - "simplecov*"
-          - "site_prism"
-          - "webmock"
-          - "timecop"
-        update-types:
-          - "minor"
-          - "patch"
-      # Everything else that is development/test only: patch releases only
-      ruby-dev-other:
-        dependency-type: "development"
+      # All patch upgrades in one PR
+      patch-updates:
         update-types:
           - "patch"
 
@@ -81,24 +55,11 @@ updates:
       - "dependencies"
       - "javascript"
     groups:
-      # Rspack packages must stay on the same version as each other
-      rspack:
-        patterns:
-          - "@rspack/*"
+      # All minor upgrades in one PR
+      minor-updates:
         update-types:
           - "minor"
+      # All patch upgrades in one PR
+      patch-updates:
+        update-types:
           - "patch"
-
-  # ---------------------------------------------------------------------------
-  # Docker base images
-  # ---------------------------------------------------------------------------
-  - package-ecosystem: docker
-    directory: "/"
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 5
-    cooldown:
-      default-days: 3
-    labels:
-      - "dependencies"
-      - "docker"
