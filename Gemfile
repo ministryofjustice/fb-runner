@@ -22,8 +22,8 @@ gem 'puma', '~> 7.2'
 gem 'rack', '~> 3.2.3'
 gem 'rails', '~> 8.1.3.1'
 gem 'sass-rails', '>= 6'
-gem 'sentry-rails', '~> 5.20'
-gem 'sentry-ruby', '~> 5.20'
+gem 'sentry-rails', '~> 7.1'
+gem 'sentry-ruby', '~> 7.1'
 gem 'shakapacker', '~> 10.3'
 
 group :development, :test do
