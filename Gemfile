@@ -30,7 +30,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'byebug'
   gem 'capybara'
-  gem 'dotenv-rails', '~> 3.1.3'
+  gem 'dotenv-rails', '~> 3.2.0'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 7.0.2'
   gem 'simplecov'
@@ -44,7 +44,7 @@ group :development do
   gem 'listen', '~> 3.8'
   gem 'rubocop', '~> 1.59'
   gem 'rubocop-govuk', '~> 5.2.1'
-  gem 'spring', '~> 4.1.1'
+  gem 'spring', '~> 4.7.0'
   gem 'spring-watcher-listen', '~> 2.1.0'
   gem 'web-console', '>= 3.3.0'
 end
