@@ -19,7 +19,7 @@ gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
 gem 'prometheus-client', '~> 4.2.0'
 gem 'puma', '~> 7.2'
-gem 'rack', '~> 3.2.3'
+gem 'rack', '~> 3.2.7'
 gem 'rails', '~> 8.1.3.1'
 gem 'sass-rails', '>= 6'
 gem 'sentry-rails', '~> 5.20'
@@ -41,7 +41,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.8'
+  gem 'listen', '~> 3.10'
   gem 'rubocop', '~> 1.59'
   gem 'rubocop-govuk', '~> 5.2.1'
   gem 'spring', '~> 4.7.0'
