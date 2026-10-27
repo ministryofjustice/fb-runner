@@ -3287,17 +3287,17 @@ setprototypeof@1.2.0, setprototypeof@~1.2.0:
   resolved "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-shakapacker-rspack@^10.3.1:
-  version "10.3.1"
-  resolved "https://registry.npmjs.org/shakapacker-rspack/-/shakapacker-rspack-10.3.1.tgz"
-  integrity sha512-dAFwyBJ3Ecq1NyLd9eoyYHirYl6uBl2ilTBDtPp79dzl5fmw4Bqd7z9eKJhDGnB8F76Tdi2/IdrqoNRY5G62Vg==
+shakapacker-rspack@^10.3.2:
+  version "10.3.2"
+  resolved "https://registry.yarnpkg.com/shakapacker-rspack/-/shakapacker-rspack-10.3.2.tgz#df505835aabb384f8065a3d044d16e79c5e68eb7"
+  integrity sha512-2ZqiijQU0Oc6QHvYTw4IY8Glzkk2LSMdnMZ80b+jkwAP9ogJud6pWfVogL1nGZXgxBVcwe4JtR4GcKpf3pdPCg==
   dependencies:
-    shakapacker "~10.3.1"
+    shakapacker "~10.3.2"
 
-shakapacker@10.3.1, shakapacker@~10.3.1:
-  version "10.3.1"
-  resolved "https://registry.npmjs.org/shakapacker/-/shakapacker-10.3.1.tgz"
-  integrity sha512-yYSbA+JaFisZQL9ImB9IMmPNKUzm0Ycw/wUnwf88f7BeHX9k/M4FIa/4syq/0xx18JqgEL3MIJmsM0RaXQ5zuA==
+shakapacker@10.3.2, shakapacker@~10.3.2:
+  version "10.3.2"
+  resolved "https://registry.yarnpkg.com/shakapacker/-/shakapacker-10.3.2.tgz#cc8047b8fa67e0b141c8c1a428bc7992967ce62a"
+  integrity sha512-W4LV0MFS1c6ayODF/Ra4RM5xS3DljBc9XGLqz04WGSap97U5gJ7FjBTChPmoJ/7VDiTYmL1w+vh+D360e9qK7Q==
   dependencies:
     js-yaml "^4.1.0"
     pack-config-diff "^0.1.0"

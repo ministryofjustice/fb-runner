@@ -240,7 +240,7 @@ GEM
       rexml
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
-    listen (3.10.0)
+    listen (3.10.1)
       logger
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -485,8 +485,8 @@ GEM
     puma (7.2.1)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.6)
-    rack-proxy (0.8.2)
+    rack (3.2.7)
+    rack-proxy (0.8.3)
       rack
     rack-session (2.1.2)
       base64 (>= 0.1.0)
@@ -628,7 +628,7 @@ GEM
     sentry-ruby (5.28.1)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    shakapacker (10.3.1)
+    shakapacker (10.3.2)
       activesupport (>= 5.2)
       package_json
       rack-proxy (>= 0.6.1)
@@ -708,11 +708,11 @@ DEPENDENCIES
   faraday_middleware
   fb-jwt-auth (= 0.10.0)
   jwt
-  listen (~> 3.8)
+  listen (~> 3.10)
   metadata_presenter (= 3.4.28)
   prometheus-client (~> 4.2.0)
   puma (~> 7.2)
-  rack (~> 3.2.3)
+  rack (~> 3.2.7)
   rails (~> 8.1.3.1)
   rails-controller-testing
   rspec-rails (~> 7.0.2)
