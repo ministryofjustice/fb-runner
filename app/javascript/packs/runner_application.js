@@ -6,8 +6,9 @@ import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch'
 import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
 import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
+import Rails from "@rails/ujs"
 
-require("@rails/ujs").start()
+Rails.start()
 require("../src/runner/contentloaded.js")
 require("../src/runner/analytics")
 require("../src/runner/index")
