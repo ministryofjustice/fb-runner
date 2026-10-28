@@ -1,6 +1,9 @@
 # Follows the MoJ Developer Portal "Dependabot guidelines":
 #   - minor and patch upgrades are each grouped into a single PR per ecosystem
 #   - major upgrades are NOT grouped; they continue to get their own individual PRs
+#   - minor and patch security fixes are grouped into a single PR per ecosystem
+#     (security fixes ignore cooldown, so they still arrive straight away
+#     https://github.com/dependabot/dependabot-core/discussions/15582)
 #
 # Not covered by Dependabot (CircleCI): orbs and images in .circleci/config.yml.
 # See the team note on how those are kept up to date.
@@ -20,11 +23,15 @@ updates:
       default-days: 3
       semver-major-days: 14
       semver-minor-days: 7
-      semver-patch-days: 3
+      semver-patch-days: 7
       # Our own MoJ gems: we know when they are released, so no need to wait
       exclude:
         - "metadata_presenter"
         - "fb-jwt-auth"
+    # Shakapacker must be the exact same version in the Gemfile and package.json.
+    # Upgrade both together manually https://shakapacker.com/docs/common-upgrades/.
+    ignore:
+      - dependency-name: "shakapacker"
     labels:
       - "dependencies"
       - "ruby"
@@ -36,6 +43,12 @@ updates:
       # All patch upgrades in one PR
       patch-updates:
         update-types:
+          - "patch"
+      # All minor and patch security fixes in one PR
+      security-updates:
+        applies-to: security-updates
+        update-types:
+          - "minor"
           - "patch"
 
   # ---------------------------------------------------------------------------
@@ -50,7 +63,12 @@ updates:
       default-days: 3
       semver-major-days: 14
       semver-minor-days: 7
-      semver-patch-days: 3
+      semver-patch-days: 7
+    # Shakapacker must be the exact same version in the Gemfile and package.json.
+    # Upgrade both together manually https://shakapacker.com/docs/common-upgrades/.
+    ignore:
+      - dependency-name: "shakapacker"
+      - dependency-name: "shakapacker-rspack"
     labels:
       - "dependencies"
       - "javascript"
@@ -62,4 +80,10 @@ updates:
       # All patch upgrades in one PR
       patch-updates:
         update-types:
+          - "patch"
+      # All minor and patch security fixes in one PR
+      security-updates:
+        applies-to: security-updates
+        update-types:
+          - "minor"
           - "patch"
