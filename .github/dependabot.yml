@@ -23,7 +23,7 @@ updates:
       default-days: 3
       semver-major-days: 14
       semver-minor-days: 7
-      semver-patch-days: 3
+      semver-patch-days: 7
       # Our own MoJ gems: we know when they are released, so no need to wait
       exclude:
         - "metadata_presenter"
@@ -63,7 +63,7 @@ updates:
       default-days: 3
       semver-major-days: 14
       semver-minor-days: 7
-      semver-patch-days: 3
+      semver-patch-days: 7
     # Shakapacker must be the exact same version in the Gemfile and package.json.
     # Upgrade both together manually https://shakapacker.com/docs/common-upgrades/.
     ignore:
