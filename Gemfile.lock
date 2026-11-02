@@ -75,7 +75,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.9.0)
+    addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
     ansi (1.6.0)
     ast (2.4.3)
@@ -542,7 +542,7 @@ GEM
       prism (>= 1.6.0)
       rbs (>= 4.0.0)
       tsort
-    regexp_parser (2.12.0)
+    regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
     request_store (1.7.0)
@@ -638,11 +638,13 @@ GEM
       ansi
       simplecov
       terminal-table
-    site_prism (5.2)
+    site_prism (6.0.1)
       addressable (~> 2.8, >= 2.8.4)
-      capybara (~> 3.34)
+      base64 (~> 0.3.0)
+      capybara (~> 3.37)
+      logger (~> 1.7)
       site_prism-all_there (> 3, < 5)
-    site_prism-all_there (3.0.8)
+    site_prism-all_there (3.0.10)
     spring (4.7.0)
     spring-watcher-listen (2.1.0)
       listen (>= 2.7, < 4.0)
@@ -718,7 +720,7 @@ DEPENDENCIES
   shakapacker (~> 10.3)
   simplecov
   simplecov-console
-  site_prism (~> 5.0)
+  site_prism (~> 6.0)
   spring (~> 4.7.0)
   spring-watcher-listen (~> 2.1.0)
   timecop
