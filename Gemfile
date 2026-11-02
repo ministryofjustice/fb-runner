@@ -32,7 +32,7 @@ group :development, :test do
   gem 'capybara'
   gem 'dotenv-rails', '~> 3.2.0'
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 7.0.2'
+  gem 'rspec-rails', '~> 8.0.4'
   gem 'simplecov'
   gem 'simplecov-console'
   gem 'site_prism', '~> 5.0'
