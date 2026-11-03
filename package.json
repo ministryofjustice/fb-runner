@@ -32,8 +32,8 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "@rspack/dev-server": "^2.2.1",
-    "postcss": "^8.5.31",
+    "@rspack/dev-server": "^2.2.2",
+    "postcss": "^8.5.32",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^16.1.1",
     "postcss-loader": "^8.2.1",
