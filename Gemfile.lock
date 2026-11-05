@@ -706,6 +706,7 @@ DEPENDENCIES
   jwt
   listen (~> 3.10)
   metadata_presenter (= 3.4.28)
+  ostruct
   prometheus-client (~> 4.2.0)
   puma (~> 8.0)
   rack (~> 3.2.7)
@@ -728,7 +729,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.4.9p82
+   ruby 4.0.9
 
 BUNDLED WITH
-   2.7.1
+   4.0.24
