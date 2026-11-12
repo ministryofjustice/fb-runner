@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.9'
+ruby file: '.ruby-version'
 
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
@@ -17,6 +17,7 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
+gem 'ostruct'
 gem 'prometheus-client', '~> 4.2.0'
 gem 'puma', '~> 8.0'
 gem 'rack', '~> 3.2.8'
