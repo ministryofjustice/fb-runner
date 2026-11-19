@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   ruby-version:
     type: string
-    default: "4.0.9"
+    default: "4.0.10"
 
 orbs:
   ruby: circleci/ruby@1.4.0
@@ -15,7 +15,7 @@ orbs:
 jobs:
   login-to-aws:
     docker: &docker_image
-      - image: 'cimg/ruby:<< pipeline.parameters.ruby-version >>-node'
+      - image: 'cimg/ruby:4.0-node'
     steps:
       - checkout
       - aws-cli/setup:
@@ -34,7 +34,7 @@ jobs:
             - bash.env
   build:
     docker: &ruby_image
-      - image: 'cimg/ruby:<< pipeline.parameters.ruby-version >>-node'
+      - image: 'cimg/ruby:4.0-node'
     resource_class: medium+ # Increased
     steps:
       - checkout
