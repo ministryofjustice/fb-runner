@@ -23,7 +23,7 @@ gem 'puma', '~> 8.0'
 gem 'rack', '~> 3.2.8'
 gem 'rails', '~> 8.1.3.1'
 gem 'sass-rails', '>= 6'
-gem 'sentry-rails', '~> 7.1'
+gem 'sentry-rails', '~> 7.2'
 gem 'sentry-ruby', '~> 7.1'
 gem 'shakapacker', '~> 10.3'
 
@@ -33,7 +33,7 @@ group :development, :test do
   gem 'capybara'
   gem 'dotenv-rails', '~> 3.2.0'
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 8.0.4'
+  gem 'rspec-rails', '~> 8.1.0'
   gem 'simplecov'
   gem 'simplecov-console'
   gem 'site_prism', '~> 6.0'
@@ -43,8 +43,8 @@ end
 
 group :development do
   gem 'listen', '~> 3.10'
-  gem 'rubocop', '~> 1.59'
-  gem 'rubocop-govuk', '~> 5.2.1'
+  gem 'rubocop', '~> 1.92'
+  gem 'rubocop-govuk', '~> 6.0.0'
   gem 'spring', '~> 4.7.0'
   gem 'spring-watcher-listen', '~> 2.1.0'
   gem 'web-console', '>= 3.3.0'
