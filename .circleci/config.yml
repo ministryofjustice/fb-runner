@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   ruby-version:
     type: string
-    default: "4.0.9"
+    default: "4.0.10"
 
 orbs:
   ruby: circleci/ruby@1.4.0
