@@ -214,7 +214,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (3.1.0)
+    json (2.21.2)
     json-schema (4.1.1)
       addressable (>= 2.8)
     jwt (3.3.0)
@@ -520,6 +520,7 @@ DEPENDENCIES
   faraday
   faraday_middleware
   fb-jwt-auth (= 0.10.0)
+  json (~> 2.21)
   jwt
   listen (~> 3.10)
   metadata_presenter (= 3.4.31)
