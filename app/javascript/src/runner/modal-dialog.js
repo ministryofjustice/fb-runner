@@ -43,7 +43,7 @@
    focusElement: element that should gain focus when the dialog opens (defaults to the dialog itself)
    onOpen: a callback function which will be invoked when the modal is opened
    onClose: a callback function which will be invoked when the modal is closed
-   onDialogNotSupported: a callback function that will be invoked if there is no native <dialog> or dialog polyfill support
+   onDialogNotSupported: a callback function that will be invoked if there is no native <dialog> support
 
 */
 
@@ -85,7 +85,7 @@ ModalDialog.prototype.init = function (options) {
 
   this.$focusElement = this.options.focusElement || this.$dialogBox
 
-  // Check for native dialog (or polyfill) support
+  // Check for native dialog support
   // if no support trigger a callback allowing us to show a fallback
   if (!this.dialogSupported()) {
     if (typeof this.options.onDialogNotSupported === 'function') {
@@ -104,19 +104,7 @@ ModalDialog.prototype.init = function (options) {
 }
 
 ModalDialog.prototype.dialogSupported = function () {
-  if (typeof HTMLDialogElement === 'function') {
-    // Native dialog is supported by browser
-    return true
-  } else {
-    // Native dialog is not supported by browser so use polyfill
-    try {
-      window.dialogPolyfill.registerDialog(this.$dialog)
-      return true
-    } catch (error) {
-      // Doesn't support polyfill (IE8)
-      return false
-    }
-  }
+  return typeof HTMLDialogElement === 'function'
 }
 // Initialize component events
 ModalDialog.prototype.initEvents = function (options) {

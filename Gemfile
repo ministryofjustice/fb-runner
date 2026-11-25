@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.9'
+ruby file: '.ruby-version'
 
 # Metadata presenter - if you need to be on development you can uncomment
 # one of these lines:
@@ -9,7 +9,7 @@ ruby '3.4.9'
 #     github: 'ministryofjustice/fb-metadata-presenter',
 #     branch: 'update-govuk-crest'
 # gem 'metadata_presenter', path: '../fb-metadata-presenter'
-gem 'metadata_presenter', '3.4.22'
+gem 'metadata_presenter', '3.4.31'
 
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -17,34 +17,35 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'fb-jwt-auth', '0.10.0'
 gem 'jwt'
+gem 'ostruct'
 gem 'prometheus-client', '~> 4.2.0'
-gem 'puma', '~> 6.4'
-gem 'rack', '~> 3.2.3'
-gem 'rails', '~> 8.1.3.1'
+gem 'puma', '~> 8.0'
+gem 'rack', '~> 3.2.8'
+gem 'rails', '~> 8.1.4.1'
 gem 'sass-rails', '>= 6'
-gem 'sentry-rails', '~> 5.20'
-gem 'sentry-ruby', '~> 5.20'
+gem 'sentry-rails', '~> 7.1'
+gem 'sentry-ruby', '~> 7.1'
 gem 'shakapacker', '~> 10.3'
 
 group :development, :test do
   gem 'brakeman'
   gem 'byebug'
   gem 'capybara'
-  gem 'dotenv-rails', '~> 3.1.3'
+  gem 'dotenv-rails', '~> 3.2.0'
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 7.0.2'
+  gem 'rspec-rails', '~> 8.0.4'
   gem 'simplecov'
   gem 'simplecov-console'
-  gem 'site_prism', '~> 5.0'
+  gem 'site_prism', '~> 6.0'
   gem 'timecop'
   gem 'webmock'
 end
 
 group :development do
-  gem 'listen', '~> 3.8'
+  gem 'listen', '~> 3.10'
   gem 'rubocop', '~> 1.59'
   gem 'rubocop-govuk', '~> 5.2.1'
-  gem 'spring', '~> 4.1.1'
+  gem 'spring', '~> 4.7.0'
   gem 'spring-watcher-listen', '~> 2.1.0'
   gem 'web-console', '>= 3.3.0'
 end
