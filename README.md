@@ -61,3 +61,36 @@ in case you want to connect with the datastore you can do via docker:
 ```
 
 Then `open localhost:9000` to see the runner in the browser.
+
+# Development debugging - running fb-runner locally with a local presenter (bundle exec rails s)
+
+Running with `bundle exec rails s` (rather than Docker) lets the debugger
+attach properly when you need to step through code.
+
+## Before you start
+- Have `fb-runner` and `fb-metadata-presenter` in the same parent folder.
+- Run everything below from the `fb-runner` folder.
+
+## One-time setup
+
+**1. Point the Gemfile at your local presenter**
+```ruby
+gem 'metadata_presenter', path: '../fb-metadata-presenter'
+```
+Then run `bundle install`.
+
+**2. Add your form**
+```bash
+cp branch-flow-short.json ../fb-metadata-presenter/fixtures/branch-flow-short.json
+```
+
+**3. Keep your personal files out of git**
+```bash
+echo "fixtures/branch-flow-short.json" >> ../fb-metadata-presenter/.git/info/exclude
+```
+
+## Starting up
+```bash
+SERVICE_FIXTURE=branch-flow-short bundle exec rails s
+```
+Open http://localhost:3000
