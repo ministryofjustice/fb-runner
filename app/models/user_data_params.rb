@@ -16,17 +16,21 @@ class UserDataParams
   attr_reader :page_answers, :answer_params
 
   def set_uploaded_file_details
-    page_answers.uploaded_files.map do |uploaded_file|
-      component_id = uploaded_file.component.id
-      answer = page_answers.send(component_id)
-      file = uploaded_file.file
+    page_answers.uploaded_files.each do |uploaded_file|
+      merge_uploaded_file(uploaded_file)
+    end
+  end
 
-      if uploaded_file.component.type == 'multiupload'
-        # merge the uploaded file into the last file in the component
-        answer_params[component_id][-1] = answer[component_id].last.merge(file)
-      else
-        answer_params[component_id] = answer.merge(file)
-      end
+  def merge_uploaded_file(uploaded_file)
+    component_id = uploaded_file.component.id
+    answer = page_answers.send(component_id)
+    file = uploaded_file.file
+
+    if uploaded_file.component.type == 'multiupload'
+      # merge the uploaded file into the last file in the component
+      answer_params[component_id][-1] = answer[component_id].last.merge(file)
+    else
+      answer_params[component_id] = answer.merge(file)
     end
   end
 

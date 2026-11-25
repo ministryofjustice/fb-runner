@@ -15,6 +15,8 @@ RSpec.describe Platform::UserFilestoreAdapter do
   let(:payload) do
     {
       'encrypted_user_id_and_token': '12345678901234567890123456789012',
+      'original_file_content_type': 'plain/txt',
+      'original_filename': 'thats-not-a-knife.txt',
       'file': encoded_file,
       'policy': {
         'allowed_types': Platform::UserFilestorePayload::ALLOWED_TYPES,
