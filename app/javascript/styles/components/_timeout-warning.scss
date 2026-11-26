@@ -1,3 +1,5 @@
+@use "../../../../node_modules/govuk-frontend/dist/govuk/helpers" as *;
+
 .js-enabled .govuk-timeout-warning-fallback {
   display: none;
 }

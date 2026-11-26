@@ -2,10 +2,6 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-import 'promise-polyfill/src/polyfill';
-import 'whatwg-fetch'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Function/prototype/bind'
-import 'govuk-frontend/govuk-esm/vendor/polyfills/Element/prototype/classList'
 import Rails from "@rails/ujs"
 
 Rails.start()

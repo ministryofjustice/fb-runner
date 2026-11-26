@@ -1,8 +1,13 @@
+@use "../../../../node_modules/govuk-frontend/dist/govuk/settings" as *;
+@use "../../../../node_modules/govuk-frontend/dist/govuk/tools" as *;
+@use "../../../../node_modules/govuk-frontend/dist/govuk/helpers" as *;
+@use "../../../../node_modules/govuk-frontend/dist/govuk/core/links";
+
 /* Emulate GovSpeak styles
  * -------------------------------- */
 .call-to-action,
 .govspeak-call-to-action {
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
   margin: 2em 0;
   padding: 2em
 }
@@ -43,10 +48,10 @@
 .govspeak-info-notice,
 .info-notice {
   @include govuk-font($size: 19);
-  @include govuk-text-colour;
+  color: govuk-functional-colour(text);
   @include govuk-responsive-margin(6, "top");
   @include govuk-responsive-margin(6, "bottom");
-  border-left: $govuk-border-width-wide solid $govuk-border-colour;
+  border-left: $govuk-border-width-wide solid govuk-functional-colour(border);
   padding: govuk-spacing(3);
 
   > :first-child {
@@ -63,10 +68,10 @@
 .govspeak-contact,
 .address,
 .contact {
-  @include govuk-text-colour;
+  color: govuk-functional-colour(text);
   @include govuk-font($size: 19);
   @include govuk-responsive-margin(4, "bottom");
-  border-left: 1px solid $govuk-border-colour;
+  border-left: 1px solid govuk-functional-colour(border);
   font-style: normal;
   margin-top: 0;
   padding-left: govuk-spacing(3);
@@ -86,7 +91,7 @@ editable-content {
 
   table {
     @include govuk-font($size: 19);
-    @include govuk-text-colour;
+    color: govuk-functional-colour(text);
     width: 100%;
     @include govuk-responsive-margin(6, "bottom");
 
@@ -101,7 +106,7 @@ editable-content {
 
   td, th {
     padding: govuk-spacing(2) govuk-spacing(4) govuk-spacing(2) 0;
-    border-bottom: 1px solid $govuk-border-colour;
+    border-bottom: 1px solid govuk-functional-colour(border);
     text-align: left;
     vertical-align: top;
   }
