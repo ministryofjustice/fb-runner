@@ -1,3 +1,19 @@
+GIT
+  remote: https://github.com/ministryofjustice/fb-metadata-presenter.git
+  revision: e0ddebc21570ad1ee56c795d92bf45b8b59d8644
+  branch: CDPTKAN-1342-govuk-frontend-to-latest-6.X
+  specs:
+    metadata_presenter (3.4.32)
+      govspeak (~> 7.1)
+      govuk_design_system_formbuilder (~> 5.11.0)
+      json-schema (~> 4.1.1)
+      kramdown (~> 2.4.0)
+      rails (~> 8.1.4.1)
+      sassc-rails (= 2.1.2)
+      sprockets
+      sprockets-rails
+      uk_postcode
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -243,16 +259,6 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
-    metadata_presenter (3.4.31)
-      govspeak (~> 7.1)
-      govuk_design_system_formbuilder (~> 5.11.0)
-      json-schema (~> 4.1.1)
-      kramdown (~> 2.4.0)
-      rails (~> 8.1.4.1)
-      sassc-rails (= 2.1.2)
-      sprockets
-      sprockets-rails
-      uk_postcode
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (6.0.6)
@@ -519,7 +525,7 @@ DEPENDENCIES
   fb-jwt-auth (= 0.10.0)
   jwt
   listen (~> 3.10)
-  metadata_presenter (= 3.4.31)
+  metadata_presenter!
   ostruct
   prometheus-client (~> 4.2.0)
   puma (~> 8.0)

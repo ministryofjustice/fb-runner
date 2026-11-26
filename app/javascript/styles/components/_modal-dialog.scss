@@ -1,3 +1,9 @@
+@use "sass:map";
+@use "sass:math";
+@use "../../../../node_modules/govuk-frontend/dist/govuk/settings" as *;
+@use "../../../../node_modules/govuk-frontend/dist/govuk/tools" as *;
+@use "../../../../node_modules/govuk-frontend/dist/govuk/helpers" as *;
+
 @include govuk-exports("govuk/component/modal-dialogue") {
   $govuk-dialogue-width: 640px;
 
@@ -48,7 +54,7 @@
 
     // Add focus outline to dialogue
     &:focus {
-      outline: $govuk-focus-width solid $govuk-focus-colour;
+      outline: $govuk-focus-width solid govuk-functional-colour(focus);
     }
 
     // Hide browser backdrop
@@ -120,10 +126,7 @@
     color: govuk-colour("white");
     background-color: govuk-colour("black");
     box-shadow: none !important;
-    font-size: $font-size;
-    @if $govuk-typography-use-rem {
-      font-size: govuk-px-to-rem($font-size);
-    }
+    font-size: govuk-px-to-rem($font-size);
     @include govuk-typography-weight-bold;
     line-height: $line-height;
 
@@ -144,7 +147,7 @@
     }
 
     .govuk-modal-dialogue__box {
-      width: percentage($govuk-dialogue-width / map-get($govuk-breakpoints, desktop));
+      width: math.percentage(math.div($govuk-dialogue-width, map.get($govuk-breakpoints, desktop)));
     }
   }
 
